@@ -1,0 +1,2 @@
+sudo chown -R jw *
+sudo chown -R http questions
