@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.4.0">
+  <title></title>
+</head>
+<body>
+  <div class="intro">
+    <div class="title" style="color:red">
+      15. Ch'ien / Modesty
+    </div>
+    <div class="trigrams">
+      above K'UN THE RECEPTIVE, EARTH below KEN KEEPING STILL,
+      MOUNTAIN
+    </div>
+    <div class="explanation">
+      This hexagram is made up of the trigrams Ken, Keeping Still,
+      mountain, andK'un. The mountain is the youngest son of the
+      Creative, the representative ofheaven and earth. It dispenses
+      the blessings of heaven, the clouds and rainthat gather round
+      its summit, and thereafter shines forth radiant withheavenly
+      light. This shows what modesty is and how it functions in
+      great andstrong men. K'un, the earth, stands above. Lowliness
+      is a quality of theearth: this is the very reason why it
+      appears in this hexagram as exalted, bybeing placed above the
+      mountain. This shows how modesty functions in lowly,simple
+      people: they are lifted up by it.
+    </div>
+  </div>
+  <div class="judgement">
+    <div class="title">
+      THE JUDGMENT
+    </div>
+    <div class="ancient">
+      MODESTY creates success.
+      <p>. The superior man carries things through.</p>
+    </div>
+    <div class="explanation">
+      It is the law of heaven to make fullness empty and to make
+      full what ismodest; when the sun is at its zenith, it must,
+      according to the law ofheaven, turn toward its setting, and
+      at its nadir it rises toward a new dawn.In obedience to the
+      same law, the moon when it is full begins to wane, andwhen
+      empty of light it waxes again. This heavenly law works itself
+      out in thefates of men also. It is the law of earth to alter
+      the full and to contributeto the modest. High mountains are
+      worn down by the waters, and the valleys arefilled up. It is
+      the law of fate to undermine what is full and to prosper
+      themodest. And men also hate fullness and love the modest.
+      The destinies of menare subject to immutable laws that must
+      fulfill themselves. But man has it inhis power to shape his
+      fate, according as his behavior exposes him to theinfluence
+      of benevolent or of destructive forces. When a man holds a
+      highposition and is nevertheless modest, he shines with the
+      light of wisdom; if heis in a lowly position and is modest,
+      he cannot be passed by. Thus thesuperior man can carry out
+      his work to the end without boasting of what he hasachieved.
+    </div>
+  </div>
+  <div class="image">
+    <div class="title">
+      THE IMAGE
+    </div>
+    <div class="ancient">
+      Within the earth, a mountain: The image of MODESTY.
+    </div>
+    <div class="explanation">
+      Thus the superior man reduces that which is too much, And
+      augments that which is too little. He weighs things and makes
+      them equal.
+      <p>The wealth of the earth in which a mountain is hidden is
+      not visible to theeye, because the depths are offset by the
+      height of the mountain. Thus highand low competent each other
+      and the result is the plain. Here an effect thatit took a
+      long time to achieve, but that in the end seems easy
+      ofaccomplishment and self-evident, is used as the image of
+      modesty. The superiorman does the same thing when he
+      establishes order in the world; he equalizesthe extremes that
+      are the source of social discontent and thereby creates
+      justand equable conditions.</p>
+    </div>
+  </div>
+  <div class="lines">
+    THE LINES
+    <div class="line" id="1">
+      Six at the beginning means:
+      <p>A superior man modest about his modesty May cross the
+      great water. Good fortune.</p>
+      <p>A dangerous enterprise, such as the crossing of a great
+      stream, is made muchmore difficult if many claims and
+      considerations have to be taken intoaccount. On the other
+      hand, the task is easy if it is attended to quickly
+      andsimply. Therefore the unassuming attitude of mind that
+      goes with modesty fitsa man to accomplish even difficult
+      undertakings: he imposes no demands orstipulations but
+      settles matters easily and quickly. Where no claims are
+      putforward, no resistances arise.</p>
+    </div>
+    <div class="line" id="2">
+      Six in the second place means:
+      <p>Modesty that comes to expression. Perseverance brings good
+      fortune.</p>
+      <p>"Out of the fullness of the heart the mouth speaketh."
+      When a man's attitudeof mind is so modest that this expresses
+      itself in his outward behavior, it isa source of good fortune
+      to him. For the possibility of exerting a lastinginfluence
+      arises of itself and no one can interfere.</p>
+    </div>
+    <div class="line" id="3">
+      Nine in the third place means:
+      <p>A superior man of modesty and merit Carries things to
+      conclusion. Good fortune.</p>
+      <p>This is the center of the hexagram, where its secret is
+      disclosed. Adistinguished name is readily earned by great
+      achievements. If a man allowshimself to be dazzled by fame,
+      he will soon be criticized, and difficultieswill arise. If,
+      on the contrary, he remains modest despite his merit, he
+      makeshimself beloved and wins the support necessary for
+      carrying his work throughto the end.</p>
+    </div>
+    <div class="line" id="4">
+      Six in the fourth place means:
+      <p>Nothing that would not further modesty In movement.</p>
+      <p>Everything has its proper measure. Even modesty in
+      behavior can be carriedtoo far. Here, however, it is
+      appropriate, because the place between a worthyhelper below
+      and a kindly ruler above carries great responsibility.
+      Theconfidence of the man in superior place must not be abused
+      nor the merits ofthe man in inferior placed concealed. There
+      are officials who indeed do notstrive for prominence; they
+      hide behind the letter of ordinances, decline
+      allresponsibility, accept pay without giving its equivalent
+      in work, and bearempty titles. This is the opposite of what
+      is meant here by modesty. In such aposition, modesty is shown
+      by interest in one's work.</p>
+    </div>
+    <div class="line" id="5">
+      Six in the fifth place means:
+      <p>No boasting of wealth before one's neighbor. It is
+      favorable to attack with force. Nothing that would not
+      further.</p>
+      <p>Modesty is not to be confused with weak good nature that
+      lets things taketheir own course. When a man holds a
+      responsible position, he must at timesresort to energetic
+      measures. In doing so he must not try to make animpression by
+      boasting of his superiority but must make certain of the
+      peoplearound him. The measures taken should be purely
+      objective and in no waypersonally offensive. Thus modesty
+      manifests itself even in severity.</p>
+    </div>
+    <div class="line" id="6">
+      Six at the top means:
+      <p>Modesty that comes to expression. It is favorable to set
+      armies marching To chastise one's own city and one's
+      country.</p>
+      <p>A person who is really sincere in his modesty must make it
+      show in reality.He must proceed with great energy in this.
+      When enmity arises nothing iseasier than to lay the blame on
+      another. A weak man takes offense perhaps, anddraws back,
+      feeling self-pity; he thinks that it is modesty that keeps
+      himfrom defending himself. Genuine modesty sets one to
+      creating order andinspires one to begin by disciplining one's
+      own ego and one's immediatecircle. Only through having the
+      courage to marshal one's armies againstoneself, will
+      something forceful really be achieved.</p>
+    </div>
+  </div>
+</body>
+</html>

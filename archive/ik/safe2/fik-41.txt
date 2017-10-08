@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.4.0">
+  <title></title>
+</head>
+<body>
+  <div class="intro">
+    <div class="title" style="color:red">
+      41. Sun / Decrease
+    </div>
+    <div class="trigrams">
+      above KeN KEEPING STILL, MOUNTAIN below TUI THE JOYOUS, LAKE
+    </div>
+    <div class="explanation">
+      This hexagram represents a decrease of the lower trigram in
+      favor of theupper, because the third line, originally strong,
+      has moved up to the top, andthe top line, originally weak,
+      has replaced it. What is below is decreased tothe benefit of
+      what is above. This is out-and-out decrease. If the
+      foundationsof a building are decreased in strength and the
+      upper walls are strengthened,the whole structure loves its
+      stability. Likewise, a decrease in theprosperity of the
+      people in favor of the government is out-and-out decrease.And
+      the entire theme of the hexagram is directed to showing how
+      this shift ofwealth can take place without causing the
+      sources of wealth can take placewithout causing the sources
+      of wealth in the nation and its lower classes tofail.
+    </div>
+  </div>
+  <div class="judgement">
+    <div class="title">
+      THE JUDGMENT
+    </div>
+    <div class="ancient">
+      DECREASE combined with sincerity Brings about supreme good
+      fortune Without blame. One may be persevering in this. It
+      furthers one to undertake something. How is this to be
+      carried out? One may use two small bowls for the sacrifice.
+    </div>
+    <div class="explanation">
+      Decrease does not under all circumstances mean something bad.
+      Increase anddecrease come in their own time. What matters
+      here is to understand the timeand not to try to cover up
+      poverty with empty pretense. If a time of scantyresources
+      brings out an inner truth, one must not feel ashamed of
+      simplicity.For simplicity is then the very thing needed to
+      provide inner strength forfurther undertakings. Indeed, there
+      need by no concern if the outward beautyof the civilization,
+      even the elaboration of religious forms, should have tosuffer
+      because of simplicity. One must draw on the strength of the
+      innerattitude to compensate for what is lacking in externals;
+      then the power of thecontent makes up for the simplicity of
+      form. There is no need of presentingfalse appearances to God.
+      Even with slender means, the sentiment of the heartcan be
+      expressed.
+    </div>
+  </div>
+  <div class="image">
+    <div class="title">
+      THE IMAGE
+    </div>
+    <div class="ancient">
+      At the foot of the mountain, the lake: The image of DECREASE.
+      Thus the superior man controls his anger And restrains his
+      instincts.
+    </div>
+    <div class="explanation">
+      The lake at the foot of the mountain evaporates. In this way
+      it decreases tothe benefit of the mountain, which is enriched
+      by its moisture. The mountainstands as the symbol of stubborn
+      strength that can harden into anger. The lakeis the symbol of
+      unchecked gaiety that can develop into passionate drives
+      atthe expense of the life forces. Therefore decrease is
+      necessary; anger must bedecreased by keeping still, the
+      instincts must be curbed by restriction. Bythis decrease of
+      the lower powers of the psyche, the higher aspects of thesoul
+      are enriched/
+    </div>
+  </div>
+  <div class="lines">
+    THE LINES
+    <div class="line" id="1">
+      Nine at the beginning means:
+      <p>Going quickly when one's tasks are finished Is without
+      blame. But one must reflect on how much one may decrease
+      others.</p>
+      <p>It is unselfish and good when a man, after completing his
+      own urgent tasks,uses his strength in the service of others,
+      and without bragging or makingmuch of it, helps quickly where
+      help is needed. But the man in a superiorposition who is thus
+      aided must weigh carefully how much he can accept
+      withoutdoing the helpful servant or friend real harm. Only
+      where such delicacy offeeling exists can one give oneself
+      unconditionally and without hesitation.</p>
+    </div>
+    <div class="line" id="2">
+      Nine in the second place means:
+      <p>Perseverance furthers.</p>
+      <p>To undertake something brings misfortune. Without
+      decreasing oneself, One is able to bring increase to
+      others.</p>
+      <p>A high-minded self-awareness and a consistent seriousness
+      with no forfeit ofdignity are necessary if a man wants to be
+      of service to others. He who throwhimself away in order to do
+      the bidding of a superior diminishes his ownposition without
+      thereby giving lasting benefit to the other. This is wrong.To
+      render true service of lasting value to another, one must
+      serve him withoutrelinquishing oneself.</p>
+    </div>
+    <div class="line" id="3">
+      Six in the third place means:
+      <p>When three people journey together,</p>
+      <p>Their number increases by one. When one man journeys
+      alone, He finds a companion.</p>
+      <p>When there are three people together, jealousy arises. One
+      of them will haveto go. Avery close bond is possible only
+      between two people. But when one manis lonely, he is certain
+      to find a companion who complements him.</p>
+    </div>
+    <div class="line" id="4">
+      Six in the fourth place means:
+      <p>If a man deceases his faults, It makes the other hasten to
+      come and rejoice.</p>
+      <p>No blame.</p>
+      <p>A man's faults often prevent even well-disposed people
+      from coming closer tohim. His faults are sometimes reinforced
+      by the environment in which he lives.But if in humility he
+      can bring himself to the point of giving them up, hefrees his
+      well-disposed friends from an inner pressure and causes them
+      toapproach the more quickly, and there is mutual joy.</p>
+    </div>
+    <div class="line" id="5">
+      Six in the fifth place means:
+      <p>Someone does indeed increase him.</p>
+      <p>Ten pairs of tortoises cannot oppose it.</p>
+      <p>Supreme good fortune.</p>
+      <p>If someone is marked out by fate for good fortune, it
+      comes without fail.All oracles-as for instance those that are
+      read from the shells of tortoises-are bound to concur in
+      giving him favorable signs. He need fear nothing,because his
+      luck is ordained from on high.</p>
+    </div>
+    <div class="line" id="6">
+      Nine at the top means:
+      <p>If one is increased without depriving other,</p>
+      <p>There is no blame. Perseverance brings good fortune. It
+      furthers one to undertake something. One obtains servants But
+      no longer has a separate home.</p>
+      <p>There are people who dispense blessings to the whole
+      world. Every increasein power that comes to them benefits the
+      whole of mankind and therefore doesnot bring decrease to
+      others. Through perseverance and zealous work a man
+      winssuccess and finds helpers as they are needed. But what he
+      accomplishes is nota limited private advantage; it is a
+      public good and available to everyone.</p>
+    </div>
+  </div>
+</body>
+</html>

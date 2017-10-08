@@ -1,0 +1,10 @@
+# all the stuff composer installs
+vendor/bin
+vendor/components
+vendor/composer
+vendor/paquettg
+vendor/twitter
+
+#garbage
+*~
+DEADJOE

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.4.0">
+  <title></title>
+</head>
+<body>
+  <div class="intro">
+    <div class="title" style="color:red">
+      60. Chieh / Limitation
+    </div>
+    <div class="trigrams">
+      above K'AN THE ABYSMAL, WATER below TUI THE JOYOUS, LAKE
+    </div>
+    <div class="explanation">
+      A lake occupies a limited space. When more water comes into
+      it, itoverflows. Therefore limits must be set for the water.
+      The image shows waterbelow and water above, with the
+      firmament between them as a limit. The Chineseword for
+      limitation really denotes the joints that divide a bamboo
+      stalk. Inrelation to ordinary life it means the thrift that
+      sets fixed limits uponexpenditures. In relation to the moral
+      sphere it means the fixed limits thatthe superior man sets
+      upon his actions-the limits of loyalty anddisinterestedness.
+    </div>
+  </div>
+  <div class="judgement">
+    <div class="title">
+      THE JUDGMENT
+    </div>
+    <div class="ancient">
+      LIMITATION. Success. Galling limitation must not be
+      persevered in.
+    </div>
+    <div class="explanation">
+      Limitations are troublesome, but they are effective. If we
+      live economicallyin normal times, we are prepared for times
+      of want. To be sparing saves usfrom humiliation. Limitations
+      are also indispensable in the regulation ofworld conditions.
+      In nature there are fixed limits for summer and winter,
+      dayand night, and these limits give the year its meaning. In
+      the same way,economy, by setting fixed limits upon
+      expenditures, acts to preserve propertyand prevent injury to
+      the people. But in limitation we must observe duemeasure. If
+      a man should seek to impose galling limitations upon his
+      ownnature, it would be injurious. And if he should go too far
+      in imposinglimitations on others, they would rebel. Therefore
+      it is necessary to setlimits even upon limitation.
+    </div>
+  </div>
+  <div class="image">
+    <div class="title">
+      THE IMAGE
+    </div>
+    <div class="ancient">
+      Water over lake: the image of LIMITATION. Thus the superior
+      man Creates number and measure, And examines the nature of
+      virtue and correct conduct.
+    </div>
+    <div class="explanation">
+      A lake is something limited. Water is inexhaustible. A lake
+      can contain onlya definite amount of the infinite quantity of
+      water; this is its peculiarity.In human life too the
+      individual achieves significance through discriminationand
+      the setting of limits. Therefore what concerns us here is the
+      problem ofclearly defining these discriminations, which are,
+      so to speak, the backboneof morality. Unlimited possibilities
+      are not suited to man; if they existed,his life would only
+      dissolve in the boundless. To become strong, a man's
+      lifeneeds the limitations ordained by duty and voluntarily
+      accepted. Theindividual attains significance as a free spirit
+      only by surrounding himselfwith these limitations and by
+      determining for himself what his duty is.
+    </div>
+  </div>
+  <div class="lines">
+    THE LINES
+    <div class="line" id="1">
+      Nine at the beginning means:
+      <p>Not going out of the door and the courtyard Is without
+      blame.</p>
+      <p>Often a man who would like to undertake something finds
+      himself confrontedby insurmountable limitations. Then he must
+      know where to stop. If he rightlyunderstands this and does
+      not go beyond the limits set for him, he accumulatesan energy
+      that enables him, when the proper time comes, to act with
+      greatforce. Discretion is of prime importance in preparing
+      the way for momentousthings. Concerning this, Confucius
+      says:</p>
+      <p>Where disorder develops, words are the first steps. If the
+      prince is notdiscreet, he loses his servant. If the servant
+      is not discreet he loses hislife. If germinating things are
+      not handled with discretion, the perfecting ofthem is
+      impeded. Therefore the superior man is careful to maintain
+      silence anddoes not go forth.</p>
+    </div>
+    <div class="line" id="2">
+      Nine in the second place means:
+      <p>Not going out of the gate and the courtyard Brings
+      misfortune.</p>
+      <p>When the time for action has come, the moment must be
+      quickly seized. Justas water first collects in a lake without
+      flowing out, yet is certain to findan outlet when the lake is
+      full, so it is in the life of man. It is a goodthing to
+      hesitate so long as the time for action has not come, but no
+      longer.Once the obstacles to action have been removed,
+      anxious hesitation is amistake that is bound to bring
+      disaster, because one misses one's opportunity.</p>
+    </div>
+    <div class="line" id="3">
+      Six in the third place means:
+      <p>He who knows limitation Will have cause to lament.</p>
+      <p>No blame.</p>
+      <p>If an individual is bent only on pleasures and enjoyment,
+      it is easy for himto lose his sense of the limits that are
+      necessary. If he gives himself overto extravagance, he will
+      have to suffer the consequences, with accompanyingregret. He
+      must not seek to lay the blame on others. Only when we
+      realize thatour mistakes are of our own making will such
+      disagreeable experiences free usof errors.</p>
+    </div>
+    <div class="line" id="4">
+      Six in the fourth place means:
+      <p>Contented limitation. Success.</p>
+      <p>Every limitation has its value, but a limitation that
+      requires persistenteffort entails a cost of too much energy.
+      When, however, the limitation is anatural one (as for
+      example, the limitation by which water flows onlydownhill),
+      it necessarily leads to success, for then it means a saving
+      ofenergy. The energy that otherwise would be consumed in a
+      vain struggle withthe object, is applied wholly to the
+      benefit of the matter in hand, andsuccess is assured.</p>
+    </div>
+    <div class="line" id="5">
+      Nine in the fifth place means:
+      <p>Sweet limitation brings good fortune. Going brings
+      esteem.</p>
+      <p>The limitation must be carried out in the right way if it
+      is to beeffective. If we seek to impose restrictions on
+      others only, while evadingthem ourselves, these restrictions
+      will always be resented and will provokeresistance. If,
+      however, a man in a leading position applies the
+      limitationfirst to himself, demanding little from those
+      associated with him, and withmodest means manages to achieve
+      something, good fortune is the result. Wheresuch an example
+      occurs, it meets with emulation, so that whatever
+      isundertaken must succeed.</p>
+    </div>
+    <div class="line" id="6">
+      Six at the top means:
+      <p>Galling limitation. Perseverance brings misfortune.
+      Remorse disappears.</p>
+      <p>If one is too severe in setting up restrictions, people
+      will not endurethem. The more consistent such severity, the
+      worse it is, for in the long runa reaction is unavoidable. In
+      the same way, the tormented body will rebelagainst excessive
+      asceticism. On the other hand, although ruthless severity
+      isnot to be applied persistently and systematically, there
+      may be times when itsi the only means of safeguarding against
+      guilt and remorse. In suchsituations ruthlessness toward
+      oneself is the only means of saving one's soul,which
+      otherwise would succumb to irresolution and temptation.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.4.0">
+  <title></title>
+</head>
+<body>
+  <div class="intro">
+    <div class="title" style="color:red">
+      14. Ta Yu / Possession in Great Measure
+    </div>
+    <div class="trigrams">
+      above LI THE CLINGING, FLAME below CH'IEN THE CREATIVE,
+      HEAVEN
+    </div>
+    <div class="explanation">
+      The fire in heaven above shines far, and all things stand out
+      in the lightand become manifest. The weak fifth line occupies
+      the place of honor and allthe strong lines are in accord with
+      it.All things come to the man who ismodest and kind in a high
+      position.
+    </div>
+  </div>
+  <div class="judgement">
+    <div class="title">
+      THE JUDGMENT
+    </div>
+    <div class="ancient">
+      POSSESSION IN GREAT MEASURE. Supreme success.
+    </div>
+    <div class="explanation">
+      The two trigrams indicate that strength and clarity unite.
+      Possessions greatmeasure is determined by fate and accords
+      with the time. How is it possiblethat the weak line has power
+      to hold the strong lines fast and to possessthem? It is done
+      by virtue of unselfish modesty. The time is favorable--a
+      timeof strength within, clarity and culture without. Power is
+      expressing itself ingraceful and controlled way. This brings
+      supreme success and wealth.
+    </div>
+  </div>
+  <div class="image">
+    <div class="title">
+      THE IMAGE
+    </div>
+    <div class="ancient">
+      Fire in heaven above: The image of POSSESSION IN GREAT
+      MEASURE. Thus the superior man curbs evil and furthers good,
+      And thereby obeys the benevolent will of heaven.
+    </div>
+    <div class="explanation">
+      The sun in heaven above, shedding light over everything one
+      earth, is theimage of possession on a grand scale. But a
+      possession of this sort must beadministered properly. The sun
+      brings both evil and good into the light ofday. Man must
+      combat and curb the evil, and must favor and promote the
+      good.Only in this way does he fulfill the benevolent will of
+      God, who desires onlygood and not evil.
+    </div>
+  </div>
+  <div class="lines">
+    THE LINES
+    <div class="line" id="1">
+      Nine at the beginning means:
+      <p>No relationship with what is harmful; There is no blame in
+      this. If one remains conscious of difficulty, One remains
+      without blame.</p>
+      <p>Great possession that is still in its beginnings and that
+      has not yet beenchallenged brings no blame, since there has
+      been no opportunity to makemistakes. Yet there are many
+      difficulties to be overcome. It is only byremaining conscious
+      of theses difficulties that one can keep inwardly free
+      ofpossible arrogance and wastefulness, and thus in principle
+      overcome all causefor blame.</p>
+    </div>
+    <div class="line" id="2">
+      Nine in the second place means:
+      <p>A big wagon for loading. One may undertake something. No
+      blame.</p>
+      <p>Great possession consists not only in the quantity of
+      goods at one'sdisposal, but first and foremost, in their
+      mobility and utility, for then theycan be used in
+      undertakings, and we remain free of embarrassment and
+      mistakes.The big wagon, which will carry a heavy load and in
+      which one can journey farmmeans that there are at hand able
+      helpers who give their support t and areequal to their task.
+      One can load great responsibility upon such persons, andthis
+      is necessary in important undertakings.</p>
+    </div>
+    <div class="line" id="3">
+      Nine in the third place means:
+      <p>A prince offers it to the Son of Heaven. A petty man
+      cannot do this.</p>
+      <p>A magnanimous, liberal-minded man should not regard what
+      he possesses as hisexclusive personal property , but should
+      place it at the disposal of the ruleror of the people at
+      large. In so doing, he takes the right attitude toward
+      hispossession, which as private property can never endure. A
+      petty man isincapable of this. He is harmed by great
+      possessions, because instead ofsacrificing them, he would
+      keep them for himself.</p>
+    </div>
+    <div class="line" id="4">
+      Nine in the fourth place means:
+      <p>He makes a difference Between himself and his neighbor. No
+      blame.</p>
+      <p>This characterizes the position of a man placed among rich
+      and powerfulneighbors. It is a dangerous position. He must
+      look neither to the right norto the left, and must shun envy
+      and the temptation to vie with others. In thisway he remains
+      free of mistakes.</p>
+    </div>
+    <div class="line" id="5">
+      Six in the fifth place means:
+      <p>He whose truth is accessible, yet dignified, Has good
+      fortune.</p>
+      <p>The situation is very favorable. People are being won not
+      by coercion but byunaffected sincerity, so that they are
+      attached to us in sincerity and truth.However, benevolence
+      alone is not sufficient at the time of POSSESSION INGREAT
+      MEASURE. For insolence might begin to spread. Insolence must
+      be kept inbounds by dignity; then good fortune is
+      assured.</p>
+    </div>
+    <div class="line" id="6">
+      Nine at the top means:
+      <p>He is blessed by heaven. Good fortune. Nothing that does
+      not further.</p>
+      <p>In the fullness of possession and at the height of power,
+      one remains modestand gives honor to the sage who stands
+      outside the affairs of the world. Bythis means one puts
+      oneself under the beneficent influence descending formheaven,
+      and all goes well. Confucius says of this line:</p>
+      <p>To bless means to help. Heaven helps the man who is
+      devoted; men help theman who is true. He who walks in truth
+      and is devoted in his thinking, andfurthermore reveres the
+      worthy, is blessed by heaven. He has good fortune, andthere
+      is nothing that would not further.</p>
+    </div>
+  </div>
+</body>
+</html>

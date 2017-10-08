@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.4.0">
+  <title></title>
+</head>
+<body>
+  <div class="intro">
+    <div class="title" style="color:red">
+      35. Chin / Progress
+    </div>
+    <div class="trigrams">
+      above LI THE CLINGING, FIRE below K'UN THE RECEPTIVE, EARTH
+    </div>
+    <div class="explanation">
+      The hexagram represents the sun rising over the earth. It is
+      therefore thesymbol of rapid, easy progress, which at the
+      same time means ever wideningexpansion and clarity.
+    </div>
+  </div>
+  <div class="judgement">
+    <div class="title">
+      THE JUDGMENT
+    </div>
+    <div class="ancient">
+      PROGRESS. The powerful prince Is honored with horses in large
+      numbers. In a single day he is granted audience three times.
+    </div>
+    <div class="explanation">
+      As an example of progress, this pictures a time when a
+      powerful feudal lordrallies the other lords around the
+      sovereign and pledges fealty and peace. Thesovereign rewards
+      him richly and invites him to a closer intimacy.
+      <p>A twofold idea is set forth here. The actual effect of the
+      progress emanatesfrom a man who is in a dependent position
+      and whom the others regard as theirequal and are therefore
+      willing to follow. This leader has enough clarity ofvision
+      not to abuse his great influence but to use it rather for the
+      benefitof his ruler. His ruler in turn is free of all
+      jealousy, showers presents onthe great man, and invites him
+      continually to his court. An enlightened rulerand an obedient
+      servant--this is the condition on which great
+      progressdepends.</p>
+    </div>
+  </div>
+  <div class="image">
+    <div class="title">
+      THE IMAGE
+    </div>
+    <div class="ancient">
+      The sun rises over the earth: The image of PROGRESS. Thus the
+      superior man himself Brightens his bright virtue.
+    </div>
+    <div class="explanation">
+      The light of the sun rises over the earth is by nature clear.
+      The higher thesun rises, the more it emerges from the dark
+      mists, spreading the pristinepurity of its rays over an ever
+      widening area. The real nature of man islikewise originally
+      good, but it becomes clouded by contact with earthlythings
+      and therefore needs purification before it can shine forth in
+      itsnative clarity.
+    </div>
+  </div>
+  <div class="lines">
+    THE LINES
+    <div class="line" id="1">
+      Six at the beginning means:
+      <p>Progressing, but turned back. Perseverance brings good
+      fortune. If one meets with no confidence, one should remain
+      calm.</p>
+      <p>No mistake.</p>
+      <p>At a time when all elements are pressing for progress, we
+      are stilluncertain whether in the course of advance we may
+      not meet with a rebuff. Thenthe thing to do is simply
+      continue in what is right; in the end this willbring good
+      fortune. It may be that we meet with no confidence. In this
+      case weought not to try to win confidence regardless of the
+      situation, but shouldremain calm and cheerful and refuse to
+      be roused to anger. Thus we remain freeof mistakes.</p>
+    </div>
+    <div class="line" id="2">
+      Six in the second place means:
+      <p>Progressing, but in sorrow. Perseverance brings good
+      fortune.</p>
+      <p>Then one obtains great happiness from one's
+      ancestress.</p>
+      <p>Progress is halted; an individual is kept from getting in
+      touch with the manin authority with whom he has a connection.
+      When this happens, he must remainpersevering, although he is
+      grieved; then with a maternal gentleness the manin question
+      will bestow great happiness upon him. This happiness comes to
+      him-and is well deserved-because in this case mutual
+      attraction does not rest onselfish or partisan motives but on
+      firm and correct principles.</p>
+    </div>
+    <div class="line" id="3">
+      Six in the third place means:
+      <p>All are in accord. Remorse disappears.</p>
+      <p>A man strives onward, in association with others whose
+      backing encourageshim. This dispels any cause for regret over
+      the fact that he does not haveenough independence to triumph
+      unaided over every hostile turn of fate.</p>
+    </div>
+    <div class="line" id="4">
+      Nine in the fourth place means:
+      <p>Progress like a hamster. Perseverance brings danger.</p>
+      <p>In times of progress it is easy for strong men in the
+      wrong places to amassgreat possessions. But such conduct
+      shuns the light. And since times ofprogress are inevitably
+      brought to the light, perseverance in such actionalways leads
+      to danger.</p>
+    </div>
+    <div class="line" id="5">
+      Six in the fifth place means:
+      <p>Remorse disappears.</p>
+      <p>Take not gain and loss to heart. Undertakings bring good
+      fortune. Everything serves to further.</p>
+      <p>The situation described here is that of one who, finding
+      himself in aninfluential position in a time of progress,
+      remains gentle and reserved. Hemight reproach himself for
+      lack of energy in making the most of thepropitiousness of the
+      time and obtaining all possible advantage. However,
+      thisregret passes away. He must not take either loss or gain
+      to heart; they areminor considerations. What matters much
+      more is the fact that in this way hehas assured himself of
+      opportunities for successful and beneficent influence.</p>
+    </div>
+    <div class="line" id="6">
+      Nine at the top means:
+      <p>Making progress with the horns is permissible Only for the
+      purpose of punishing one's own city.</p>
+      <p>To be conscious of danger brings good fortune. No blame.
+      Perseverance brings humiliation.</p>
+      <p>Making progress with lowered horns-i.e., acting on the
+      offensive-ispermissible, in times like those referred to
+      here, only in dealing with themistakes of one's own people.
+      Even then we must bear in mind that proceedingon the
+      offensive may always be dangerous. In this way we avoid the
+      mistakesthat otherwise threaten, and succeed in what we set
+      out to do. On the otherhand, perseverance in such over
+      energetic behavior, especially toward personswith whom there
+      is no close connection, will lead to humiliation.</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.4.0">
+  <title></title>
+</head>
+<body>
+  <div class="intro">
+    <div class="title" style="color:red">
+      36. Ming I / Darkening of the light
+    </div>
+    <div class="trigrams">
+      above K'UN THE RECEPTIVE, EARTH below LI THE CLINGING, FIRE
+    </div>
+    <div class="explanation">
+      Here the sun has sunk under the earth and is therefore
+      darkened. The name ofthe hexagram means literally "wounding
+      of the bright"; hence the individuallines contain frequent
+      references to wounding. The situation is the exactopposite of
+      that in the foregoing hexagram. In the latter a wise man at
+      thehead of affairs has able helpers, and in company with them
+      makes progress;here a man of dark nature is in a position of
+      authority and brings harm to thewise and able man.
+    </div>
+  </div>
+  <div class="judgement">
+    <div class="title">
+      THE JUDGMENT
+    </div>
+    <div class="ancient">
+      DARKENING OF THE LIGHT. In adversity It furthers one to be
+      persevering.
+    </div>
+    <div class="explanation">
+      One must not unresistingly let himself be swept along by
+      unfavorablecircumstances, nor permit his steadfastness to be
+      shaken. He can avoid this bymaintaining his inner light,
+      while remaining outwardly yielding and tractable.With this
+      attitude he can overcome even the greatest adversities. In
+      somesituations indeed a man must hide his light, in order to
+      make his will prevailinspite of difficulties in his immediate
+      environment. Perseverance must dwellin inmost consciousness
+      and should not be discernible from without. Only thusis a man
+      able to maintain his will in the face of difficulties.
+    </div>
+  </div>
+  <div class="image">
+    <div class="title">
+      THE IMAGE
+    </div>
+    <div class="ancient">
+      The light has sunk into the earth: The image of DARKENING OF
+      THE LIGHT. Thus does the superior man live with the great
+      mass: He veils his light, yet still shines.
+    </div>
+    <div class="explanation">
+      In a time of darkness it is essential to be cautious and
+      reserved. Oneshould not needlessly awaken overwhelming enmity
+      by inconsiderate behavior. Insuch times one ought not to fall
+      in with the practices of others; neithershould one drag them
+      censoriously into the light. In social intercourse oneshould
+      not try to be all-knowing. One should let many things pass,
+      withoutbeing duped.
+    </div>
+  </div>
+  <div class="lines">
+    THE LINES
+    <div class="line" id="1">
+      Nine at the beginning means:
+      <p>Darkening of the light during flight. He lowers his
+      wings.</p>
+      <p>The superior man does not eat for three days On his
+      wanderings. But he has somewhere to go.</p>
+      <p>The host has occasion to gossip about him.</p>
+      <p>With grandiose resolve a man endeavors to soar above all
+      obstacles, but thusencounters a hostile fate. He retreats and
+      evades the issue. The time isdifficult. Without rest, he must
+      hurry along, with no permanent abiding place.If he does not
+      want to make compromises within himself, but insists
+      onremaining true to his principles, he suffers deprivation.
+      Never the less hehas a fixed goal to strive for even though
+      the people with whom he lives donot understand him and speak
+      ill of him.</p>
+    </div>
+    <div class="line" id="2">
+      Six in the second place means:
+      <p>Darkening of the light injures him in the left thigh. He
+      gives aid with the strength of a horse. Good fortune.</p>
+      <p>Here the Lord of Light is in a subordinate place and is
+      wounded by the Lordof Darkness. But the injury is not fatal;
+      it is only a hindrance. Rescue isstill possible. The wounded
+      man gives no thought to himself; he thinks only ofsaving the
+      others who are also in danger. Therefore he tries with all
+      hisstrength to save all that can be saved. There is good
+      fortune in thus actingaccording to duty.</p>
+    </div>
+    <div class="line" id="3">
+      Nine in the third place means:
+      <p>Darkening of the light during the hunt in the south.</p>
+      <p>Their great leader is captured. One must not expect
+      perseverance too soon.</p>
+      <p>It seems as if chance were at work. While the strong,
+      loyal man is strivingeagerly and in good faith to create
+      order, he meets the ringleader of thedisorder, as if by
+      accident, and seizes him. Thus victory is achieved. But
+      inabolishing abuses one must not be too hasty. This would
+      turn out badly becausethe abuses have been in existence so
+      long.</p>
+    </div>
+    <div class="line" id="4">
+      Six in the fourth place means:
+      <p>He penetrates the left side of the belly. One gets at the
+      very heart of the darkening of the light.</p>
+      <p>We find ourselves close to the commander of darkness and
+      so discover his motsecret thoughts. In this way we realize
+      that there is no longer any hope ofimprovement, and thus we
+      are enabled to leave the scene of disaster before thestorm
+      breaks.</p>
+    </div>
+    <div class="line" id="5">
+      Six in the fifth place means:
+      <p>Darkening of the light as with Prince Chi. Perseverance
+      furthers.</p>
+      <p>Prince Chi lived at the court of the evil tyrant Chou
+      Hsin, who, althoughnot mentioned by name, furnished the
+      historical example on which this wholesituation is based.
+      Prince Chi was a relative of the tyrant and could notwithdraw
+      from the court; therefore he concealed his true sentiments
+      andfeigned insanity. Although he was held a slave, he did not
+      allow externalmisery to deflect him from his convictions.
+      This provides a teaching for thosewho cannot leave their
+      posts in times of darkness. In order to escape danger,they
+      need invincible perseverance of spirit and redoubled caution
+      in theirdealings with the world.</p>
+    </div>
+    <div class="line" id="6">
+      Six at the top means:
+      <p>Not light but darkness. First he climbed up to heaven,</p>
+      <p>Then plunged into the depths of the earth.</p>
+      <p>Here the climax of the darkening is reached. The dark
+      power at first held sohigh a place that it could wound all
+      who were on the side of good and of thelight. But in the end
+      it perishes of its own darkness, for evil must itselffall at
+      the very moment when it has wholly overcome the good, and
+      thusconsumed the energy to which it owed its duration.</p>
+    </div>
+  </div>
+</body>
+</html>

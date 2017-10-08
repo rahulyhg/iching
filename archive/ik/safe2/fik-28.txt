@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.4.0">
+  <title></title>
+</head>
+<body>
+  <div class="intro">
+    <div class="title" style="color:red">
+      28. Ta Kuo / Preponderance of the Great
+    </div>
+    <div class="trigrams">
+      above TUI THE JOYOUS, LAKE below SUN THE GENTLE, WIND, WOOD
+    </div>
+    <div class="explanation">
+      This hexagram consists of four strong lines inside and two
+      weak linesoutside. When the strong are outside and the weak
+      inside, all is well andthere is nothing out of balance,
+      nothing extraordinary in the situation. Here,however, the
+      opposite is the case. The hexagram represents a beam that
+      isthick and heavy in the middle but too weak at the ends.
+      This is a conditionthat cannot last; it must be changed, must
+      pass, or misfortune will result.
+    </div>
+  </div>
+  <div class="judgement">
+    <div class="title">
+      THE JUDGMENT
+    </div>
+    <div class="ancient">
+      PREPONDERANCE OF THE GREAT.
+      <p>The ridgepole sags to the breaking point. It furthers one
+      to have somewhere to go.</p>
+      <p>Success.</p>
+    </div>
+    <div class="explanation">
+      The weight of the great is excessive. The load is too heavy
+      for the strengthof the supports. The ridgepole on which the
+      whole roof rests, sags to thebreaking point, because its
+      supporting ends are too weak for the load theybear. It is an
+      exceptional time and situation; therefore
+      extraordinarymeasures are demanded. It is necessary to find a
+      way of transition as quicklyas possible, and to take action.
+      This promises success. For although thestrong element is in
+      excess, it is in the middle, that is, at the center
+      ofgravity, so that a revolution is not to be feared. Nothing
+      is to be achievedby forcible measures. The problem must be
+      solved by gently penetration to themeaning of the situation
+      (as is suggested by the attribute of the innertrigram, Sun);
+      then the change-over to other conditions will be successful.
+      Itdemands real superiority; therefore the time when the great
+      preponderates is amomentous time.
+    </div>
+  </div>
+  <div class="image">
+    <div class="title">
+      THE IMAGE
+    </div>
+    <div class="ancient">
+      The lake rises above the trees: The image of PREPONDERANCE OF
+      THE GREAT.Thus the superior man, when he stands alone, Is
+      unconcerned, And if he has to renounce the world, He is
+      undaunted.
+    </div>
+    <div class="explanation">
+      Extraordinary times when the great preponderates are like
+      flood times whenthe lake rises over the treetops. But such
+      conditions are temporary. The twotrigrams indicate the
+      attitude proper to such exceptional times: the symbol ofthe
+      trigram Sun is the tree, which stands firm even though it
+      stands alone,and the attribute of Tui is joyousness, which
+      remains undaunted even if itmust renounce the world.
+    </div>
+  </div>
+  <div class="lines">
+    THE LINES
+    <div class="line" id="1">
+      Six at the beginning means:
+      <p>To spread white rushes underneath.</p>
+      <p>No blame.</p>
+      <p>When a man wishes to undertake an enterprise in
+      extraordinary times, he mustbe extraordinarily cautious, just
+      as when setting a heavy thing down on thefloor, one takes
+      care to put rushes under it, so that nothing will break.
+      Thiscaution, though it may seem exaggerated, is not a
+      mistake. Exceptionalenterprises cannot succeed unless utmost
+      caution is observed in theirbeginnings and in the laying of
+      their foundations.</p>
+    </div>
+    <div class="line" id="2">
+      Nine in the second place means:
+      <p>A dry poplar sprouts at the root. An older man takes a
+      young wife. Everything furthers.</p>
+      <p>Wood is near water; hence the image of an old poplar
+      sprouting at the root.This means an extraordinary situation
+      arises when an older man marries a younggirl who suits him.
+      Despite the unusualness of the situation, all goes well.From
+      the point of view of politics, the meaning is that in
+      exceptional timesone does well to join with the lowly, for
+      this affords a possibility ofrenewal.</p>
+    </div>
+    <div class="line" id="3">
+      Nine in the third place means:
+      <p>The ridgepole sags to the breaking point. Misfortune.</p>
+      <p>This indicates a type of man who in times of preponderance
+      of the greatinsists on pushing ahead. He accepts no advice
+      from others, and therefore theyin turn are not willing to
+      lend him support. Because of this the burden grows,until the
+      structure of things bends or breaks. Plunging willfully ahead
+      intimes of danger only hastens the catastrophe.</p>
+    </div>
+    <div class="line" id="4">
+      Nine in the fourth place means:
+      <p>The ridgepole is braced. Good fortune. If there are
+      ulterior motives, it is humiliating.</p>
+      <p>Through friendly relations with people of lower rank, a
+      responsible mansucceeds in becoming master of the situation.
+      But if, instead of working forthe rescue of the whole, he
+      were to misuse his connections to obtain personalpower and
+      success, it would lead to humiliation.</p>
+    </div>
+    <div class="line" id="5">
+      Nine in the fifth place means:
+      <p>A withered poplar puts forth flowers. An older woman takes
+      a husband.</p>
+      <p>No blame. No praise.</p>
+      <p>A withered poplar that flowers exhausts its energies
+      thereby and onlyhastens its end. An older woman may marry
+      once more, but no renewal takesplace. Everything remains
+      barren. Thus, though all the amenities are observed,the net
+      result is only the anomaly of the situation. Applied to
+      politics, themetaphor means that if in times of insecurity we
+      give up alliance with thosebelow us and keep up only the
+      relationships we have with people of higherrank, an unstable
+      situation is created.</p>
+    </div>
+    <div class="line" id="6">
+      Six at the top means:
+      <p>One must go through the water. It goes over one's head.
+      Misfortune. No blame.</p>
+      <p>Here is a situation in which the unusual has reached a
+      climax. One iscourageous and wishes to accomplish one's task,
+      no matter what happens. Thisleads into danger. The water
+      rises over one's head. This is the misfortune.But one incurs
+      no blame in giving up one's life that the good and the
+      rightmay prevail. There are things that are more important
+      than life.</p>
+    </div>
+  </div>
+</body>
+</html>

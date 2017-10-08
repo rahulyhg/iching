@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.4.0">
+  <title></title>
+</head>
+<body>
+  <div class="intro">
+    <div class="title" style="color:red">
+      3. Chun / Difficulty at the Beginning
+    </div>
+    <div class="trigrams">
+      above K'AN THE ABYSMAL, WATER below CHeN THE AROUSING,
+      THUNDER
+    </div>
+    <div class="explanation">
+      The name of the hexagram, Chun, really connotes a blade of
+      grass pushingagainst an obstacle as it sprouts out of the
+      earth--hence the meaning,"difficulty at the beginning." The
+      hexagram indicates the way in which heavenand earth bring
+      forth individual beings. It is their first meeting, which
+      isbeset with difficulties. The lower trigram Chen is the
+      Arousing; its motion isupward and its image is thunder. The
+      upper trigram K'an stands for theAbysmal, the dangerous. Its
+      motion is downward and its image is rain. Thesituation points
+      to teeming, chaotic profusion; thunder and rain fill the
+      air.But the chaos clears up. While the Abysmal sinks, the
+      upward movementeventually passes beyond the danger. A
+      thunderstorm brings release fromtension, and all things
+      breathe freely again.
+    </div>
+  </div>
+  <div class="judgement">
+    <div class="title">
+      THE JUDGMENT
+    </div>
+    <div class="ancient">
+      DIFFICULTY AT THE BEGINNING works supreme success, Furthering
+      through perseverance. Nothing should be undertaken. It
+      furthers one to appoint helpers.
+    </div>
+    <div class="explanation">
+      Times of growth are beset with difficulties. They resemble a
+      first birth.But these difficulties arise from the very
+      profusion of all that is strugglingto attain form .
+      Everything is in motion: therefore if one perseveres there
+      isa prospect of great success, in spite of the existing
+      danger. When it is aman's fate to undertake such new
+      beginnings, everything is still unformed,dark. Hence he must
+      hold back, because any premature move might bringdisaster.
+      Likewise, it is very important not to remain alone; in order
+      toovercome the chaos he needs helpers. This is not to say,
+      however, that hehimself should look on passively at what is
+      happening. He must lend his handand participate with
+      inspiration and guidance.
+    </div>
+  </div>
+  <div class="image">
+    <div class="title">
+      THE IMAGE
+    </div>
+    <div class="ancient">
+      Clouds and thunder: The image of DIFFICULTY AT THE BEGINNING.
+      Thus the superior man Brings order out of confusion.
+    </div>
+    <div class="explanation">
+      Clouds and thunder are represented by definite decorative
+      lines; this meansthat in the chaos of difficulty at the
+      beginning, order is already implicit.So too the superior man
+      has to arrange and organize the inchoate profusion ofsuch
+      times of beginning, just as one sorts out silk threads from a
+      knottedtangle and binds them into skeins. In order to find
+      one's place in theinfinity of being, one must be able both to
+      separate and to unite.
+    </div>
+  </div>
+  <div class="lines">
+    THE LINES
+    <div class="line" id="1">
+      Nine at the beginning means:
+      <p>Hesitation and hindrance. It furthers one to remain
+      persevering. It furthers one to appoint helpers.</p>
+      <p>If a person encounters a hindrance at the beginning of an
+      enterprise, hemust not try to force advance but must pause
+      and take thought. However,nothing should put him off his
+      course; he must persevere and constantly keepthe goal in
+      sight. It is important to seek out the right assistants, but
+      hecan find them only if he avoids arrogance and associated
+      with his fellows in aspirit of humility. Only then will he
+      attract those with whose help he cancombat the
+      difficulties.</p>
+    </div>
+    <div class="line" id="2">
+      Six in the second place means:
+      <p>Difficulties pile up. Horse and wagon part. He is not a
+      robber; He wants to woo when the time comes. The maiden is
+      chaste, She does not pledge herself. Ten years--then she
+      pledges herself.</p>
+      <p>We find ourselves beset by difficulties and hindrances.
+      Suddenly there is aturn of affairs, as if someone were coming
+      up with a horse and wagon andunhitching them. This event
+      comes so unexpectedly that we assume the newcomerto be a
+      robber. Gradually it becomes clear that he has no evil
+      intentions butseeks to be friendly and to offer help. But
+      this offer is not to be accepted,because it does not come
+      from the right quarter. We must wait until the timeis
+      fulfilled; ten years is a fulfilled cycle of time. Then
+      normal conditionsreturn of themselves, and we can join forces
+      with the friend intended for us.Using the image of a
+      betrothed girl who remains true to her lover in face ofgrave
+      conflicts, the hexagram gives counsel for a special
+      situation. When intimes of difficulty a hindrance is
+      encountered and unexpected relief isoffered from a source
+      unrelated to us, we must be careful and not take
+      uponourselves any obligations entailed by such help;
+      otherwise our freedom ofdecision is impaired. If we bide our
+      time, things will quiet down again, andwe shall attain what
+      we have hoped for.</p>
+    </div>
+    <div class="line" id="3">
+      Six in the third place means:
+      <p>Whoever hunts deer without the forester Only loses his way
+      in the forest. The superior man understands the signs of the
+      time And prefers to desist. To go on brings humiliation.</p>
+      <p>If a man tries to hunt in a strange forest and has no
+      guide, he loses hisway. When he finds himself in difficulties
+      he must not try to steal out ofthem unthinkingly and without
+      guidance. Fate cannot be duped; prematureeffort, without the
+      necessary guidance, ends in failure and disgrace.Therefore
+      the superior man, discerning the seeds of coming events,
+      prefers torenounce a wish rather than to provoke failure and
+      humiliation by trying toforce its fulfillment.</p>
+    </div>
+    <div class="line" id="4">
+      Six in the fourth place means:
+      <p>Horse and wagon part. Strive for union. To go brings good
+      fortune. Everything acts to further.</p>
+      <p>We are in a situation in which it is our duty to act, but
+      we lack sufficientpower. However, an opportunity to make
+      connections offers itself. It must beseized. Neither false
+      pride nor false reserve should deter us. Bringingoneself to
+      take the first step, even when it involves a certain degree
+      ofself-abnegation, is a sign of inner clarity. To accept help
+      in a difficultsituation is not a disgrace. If the right
+      helper is found, all goes well.</p>
+    </div>
+    <div class="line" id="5">
+      Nine in the fifth place means:
+      <p>Difficulties in blessing. A little perseverance brings
+      good fortune. Great perseverance brings misfortune.</p>
+      <p>An individual is in a position in which he cannot so
+      express his goodintentions that they will actually take shape
+      and be understood. Other peopleinterpose and distort
+      everything he does. He should then be cautious andproceed
+      step by step. He must not try to force the consummation of a
+      greatundertaking, because success is possible only when
+      general confidence alreadyprevails. It is only through
+      faithful and conscientious work, unobtrusivelycarried on,
+      that the situation gradually clears up and the
+      hindrancedisappears.</p>
+    </div>
+    <div class="line" id="6">
+      Six at the top means:
+      <p>Horse and wagon part. Bloody tears flow.</p>
+      <p>The difficulties at the beginning are too great for some
+      persons. They getstuck and never find their way out; they
+      fold their hands and give up thestruggle. Such resignation is
+      the saddest of all things. Therefore Confuciussays of this
+      line: "Bloody tears flow: one should not persist in
+      this."</p>
+    </div>
+  </div>
+</body>
+</html>
