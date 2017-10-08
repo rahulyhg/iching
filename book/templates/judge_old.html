@@ -1,0 +1,24 @@
+function judge_old($hex,$col,$fh) {
+        fwrite($fh,"*The Judgment: \n");
+        fwrite($fh,$hex[0][$col]."\n\n");    
+}
+function judge_exp($hex,$col,$fh) {
+        fwrite($fh,"*An Explanation of the Judgment: \n");
+        fwrite($fh,$hex[0][$col]."\n\n");    
+}
+function _dir($hex,$col,$fh) {
+        //fwrite($fh,"".$col.": ");
+        fwrite($fh,"This is an *".$hex[0][$col]." hexagram. \n\n");    
+}
+function lineitem($hex,$col,$fh) {
+        fwrite($fh,"*".$col.": ");
+        fwrite($fh,"***".$hex[0][$col]."*** \n\n");    
+}
+function tri_upper($hex,$col,$fh) {
+//        fwrite($fh,"".$col.": ");
+        fwrite($fh,"*"."Upper trigram: ".$hex[0][$col]."\n\n");    
+}
+function tri_lower($hex,$col,$fh) {
+//        fwrite($fh,"".$col.": ");
+        fwrite($fh,"*"."Lower trigram: ".$hex[0][$col]."\n\n");    
+}
