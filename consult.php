@@ -13,6 +13,7 @@
         <script type="text/javascript" src="consult.js"></script>
 
     </head>
+
     <body>
         <?php
         require "vendor/autoload.php";
