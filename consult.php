@@ -15,7 +15,6 @@
     </head>
     <body>
         <?php
-        session_start();
         require "vendor/autoload.php";
         require "functions.php";
         mb_internal_encoding("UTF-8");
