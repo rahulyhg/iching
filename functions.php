@@ -108,7 +108,7 @@ function tobin($ary) {
 }
 
 function getData($sql) {
-    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'root', '1q2w3e');
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     //$sql = "SELECT * from hexagrams where binary = '$bstr'";
     $sth = $dbh->prepare($sql);
     $sth->execute();
@@ -205,13 +205,13 @@ function tossit() {
 }
 
 function sql($vars) {
-    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'root', '1q2w3e');
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "UPDATE hexagrams set " . $vars['name'] . " = :val WHERE ID = " . $vars['i'];
     $sth = $dbh->prepare($sql);
     $sth->execute(array(":val" => $vars['val']));
 }
 function getAllHexes() {
-    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'root', '1q2w3e');
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT * from hexagrams";
     $sth = $dbh->prepare($sql);
     $sth->execute();
@@ -246,7 +246,7 @@ function outProc1($a,$j) {
     echo "<a href='?consult.php?hex=".$a[$j]['pseq']."'><img class='heximg' src='images/hex/hexagram".f($a[$j]['pseq']).".png'>".$a[$j]['pseq']." [b:".$a[$j]['bseq']."] / ".$a[$j]['title']." / ".$a[$j]['trans']."</a>";        
 }
 function getHex($h) {
-    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'root', '1q2w3e');
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT * from hexagrams where pseq=${h}";
     $sth = $dbh->prepare($sql);
     $sth->execute();
@@ -255,7 +255,7 @@ function getHex($h) {
 }
 
 function getBin($h) {
-    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'root', '1q2w3e');
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT * from hexagrams where bseq=${h}";
 //    var_dump($sql);
     $sth = $dbh->prepare($sql);
@@ -265,7 +265,7 @@ function getBin($h) {
 }
 
 function cbin2hex($b) {
-    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'root', '1q2w3e');
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT pseq from hexagrams where bseq=${b}";
     $sth = $dbh->prepare($sql);
 //    var_dump($sql);
@@ -275,7 +275,7 @@ function cbin2hex($b) {
 }
 
 function chex2bin($h) {
-    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'root', '1q2w3e');
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT bseq from hexagrams where pseq=${h}";
 //    var_dump($sql);
     $sth = $dbh->prepare($sql);
@@ -296,7 +296,7 @@ EOX;
     echo $debugBlock;
 }
 function getTransByBin($bin) {
-    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'root', '1q2w3e');
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT trans from hexagrams where bseq=${bin}";
     $sth = $dbh->prepare($sql);
     $sth->execute();
