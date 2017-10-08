@@ -1,10 +1,10 @@
-{% include "git+https://github.com/baardev/iching_book.git/[@id].md" %}
+
 
 ![](/assets/hexagram[@id].png)
 
 # <span style="color:gray">[@trans] / [@title]</span>
 Hexagram: [@pseq]
-Binary Sequence: [@bseq] ('[@binary])
+Binary Sequence: [@bseq] ([@binary])
 Direction: [@dir]
 
 * Upper trigram: [@tri_upper]
