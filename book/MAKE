@@ -1,5 +1,0 @@
-php ./makemds.php
-cd iching_book
-cp 01.md 01-creative.md
-git pull
-./UP
