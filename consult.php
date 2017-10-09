@@ -25,7 +25,11 @@
 
 
         <div class="container leftCol">
-            <div class="btn btn-warning"><a href="consult.php">RESET</a></div><p>
+            <span class="btn btn-warning"><a href="consult.php">RESET</a></span>
+            <span class="btn btn-toolbar"><a href="/book/ichingbook/_book/">DOCUMENTAION</a></span>
+            <p>
+
+
                 <?php
 //slogout($_REQUEST);
 
