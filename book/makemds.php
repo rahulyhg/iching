@@ -73,7 +73,7 @@ foreach ($ids as $id) {
      * Outputs the page with the user's page.
      */
     $fpage =  $layout->output();
-    $f = "iching_book/The Hexagrams/" . f($id) . "-".$hex[0]['filename'].".md";
+    $f = "ichingbook/hexagrams/" . f($id) . "-".$hex[0]['filename'].".md";
 //    $f = "iching_book/" . f($id) .".md";
     echo "writing [${f}]\n";
     file_put_contents($f,$fpage);
