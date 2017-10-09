@@ -1,5 +1,0 @@
-php ./makemds.php
-cd iching_book
-rm -rf _book
-gitbook build
-#git commit -a -m "local build"
