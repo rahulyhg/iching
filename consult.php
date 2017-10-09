@@ -26,7 +26,7 @@
 
         <div class="container leftCol">
             <span class="btn btn-warning"><a href="consult.php">RESET</a></span>
-            <span class="btn btn-danger"><a href="/book/ichingbook/_book/">DOCUMENTATION</a></span>
+            <span class="btn btn-danger"><a style="color:white;font-weight: bold;" href="/book/ichingbook/_book/">DOCUMENTATION</a></span>
             <p>
 
 
