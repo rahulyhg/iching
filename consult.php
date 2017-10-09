@@ -1,28 +1,18 @@
-<html>
-    <head>
 
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="vendor/twitter/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="consult.css">
-        <link type="text/css" rel="stylesheet" href="vendor/qtip/jquery.qtip.css" />
-
-        <script src="vendor/components/jquery/jquery.min.js"></script>
-        <script src="vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>    
-        <script type="text/javascript" src="vendor/qtip/jquery.qtip.js"></script>
-        <script type="text/javascript" src="consult.js"></script>
-
-    </head>
-
-    <body>
         <?php
+
+        require "elements/header_top.php";
+        require "elements/header.php";
         require "vendor/autoload.php";
         require "functions.php";
         mb_internal_encoding("UTF-8");
         mb_regex_encoding("UTF-8");
         $a = null;
         ?>
-
+	<section>
+		<strong>Demonstration of a simple page layout using HTML5 tags: header, nav, section, main, article, aside, footer, address.</strong>
+	</section>
+	<section id="pageContent">
 
         <div class="container leftCol">
             <span class="btn btn-warning"><a href="consult.php">RESET</a></span>
@@ -242,19 +232,9 @@
 
                 </div>
 
-
-            </div>    
-            <div class="container rightCol" id="debug">
-            </div>    
-
-
-
-        </body>
-    </html>
-    <?php
-}
-?>
-
+            	</section>
+    
 <?php
-//var_dump($ary);
-
+        require "elements/header_top.php";
+        require "elements/header.php";
+?>
