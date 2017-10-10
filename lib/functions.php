@@ -3,6 +3,7 @@
 function getToss() {
     $tossed = tossit();
     
+ 
     $delta = array(0, 0, 0, 0, 0, 0);
     
     // if we are using static number we have to do it diffenely
@@ -13,8 +14,6 @@ function getToss() {
         $newTossed = str_split(sprintf("%06d",decbin(chex2bin($_REQUEST['f_tossed']))));
         $newFinal = str_split(sprintf("%06d",decbin(chex2bin($_REQUEST['f_final']))));
     
-        
- 
         for ($i = 0; $i < 6; $i++) {
             if (($newTossed[$i] != $newFinal[$i])) {
                 if ($newFinal[$i] == 1) {
@@ -75,7 +74,7 @@ function getToss() {
 $sql=<<<EOX
     SELECT 
         fix
-        `comment`
+        ,`comment`
         ,filename
         ,pseq
         ,bseq
@@ -84,8 +83,7 @@ $sql=<<<EOX
         ,trans
         ,trigrams
                ,(SELECT distinct concat(
-            ' TITLE: **',trigrams.title,'**',
-            ' TRANS: **',trigrams.trans,'**',
+            ' TITLE: **',trigrams.title,' / ',trigrams.trans,'**',
             ' ELEMENT: **',trigrams.t_element,'**',
             ' POLARITY: **',trigrams.polarity,'**',
             ' PLANET: **',trigrams.planet,'**'
@@ -135,12 +133,17 @@ FROM hexagrams
 EOX;
 
 //    $sql = "SELECT * FROM hexagrams WHERE hexagrams.`binary` =  '$tossed_bin'";
-    $sql = $sql . "'$tossed_bin'";
-    $tossedData = getData($sql);
+
+    $query = $sql . "'$tossed_bin'";
+    $tossedData = getData($query);
 
 //    $sql = "SELECT * FROM hexagrams WHERE hexagrams.`binary` =  '$final_bin'";
-    $sql = $sql . "'$final_bin'";
-    $finalData = getData($sql);
+
+    $query = $sql . "'$final_bin'";
+    $finalData = getData($query);
+
+    
+
     return(array('tossed' => $tossedData, 'delta' => $delta, 'final' => $finalData));
 }
 function getTri() {

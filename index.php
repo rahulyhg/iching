@@ -85,7 +85,10 @@ $a = null;
         if (isset($t['fix'])) {?>
             <div class="content btn btn-danger">FIX :<?= $t['fix'] ?></div>
         <?php } ?>
-        <div><img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png"></div>    
+        <div>
+            <img class="heximg select" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
+            <img class="heximg" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
+        </div>    
         <div class="tossed">
 
             <div class="label">Hex # [bin] / Title / Translation</div>
@@ -141,7 +144,10 @@ $a = null;
         <?php if (isset($f['fix'])) {?>
             <div class="content btn btn-danger">FIX :<?= $f['fix'] ?></div>
         <?php } ?>
-        <div><img class="heximg" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png"></div>    
+        <div>
+            <img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
+            <img class="heximg select" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
+        </div>    
         <div class="final">
             <div class="label">Hex # [bin]/ Title / Translation</div>
             <div class="content" id="pseq"><?= $f['pseq'] ?> [b:<?= $f['bseq'] ?>]/ <?= $f['title'] ?>/<a target="blank_" href="show.php?hex=<?= (isset($f['pseq']) ? $f['pseq'] : 0) ?>"><?= $f['trans'] ?></a></div>
