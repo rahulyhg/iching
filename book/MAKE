@@ -6,8 +6,8 @@ php ./makemds.php
 #------------------------
 cd ichingbook
 git pull
-rm -rf The\ Hexagrams
-rm -rf _book
+#rm -rf The\ Hexagrams
+#m -rf _book
 
 #add the subdir we just made
 #------------------------

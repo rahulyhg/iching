@@ -1,7 +1,7 @@
 
 <?php
 
-require "../functions.php";
+require "../lib/functions.php";
 include("templates/template.class.php");
 $type = 'pseq';
 $ids = getids($type);

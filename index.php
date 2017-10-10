@@ -75,11 +75,14 @@ $a = null;
         $f = $ary['final'][0];
         $d = $ary['delta'];
 
+        // remove whitespces and extention from question to use as filename
         $fn = "questions/" . mb_ereg_replace(" ", "_", $_REQUEST['question'] . ".txt");
         $json = json_encode(array(array('question' => $_REQUEST['question']), $t, $d, $f), JSON_PRETTY_PRINT);
         file_put_contents($fn, $json);
         ?>
-        <?php if (isset($t['fix'])) {?>
+        <?php 
+        // FIX is special column for editing notes
+        if (isset($t['fix'])) {?>
             <div class="content btn btn-danger">FIX :<?= $t['fix'] ?></div>
         <?php } ?>
         <div><img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png"></div>    

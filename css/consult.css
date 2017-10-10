@@ -95,9 +95,9 @@ address {
     color:blue;
 }
 .label {
-    font-size:8pt;
-    font-weight: bold;
-    color:black;
+    font-size:8pt !important;
+    font-weight: bold  !important;
+    color:black  !important;
 }
 .coin {
     width:50px;

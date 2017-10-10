@@ -72,16 +72,82 @@ function getToss() {
     $tossed_bin = tobin($tossed);
     $final_bin = tobin($final);
     
-    
-    
-    
-    $sql = "SELECT * FROM hexagrams WHERE hexagrams.`binary` =  '$tossed_bin'";
+$sql=<<<EOX
+    SELECT 
+        fix
+        `comment`
+        ,filename
+        ,pseq
+        ,bseq
+        ,`binary`
+        ,title
+        ,trans
+        ,trigrams
+               ,(SELECT distinct concat(
+            ' TITLE: **',trigrams.title,'**',
+            ' TRANS: **',trigrams.trans,'**',
+            ' ELEMENT: **',trigrams.t_element,'**',
+            ' POLARITY: **',trigrams.polarity,'**',
+            ' PLANET: **',trigrams.planet,'**'
+            )   FROM
+            hexagrams
+            Inner Join trigrams ON hexagrams.tri_upper_bin = trigrams.bseq 
+            WHERE hexagrams.binary = '${tossed_bin}' limit 1
+            ) as tri_upper
+        ,(SELECT distinct concat(
+            ' TITLE: **',trigrams.title,'**',
+            ' TRANS: **',trigrams.trans,'**',
+            ' ELEMENT: **',trigrams.t_element,'**',
+            ' POLARITY: **',trigrams.polarity,'**',
+            ' PLANET: **',trigrams.planet,'**'
+            )   FROM
+            hexagrams
+            Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
+            WHERE hexagrams.binary = '${tossed_bin}' limit 1
+         ) as tri_lower
+        ,dir
+        ,explanation
+        ,judge_old
+        ,judge_exp
+        ,image_old
+        ,image_exp
+        ,line_1
+        ,line_1_org
+        ,line_1_exp
+        ,line_2
+        ,line_2_org
+        ,line_2_exp
+        ,line_3
+        ,line_3_org
+        ,line_3_exp
+        ,line_4
+        ,line_4_org
+        ,line_4_exp
+        ,line_5
+        ,line_5_org
+        ,line_5_exp
+        ,line_6
+        ,line_6_org
+        ,line_6_exp
+
+FROM hexagrams
+    WHERE hexagrams.`binary` =         
+EOX;
+
+//    $sql = "SELECT * FROM hexagrams WHERE hexagrams.`binary` =  '$tossed_bin'";
+    $sql = $sql . "'$tossed_bin'";
     $tossedData = getData($sql);
 
-    $sql = "SELECT * FROM hexagrams WHERE hexagrams.`binary` =  '$final_bin'";
+//    $sql = "SELECT * FROM hexagrams WHERE hexagrams.`binary` =  '$final_bin'";
+    $sql = $sql . "'$final_bin'";
     $finalData = getData($sql);
-
     return(array('tossed' => $tossedData, 'delta' => $delta, 'final' => $finalData));
+}
+function getTri() {
+    $sql = "SELECT * FROM trigrams";
+    $d = getData($sql);
+
+    return($d);
 }
 
 function getFinal($tossed) {
