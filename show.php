@@ -32,7 +32,7 @@ require "lib/functions.php";
         }
         if ($_REQUEST['submit'] == "Bin >") {
             $binNum++;
-            $binNum = ($hexNum > 63 ? 0 : $binNum);
+            $binNum = ($binNum > 63 ? 0 : $binNum);
             $hexNum = cbin2Hex($binNum);
             $usebin = 1;
         }
@@ -45,22 +45,23 @@ require "lib/functions.php";
 
         if (isset($_REQUEST['gotohex'])) {
             if ($_REQUEST['submit'] == "Go To Hex") {
-                if ($_REQUEST['gotohex'] != $hexNum) {
+//                if ($_REQUEST['gotohex'] != $hexNum) {
                     $hexNum = ($_REQUEST['gotohex']);
+                    $binNum = chex2bin($hexNum);
                     $usebin = 0;
-                }
+//                }
             }
         }
 
         if (isset($_REQUEST['gotobin'])) {
             if ($_REQUEST['submit'] == "Go To Bin") {
-                if ($_REQUEST['gotobin'] != $binNum) {
+//                if ($_REQUEST['gotobin'] != $binNum) {
                     $binNum = ($_REQUEST['gotobin']);
+                    $hexNum = cbin2hex($binNum);
                     $usebin = 1;
-                }
+//                }
             }
         }
-       // var_dump($_REQUEST);
         ?>
         <form method="POST" action="">
         <span class="question text_mdcaps">Scan the hexagrams</span>
@@ -92,76 +93,29 @@ require "lib/functions.php";
         }
 
         $t = $ary[0];
-            logout($t);
-//    var_dump($json);
-        ?>
-                <?php if (isset($t['fix'])) {?>
-                   <div class="content btn btn-danger">FIX :<?= $t['fix'] ?></div>
-                <?php } ?>
-        <div><img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/small/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png"></div>    
-        <div class="tossed">
+        
+        if (isset($t['fix'])) {?>
+            <div class="content btn btn-danger">FIX :<?= $t['fix'] ?></div>
+        <?php } ?>
+ 
+                   
+<?php
+#book-search-results > div.search-noresults > section
 
-            <div class="label">Hex #</div>
-            <div class="content" id="pseq"><?= $t['pseq'] ?></div>
+use PHPHtmlParser\Dom;
+$dom = new Dom;
 
-            <div class="label">Bin #</div>
-            <div class="content" id="bseq"><?= $t['bseq'] ?></div>
+$filename = "book/ichingbook/_book/hexagrams/".f($hexNum)."-".$t['filename'].".html";
+//var_dump($filename);
 
-            <div class="label">Title</div>
-            <div class="content" id="title"><?= $t['title'] ?></div>
+$dom->load(file_get_contents($filename));
+$c = $dom->find("#book-search-results > div.search-noresults > section");
 
-            <div class="label">Translation</div>
-            <div class="content" id="trans"><?= $t['trans'] ?></div>
+echo $c->innerHtml();
 
-            <div class="label">The Upper Trigram</div>
-            <div class="content" id="tri_upper"><?= $t['tri_upper'] ?></div>
+?>                   
 
-            <div class="label">The Lower Trigram</div>
-            <div class="content" id="tri_lower"><?= $t['tri_lower'] ?></div>
-
-            <div class="label">Explanation of the Trigrams</div>
-            <div class="content" id="explanation"><?= $t['explanation'] ?></div>
-
-            <div class="label">The Judgment</div>
-            <div class="content" id="judge_old"><?= $t['judge_old'] ?></div>
-            
-            <div class="label">Comments</div>
-            <div class="content comment" id="comment"><?= $t['comment'] ?></div>
-            
-            <div class="label">Commentary an Explanation of the Judgement</div>
-            <div class="content" id="judge_exp"><?= $t['judge_exp'] ?></div>
-
-            <div class="label">The Ancient Assocated Image</div>
-            <div class="content" id="image_old"><?= $t['image_exp'] ?></div>
-
-            <div class="label">Commentary and Explanation of the Image</div>
-            <div class="content" id="image_exp"><?= $t['image_exp'] ?></div>
-
-        </div>
-        <?php
-        for ($i = 0; $i < 6; $i++) {
-            $j = $i + 1;
-            ?>
-            <div class="lines">
-                <div class="label">Line <?= $j ?></div>
-                <div class="content line_title" id="line_<?= $j ?>"><?= $t['line_' . $j] ?></div>
-
-                <div class="label">Original Text</div>
-                <div class="content line_org" id="line_<?= $j ?>_org"><?= $t['line_' . $j . '_org'] ?></div>
-
-                <div class="label">Expanded Text</div>
-                <div class="content line_exp" id="line_<?= $j ?>_exp"><?= $t['line_' . $j . '_exp'] ?></div>
-            </div>
-
-
-
-            <?php
-        }
-        ?>
-        </div>
-        </div>    
-    <div class="container rightCol" id="debug">
-</div>  
+        </div>  
 <?php
 require "elements/footer.php";
 ?>

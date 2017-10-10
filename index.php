@@ -6,6 +6,7 @@ require "lib/functions.php";
 
 $a = null;
 ?>
+
 <section>
     <!-- div class="content"><strong> The Dharma Clock Project's I Ching page</strong></div-->
 </section>
@@ -99,8 +100,11 @@ $a = null;
             <div class="label">The Judgment</div>
             <div class="content" id="judge_old"><?= $t['judge_old'] ?></div>
 
-            <div class="label">Comments</div>
-            <div class="content comment" id="comment"><?= $t['comment'] ?></div>
+            <?php 
+            if (isset($t['comment'])) { ?>
+                <div class="label">Comments</div>
+                <div class="content comment" id="comment"><?= $t['comment'] ?></div>
+            <?php } ?>
 
             <div class="label">Commentary an Explanation of the Judgement</div>
             <div class="content" id="judge_exp"><?= $t['judge_exp'] ?></div>
