@@ -122,60 +122,45 @@ function tossit() {
         $r = array(6, 7, 8, 9, 6, 7);
         return($r);
     }    
-    if (isset($_REQUEST['testmode'])) {
-        $r = array(rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9));
-        //var_dump($r);
-        return($r);
+    if (isset($_REQUEST['mode'])) {
+        if ($_REQUEST['mode'] == "testmode") {
+            $r = array(rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9));
+            //var_dump($r);
+            return($r);
+        }    
     }    
-    
 
-    $throw = array(null, null, null, null, null, null);
-    for ($i = 0; $i < 6; $i++) {
-        $id = uniqid();
-        $f = "./throw.sh ${id} ${i}";
-        $run = trim(system($f));
-        $flip = file_get_contents("id/${id}"); 
-        ?>
-<!--
-<style>
-        .places {
-            border: 1px solid red;
-            min-width:160px;
-            min-height:52px;
-            max-width:160px;
-            max-height:52px;
+    if (isset($_REQUEST['mode'])) {
+        if ($_REQUEST['mode'] == "random.org") {    
+            $throw = array(null, null, null, null, null, null);
+            for ($i = 0; $i < 6; $i++) {
+                $id = uniqid();
+                $f = "./throw.sh ${id} ${i}";
+                $run = trim(system($f));
+                $flip = file_get_contents("id/${id}"); 
+
+
+                switch ($flip) {
+                    case 0:
+                        $throw[$i] = 6;
+                        break;
+                    case 1:
+                        $throw[$i] = 7;
+                        break;
+                    case 2:
+                        $throw[$i] = 8;
+                        break;
+                    case 3:
+                        $throw[$i] = 9;
+                        break;
+                }
+                sleep(5);
+            }
         }
-    </style>
-    <div class="places" id="p6"></div>
-    <div class="places" id="p5"></div>
-    <div class="places" id="p4"></div>
-    <div class="places" id="p3"></div>
-    <div class="places" id="p2"></div>
-    <div class="places" id="p1"></div>
--->
-        <?php
-        switch ($flip) {
-            case 0:
-                $throw[$i] = 6;
-//                echo "<div><img class='coin' src='images/reverse.jpg'><img class='coin' src='images/reverse.jpg'><img class='coin' src='images/reverse.jpg'></div>";
-                break;
-            case 1:
-                $throw[$i] = 7;
-//                echo "<div><img class='coin' src='images/obverse.jpg'><img class='coin' src='images/reverse.jpg'><img class='coin' src='images/reverse.jpg'></div>";
-                break;
-            case 2:
-                $throw[$i] = 8;
-//                echo "<div><img class='coin' src='images/obverse.jpg'><img class='coin' src='images/obverse.jpg'><img class='coin' src='images/reverse.jpg'></div>";
-                break;
-            case 3:
-                $throw[$i] = 9;
-//                echo "<div><img class='coin' src='images/obverse.jpg'><img class='coin' src='images/obverse.jpg'><img class='coin' src='images/obverse.jpg'></div>";
-                break;
-        }
-        sleep(5);
+        return($throw);
     }
-    //var_dump($throw);
-    return($throw);
+}
+
     /*
       //   Find a quiet place, and take a few moments to relax and meditate on your query. Concentrate on your question or the situation for which you seek guidance.
       //Taking the 50 sticks in your hand, remove one stick and set it aside.
@@ -202,7 +187,6 @@ function tossit() {
       //Take all the sticks from your left hand and set them aside. Gather the remaining sticks and divide them into two bunches.
       $remaining = $sticks - $left_hand;
      */
-}
 
 function sql($vars) {
     $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');

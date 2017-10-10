@@ -1,53 +1,42 @@
-<html>
-    <head>
+<?php
 
+require "elements/header.php";
+require "vendor/autoload.php";
+require "lib/functions.php";
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="vendor/twitter/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="consult.css">
+?>
 
-        <!-- jQuery library -->
-        <script src="vendor/components/jquery/jquery.min.js"></script>
+<section>
+    <!-- div class="content"><strong> The Dharma Clock Project's I Ching page</strong></div-->
+</section>
+<section id="pageContent">
 
-        <!-- Latest compiled JavaScript -->
-        <script src="vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>    
-
-    </head>
-    <body>
-        <div class="container leftCol">
-        <?php
-        require "vendor/autoload.php";
-        require "functions.php";
-        mb_internal_encoding("UTF-8");
-        mb_regex_encoding("UTF-8");
-        ?>
-
-
+    <span class="floatingcontainer">
         <?php
         $usebin = 0;
 
         $hexNum = ($_REQUEST['hex'] ? $_REQUEST['hex'] : 1);
         $binNum = ($_REQUEST['bin'] ? $_REQUEST['bin'] : 0);
 
-        if ($_REQUEST['submit'] == "Next Hex") {
+        if ($_REQUEST['submit'] == "Hex >") {
             $hexNum++;
             $hexNum = ($hexNum > 64 ? 1 : $hexNum);
             $binNum = chex2bin($hexNum);
             $usebin = 0;
         }
-        if ($_REQUEST['submit'] == "Prev Hex") {
+        if ($_REQUEST['submit'] == "< Hex") {
             $hexNum--;
             $hexNum = ($hexNum < 1 ? 64 : $hexNum);
             $binNum = chex2bin($hexNum);
             $usebin = 0;
         }
-        if ($_REQUEST['submit'] == "Next Bin") {
+        if ($_REQUEST['submit'] == "Bin >") {
             $binNum++;
             $binNum = ($hexNum > 63 ? 0 : $binNum);
             $hexNum = cbin2Hex($binNum);
             $usebin = 1;
         }
-        if ($_REQUEST['submit'] == "Prev Bin") {
+        if ($_REQUEST['submit'] == "< Bin") {
             $binNum--;
             $binNum = ($binNum < 0 ? 63 : $binNum);
             $hexNum = cbin2Hex($binNum);
@@ -71,25 +60,28 @@
                 }
             }
         }
+       // var_dump($_REQUEST);
         ?>
-        <div class="question">Scan the hexagrams</div>
-        <div ><a href="consult.php">CONSULT</a></div>
-
         <form method="POST" action="">
-            <input type="submit" name="submit" value="Prev Hex">
-            <input type="submit" name="submit" value="Next Hex">
-            <input type="submit" name="submit" value="Prev Bin">
-            <input type="submit" name="submit" value="Next Bin"><br>
+        <span class="question text_mdcaps">Scan the hexagrams</span>
+        <span class="text_md-caps btn btn-danger" ><a style="color:white" target="blank_" href="/index.php">CONSULT</a></span>
+            <input class="text_md-caps btn btn-primary" type="submit" name="submit" value="< Hex">
+            <input class="text_md-caps btn btn-success" type="submit" name="submit" value="Hex >">
+            <input class="text_md-caps btn btn-primary" type="submit" name="submit" value="< Bin">
+            <input class="text_md-caps btn btn-success" type="submit" name="submit" value="Bin >">
 
             <input type="hidden" name="hex" value="<?= $hexNum ?>">
-            <input type="text" name="gotohex" value="<?= $hexNum ?>">
-            <input type="submit" name="submit" value="Go To Hex"><br>
+            <input type="text" class = "doublenum"  name="gotohex" value="<?= $hexNum ?>">
+            <input class="text_mdcaps btn btn-info" style="color:black" type="submit" name="submit" value="Go To Hex">
 
             <input type="hidden" name="bin" value="<?= $binNum ?>">
-            <input type="text" name="gotobin" value="<?= $binNum ?>">
-            <input type="submit" name="submit" value="Go To Bin">
+            <input type="text" class = "doublenum" name="gotobin" value="<?= $binNum ?>">
+            <input class="text_mdcaps btn btn-info" style="color:black" type="submit" name="submit" value="Go To Bin">
 
         </form>
+        </span>
+        <div class="container">
+
         <?php
         $ary = null;
         if ($usebin == 1) {
@@ -106,7 +98,7 @@
                 <?php if (isset($t['fix'])) {?>
                    <div class="content btn btn-danger">FIX :<?= $t['fix'] ?></div>
                 <?php } ?>
-        <div><img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png"></div>    
+        <div><img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/small/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png"></div>    
         <div class="tossed">
 
             <div class="label">Hex #</div>
@@ -170,7 +162,7 @@
         </div>    
     <div class="container rightCol" id="debug">
 </div>  
-    </body>
-</html>
 <?php
+require "elements/footer.php";
+?>
 
