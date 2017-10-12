@@ -4,5 +4,5 @@
 		</address>
 	</footer>
 <?php
-require "elements/footer_bottom.php";
+require get_cfg_var("iching_root")."/elements/footer_bottom.php";
 ?>

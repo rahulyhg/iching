@@ -1,0 +1,40 @@
+.box1 {
+    max-width:90px;
+    min-width:90px;
+    max-height:116px;
+    min-height:116px;
+    border: 0px solid red;
+}    
+.box2 {
+    max-width:90px;
+    min-width:90px;
+    max-height:116px;
+    min-height:116px;
+    border: 0px solid red;
+}    
+.line1, .line2, .line3, .line4, .line5, .line6 {
+    width:96px;
+}
+.part1,.part3 {
+    margin-bottom:5px;
+    max-width:40px;
+    min-width:40px;
+    max-height:15px;
+    min-height:15px;
+    border: 0px solid black;
+    float:left;     
+    background-color: black;
+}
+.part2 {
+    margin-bottom:5px;
+    max-width:10px;
+    min-width:10px;
+    max-height:15px;
+    min-height:15px;
+    border: 0px solid green;
+    float:left;        
+}
+.clear {
+    clear:both;
+}
+
