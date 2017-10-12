@@ -1,9 +1,12 @@
 
 <?php
-require "elements/header.php";
-require "vendor/autoload.php";
-require "lib/functions.php";
+require get_cfg_var("iching_root")."/elements/header.php";
+require get_cfg_var("iching_root")."/vendor/autoload.php";
+require get_cfg_var("iching_root")."/conf/config.php";
+require get_cfg_var("iching_root")."/lib/init.php";
+require get_cfg_var("iching_root")."/lib/functions.php";
 
+//var_dump($_dbh);
 $a = null;
 ?>
 
@@ -24,7 +27,7 @@ $a = null;
     <!-- ------------------------------------------------------------>
     
     <?php
-//    var_dump($_REQUEST);
+    //var_dump($_REQUEST);
     if (!isset($_REQUEST['flipped'])) { ?>
         <div class="qbox">
 
@@ -32,10 +35,11 @@ $a = null;
             <input type="hidden" name="flipped" value="1">
             <div class="row2">
                 <input id="qfield" type="text" name="question" placeholder="question" value=""></p>
-                <a id="testtip" href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode"  id="testmode"  value="testmode" > <span class="text_mdcaps" id="test-modemsg">test-mode</span></p>
-                <a id="randomtip" href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="random.org" value="random.org" checked > <span class="text_mdcaps" id="random.orgmsg">random.org</span></p>
-                <a id="entropytip" href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="entropy" value="entropy"  > <span class="text_mdcaps" id="entropymsg">entropy</span></p>
-                <a id="r-decaytip" href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="r-decay" value="r-decay"  > <span class="text_mdcaps" id="r-decaymsg">r-decay</span></p>
+                <!-- a id="testtip" href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode"  id="testmode"  value="testmode" > <span class="text_mdcaps" id="test-modemsg">test-mode</span></p -->
+                <a id="plumtip"     href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="plum"         value="plum"       checked > <span class="text_mdcaps" id="plummsg">Modern Plum</span>    </p>
+                <a id="randomtip"   href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="random.org"   value="random.org"          > <span class="text_mdcaps" id="random.orgmsg">random.org</span></p>
+                <a id="entropytip"  href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="entropy"      value="entropy"             > <span class="text_mdcaps" id="entropymsg">entropy</span>      </p>
+                <a id="r-decaytip"  href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="r-decay"      value="r-decay"             > <span class="text_mdcaps" id="r-decaymsg">r-decay</span>      </p>
 
                 <span class="text_mdcaps" id="baynesmsg">Wilhelm/Baynes</span> <input type="radio" name="trans" id="baynes" value="baynes" checked > <a id="baynestip" href="#"><img src="images/g-qmark.png"></a></p> 
                 <span class="text_mdcaps" id="aculturalmsg">Acultural</span> <input type="radio" name="trans" id="acultural" value="acultural"  > <a id="aculturaltip" href="#"><img src="images/g-qmark.png"></a></p>
@@ -65,9 +69,9 @@ $a = null;
         //    $ary['question']=$_REQUEST['question'];
         // get all data for local access
 
-        GLOBAL $a;
-        $a = getAllHexes();
-        $_SESSION['allhexes'] = $a;
+//        GLOBAL $a;
+        $a = $GLOBALS['dbh']->getAllHexes();
+//        $_SESSION['allhexes'] = $a;
 
         //    var_dump($json);
 
@@ -86,9 +90,15 @@ $a = null;
             <div class="content btn btn-danger">FIX :<?= $t['fix'] ?></div>
         <?php } ?>
         <div>
+            
+        <?php 
+            echo makeHex(str_split($t['binary']),$d);
+        ?>
+        </div>    
+        <!-- div>
             <img class="heximg select" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
             <img class="heximg" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
-        </div>    
+        </div -->    
         <div class="tossed">
 
             <div class="label">Hex # [bin] / Title / Translation</div>
@@ -134,7 +144,7 @@ $a = null;
                     <div class="label">Original Text</div>
                     <div class="content line_org" id="line_<?= $j ?>_org"><?= $t['line_' . $j . '_org'] ?></div>
 
-                    <div class="label">Exrequire "elements/header_top.php";panded Text</div>
+                    <div class="label">Expanded Text</div>
                     <div class="content line_exp" id="line_<?= $j ?>_exp"><?= $t['line_' . $j . '_exp'] ?></div>
                 </div>
                 <?php
@@ -203,7 +213,7 @@ $a = null;
 
             <?php
             $h_receptive = 2;
-            $b_receptive = chex2bin($h_receptive);
+            $b_receptive = $GLOBALS['dbh']->chex2bin($h_receptive);
             $toReceptive = c_sub($fi, $b_receptive);
             echo fromtoprint($b_receptive, $h_receptive, $f);
             //                    var_dump($toReceptive);
@@ -213,7 +223,7 @@ $a = null;
 
             <?php
             $h_peace = 11;
-            $b_peace = chex2bin($h_peace);
+            $b_peace = $GLOBALS['dbh']->chex2bin($h_peace);
             $toPeace = c_sub($fi, $b_peace);
             echo fromtoprint($b_peace, $h_peace, $f);
             //                    var_dump($toPeace);
@@ -222,7 +232,7 @@ $a = null;
             <hr>
             <?php
             $h_completion = 63;
-            $b_completion = chex2bin($h_completion);
+            $b_completion = $GLOBALS['dbh']->chex2bin($h_completion);
             $toCompletion = c_sub($fi, $b_completion);
             echo fromtoprint($b_completion, $h_completion, $f);
             outProc1($a, $toCompletion);
@@ -230,7 +240,7 @@ $a = null;
             <hr>
             <?php
             $h_creative = 1;
-            $b_creative = chex2bin($h_creative);
+            $b_creative = $GLOBALS['dbh']->chex2bin($h_creative);
             $toCreative = c_sub($fi, $b_creative);
             echo fromtoprint($b_creative, $h_creative, $f);
             outProc1($a, $toCreative);

@@ -16,18 +16,19 @@ mb_regex_encoding("UTF-8");
     
     ?>
     
-        <script src="vendor/components/jquery/jquery.min.js"></script>
-        <script src="vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>    
-        <script type="text/javascript" src="vendor/qtip/jquery.qtip.js"></script>
-        <script type="text/javascript" src="js/script.js"></script>    
-        <script type="text/javascript" src="js/consult.js"></script>    
+        <script src="/vendor/components/jquery/jquery.min.js"></script>
+        <script src="/vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>    
+        <script type="text/javascript" src="/vendor/qtip/jquery.qtip.js"></script>
+        <script type="text/javascript" src="/js/script.js"></script>    
+        <script type="text/javascript" src="/js/consult.js"></script>    
         
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">//-->
-        <link rel="stylesheet" media="screen" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" media="screen" type="text/css" href="/css/style.css" />
+        <link rel="stylesheet" media="screen" type="text/css" href="/css/drawhex.css" />
         <!-- overload this if other page -->
-        <link rel="stylesheet" media="screen" type="text/css" href="css<?= ($_SERVER['PHP_SELF'] == "/show.php" ? "/show" : "/consult") ?>.css" />
+        <link rel="stylesheet" media="screen" type="text/css" href="/css<?= ($_SERVER['PHP_SELF'] == "/show.php" ? "/show" : "/consult") ?>.css" />
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="vendor/twitter/bootstrap/dist/css/bootstrap.min.css">
-        <link type="text/css" rel="stylesheet" href="vendor/qtip/jquery.qtip.css" />
+        <link rel="stylesheet" href="/vendor/twitter/bootstrap/dist/css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="/vendor/qtip/jquery.qtip.css" />
     </head>
 <body>

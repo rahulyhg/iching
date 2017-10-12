@@ -13,6 +13,22 @@ $(document).ready(function () {
     }
     
 
+    $("#plumtip").qtip({
+        content: 'The Modern Plum technique is based on the ancient Mei Hua ("Plum Blossom") method of the Sung Synasty (920-1279ad).  It uses the current time as the "seed" for the casting.  This modern version also uses the current time of number of milliseconds since Jan. 1, 1970. An algorithm takes that number, <a href="/book/ichingbook/_book/instructions.html">transforms it to simulate three coins</a>.  This is done six time, with a random numner of milliseconds between each "toss".',
+        style:
+                {
+                    name: 'blue',
+                    tip: 'leftMiddle'
+                },
+        position:
+                {
+                    corner:
+                            {
+                                target: 'rightMiddle',
+                                tooltip: 'leftMiddle'
+                            }
+                }
+    });
     $("#testtip").qtip({
         content: 'This randomly generates hexagrams using the PHP rand() function.  Mainly used for its speed as it does not access any services. Not a good option for proper use.',
         style:
