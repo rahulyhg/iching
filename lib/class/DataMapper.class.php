@@ -67,18 +67,27 @@ class DataMapper {
 
     public function getHex($h) {
         $query = "SELECT * from hexagrams where pseq=${h}";
-        return($this->ex($query, array(), array())->fetchAll(PDO::FETCH_ASSOC));
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        return($sth->fetchAll(PDO::FETCH_ASSOC));
+
+        //return($this->ex($query, array(), array())->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function getBin($h) {
         $query = "SELECT * from hexagrams where bseq=${h}";
-        return($this->ex($query, array(), array())->fetchAll(PDO::FETCH_ASSOC));
+         $sth = $this->o->prepare($query);
+        $sth->execute();
+        return($sth->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function cbin2hex($b) {
         $query = "SELECT pseq from hexagrams where bseq=${b}";
-        $res = $this->ex($query, array(), array())->fetchAll(PDO::FETCH_ASSOC);
-        return($res['pseq']);
+        
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return($res[0]['pseq']);
     }
 
     public function chex2bin($h) {
@@ -87,6 +96,15 @@ class DataMapper {
         $sth->execute();
         $bin = $sth->fetch();
         return($bin['bseq']);
+      //  $res = $this->ex($query, array(), array('debug' => $d))->fetchAll(PDO::FETCH_ASSOC);
+      //  return($res['bseq']);
+    }
+    public function getHexFieldByBinary($table, $field,$bin) {
+        $query = "SELECT $field from $table where `binary` = '${bin}'";
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $bin = $sth->fetch();
+        return($bin[$field]);
       //  $res = $this->ex($query, array(), array('debug' => $d))->fetchAll(PDO::FETCH_ASSOC);
       //  return($res['bseq']);
     }

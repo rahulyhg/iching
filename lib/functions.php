@@ -2,22 +2,133 @@
 
 //$dbh = new DataMapper();
 //DataMapper$stuff = $mapper->fetchAllHexByPseq(11,TRUE);    
-require get_cfg_var("iching_root")."/lib/class/CssHex.class.php";
+require get_cfg_var("iching_root") . "/lib/class/CssHex.class.php";
 
-function makeHex($tossed,$delta) {
+function makeHex($tossed, $delta, $uid, $whichToFade) {
     $cssHex = new CssHex();
     $script = "";
-    
-    list($hex1, $script, $newHex) = $cssHex->drawHex($tossed,$delta, $script, 1);
-    $out = "<div style='float:left; padding:10px;'>\n" . $hex1 . "</div>\n";
 
-    list($hex2, $script, $newHex) = $cssHex->drawHex($newHex, array(0, 0, 0, 0, 0, 0), $script, 2);
-    $out .= "<div style='float:left; padding:10px;'>\n" . $hex2 . "</div>\n";
+
+    $out = "<div id='${uid}'>\n";
+//    $hex1 = code that builds '$tossed' hex
+//    $script = gathered code to print into page
+//    $newHex = the resutl of $tossed and $delta    
+
+    list($hex1, $script, $newHex) = $cssHex->drawHex($tossed, $delta, $script, 1, $uid);
+    $out .= "<div id='tossed_${uid}' class='" . (($whichToFade == "fade_tossed") ? "faded" : "live") . "'>\n" . $hex1 . "</div>\n";
+    $out .= "<div class='spacerbox'></div>\n";
+
+    $a = implode($tossed);
+    $b = implode($newHex);
+//var_dump($a);
+//var_dump($b);
+//var_dump($delta);
+    $a1 = bindec($a);
+    //var_dump($a1);
+    $b1 = bindec($b);
+    //  var_dump($b1);
+
+    $c = ($b1 - $a1 < 0 ? ($b1 - $a1) + 63 : $b1 - $a1);
+    //    var_dump("c");
+    //      var_dump($c);
+    $q = sprintf("%06d", decbin($c));
+//       var_dump($q);
+    $c1 = sprintf("%06d", $q);
+//          var_dump($c1);
+
+    $Thex = str_split($c1);
+    list($Thex2, $script, $TnewHex) = $cssHex->drawHex($Thex, array(0, 0, 0, 0, 0, 0), $script, 3, $uid);
+    $out .= "<div  id='tossed_${uid}' class='trx_faded'>\n" . $Thex2 . "</div>\n";
+    $out .= "<div class='spacerbox'></div>\n";
+
+//
+//        
+    list($hex2, $script, $newHex) = $cssHex->drawHex($newHex, array(0, 0, 0, 0, 0, 0), $script, 2, $uid);
+    $out .= "<div  id='final_${uid}' class='" . (($whichToFade == "fade_final") ? "faded" : "live") . "'>\n" . $hex2 . "</div>\n";
+    // var_dump($tossed);
+    // var_dump($TnewHex);
+    // var_dump($newHex);
+
+
+
+
+
+
+
+
+
+
+
+
+    $tossed_pseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq", implode($tossed));
+    $trx_pseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq", implode($Thex));
+    $final_pseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq", implode($newHex));
+
+    $tossed_bseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "bseq", implode($tossed));
+    $trx_bseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "bseq", implode($Thex));
+    $final_bseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "bseq", implode($newHex));
+
+    $tossed_trans = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "trans", implode($tossed));
+    $trx_trans = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "trans", implode($Thex));
+    $final_trans = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "trans", implode($newHex));
+
+    $tossed_iq32_theme = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "iq32_theme", implode($tossed));
+    $trx_iq32_theme = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "iq32_theme", implode($Thex));
+    $final_iq32_theme = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "iq32_theme", implode($newHex));
+
+
+//
+//        $tossed_iq32_desc = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams","iq32_desc",implode($tossed));
+//        $tossed_iq32_desc = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams","iq32_desc",implode($tossed));
+//        $final_iq32_desc = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams","iq32_desc",implode($newHex));
+
+
+    $t_sub = "<a target='_blank' href='/show.php?hex=${tossed_pseq}'><span class='st1'>$tossed_pseq</span></a><span> ($tossed_bseq)    </span><br><span class='st2'>$tossed_trans  </span><br><span class='st3'>$tossed_iq32_theme </span><br>\n";
+    $x_sub = "<a target='_blank' href='/show.php?hex=${trx_pseq}'><span class='st1'>$trx_pseq   </span></a><span> ($trx_bseq)       </span><br><span class='st2'>$trx_trans     </span><br><span class='st3'>$trx_iq32_theme    </span><br>\n";
+    $f_sub = "<a target='_blank' href='/show.php?hex=${final_pseq}'><span class='st1'>$final_pseq </span></a><span> ($final_bseq)     </span><br><span class='st2'>$final_trans   </span><br><span class='st3'>$final_iq32_theme  </span><br>\n";
+
+    $out .= "</div>\n";
+    $out .= "<div class='clear underHex' >"
+            . "<table class='ttd'>"
+            . "     <tr class='rtd'>"
+            . "         <td class='htd'>"
+            . "             $t_sub"
+            . "         </td>"
+            . "         <td class='htd'>"
+            . "             $x_sub<br><a id='xsubtip' href='#'><img style='width:20px' src='/images/qmark-small-bw.png'/></a>"
+            . "         </td>"
+            . "         <td class='htd'>"
+            . "             $f_sub"
+            . "         </td>"
+            . "     </tr>"
+            . "</table>"
+            . "</div>\n";
+
+
+
+//      $out .= "</div><div class='clear underHex' ><table class='ttd'><tr class='rtd'><td class='htd'>$t_sub</td><td class='htd'>$x_sub</td><td class='htd'>$f_sub</td></tr></table></div>\n";
+//      $out .= "</div><div class='clear underHex' ><table class='ttd'><tr class='rtd'><td class='htd'>$t_sub</td><td class='htd'>$x_sub</td><td class='htd'>$f_sub</td></tr></table></div>\n";
+//      $out .= "</div><div class='clear underHex' ><table class='ttd'><tr class='rtd'><td class='htd'>$t_sub</td><td class='htd'>$x_sub</td><td class='htd'>$f_sub</td></tr></table></div>\n";
+//        $out .= "<div  id='trx_${uid}' class='boxD1 trx_faded'>$t_sub</div>\n";
+//        $out .= "<div  id='trx_${uid}' class='boxD3 trx_faded'>$t_sub</div>\n";
+//        $out .= "<div  id='trx_${uid}' class='boxD2 trx_faded'>$t_sub</div>\n";
+//        $out .= "   <div>" . $x_sub . "</div>\n";
+//        $out .= "</div>\n";
+    //$out .= "<div class='clear'></div>\n";
+//        $out .= "<div  id='final_${uid}' class='boxD2 ".(($whichToFade == "fade_final") ? "faded" :"live")."'>$_sub</div>\n";
+//        $out .= "   <div>" . $f_sub . "</div>\n";
+//        $out .= "</div>\n";
+//        $out .="</div>\n";
+//        
+
+
+
+
 
     $out .= "<script>\n$(document).ready(function () {\n" . $script . "});\n</script>\n";
-    
+    $out .= "</div>\n";
+
     return($out);
-    
 }
 
 function getToss() {
@@ -31,20 +142,26 @@ function getToss() {
     $newTossed = null;
 
     if (isset($_REQUEST['f_tossed'])) {
-        $newTossed = str_split(sprintf("%06d", decbin(chex2bin($_REQUEST['f_tossed']))));
-        $newFinal = str_split(sprintf("%06d", decbin(chex2bin($_REQUEST['f_final']))));
+        $newTossed = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_tossed']))));
+        $newFinal = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_final']))));
 
+//      var_dump($_REQUEST['f_final']);
+//      var_dump($GLOBALS['dbh']->chex2bin($_REQUEST['f_final']));
+//      var_dump(decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_final'])));
+//  var_dump($newFinal);
+//
+        
         for ($i = 0; $i < 6; $i++) {
             if (($newTossed[$i] != $newFinal[$i])) {
-                if ($newFinal[$i] == 1) {
-                    $newTossed[$i] = 6;
-                    $delta[$i] = 1;
-                    $newFinal[$i] = 9;
+                if ($newFinal[$i] == 1) {   // if newFinal == 1 then newTossed == 0
+                    $newTossed[$i] = 6;     // so newTossed mucgt be a moving YIN == 6
+                    $delta[$i] = 1;         // and that is a delta
+                    $newFinal[$i] = 9;      // and we change the newFinal accordingly, preserrving movement
                 }
-                if ($newFinal[$i] == 0) {
-                    $newTossed[$i] = 9;
-                    $delta[$i] = 1;
-                    $newFinal[$i] = 6;
+                if ($newFinal[$i] == 0) {   // if newFinal == 0 then newTossed == 1
+                    $newTossed[$i] = 9;     // so newTossed must be a moving YANG == 9
+                    $delta[$i] = 1;         // mark the delta
+                    $newFinal[$i] = 6;      // change the new final to a YIN preserving movement
                 }
             }
             if (($newTossed[$i] == $newFinal[$i])) {
@@ -64,6 +181,10 @@ function getToss() {
         // it gets recalced later, so clear it
         $delta = array(0, 0, 0, 0, 0, 0); //reset it 
     }
+  //      var_dump($newTossed);
+ //       var_dump($newFinal);
+//        var_dump($delta);
+        
 
 
 
@@ -76,7 +197,7 @@ function getToss() {
         }
     }
     // confused as to why this has to be reversed 
-    $delta = array_reverse($delta);
+    //$delta = array_reverse($delta);
 
     $final = getFinal($tossed);
     //override it static
@@ -123,7 +244,7 @@ function getToss() {
             Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
             WHERE hexagrams.binary = '${tossed_bin}' limit 1
          ) as tri_lower
-        ,dir
+        ,iq32_dir
         ,explanation
         ,judge_old
         ,judge_exp
@@ -158,7 +279,8 @@ EOX;
     $query = $sql . "'$final_bin'";
     $finalData = $GLOBALS['dbh']->getData($query);
 
-    return(array('tossed' => $tossedData, 'delta' => $delta, 'final' => $finalData));
+    $res = array('tossed' => $tossedData, 'delta' => $delta, 'final' => $finalData);
+    return($res);
 }
 
 function getTri() {
@@ -359,12 +481,13 @@ function fromtoprint($b, $h, $f) {
     return($s);
 }
 
+function microtime_float() {
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float) $usec + (float) $sec);
+}
+
 function getPlumBlossomArray() {
 
-    function microtime_float() {
-        list($usec, $sec) = explode(" ", microtime());
-        return ((float) $usec + (float) $sec);
-    }
 
     $hex = array();
     $m = 0;
@@ -403,10 +526,11 @@ function getPlumBlossomArray() {
 //        print "[$t]  ";
 
 
-        usleep(rand(rand(100000, 1000000), rand(100000, 1000000)));
+        usleep(rand(rand(1000, 10000), rand(10000, 100000)));
         array_push($hex, $t);
         $m++;
     }
+    //var_dump($hex);
     return($hex);
 }
 
