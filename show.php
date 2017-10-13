@@ -1,9 +1,9 @@
 <?php
-
-require "elements/header.php";
-require "vendor/autoload.php";
-require "lib/functions.php";
-
+require get_cfg_var("iching_root") . "/elements/header.php";
+require get_cfg_var("iching_root") . "/vendor/autoload.php";
+require get_cfg_var("iching_root") . "/conf/config.php";
+require get_cfg_var("iching_root") . "/lib/init.php";
+require get_cfg_var("iching_root") . "/lib/functions.php";
 ?>
 
 <section>
@@ -12,60 +12,73 @@ require "lib/functions.php";
 <section id="pageContent">
 
     <span class="floatingcontainer">
-        <?php
+<?php
+$usebin = 0;
+
+$hexNum = 1;
+$binNum = 0;
+
+if (isset($_REQUEST['hex'])) {
+    $hexNum = $_REQUEST['hex'];
+    $binNum = $GLOBALS['dbh']->chex2bin($hexNum);
+}
+
+if (isset($_REQUEST['bin'])) {
+    $binNum = $_REQUEST['bin'];
+    $hexNum = $GLOBALS['dbh']->cbin2hex($binNum);
+}
+
+//        $binNum = ($_REQUEST['bin'] ? $_REQUEST['bin'] : 0);
+
+if (isset($_REQUEST['submit'])) {
+    if ($_REQUEST['submit'] == "Hex >") {
+        $hexNum++;
+        $hexNum = ($hexNum > 64 ? 1 : $hexNum);
+        $binNum = $GLOBALS['dbh']->chex2bin($hexNum);
         $usebin = 0;
-
-        $hexNum = ($_REQUEST['hex'] ? $_REQUEST['hex'] : 1);
-        $binNum = ($_REQUEST['bin'] ? $_REQUEST['bin'] : 0);
-
-        if ($_REQUEST['submit'] == "Hex >") {
-            $hexNum++;
-            $hexNum = ($hexNum > 64 ? 1 : $hexNum);
-            $binNum = chex2bin($hexNum);
-            $usebin = 0;
-        }
-        if ($_REQUEST['submit'] == "< Hex") {
-            $hexNum--;
-            $hexNum = ($hexNum < 1 ? 64 : $hexNum);
-            $binNum = chex2bin($hexNum);
-            $usebin = 0;
-        }
-        if ($_REQUEST['submit'] == "Bin >") {
-            $binNum++;
-            $binNum = ($binNum > 63 ? 0 : $binNum);
-            $hexNum = cbin2Hex($binNum);
-            $usebin = 1;
-        }
-        if ($_REQUEST['submit'] == "< Bin") {
-            $binNum--;
-            $binNum = ($binNum < 0 ? 63 : $binNum);
-            $hexNum = cbin2Hex($binNum);
-            $usebin = 1;
-        }
-
-        if (isset($_REQUEST['gotohex'])) {
-            if ($_REQUEST['submit'] == "Go To Hex") {
+    }
+    if ($_REQUEST['submit'] == "< Hex") {
+        $hexNum--;
+        $hexNum = ($hexNum < 1 ? 64 : $hexNum);
+        $binNum = $GLOBALS['dbh']->chex2bin($hexNum);
+        $usebin = 0;
+    }
+    if ($_REQUEST['submit'] == "Bin >") {
+        $binNum++;
+        $binNum = ($binNum > 63 ? 0 : $binNum);
+        $hexNum = $GLOBALS['dbh']->cbin2Hex($binNum);
+        $usebin = 1;
+    }
+    if ($_REQUEST['submit'] == "< Bin") {
+        $binNum--;
+        $binNum = ($binNum < 0 ? 63 : $binNum);
+        $hexNum = $GLOBALS['dbh']->cbin2Hex($binNum);
+        $usebin = 1;
+    }
+}
+if (isset($_REQUEST['gotohex'])) {
+    if ($_REQUEST['submit'] == "Go To Hex") {
 //                if ($_REQUEST['gotohex'] != $hexNum) {
-                    $hexNum = ($_REQUEST['gotohex']);
-                    $binNum = chex2bin($hexNum);
-                    $usebin = 0;
+        $hexNum = ($_REQUEST['gotohex']);
+        $binNum = $GLOBALS['dbh']->chex2bin($hexNum);
+        $usebin = 0;
 //                }
-            }
-        }
+    }
+}
 
-        if (isset($_REQUEST['gotobin'])) {
-            if ($_REQUEST['submit'] == "Go To Bin") {
+if (isset($_REQUEST['gotobin'])) {
+    if ($_REQUEST['submit'] == "Go To Bin") {
 //                if ($_REQUEST['gotobin'] != $binNum) {
-                    $binNum = ($_REQUEST['gotobin']);
-                    $hexNum = cbin2hex($binNum);
-                    $usebin = 1;
+        $binNum = ($_REQUEST['gotobin']);
+        $hexNum = $GLOBALS['dbh']->cbin2hex($binNum);
+        $usebin = 1;
 //                }
-            }
-        }
-        ?>
+    }
+}
+?>
         <form method="POST" action="">
-        <span class="question text_mdcaps">Scan the hexagrams</span>
-        <span class="text_md-caps btn btn-danger" ><a style="color:white" target="blank_" href="/index.php">CONSULT</a></span>
+            <span class="question text_mdcaps">Scan the hexagrams</span>
+            <span class="text_md-caps btn btn-danger" ><a style="color:white" target="blank_" href="/index.php">CONSULT</a></span>
             <input class="text_md-caps btn btn-primary" type="submit" name="submit" value="< Hex">
             <input class="text_md-caps btn btn-success" type="submit" name="submit" value="Hex >">
             <input class="text_md-caps btn btn-primary" type="submit" name="submit" value="< Bin">
@@ -80,43 +93,44 @@ require "lib/functions.php";
             <input class="text_mdcaps btn btn-info" style="color:black" type="submit" name="submit" value="Go To Bin">
 
         </form>
-        </span>
-        <div class="container">
+    </span>
+    <div class="container">
 
-        <?php
-        $ary = null;
-        if ($usebin == 1) {
-            $ary = getBin($binNum);
-        }
-        if ($usebin == 0) {
-            $ary = getHex($hexNum);
-        }
+<?php
+$ary = null;
+if ($usebin == 1) {
+    $ary = $GLOBALS['dbh']->getBin($binNum);
+}
+if ($usebin == 0) {
+    $ary = $GLOBALS['dbh']->getHex($hexNum);
+}
 
-        $t = $ary[0];
-        
-        if (isset($t['fix'])) {?>
+$t = $ary[0];
+
+if (isset($t['fix'])) {
+    ?>
             <div class="content btn btn-danger">FIX :<?= $t['fix'] ?></div>
         <?php } ?>
- 
-                   
-<?php
+
+
+        <?php
 #book-search-results > div.search-noresults > section
 
-use PHPHtmlParser\Dom;
+        use PHPHtmlParser\Dom;
+
 $dom = new Dom;
 
-$filename = "book/ichingbook/_book/hexagrams/".f($hexNum)."-".$t['filename'].".html";
+        $filename = "book/ichingbook/_book/hexagrams/" . f($hexNum) . "-" . $t['filename'] . ".html";
 //var_dump($filename);
 
-$dom->load(file_get_contents($filename));
-$c = $dom->find("#book-search-results > div.search-noresults > section");
+        $dom->load(file_get_contents($filename));
+        $c = $dom->find("#book-search-results > div.search-noresults > section");
 
-echo $c->innerHtml();
+        echo $c->innerHtml();
+        ?>                   
 
-?>                   
-
-        </div>  
-<?php
-require "elements/footer.php";
-?>
+    </div>  
+    <?php
+    require "elements/footer.php";
+    ?>
 

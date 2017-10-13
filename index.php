@@ -1,10 +1,10 @@
 
 <?php
-require get_cfg_var("iching_root")."/elements/header.php";
-require get_cfg_var("iching_root")."/vendor/autoload.php";
-require get_cfg_var("iching_root")."/conf/config.php";
-require get_cfg_var("iching_root")."/lib/init.php";
-require get_cfg_var("iching_root")."/lib/functions.php";
+require get_cfg_var("iching_root") . "/elements/header.php";
+require get_cfg_var("iching_root") . "/vendor/autoload.php";
+require get_cfg_var("iching_root") . "/conf/config.php";
+require get_cfg_var("iching_root") . "/lib/init.php";
+require get_cfg_var("iching_root") . "/lib/functions.php";
 
 //var_dump($_dbh);
 $a = null;
@@ -16,85 +16,141 @@ $a = null;
 
 <section id="pageContent">
 
-<div class="container">
+    <div class="container">
 
-    <div class="row1">
-        <span class="btn btn-warning"><a href="index.php">RESET</a></span>
-        <span class="btn btn-danger"><a style="color:white;font-weight: bold;" href="/book/ichingbook/_book/">DOCS</a></span>
-        <span class="btn btn-danger"><a style="color:white;" href="show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >Browse</a></span>    <p>
-    </div>
-    
-    <!-- ------------------------------------------------------------>
-    
-    <?php
-    //var_dump($_REQUEST);
-    if (!isset($_REQUEST['flipped'])) { ?>
-        <div class="qbox">
+        <div class="row1">
+            <span class="btn btn-warning"><a href="index.php">RESET</a></span>
+            <span class="btn btn-danger"><a style="color:white;font-weight: bold;" href="/book/ichingbook/_book/">DOCS</a></span>
+            <span class="btn btn-danger"><a style="color:white;" href="show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >Browse</a></span>    <p>
+        </div>
 
-        <form id = "tosstype" method="POST" action="">
-            <input type="hidden" name="flipped" value="1">
-            <div class="row2">
-                <input id="qfield" type="text" name="question" placeholder="question" value=""></p>
-                <!-- a id="testtip" href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode"  id="testmode"  value="testmode" > <span class="text_mdcaps" id="test-modemsg">test-mode</span></p -->
-                <a id="plumtip"     href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="plum"         value="plum"       checked > <span class="text_mdcaps" id="plummsg">Modern Plum</span>    </p>
-                <a id="randomtip"   href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="random.org"   value="random.org"          > <span class="text_mdcaps" id="random.orgmsg">random.org</span></p>
-                <a id="entropytip"  href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="entropy"      value="entropy"             > <span class="text_mdcaps" id="entropymsg">entropy</span>      </p>
-                <a id="r-decaytip"  href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="r-decay"      value="r-decay"             > <span class="text_mdcaps" id="r-decaymsg">r-decay</span>      </p>
+        <!-- ------------------------------------------------------------>
 
-                <span class="text_mdcaps" id="baynesmsg">Wilhelm/Baynes</span> <input type="radio" name="trans" id="baynes" value="baynes" checked > <a id="baynestip" href="#"><img src="images/g-qmark.png"></a></p> 
-                <span class="text_mdcaps" id="aculturalmsg">Acultural</span> <input type="radio" name="trans" id="acultural" value="acultural"  > <a id="aculturaltip" href="#"><img src="images/g-qmark.png"></a></p>
+        <?php
+        //var_dump($_REQUEST);
+        if (!isset($_REQUEST['flipped'])) {
+            ?>
+            <div class="qbox">
+
+                <form id = "tosstype" method="POST" action="">
+                    <input type="hidden" name="flipped" value="1">
+                    <div class="row2">
+                        <input id="qfield" type="text" name="question" placeholder="question" value=""></p>
+                        <!-- a id="testtip" href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode"  id="testmode"  value="testmode" > <span class="text_mdcaps" id="test-modemsg">test-mode</span></p -->
+                        <a id="plumtip"     href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="plum"         value="plum"       checked > <span class="text_mdcaps" id="plummsg">Modern Plum</span>    </p>
+                        <a id="randomtip"   href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="random.org"   value="random.org"          > <span class="text_mdcaps" id="random.orgmsg">random.org</span></p>
+                        <a id="entropytip"  href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="entropy"      value="entropy"             > <span class="text_mdcaps" id="entropymsg">entropy</span>      </p>
+                        <a id="r-decaytip"  href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode" id="r-decay"      value="r-decay"             > <span class="text_mdcaps" id="r-decaymsg">r-decay</span>      </p>
+
+                        <span class="text_mdcaps" id="baynesmsg">Wilhelm/Baynes</span> <input type="radio" name="trans" id="baynes" value="baynes" checked > <a id="baynestip" href="#"><img src="images/g-qmark.png"></a></p> 
+                        <span class="text_mdcaps" id="aculturalmsg">Acultural</span> <input type="radio" name="trans" id="acultural" value="acultural"  > <a id="aculturaltip" href="#"><img src="images/g-qmark.png"></a></p>
 
 
-                <input class = "btn btn-info" style="width:100%" type="submit" value="Cast Coins">
+                        <input class = "btn btn-info" style="width:100%" type="submit" value="Cast Coins">
+                    </div>
+                </form>
+                <form method="POST" action="">
+                    <input type="hidden" name="flipped" value="1">
+                    <div class="row3">
+                        <div class="text_smcaps">Or enter 2 hex nums    </div>
+                        <input class = "doublenum" id="f_tossed" type="text" name="f_tossed" placeholder="<?php echo rand(1, 64) ?>" value="">
+                        <input class = "doublenum" id="f_final" type="text" name="f_final" placeholder="<?php echo rand(1, 64) ?>" value="">
+                        <input class = "btn btn-primary" type="submit" value="Show">
+                    </div>
+                </form>
             </div>
-        </form>
-        <form method="POST" action="">
-            <input type="hidden" name="flipped" value="1">
-            <div class="row3">
-        <div class="text_smcaps">Or enter 2 hex nums    </div>
-                <input class = "doublenum" id="f_tossed" type="text" name="f_tossed" placeholder="<?php echo rand(1,64)?>" value="">
-                <input class = "doublenum" id="f_final" type="text" name="f_final" placeholder="<?php echo rand(1,64)?>" value="">
-                <input class = "btn btn-primary" type="submit" value="Show">
-            </div>
-        </form>
-    </div>
-    </div>
-    <?php 
+        </div>
+        <?php
     } else {
-    ?>
+        $_REQUEST['question'] = "no question asked"
+        ?>
         <div class="question"><?= $_REQUEST['question'] ?></div>
 
         <?php
-        $ary = getToss();
+        $ary = null;
+        $t = array();
+        $f = array();
+        $d = array();
+        
+        
+            $ary = getToss();
+//            print "<pre>";
+//            print_r($ary);
+        
+//        while (!$ary) {
+//            $ary = getToss();
+//        }
+//        while (
+//                (!$ary['tossed']) ||
+//                (!$ary['delta']) ||
+//                (!$ary['final']) ) {
+//            
+//                $ary = getToss();
+//            
+//        }
+        
         //    $ary['question']=$_REQUEST['question'];
         // get all data for local access
-
 //        GLOBAL $a;
         $a = $GLOBALS['dbh']->getAllHexes();
 //        $_SESSION['allhexes'] = $a;
-
         //    var_dump($json);
+ $t = $ary['tossed'][0];
+ $f = $ary['final'][0];
+ $d = $ary['delta'];
 
-        $t = $ary['tossed'][0];
-        $f = $ary['final'][0];
-        $d = $ary['delta'];
+ 
+ 
+ 
+//        if (isset($ary['tossed'][0])) {
+//            $t = $ary['tossed'][0];
+//        } else {
+//            PRINT "<PRE>";
+//            var_export("ERROR: the 'tossed' array is empty");
+//           print_r($ary);
+//            die;
+//        }
+//
+//        if (isset($ary['final'][0])) {
+//            $f = $ary['final'][0];
+//        } else {
+//            PRINT "<PRE>";
+//            var_export("ERROR: the 'final' array is empty");
+//            var_export($ary);
+//            die;
+//        }
+//        if (isset($ary['delta'][0])) {
+//            $d = $ary['delta'];
+//        } else {
+//            PRINT "<PRE>";
+//            var_export("ERROR: the 'delta' array is empty");
+//            var_export($ary);
+//            die;
+//        }
 
         // remove whitespces and extention from question to use as filename
         $fn = "questions/" . mb_ereg_replace(" ", "_", $_REQUEST['question'] . ".txt");
         $json = json_encode(array(array('question' => $_REQUEST['question']), $t, $d, $f), JSON_PRETTY_PRINT);
         file_put_contents($fn, $json);
         ?>
-        <?php 
+        <?php
         // FIX is special column for editing notes
-        if (isset($t['fix'])) {?>
+        if (isset($t['fix'])) {
+            ?>
             <div class="content btn btn-danger">FIX :<?= $t['fix'] ?></div>
         <?php } ?>
-        <div>
-            
-        <?php 
-            echo makeHex(str_split($t['binary']),$d);
+
+        <?php
+        //var_dump($t['binary']);
+        //var_dump($d);
+        
+        $hexes = makeHex(
+                
+                str_split($t['binary']), $d, uniqid(), "fade_final");
+                print $hexes;
         ?>
-        </div>    
+
+
         <!-- div>
             <img class="heximg select" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
             <img class="heximg" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
@@ -116,8 +172,7 @@ $a = null;
             <div class="label">The Judgment</div>
             <div class="content" id="judge_old"><?= $t['judge_old'] ?></div>
 
-            <?php 
-            if (isset($t['comment'])) { ?>
+            <?php if (isset($t['comment'])) { ?>
                 <div class="label">Comments</div>
                 <div class="content comment" id="comment"><?= $t['comment'] ?></div>
             <?php } ?>
@@ -131,12 +186,14 @@ $a = null;
             <div class="label">Commentary and Explanation of the Image</div>
             <div class="content" id="image_exp"><?= $t['image_exp'] ?></div>
         </div>
-        <?php
-        for ($i = 0; $i < 6; $i++) {
-            if ($d[$i] == 1) {
-                $j = $i + 1;
-                //var_dump($j);
-                ?>
+        The Lines
+
+    <?php
+    for ($i = 0; $i < 6; $i++) {
+        if ($d[$i] == 1) {
+            $j = $i + 1;
+            //var_dump($j);
+            ?>
                 <div class="lines">
                     <div class="label">Line <?= $j ?></div>
                     <div class="content line_title" id="line_<?= $j ?>"><?= $t['line_' . $j] ?></div>
@@ -147,17 +204,25 @@ $a = null;
                     <div class="label">Expanded Text</div>
                     <div class="content line_exp" id="line_<?= $j ?>_exp"><?= $t['line_' . $j . '_exp'] ?></div>
                 </div>
-                <?php
-            }
+            <?php
         }
-        ?>
-        <?php if (isset($f['fix'])) {?>
+    }
+    ?>
+        <?php if (isset($f['fix'])) { ?>
             <div class="content btn btn-danger">FIX :<?= $f['fix'] ?></div>
         <?php } ?>
-        <div>
-            <img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
+
+
+        <?php
+        $hexes = makeHex(str_split($t['binary']), $d, uniqid(), "fade_tossed"
+        );
+        print $hexes;
+        ?>
+
+        <!-- div>
+            < img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
             <img class="heximg select" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
-        </div>    
+        </div -->    
         <div class="final">
             <div class="label">Hex # [bin]/ Title / Translation</div>
             <div class="content" id="pseq"><?= $f['pseq'] ?> [b:<?= $f['bseq'] ?>]/ <?= $f['title'] ?>/<a target="blank_" href="show.php?hex=<?= (isset($f['pseq']) ? $f['pseq'] : 0) ?>"><?= $f['trans'] ?></a></div>
@@ -169,6 +234,11 @@ $a = null;
             <div class="content" id="explanation"><?= $f['explanation'] ?></div>
             <div class="label">The Judgment</div>
             <div class="content" id="judge_old"><?= $f['judge_old'] ?></div>
+            
+            <?php if (isset($f['comment'])) { ?>
+                <div class="label">Comments</div>
+                <div class="content comment" id="comment"><?= $f['comment'] ?></div>
+            <?php } ?>
 
             <div class="label">Comments</div>
             <div class="content comment" id="comment"><?= $f['comment'] ?></div>
@@ -182,10 +252,10 @@ $a = null;
         </div>
 
         <div class="extra">
-            <?php
-            $ti = intval($t['bseq']);
-            $fi = intval($f['bseq']);
-            ?>
+    <?php
+    $ti = intval($t['bseq']);
+    $fi = intval($f['bseq']);
+    ?>
             Two points form a line, three points form a direction, a flow. <br>
             The the binary values of the two hexagrams are added, you get...<p>
             <?php
@@ -196,29 +266,29 @@ $a = null;
             <hr>
             Our present is different from our past based on what motivated us in the past to make the decisions that lead us to where we are today.  The rose is red because it absorbs the green. <br>
             The 2nd hex subtracted from the 1st hex...<p>
-            <?php
-            $subFfrT = c_sub($ti, $fi);
-            outProc1($a, $subFfrT);
-            ?>
+                <?php
+                $subFfrT = c_sub($ti, $fi);
+                outProc1($a, $subFfrT);
+                ?>
             <hr>
             By removing what was before from the now, we can see what it is that has developed in us.<br> 
             The 1st hex subtracted from the 2nd hex...<p>
-            <?php
-            $subTfrF = c_sub($fi, $ti);
-            outProc1($a, $subTfrF);
-            ?>
+                <?php
+                $subTfrF = c_sub($fi, $ti);
+                outProc1($a, $subTfrF);
+                ?>
             <hr>
             <DIV style="background-color:yellow"> The following shows how you can get from the final hexagram to the next hexagram of your choice. </div>
             <hr>
 
-            <?php
-            $h_receptive = 2;
-            $b_receptive = $GLOBALS['dbh']->chex2bin($h_receptive);
-            $toReceptive = c_sub($fi, $b_receptive);
-            echo fromtoprint($b_receptive, $h_receptive, $f);
-            //                    var_dump($toReceptive);
-            outProc1($a, $toReceptive);
-            ?>
+                <?php
+                $h_receptive = 2;
+                $b_receptive = $GLOBALS['dbh']->chex2bin($h_receptive);
+                $toReceptive = c_sub($fi, $b_receptive);
+                echo fromtoprint($b_receptive, $h_receptive, $f);
+                //                    var_dump($toReceptive);
+                outProc1($a, $toReceptive);
+                ?>
             <hr>
 
             <?php
@@ -247,10 +317,10 @@ $a = null;
             ?>
             <hr>
         </div>
-</div>
-    <?php } ?>
+    </div>
+        <?php } ?>
 </section>
 
-<?php
-require "elements/footer.php";
-?>
+        <?php
+        require "elements/footer.php";
+        ?>
