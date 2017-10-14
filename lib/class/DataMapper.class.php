@@ -112,5 +112,16 @@ class DataMapper {
       //  $res = $this->ex($query, array(), array('debug' => $d))->fetchAll(PDO::FETCH_ASSOC);
       //  return($res['bseq']);
     }
+    public function getHexFieldByPseq($table, $field,$pseq) {
+        $query = "SELECT $field from $table where `pseq` = '${pseq}'";
+        
+//        var_dump($query);
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $bin = $sth->fetch();
+        return($bin[$field]);
+      //  $res = $this->ex($query, array(), array('debug' => $d))->fetchAll(PDO::FETCH_ASSOC);
+      //  return($res['bseq']);
+    }
 
 }

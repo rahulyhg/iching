@@ -4,19 +4,57 @@
 //DataMapper$stuff = $mapper->fetchAllHexByPseq(11,TRUE);    
 require get_cfg_var("iching_root") . "/lib/class/CssHex.class.php";
 
-function makeHuKua($t) {
-    $h = array(0,0,0,0,0,0);
+function getEdStatus($t) {
+    if (!$t['proofed']) {
+        //print "<div class='notice'>This content has yet to be proofed.  Please disregard the typos and other errors.</div>";
+        return "<div class='notice'>status: UNPROOFED</div>";
+    }
+}
 
-    $h[5]=$t[4];
-    $h[4]=$t[3];
-    $h[3]=$t[2];
-    $h[2]=$t[3];
-    $h[1]=$t[2];
-    $h[0]=$t[1];
-    
+function showComment($t) {
+    if (isset($t['comment'])) {
+        $out = "<div class='label'>Comments</div>\n";
+        $out .= "<div class='content comment' id='comment'>${t['comment']}</div>\n";
+        return($out);
+    }
+}
+
+function saveToFile($t, $d, $f) {
+    /* remove whitespces and extention from question to use as filename */
+    $fn = "questions/" . mb_ereg_replace(" ", "_", $_REQUEST['question'] . ".txt");
+    $json = json_encode(array(array('question' => $_REQUEST['question']), $t, $d, $f), JSON_PRETTY_PRINT);
+    file_put_contents($fn, $json);
+    return TRUE;
+}
+
+function showFixes($t) {
+    /* FIX is special column for editing notes.  Show any FIX commenst if they exist */
+    if (isset($t['fix'])) {
+        return("<div class='content btn btn-danger'>FIX :${t['fix']}</div>");
+    }
+}
+
+function getDates() {
+    /* calc dates for rpesenation and data */
+    $dataDate = date("y.m.d.H.i.s", time()) . ".U"; /* 17.10.14.14.59.32.U */
+    $humanDate = date("F d, l g:i:s A (T)", time()); /* October 14, Saturday 2:59:32 PM (UTC) */
+    $dates = array('human' => $humanDate, 'data' => $dataDate,);
+    return $dates;
+}
+
+function makeHuKua($t) {
+    $h = array(0, 0, 0, 0, 0, 0);
+
+    $h[5] = $t[4];
+    $h[4] = $t[3];
+    $h[3] = $t[2];
+    $h[2] = $t[3];
+    $h[1] = $t[2];
+    $h[0] = $t[1];
+
     $bin = implode($h);
-    
-    $hex = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq"  ,$bin);
+
+    $hex = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq", $bin);
 //    var_dump($hex);
     return($hex);
 }
@@ -73,30 +111,30 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
     $f_sub = "<a target='_blank' href='/show.php?hex=${final_pseq}'><span class='st1'>$final_pseq </span></a><span> ($final_bseq)     </span><br><span class='st2'>$final_trans   </span><br><span class='st3'>$final_iq32_theme  </span><br>\n";
 
     $out .= "</div>\n";
-        $out .= "<div class='clear underHex' >"
-                . "<table class='ttd'>"
-                . "     <tr class='rtd'>"
-                . "         <td class='htd'>"
-                . "             $t_sub"
-                . "         </td>"
-                . "         <td class='htd'>"
-                . "             $x_sub";
-    if ($whichToFade == "fade_final") { 
-          $out .= "<br><a id='xsubtip' class='xsubtip' href='#'><img style='width:20px' src='/images/qmark-small-bw.png'/></a>";
+    $out .= "<div class='clear underHex' >"
+            . "<table class='ttd'>"
+            . "     <tr class='rtd'>"
+            . "         <td class='htd'>"
+            . "             $t_sub"
+            . "         </td>"
+            . "         <td class='htd'>"
+            . "             $x_sub";
+    if ($whichToFade == "fade_final") {
+        $out .= "<br><a id='xsubtip' class='xsubtip' href='#'><img style='width:20px' src='/images/qmark-small-bw.png'/></a>";
     }
-          $out .= "         </td>"
-                . "         <td class='htd'>"
-                . "             $f_sub"
-                . "         </td>"
-                . "     </tr>"
-                . "</table>"
-                . "</div>\n";
+    $out .= "         </td>"
+            . "         <td class='htd'>"
+            . "             $f_sub"
+            . "         </td>"
+            . "     </tr>"
+            . "</table>"
+            . "</div>\n";
 
 
     $out .= "<script>\n$(document).ready(function () {\n" . $script . "});\n</script>\n";
     $out .= "</div>\n";
 
-    return($out);
+    return(array('hexes'=>$out,'tpseq'=>$trx_pseq));
 }
 
 function getToss() {
@@ -382,11 +420,11 @@ function getCleanHotBits() {
     $hotbitsURL = "http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=3&fmt=c&apikey=HB1P93mBRUA23F7HUF5MCpyZ2PS";
     $str = file_get_contents($hotbitsURL);
 //    $str = "/* Random data from the HotBits radioactive random number generator */\nunsigned char hotBits[3] = {\n    10, 240, 151\n};";
-    
+
     preg_match('/[\d].*[\d]/', $str, $matches, PREG_OFFSET_CAPTURE);
     $str = ($matches[0][0]);
     $hotbits = explode(",", $str);
-    
+
     foreach ($hotbits as $h) {
         array_push($intAry, intval(trim($h)));
     }

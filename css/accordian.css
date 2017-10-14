@@ -1,0 +1,45 @@
+    .awrapper {
+        width:50%;
+        margin: 40px;
+        padding: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        justify-content: center;
+    }
+    
+    .tColors {
+        background-color: darkgreen;
+        color:yellow;
+    }
+    .fColors {
+        background-color: brown;
+        color:yellow;
+    }
+
+    .eTitle {
+        font-size: 24pt !important;
+        font-weight: bold;
+    }
+    .eTrigrams {
+        font-size: 18pt;
+        font-weight: bold;
+        padding-left:50px !important;
+    }
+    .eImage {
+        font-size: 18pt;
+        font-weight: bold;
+        padding-left:50px !important;
+    }
+
+
+    
+    
+    .eLines {
+        color:blue;
+        font-size: 18pt;
+        font-weight: bold;
+        background-color: cyan;
+        padding-left:50px !important;
+    }
+    

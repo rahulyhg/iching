@@ -4,12 +4,10 @@
     padding: 4px;
     margin:15px;
     border: 3px solid lightslategrey;
-    max-width: 200px;
-    max-height: 200px;
-    z-index:1000;
-    position: relative;
 }
-
+.date {
+    font-size: .9em;
+}
 
 .xsubtip {
     font-size:11pt !important;
