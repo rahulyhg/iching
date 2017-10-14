@@ -1,7 +1,9 @@
 xdiv {
     border: 1px solid red;
 }
-
+.myCustomClass .qtip-content{
+	font-size: 12px;
+}
 .left {
     float:left;
 }

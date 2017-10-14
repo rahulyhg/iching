@@ -1,6 +1,25 @@
-.container {
-    width:auto !important;
+.xsubtip {
+    font-size:11pt !important;
+    line-height: 1 !important;
+    color: black !important;
 }
+
+.plumtip {
+    font-size:11pt !important;
+    line-height: 1 !important;
+    color: black !important;
+    
+}
+
+/*, .randomtip, .entropytip, .r-decaytip ,r-decaytip */
+
+
+
+
+
+
+
+
 
 body > section {
     width: 90% !important;
@@ -12,6 +31,9 @@ width:auto !important;
 max-width:auto !important;
 }
 
+.container {
+    width:auto !important;
+}
 .container {
     margin: 40px;
     padding: 0px;

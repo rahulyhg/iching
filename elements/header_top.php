@@ -22,6 +22,12 @@ mb_regex_encoding("UTF-8");
         <script type="text/javascript" src="/js/script.js"></script>    
         <script type="text/javascript" src="/js/consult.js"></script>    
         
+	<link href="../assets/styles.min.css" rel="stylesheet">
+	<title>jQuery UI Dialog: Open Dialog on Click</title>
+	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+	<script src="/vendor/jquery-ui/jquery-ui.min.js"></script>        
+        
+        
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">//-->
         <link rel="stylesheet" media="screen" type="text/css" href="/css/style.css" />
         <link rel="stylesheet" media="screen" type="text/css" href="/css/drawhex.css" />
@@ -29,6 +35,6 @@ mb_regex_encoding("UTF-8");
         <link rel="stylesheet" media="screen" type="text/css" href="/css<?= ($_SERVER['PHP_SELF'] == "/show.php" ? "/show" : "/consult") ?>.css" />
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="/vendor/twitter/bootstrap/dist/css/bootstrap.min.css">
-        <link type="text/css" rel="stylesheet" href="/vendor/qtip/jquery.qtip.css" />
+        <!-- link type="text/css" rel="stylesheet" href="/vendor/qtip/jquery.qtip.css" /-->
     </head>
 <body>

@@ -95,7 +95,7 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
             . "             $t_sub"
             . "         </td>"
             . "         <td class='htd'>"
-            . "             $x_sub<br><a id='xsubtip' href='#'><img style='width:20px' src='/images/qmark-small-bw.png'/></a>"
+            . "             $x_sub<br><a id='xsubtip' class='xsubtip qtip-content ui-widget-content' href='#'><img style='width:20px' src='/images/qmark-small-bw.png'/></a>"
             . "         </td>"
             . "         <td class='htd'>"
             . "             $f_sub"
@@ -150,7 +150,7 @@ function getToss() {
 //      var_dump(decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_final'])));
 //  var_dump($newFinal);
 //
-        
+
         for ($i = 0; $i < 6; $i++) {
             if (($newTossed[$i] != $newFinal[$i])) {
                 if ($newFinal[$i] == 1) {   // if newFinal == 1 then newTossed == 0
@@ -181,14 +181,9 @@ function getToss() {
         // it gets recalced later, so clear it
         $delta = array(0, 0, 0, 0, 0, 0); //reset it 
     }
-  //      var_dump($newTossed);
- //       var_dump($newFinal);
+    //      var_dump($newTossed);
+    //       var_dump($newFinal);
 //        var_dump($delta);
-        
-
-
-
-
 // back to the normal  processing
 
     for ($i = 0; $i < 6; $i++) {
@@ -326,6 +321,12 @@ function tossit() {
             //var_dump($r);
             return($r);
         }
+        if ($_REQUEST['mode'] == "random.org") {
+            $r = getHotBits();
+            //$r = array(rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9));
+            //var_dump($r);
+            return($r);
+        }
     }
 
     if (isset($_REQUEST['mode'])) {
@@ -400,6 +401,41 @@ function tossit() {
 //    $ah = $sth->fetchAll();
 //    return($ah);
 //}
+
+
+function getHotBits() {
+
+    $lines = array();
+    for ($i = 0; $i < 6; $i++) {
+        $hotbits = getCleanHotBits();
+        $line = null;
+        foreach ($hotbits as $tb) {
+            $c = ($tb % 2) + 2;
+            $line += ($tb % 2) + 2;
+        }
+        array_push($lines, $line);
+    }
+    //var_dump($lines);
+    return($lines);
+}
+
+function getCleanHotBits() {
+    $intAry = array();
+    $hotbitsURL = "http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=3&fmt=c&apikey=HB1P93mBRUA23F7HUF5MCpyZ2PS";
+    $str = file_get_contents($hotbitsURL);
+//    $str = "/* Random data from the HotBits radioactive random number generator */\nunsigned char hotBits[3] = {\n    10, 240, 151\n};";
+    
+    preg_match('/[\d].*[\d]/', $str, $matches, PREG_OFFSET_CAPTURE);
+    $str = ($matches[0][0]);
+    $hotbits = explode(",", $str);
+    
+    foreach ($hotbits as $h) {
+        array_push($intAry, intval(trim($h)));
+    }
+    //var_dump($intAry);
+    return($intAry);
+}
+
 function oldlogout($t, $str = null) {
     $dumpStr = str_replace("\n", '<br />', var_export($t, TRUE));
     $dumpStr = str_replace("\"", '\'', $dumpStr);
