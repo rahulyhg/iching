@@ -38,17 +38,17 @@ $a = null;
                         <input id="qfield" type="text" name="question" placeholder="question" value=""></p>
                         <!-- a id="testtip" href="#"><img src="images/qmark.png"></a> <input type="radio" name="mode"  id="testmode"  value="testmode" > <span class="text_mdcaps" id="test-modemsg">test-mode</span></p -->
 
-                        <a id="plumtip" class="plumtip qtip-content ui-widget-content" href="#"><img src="images/qmark.png"></a> 
+                        <a id="plumtip" class="plumtip" href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="plum" value="plum" checked > 
                             <span class="text_mdcaps" id="plummsg">Modern Plum</span>    
                         </p>
 
-                        <a id="randomtip" class="randomtip qtip-content ui-widget-content" href="#"><img src="images/qmark.png"></a> 
+                        <a id="randomtip" class="randomtip" href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="random.org" value="random.org"> 
                             <span class="text_mdcaps" id="random.orgmsg">random.org</span>
                         </p>
 
-                        <a id="r-decaytip" class="r-decaytip qtip-content ui-widget-content"  href="#"><img src="images/qmark.png"></a> 
+                        <a id="r-decaytip" class="r-decaytip"  href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="r-decay" value="r-decay"> 
                             <span class="text_mdcaps" id="r-decaymsg">r-decay</span>
                         </p>
@@ -78,9 +78,13 @@ $a = null;
         </div>
         <?php
     } else {
-        $_REQUEST['question'] = "no question asked"
+        $_REQUEST['question'] = "no question asked";
+        if (!isset($_REQUEST['kua'])) {
+            $_REQUEST['kua']="Pen-Kua";
+        }
         ?>
         <div class="question"><?= $_REQUEST['question'] ?></div>
+        <div class="kua">(<?= $_REQUEST['kua'] ?>)</div>
 
         <?php
         $ary = null;
@@ -88,61 +92,14 @@ $a = null;
         $f = array();
         $d = array();
         
-        
-            $ary = getToss();
-//            print "<pre>";
-//            print_r($ary);
-        
-//        while (!$ary) {
-//            $ary = getToss();
-//        }
-//        while (
-//                (!$ary['tossed']) ||
-//                (!$ary['delta']) ||
-//                (!$ary['final']) ) {
-//            
-//                $ary = getToss();
-//            
-//        }
-        
-        //    $ary['question']=$_REQUEST['question'];
-        // get all data for local access
-//        GLOBAL $a;
-        $a = $GLOBALS['dbh']->getAllHexes();
-//        $_SESSION['allhexes'] = $a;
-        //    var_dump($json);
- $t = $ary['tossed'][0];
- $f = $ary['final'][0];
- $d = $ary['delta'];
+        $ary = getToss();
 
- 
- 
- 
-//        if (isset($ary['tossed'][0])) {
-//            $t = $ary['tossed'][0];
-//        } else {
-//            PRINT "<PRE>";
-//            var_export("ERROR: the 'tossed' array is empty");
-//           print_r($ary);
-//            die;
-//        }
-//
-//        if (isset($ary['final'][0])) {
-//            $f = $ary['final'][0];
-//        } else {
-//            PRINT "<PRE>";
-//            var_export("ERROR: the 'final' array is empty");
-//            var_export($ary);
-//            die;
-//        }
-//        if (isset($ary['delta'][0])) {
-//            $d = $ary['delta'];
-//        } else {
-//            PRINT "<PRE>";
-//            var_export("ERROR: the 'delta' array is empty");
-//            var_export($ary);
-//            die;
-//        }
+        $a = $GLOBALS['dbh']->getAllHexes();
+
+        $t = $ary['tossed'][0];
+        $f = $ary['final'][0];
+        $d = $ary['delta'];
+
 
         // remove whitespces and extention from question to use as filename
         $fn = "questions/" . mb_ereg_replace(" ", "_", $_REQUEST['question'] . ".txt");
@@ -160,13 +117,47 @@ $a = null;
         //var_dump($t['binary']);
         //var_dump($d);
         
-        $hexes = makeHex(
+        $hexes = makeHex(str_split($t['binary']), $d, uniqid(), "fade_final");
+
+        print $hexes;
+
+        $t_hukua = makeHuKua($t['binary']);
+        $f_hukua = makeHuKua($f['binary']);
                 
-                str_split($t['binary']), $d, uniqid(), "fade_final");
-                print $hexes;
         ?>
-
-
+            
+                        
+            <div class="container">
+             <?php 
+             if (!isset($_REQUEST['t'])) {
+             ?>
+                <a style="font-size:16pt" href='/index.php?t=<?=$t['pseq']?>&f=<?=$f['pseq']?>&flipped=1&kua=Hu-Kua&f_tossed=<?= $t_hukua ?>&f_final=<?= $f_hukua ?>'>View the Hu Kua</a>
+                
+                        <a id="hukuatip" class="hukuatip"  href="#">
+                            <img style="width:20px" src="/images/qmark-small-bw.png">
+                            <span id="hukuatipmsg"></span>
+                        </a> 
+             <?php
+             } else {
+             ?>
+                <a style="font-size:16pt" href='/index.php?flipped=1&f_tossed=<?= $_REQUEST['t'] ?>&f_final=<?= $_REQUEST['f'] ?>'>View the Pen Kua</a>
+                
+                        <a id="penkuatip" class="penkuatip"  href="#">
+                            <img style="width:20px" src="/images/qmark-small-bw.png">
+                            <span id="penkuatipmsg"></span>
+                        </a> 
+            </div>
+            <?php
+             }
+             
+             if (!$t['proofed']) {
+                 //print "<div class='notice'>This content has yet to be proofed.  Please disregard the typos and other errors.</div>";
+                 print "<div class='notice'>status: UNPROOFED</div>";
+             }
+             
+             
+             
+             ?>
         <!-- div>
             <img class="heximg select" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
             <img class="heximg" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
@@ -239,7 +230,15 @@ $a = null;
             <?php
             $hexes = makeHex(str_split($t['binary']), $d, uniqid(), "fade_tossed"
             );
-            print $hexes;
+            print "<div class='container'>$hexes</div>";
+            
+            
+            
+             if (!$f['proofed']) {
+                 //print "<div class='notice'>This content has yet to be proofed.  Please disregard the typos and other errors.</div>";
+                 print "<div class='notice'>status: UNPROOFED</div>";
+             }
+            
             ?>
 
             <!-- div>
@@ -262,9 +261,6 @@ $a = null;
                     <div class="label">Comments</div>
                     <div class="content comment" id="comment"><?= $f['comment'] ?></div>
                 <?php } ?>
-
-                <div class="label">Comments</div>
-                <div class="content comment" id="comment"><?= $f['comment'] ?></div>
 
                 <div class="label">Commentary an Explanation of the Judgement</div>
                 <div class="content" id="judge_exp"><?= $f['judge_exp'] ?></div>
@@ -389,8 +385,8 @@ $a = null;
         about the quality and integrity of their randomness that they actually have 
         different result based on the type of coin you use. For now, we are using 
         three Bronze Sestertius coins from the Roman Empire of Antoninus Pius
-        <img src="/images/reverse.png" style="width:60px;height:60px;passing 5px;float:right;">
-        <img src="/images/obverse.png" style="width:60px;height:60px;passing 5px;float:right;">
+        <img src="/images/reverse.png" style="width:60px;height:60px;padding:5px;float:right;">
+        <img src="/images/obverse.png" style="width:60px;height:60px;padding:5px;float:right;">
     </p>
 </div>
 
@@ -422,6 +418,17 @@ $a = null;
         the structure and the relationship of the hexagrams outside of the highly moral 
         Confucian version, which is the only one that survived to this day.  The Lao Tzu 
         version, undoubtedly less moralistic and judgmental, did not
+    </p>
+</div>
+<div id="hukuamsg" title="The Hu Kua">
+    <p>
+        The typical hexagrams (the "Pen Kua") show the beginning, middle, and end of a situation, but there is another, hidden, story to be told.  We can see this hidden story in the "Hu Kua".  This is where we take the 2nd, 3rd, and 4th lines and make the lower trigram of a new hexagram, and then take the 3rd, 4th, and 5th lines to create an upper trigram.  This newly created hexagram is the "Hu Kua".
+        <img src="/images/hukua.png">
+    </p>
+</div>
+<div id="penkuamsg" title="The Hu Kua">
+    <p>
+        The "Pen Kua" are the hexagrams arrived at by tossing coins or yarrow sticks, etc. This is the most common form of the hexagrams; the ones we usually think of when he think of the I Ching.
     </p>
 </div>
 

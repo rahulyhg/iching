@@ -1,5 +1,29 @@
 $(document).ready(function () {
     
+    
+    
+    
+    $("#tosstype").hover(function() {
+            turnOffRadio();
+//            $("#entropymsg").text("not yet enabled");
+        });
+        
+//jQuery("#tosstype").click(writeData);        
+    function turnOffRadio() {    
+//        $("#tosstype  input[id^=r-decay]:radio").attr('disabled',true);
+        $("#tosstype  input[id^=entropy]:radio").attr('disabled',true);
+        $("#tosstype  input[id^=acultural]:radio").attr('disabled',true);
+    }
+    
+//    $("#xsubtip").qtip({
+//        content: 'This is the transitional hexagram that is the difference between the original and the resulting hexagram.  Typically this transition is represented only by the moving lines of the original hexagram.  We rrive at this transition hexagram by subtracting the binary value of the original hex from the final hex (andd add 63 is less that zer0)final hexagram.  In this way, this transitional hex is the hexagram verion of the movong lines.',
+//    
+//    $("#plumtip").qtip({
+//        content: 'The Modern Plum technique is based on the ancient Mei Hua ("Plum Blossom") method of the Sung Synasty (920-1279ad).  It uses the current time as the "seed" for the casting.  This modern version also uses the current time of number of milliseconds since Jan. 1, 1970. An algorithm takes that number, <a href="/book/ichingbook/_book/instructions.html">transforms it to simulate three coins</a>.  This is done six time, with a random numner of milliseconds between each "toss".',
+//    
+//    $("#testtip").qtip({
+//        content: 'This randomly generates hexagrams using the PHP rand() function.  Mainly used for its speed as it does not access any services. Not a good option for proper use.',
+
 		$(function() {
 			$("#xsubtipmsg").dialog({
 				autoOpen: false
@@ -27,30 +51,6 @@ $(document).ready(function () {
 		});
 
     
-    
-    
-    
-    $("#tosstype").hover(function() {
-            turnOffRadio();
-//            $("#entropymsg").text("not yet enabled");
-        });
-        
-//jQuery("#tosstype").click(writeData);        
-    function turnOffRadio() {    
-//        $("#tosstype  input[id^=r-decay]:radio").attr('disabled',true);
-        $("#tosstype  input[id^=entropy]:radio").attr('disabled',true);
-        $("#tosstype  input[id^=acultural]:radio").attr('disabled',true);
-    }
-    
-//    $("#xsubtip").qtip({
-//        content: 'This is the transitional hexagram that is the difference between the original and the resulting hexagram.  Typically this transition is represented only by the moving lines of the original hexagram.  We rrive at this transition hexagram by subtracting the binary value of the original hex from the final hex (andd add 63 is less that zer0)final hexagram.  In this way, this transitional hex is the hexagram verion of the movong lines.',
-//    
-//    $("#plumtip").qtip({
-//        content: 'The Modern Plum technique is based on the ancient Mei Hua ("Plum Blossom") method of the Sung Synasty (920-1279ad).  It uses the current time as the "seed" for the casting.  This modern version also uses the current time of number of milliseconds since Jan. 1, 1970. An algorithm takes that number, <a href="/book/ichingbook/_book/instructions.html">transforms it to simulate three coins</a>.  This is done six time, with a random numner of milliseconds between each "toss".',
-//    
-//    $("#testtip").qtip({
-//        content: 'This randomly generates hexagrams using the PHP rand() function.  Mainly used for its speed as it does not access any services. Not a good option for proper use.',
-
     		$(function() {
 			$("#testtipmsg").dialog({
 				autoOpen: false
@@ -70,6 +70,24 @@ $(document).ready(function () {
 				$("#randomtipmsg").dialog("open");
 			});
 		});
+		$(function() {
+			$("#hukuamsg").dialog({
+				autoOpen: false
+			});
+			$("#hukuatip").on("click", function() {
+				$("#hukuamsg").dialog("open");
+			});
+		});
+		$(function() {
+			$("#penkuamsg").dialog({
+				autoOpen: false
+			});
+			$("#penkuatip").on("click", function() {
+				$("#penkuamsg").dialog("open");
+			});
+		});
+
+    //    
 //    
 //    $("#entropytip").qtip({
 //        content: 'CURRENTY DISABLED - Entropy is how random numbers are genenrated for encruption purposed.  This randomness is often collected from hardware sources (variance in fan noise or HDD), either pre-existing ones such as mouse movements or specially provided randomness generators.  The problem with this method is it takes time to "collect" entropy.  If it is all used up, it could take many minutes to collect enough too throw the I Ching.',

@@ -12,6 +12,8 @@ foreach ($ids as $id) {
     $fpseq = sprintf("%02s",$id['pseq']);
     $fbseq = sprintf("%02s",$id['bseq']);
     $hex = mdgethex($fpseq,$fbseq, $id);
+    
+    var_dump($hex);
     /**
      * Creates a new template for the user's page.
      * Fills it with mockup data just for testing.
@@ -24,7 +26,7 @@ foreach ($ids as $id) {
     $page->set("pseq", f($hex[0]['pseq']));    
     $page->set("bseq", f($hex[0]['bseq']));
     $page->set("binary", $hex[0]['binary']);
-    $page->set("dir", $hex[0]['dir']);
+    $page->set("dir", $hex[0]['iq32_dir']);
     $page->set("tri_upper", $hex[0]['tri_upper']);
     $page->set("tri_lower", $hex[0]['tri_lower']);
     $page->set("judge_old", $hex[0]['judge_old']);
@@ -138,7 +140,7 @@ function mdgethex($pseq,$bseq, $id) {
             Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
             WHERE hexagrams.pseq = '${pseq}' limit 1
          ) as tri_lower
-        ,dir
+        ,iq32_dir
         ,explanation
         ,judge_old
         ,judge_exp

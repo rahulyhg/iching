@@ -4,6 +4,23 @@
 //DataMapper$stuff = $mapper->fetchAllHexByPseq(11,TRUE);    
 require get_cfg_var("iching_root") . "/lib/class/CssHex.class.php";
 
+function makeHuKua($t) {
+    $h = array(0,0,0,0,0,0);
+
+    $h[5]=$t[4];
+    $h[4]=$t[3];
+    $h[3]=$t[2];
+    $h[2]=$t[3];
+    $h[1]=$t[2];
+    $h[0]=$t[1];
+    
+    $bin = implode($h);
+    
+    $hex = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq"  ,$bin);
+//    var_dump($hex);
+    return($hex);
+}
+
 function makeHex($tossed, $delta, $uid, $whichToFade) {
     $cssHex = new CssHex();
     $script = "";
@@ -20,45 +37,19 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
 
     $a = implode($tossed);
     $b = implode($newHex);
-//var_dump($a);
-//var_dump($b);
-//var_dump($delta);
     $a1 = bindec($a);
-    //var_dump($a1);
     $b1 = bindec($b);
-    //  var_dump($b1);
-
     $c = ($b1 - $a1 < 0 ? ($b1 - $a1) + 63 : $b1 - $a1);
-    //    var_dump("c");
-    //      var_dump($c);
     $q = sprintf("%06d", decbin($c));
-//       var_dump($q);
     $c1 = sprintf("%06d", $q);
-//          var_dump($c1);
 
     $Thex = str_split($c1);
     list($Thex2, $script, $TnewHex) = $cssHex->drawHex($Thex, array(0, 0, 0, 0, 0, 0), $script, 3, $uid);
     $out .= "<div  id='tossed_${uid}' class='trx_faded'>\n" . $Thex2 . "</div>\n";
     $out .= "<div class='spacerbox'></div>\n";
 
-//
-//        
     list($hex2, $script, $newHex) = $cssHex->drawHex($newHex, array(0, 0, 0, 0, 0, 0), $script, 2, $uid);
     $out .= "<div  id='final_${uid}' class='" . (($whichToFade == "fade_final") ? "faded" : "live") . "'>\n" . $hex2 . "</div>\n";
-    // var_dump($tossed);
-    // var_dump($TnewHex);
-    // var_dump($newHex);
-
-
-
-
-
-
-
-
-
-
-
 
     $tossed_pseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq", implode($tossed));
     $trx_pseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq", implode($Thex));
@@ -77,52 +68,29 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
     $final_iq32_theme = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "iq32_theme", implode($newHex));
 
 
-//
-//        $tossed_iq32_desc = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams","iq32_desc",implode($tossed));
-//        $tossed_iq32_desc = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams","iq32_desc",implode($tossed));
-//        $final_iq32_desc = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams","iq32_desc",implode($newHex));
-
-
     $t_sub = "<a target='_blank' href='/show.php?hex=${tossed_pseq}'><span class='st1'>$tossed_pseq</span></a><span> ($tossed_bseq)    </span><br><span class='st2'>$tossed_trans  </span><br><span class='st3'>$tossed_iq32_theme </span><br>\n";
     $x_sub = "<a target='_blank' href='/show.php?hex=${trx_pseq}'><span class='st1'>$trx_pseq   </span></a><span> ($trx_bseq)       </span><br><span class='st2'>$trx_trans     </span><br><span class='st3'>$trx_iq32_theme    </span><br>\n";
     $f_sub = "<a target='_blank' href='/show.php?hex=${final_pseq}'><span class='st1'>$final_pseq </span></a><span> ($final_bseq)     </span><br><span class='st2'>$final_trans   </span><br><span class='st3'>$final_iq32_theme  </span><br>\n";
 
     $out .= "</div>\n";
-    $out .= "<div class='clear underHex' >"
-            . "<table class='ttd'>"
-            . "     <tr class='rtd'>"
-            . "         <td class='htd'>"
-            . "             $t_sub"
-            . "         </td>"
-            . "         <td class='htd'>"
-            . "             $x_sub<br><a id='xsubtip' class='xsubtip qtip-content ui-widget-content' href='#'><img style='width:20px' src='/images/qmark-small-bw.png'/></a>"
-            . "         </td>"
-            . "         <td class='htd'>"
-            . "             $f_sub"
-            . "         </td>"
-            . "     </tr>"
-            . "</table>"
-            . "</div>\n";
-
-
-
-//      $out .= "</div><div class='clear underHex' ><table class='ttd'><tr class='rtd'><td class='htd'>$t_sub</td><td class='htd'>$x_sub</td><td class='htd'>$f_sub</td></tr></table></div>\n";
-//      $out .= "</div><div class='clear underHex' ><table class='ttd'><tr class='rtd'><td class='htd'>$t_sub</td><td class='htd'>$x_sub</td><td class='htd'>$f_sub</td></tr></table></div>\n";
-//      $out .= "</div><div class='clear underHex' ><table class='ttd'><tr class='rtd'><td class='htd'>$t_sub</td><td class='htd'>$x_sub</td><td class='htd'>$f_sub</td></tr></table></div>\n";
-//        $out .= "<div  id='trx_${uid}' class='boxD1 trx_faded'>$t_sub</div>\n";
-//        $out .= "<div  id='trx_${uid}' class='boxD3 trx_faded'>$t_sub</div>\n";
-//        $out .= "<div  id='trx_${uid}' class='boxD2 trx_faded'>$t_sub</div>\n";
-//        $out .= "   <div>" . $x_sub . "</div>\n";
-//        $out .= "</div>\n";
-    //$out .= "<div class='clear'></div>\n";
-//        $out .= "<div  id='final_${uid}' class='boxD2 ".(($whichToFade == "fade_final") ? "faded" :"live")."'>$_sub</div>\n";
-//        $out .= "   <div>" . $f_sub . "</div>\n";
-//        $out .= "</div>\n";
-//        $out .="</div>\n";
-//        
-
-
-
+        $out .= "<div class='clear underHex' >"
+                . "<table class='ttd'>"
+                . "     <tr class='rtd'>"
+                . "         <td class='htd'>"
+                . "             $t_sub"
+                . "         </td>"
+                . "         <td class='htd'>"
+                . "             $x_sub";
+    if ($whichToFade == "fade_final") { 
+          $out .= "<br><a id='xsubtip' class='xsubtip' href='#'><img style='width:20px' src='/images/qmark-small-bw.png'/></a>";
+    }
+          $out .= "         </td>"
+                . "         <td class='htd'>"
+                . "             $f_sub"
+                . "         </td>"
+                . "     </tr>"
+                . "</table>"
+                . "</div>\n";
 
 
     $out .= "<script>\n$(document).ready(function () {\n" . $script . "});\n</script>\n";
@@ -144,12 +112,6 @@ function getToss() {
     if (isset($_REQUEST['f_tossed'])) {
         $newTossed = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_tossed']))));
         $newFinal = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_final']))));
-
-//      var_dump($_REQUEST['f_final']);
-//      var_dump($GLOBALS['dbh']->chex2bin($_REQUEST['f_final']));
-//      var_dump(decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_final'])));
-//  var_dump($newFinal);
-//
 
         for ($i = 0; $i < 6; $i++) {
             if (($newTossed[$i] != $newFinal[$i])) {
@@ -181,9 +143,7 @@ function getToss() {
         // it gets recalced later, so clear it
         $delta = array(0, 0, 0, 0, 0, 0); //reset it 
     }
-    //      var_dump($newTossed);
-    //       var_dump($newFinal);
-//        var_dump($delta);
+
 // back to the normal  processing
 
     for ($i = 0; $i < 6; $i++) {
@@ -200,9 +160,6 @@ function getToss() {
         $final = $newFinal;
     }
 
-//    var_dump($tossed);
-//    var_dump($delta);
-//    var_dump($final);
 
     $tossed_bin = tobin($tossed);
     $final_bin = tobin($final);
@@ -210,6 +167,7 @@ function getToss() {
     $sql = <<<EOX
     SELECT 
         fix
+        ,proofed
         ,`comment`
         ,filename
         ,pseq
