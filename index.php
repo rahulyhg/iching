@@ -184,7 +184,10 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 <div class="awrapper">
     <div id="accordion1">
 
-        <h3 class="eTitle tColors"><?= $t['pseq'] ?> (<?= $t['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($t['pseq']) ? $t['pseq'] : 0) ?>"><?= $t['trans'] ?></a></h3>
+        <h3 class="eTitle tColors"><?= $t['pseq'] ?> (<?= $t['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($t['pseq']) ? $t['pseq'] : 0) ?>"><?= $t['trans'] ?></a>
+            <a href="/cignite/index.php/main/hexagrams/edit/<?= $t['bseq']?>" target="_blank"><img style="width:20px" src="/images/edit.png"></a>
+            <a href="/cignite/index.php/main/notes/edit/<?= $t['bseq']?>" target="_blank"><img style="width:20px" src="/images/addnotes.png"></a>
+        </h3>
         <div>
             <p>
                 <?= $t['judge_old'] ?></p>
