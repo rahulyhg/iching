@@ -183,10 +183,20 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 ?>
 <div class="awrapper">
     <div id="accordion1">
-
-        <h3 class="eTitle tColors"><?= $t['pseq'] ?> (<?= $t['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($t['pseq']) ? $t['pseq'] : 0) ?>"><?= $t['trans'] ?></a>
-            <a href="/cignite/index.php/main/hexagrams/edit/<?= $t['bseq']?>" target="_blank"><img style="width:20px" src="/images/edit.png"></a>
-            <a href="/cignite/index.php/main/notes/edit/<?= $t['bseq']?>" target="_blank"><img style="width:20px" src="/images/addnotes.png"></a>
+<?php 
+/*
+ *  First Title
+ */
+?>
+        <h3 style="font-size:1.2em !important" class="eTitle tColors"><?= $t['pseq'] ?> (<?= $t['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($t['pseq']) ? $t['pseq'] : 0) ?>"><?= $t['trans'] ?></a>
+            <div style="float:right">
+            <a href="/cignite/index.php/main/hexagrams/edit/<?= $t['pseq']?>" target="_blank">
+                <img style="width:20px" src="/images/edit.png">
+            </a>
+            <a href="/cignite/index.php/main/notes/edit/<?= $t['pseq']?>" target="_blank">
+                <img style="width:20px" src="/images/addnotes.png">
+            </a>
+            </div>
         </h3>
         <div>
             <p>
@@ -194,6 +204,11 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             <p><?= $t['judge_exp'] ?></p>
         </div>
 
+<?php 
+/*
+ *  First Trigrams
+ */
+?>
             <h3 class="eTrigrams tColors">The Trigrams</h3>
             <div>
                 <p>
@@ -207,28 +222,45 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                 <?= $t['explanation'] ?>
 
             </div>
+<?php 
+/*
+ *  First image
+ */
+?>
             <h3 class="eImage  tColors">Image</h3>
             <div>
                 <p>
-                    The Ancient Assocated Image
+                    <b>The Ancient Assocated Image</b>
+                </p>
                 <p>
-                    <?= $t['image_old'] ?>
+                    <i><?= $t['image_old'] ?></i>
+                </p>
                 <p>
-                    Commentary and Explanation of the Image
+                    <?php
+                    if ( file_exists(get_cfg_var("iching_root")."/images/symbol/image".$t['pseq'].".jpg")) {
+                        $fn = "/images/symbol/image".$t['pseq'].".jpg";
+                        print "<img style='width:70%' src='${fn}'>";
+
+                    } else {
+                        print "[no image yet]";
+                    }
+                    ?>
+                <p>
+                    <b>Commentary and Explanation of the Image</b>
+                </p>
                 <p>
                     <?= $t['image_exp'] ?>
+                </p>
             </div>
+<?php 
+/*
+ *  First Notes
+ */  
+?>
+            
             <h3 class="eImage  tColors">Notes</h3>
             <div>
-                <p>
-                    Comments:  <?php  print showComment($t) ?>
-                </p>
-                <p>
-                    Fixes:    <?php print showFixes($t); ?> 
-                </p>
-                <p>
-                    Edit Status: <?php print getEdStatus($t);?>
-                </p>
+                <?php echo getNotes($t['pseq']) ?>
             </div>
 
 <?php
@@ -238,7 +270,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                 $j = $i + 1;
                 //var_dump($j);
                 ?>
-                <h3 class="eLines"><?= $t['line_' . $j] ?></h3>
+                <h3 class="eLines lColors"><?= $t['line_' . $j] ?></h3>
                 <div>
                     <div class="content line_org" id="line_<?= $j ?>_org"><?= $t['line_' . $j . '_org'] ?></div>
                     <div class="content line_exp" id="line_<?= $j ?>_exp"><?= $t['line_' . $j . '_exp'] ?></div>
@@ -247,7 +279,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             }
         }
         ?>
-            <h3 class="eImage  tColors">Transitional Hexagram</h3>
+            <h3 class="eImage  xColors">Transitional Hexagram</h3>
             <div>
                 <p>
                 <h2><a href="/show.php?hex=<?= $ret['tpseq'] ?>"><?= $ret['tpseq'] ?>
@@ -295,7 +327,16 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 <div class="awrapper">
     <div id="accordion2">
 
-        <h3 class="eTitle fColors"><?= $f['pseq'] ?> (<?= $f['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($f['pseq']) ? $f['pseq'] : 0) ?>"><?= $f['trans'] ?></a></h3>
+        <h3 style="font-size:1.2em !important" class="eTitle fColors"><?= $f['pseq'] ?> (<?= $f['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($f['pseq']) ? $f['pseq'] : 0) ?>"><?= $f['trans'] ?></a>
+            <div style="float:right">
+            <a href="/cignite/index.php/main/hexagrams/edit/<?= $f['pseq']?>" target="_blank">
+                <img style="width:20px" src="/images/edit.png">
+            </a>
+            <a href="/cignite/index.php/main/notes/edit/<?= $f['pseq']?>" target="_blank">
+                <img style="width:20px" src="/images/addnotes.png">
+            </a>
+            </div>
+        </h3>
         <div>
             <p>
                 <?= $f['judge_old'] ?></p>
@@ -328,15 +369,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             </div>
             <h3 class="eImage  fColors">Notes</h3>
             <div>
-                <p>
-                    Comments:  <?= showComment($f) ?>
-                </p>
-                <p>
-                    Fixes:    <?= showFixes($f); ?> 
-                </p>
-                <p>
-                    Edit Status: <?= getEdStatus($f);?>
-                </p>
+                <?php echo getNotes($f['pseq']) ?>
             </div>
     </div>
 </div>

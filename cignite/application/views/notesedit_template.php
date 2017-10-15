@@ -34,10 +34,12 @@ a:hover
 </head>
 <body>
     <?php 
-    echo $this->vars['name'];
-    echo "<img style='width:30px' src='/images/hex/small/hexagram".sprintf("%02d",$this->vars['pseq']).".png'>";
-    echo " op: ".$this->vars['oname'] ;
-    echo "<img style='width:30px' src='/images/hex/small/hexagram".sprintf("%02d",$this->vars['opseq']).".png'>";
+    echo " <h3>";
+    echo $this->vars['name']."(".$this->vars['pseq'].")";
+    echo " <a href='/show.php?hex=".$this->vars['pseq']."'><img style='width:30px' src='/images/hex/small/hexagram".$this->vars['pseq'].".png'></a>";
+    echo "  op: ".$this->vars['oname']."(".$this->vars['opseq'].")";
+    echo " <a href='/show.php?hex=".$this->vars['opseq']."'><img style='width:30px' src='/images/hex/small/hexagram".$this->vars['opseq'].".png'></a>";
+    echo " </h3>";
     ?>
 <!-- Beginning header -->
 <!--    <div>

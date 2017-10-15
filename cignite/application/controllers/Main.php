@@ -48,13 +48,13 @@ class Main extends CI_Controller {
         $this->vars = array(
              'name'=>$name
             ,'oname'=>$oname
-            ,'pseq'=>$pseq
-            ,'opseq'=>$opseq
+            ,'pseq'=>sprintf("%02d",$pseq)
+            ,'opseq'=>sprintf("%02d",$opseq)
         );
         
 //        $this->load->view('notesedit_template', $this->vars);
         
-//        var_dump($this);
+//        var_dump($this->vars);
         
         $output = $crud->render();        
         $this->_notesedit_output($output);

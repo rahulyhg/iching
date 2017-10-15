@@ -4,6 +4,30 @@
 //DataMapper$stuff = $mapper->fetchAllHexByPseq(11,TRUE);    
 require get_cfg_var("iching_root") . "/lib/class/CssHex.class.php";
 
+function getNotes($pseq) {
+    $hex = $GLOBALS['dbh']->getNotes($pseq);
+        $out = "";
+$hex[0]['pseq'] = null;
+$hex[0]['bseq'] = null;
+$hex[0]['oseq'] = null;
+$hex[0]['binary'] = null;
+$hex[0]['balance'] = null;
+$hex[0]['tri_upper_bin'] = null;
+$hex[0]['tri_lower_bin'] = null;
+    
+    
+    foreach ($hex[0] as $key => $val) {
+        if ($val) {
+            $out .= "<b>$key: </b> $val<br>\n";
+        }
+    }
+    
+    if (!$out) {
+        $out = "There are no notes yet.";
+    }
+    return($out);
+}
+
 function getEdStatus($t) {
     if (!$t['proofed']) {
         //print "<div class='notice'>This content has yet to be proofed.  Please disregard the typos and other errors.</div>";

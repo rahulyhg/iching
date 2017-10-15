@@ -65,6 +65,12 @@ class DataMapper {
 //        return($this->ex($query, array(), array('debug' => $d))->fetchAll(PDO::FETCH_ASSOC));
     }
 
+    public function getNotes($h) {
+        $query = "SELECT * from notes where pseq=${h}";
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        return($sth->fetchAll(PDO::FETCH_ASSOC));
+    }
     public function getHex($h) {
         $query = "SELECT * from hexagrams where pseq=${h}";
         $sth = $this->o->prepare($query);
@@ -100,7 +106,6 @@ class DataMapper {
     
     public function getHexnumOppositeByPseq($pseq) {
         $bin = $this->getHexFieldByPseq("hexagrams","bseq",$pseq);
-        var_dump($bin);
         $obin = 63-$bin;
         $ohexnum = $this->cbin2hex($obin);
         return($ohexnum);

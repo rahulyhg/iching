@@ -1,5 +1,6 @@
     .awrapper {
         width:50%;
+        min-width:50%;
         margin: 40px;
         padding: 0px;
         display: flex;
@@ -11,6 +12,14 @@
     .tColors {
         background-color: darkgreen;
         color:yellow;
+    }
+    .lColors {
+        background-color: goldenrod;
+        color:brown;
+    }
+    .xColors {
+        background-color: lightgrey;
+        color:#444444;
     }
     .fColors {
         background-color: brown;
@@ -36,10 +45,8 @@
     
     
     .eLines {
-        color:blue;
         font-size: 18pt;
         font-weight: bold;
-        background-color: cyan;
         padding-left:50px !important;
     }
     
