@@ -92,36 +92,54 @@ class DataMapper {
 
     public function chex2bin($h) {
         $query = "SELECT bseq from hexagrams where pseq=${h}";
-        
-//        var_dump($query);
         $sth = $this->o->prepare($query);
         $sth->execute();
         $bin = $sth->fetch();
         return($bin['bseq']);
-      //  $res = $this->ex($query, array(), array('debug' => $d))->fetchAll(PDO::FETCH_ASSOC);
-      //  return($res['bseq']);
+    }
+    
+    public function getHexnumOppositeByPseq($pseq) {
+        $bin = $this->getHexFieldByPseq("hexagrams","bseq",$pseq);
+        var_dump($bin);
+        $obin = 63-$bin;
+        $ohexnum = $this->cbin2hex($obin);
+        return($ohexnum);
     }
     public function getHexFieldByBinary($table, $field,$bin) {
         $query = "SELECT $field from $table where `binary` = '${bin}'";
-        
-//        var_dump($query);
         $sth = $this->o->prepare($query);
         $sth->execute();
         $bin = $sth->fetch();
         return($bin[$field]);
-      //  $res = $this->ex($query, array(), array('debug' => $d))->fetchAll(PDO::FETCH_ASSOC);
-      //  return($res['bseq']);
     }
     public function getHexFieldByPseq($table, $field,$pseq) {
         $query = "SELECT $field from $table where `pseq` = '${pseq}'";
-        
 //        var_dump($query);
         $sth = $this->o->prepare($query);
         $sth->execute();
         $bin = $sth->fetch();
         return($bin[$field]);
-      //  $res = $this->ex($query, array(), array('debug' => $d))->fetchAll(PDO::FETCH_ASSOC);
-      //  return($res['bseq']);
+    }
+    public function getAllPositions() {
+        $query = "SELECT * from positions";
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return($res);
+    }
+    public function getAllDescPositions() {
+        $query = "SELECT * from desc_positions";
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return($res);
+    }
+    public function getAllAscPositions() {
+        $query = "SELECT * from asc_positions";
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return($res);
     }
 
 }

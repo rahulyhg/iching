@@ -1,7 +1,0 @@
-<?php
-for ($i=0; $i<65 ; $i++) {
-$d = sprintf("%02d",$i);
-echo "wget http://www.iching-online.org/images/hexagram${d}.png\n";
-}
-?>
-
