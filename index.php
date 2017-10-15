@@ -327,6 +327,11 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 <div class="awrapper">
     <div id="accordion2">
 
+<?php 
+/*
+ *  Second Hex Title
+ */  
+?>
         <h3 style="font-size:1.2em !important" class="eTitle fColors"><?= $f['pseq'] ?> (<?= $f['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($f['pseq']) ? $f['pseq'] : 0) ?>"><?= $f['trans'] ?></a>
             <div style="float:right">
             <a href="/cignite/index.php/main/hexagrams/edit/<?= $f['pseq']?>" target="_blank">
@@ -343,6 +348,11 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             <p><?= $f['judge_exp'] ?></p>
         </div>
 
+<?php 
+/*
+ *  Second Trigrams
+ */  
+?>
             <h3 class="eTrigrams fColors">The Trigrams</h3>
             <div>
                 <p>
@@ -356,17 +366,41 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                 <?= $f['explanation'] ?>
 
             </div>
+<?php 
+/*
+ *  Second Image
+ */  
+?>
             <h3 class="eImage  fColors">Image</h3>
             <div>
                 <p>
-                    The Ancient Assocated Image
+                    <b>The Ancient Assocated Image</b>
+                </p>
                 <p>
-                    <?= $f['image_old'] ?>
+                    <i><?= $f['image_old'] ?></i>
+                </p>
                 <p>
-                    Commentary and Explanation of the Image
+                    <?php
+                    if ( file_exists(get_cfg_var("iching_root")."/images/symbol/image".$f['pseq'].".jpg")) {
+                        $fn = "/images/symbol/image".$f['pseq'].".jpg";
+                        print "<img style='width:70%' src='${fn}'>";
+
+                    } else {
+                        print "[no image yet]";
+                    }
+                    ?>
+                <p>
+                    <b>Commentary and Explanation of the Image</b>
+                </p>
                 <p>
                     <?= $f['image_exp'] ?>
+                </p>
             </div>
+<?php 
+/*
+ *  Second Notes
+ */  
+?>
             <h3 class="eImage  fColors">Notes</h3>
             <div>
                 <?php echo getNotes($f['pseq']) ?>
