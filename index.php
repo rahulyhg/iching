@@ -28,7 +28,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         <!-- ------------------------------------------------------------>
 
         <?php
-        var_dump($_REQUEST);
+        //var_dump($_REQUEST);
         if (!isset($_REQUEST['flipped'])) { /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
             ?>
             <div class="qbox">
