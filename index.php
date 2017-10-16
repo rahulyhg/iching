@@ -84,7 +84,8 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         
         /* set question to 'Query for <date>' if it is blank */
         if (!isset($_REQUEST['question'])) {
-            $_REQUEST['question'] = "Query for ".$dates['human'];
+//            $_REQUEST['question'] = "Query for ".$dates['human'];
+            $_REQUEST['question'] = "no question, but an answer";
         }
         
         /* determine which qua we are in, default is Pen-Kua */
@@ -167,7 +168,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             </div>
             <?php
              }
-             //print getEdStatus($t);  /* show statis on pgage, ex "PROOFED" */
+
              
              
             /*
@@ -305,8 +306,8 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 /* *************************************************************************** */
 ?>
 
+     <div if = 'here2' class="container container-top">
     <?php
-    
     if ($t['bseq'] != $f['bseq'] ) {  /* if T == F then there are no moving lines, so skip */
         /* make and shwo hexs - same as above */
         $ret = makeHex(str_split($t['binary']), $d, uniqid(), "fade_tossed");
@@ -325,7 +326,11 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
           //require get_cfg_var("iching_root")."/lib/accordian2.php";
 
         ?>
-    
+    </div>
+        <script>
+    $(".container-top").css("background-color","rgb(242, 240, 255");
+    </script>
+
     <?php
 /* *************************************************************************** */
     if ($t['bseq'] != $f['bseq'] ) {  /* if T == F then there are no moving lines, so skip */
