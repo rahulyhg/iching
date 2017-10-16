@@ -372,7 +372,7 @@ function tossit() {
                         $throw[$i] = 9;
                         break;
                 }
-                sleep(5);
+//                sleep(5);
             }
         }
         return($throw);
