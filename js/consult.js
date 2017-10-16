@@ -1,6 +1,28 @@
 $(document).ready(function () {
 
 
+    $("#f_tossed").change(function () {
+
+        var pseq = $("#f_tossed").val();
+        var durl = "/api/func.php?func=getHexnumOppositeByPseq&pseq=" + pseq;
+        $.ajax({
+            url: durl,
+            data: {
+                format: "json"
+            },
+            crossDomain: true,
+            dataType: 'jsonp',
+            jsonpCallback: 'callback',
+            type: 'GET',
+            success: function (json) {
+                $("#f_final").attr("placeholder",json['ret']);
+            },
+            error: function () {
+                alert("Request Failed");
+            }
+        });
+
+    });
 
 
     $("#tosstype").hover(function () {

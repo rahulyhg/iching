@@ -118,8 +118,8 @@ class DataMapper {
         return($bin[$field]);
     }
     public function getHexFieldByPseq($table, $field,$pseq) {
-        $query = "SELECT $field from $table where `pseq` = '${pseq}'";
-//        var_dump($query);
+        $query = "SELECT $field from $table where pseq = ${pseq}";
+        //var_dump($query);
         $sth = $this->o->prepare($query);
         $sth->execute();
         $bin = $sth->fetch();

@@ -1,7 +1,10 @@
     .awrapper {
         width:auto;
         min-width:50%;
-        margin: 40px;
+        margin-top: 4px;
+        margin-left: 31px;
+        margin-right: 31px;
+        margin-bottom: 31px;
         padding: 0px;
         display: flex;
         flex-direction: column;

@@ -341,7 +341,7 @@ function tossit() {
             //var_dump($r);
             return($r);
         }
-        if ($_REQUEST['mode'] == "random.org") {
+        if ($_REQUEST['mode'] == "r-decay") {
             $r = getHotBits();
             //$r = array(rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9));
             //var_dump($r);
@@ -350,14 +350,13 @@ function tossit() {
     }
 
     if (isset($_REQUEST['mode'])) {
+        $throw = array(null, null, null, null, null, null);
         if ($_REQUEST['mode'] == "random.org") {
-            $throw = array(null, null, null, null, null, null);
             for ($i = 0; $i < 6; $i++) {
                 $id = uniqid();
                 $f = "./throw.sh ${id} ${i}";
                 $run = trim(system($f));
                 $flip = file_get_contents("id/${id}");
-
 
                 switch ($flip) {
                     case 0:

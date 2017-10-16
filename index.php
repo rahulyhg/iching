@@ -28,7 +28,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         <!-- ------------------------------------------------------------>
 
         <?php
-        //var_dump($_REQUEST);
+        var_dump($_REQUEST);
         if (!isset($_REQUEST['flipped'])) { /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
             ?>
             <div class="qbox">
@@ -69,8 +69,13 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                     <input type="hidden" name="flipped" value="1">
                     <div class="row3">
                         <div class="text_smcaps">Or enter 2 hex nums    </div>
-                        <input class = "doublenum" id="f_tossed" type="text" name="f_tossed" placeholder="<?php echo rand(1, 64) ?>" value="">
-                        <input class = "doublenum" id="f_final" type="text" name="f_final" placeholder="<?php echo rand(1, 64) ?>" value="">
+
+                        <?php
+                        $fromNum = rand(1,64);
+                        $toNum = $GLOBALS['dbh']->getHexnumOppositeByPseq($fromNum);
+                        ?>
+                        <input class = "doublenum" id="f_tossed" type="text" name="f_tossed" placeholder="<?= $fromNum ?>" value="">
+                        <input class = "doublenum" id="f_final" type="text" name="f_final" placeholder="<?= $toNum ?>" value="">
                         <input class = "btn btn-primary" type="submit" value="Show">
                     </div>
                 </form>
