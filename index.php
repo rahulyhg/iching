@@ -17,8 +17,8 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 
 <section id="pageContent">
 
-    <div class="container">
-
+    <div if = 'here2' class="container container-top">
+    
         <div class="row1">
             <span class="btn btn-warning"><a href="index.php">RESET</a></span>
             <span class="btn btn-danger"><a style="color:white;font-weight: bold;" href="/book/ichingbook/_book/">DOCS</a></span>
@@ -133,28 +133,37 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         $t_hukua = makeHuKua($t['binary']);
         $f_hukua = makeHuKua($f['binary']);
         ?>
-            <div class="container">
+    <script>
+    $(".container-top").css("background-color","rgb(242, 240, 255");
+    </script>
              <?php 
              /* the 't' query param is only set when you are viewing the Hu Kua.  't' and 'f' are set
               * as params to the 'view Hu Kua' link so the user can navigate back to the original vua the 'view Pen Kua'
               */
              if (!isset($_REQUEST['t'])) { /* Show Hu Kua links */
              ?>
+            <div id='here3' class='textWrapper'>
+                <div class='subtextWrapper'>
                 <a style="font-size:16pt" href='/index.php?t=<?=$t['pseq']?>&f=<?=$f['pseq']?>&flipped=1&kua=Hu-Kua&f_tossed=<?= $t_hukua ?>&f_final=<?= $f_hukua ?>'>View the Hu Kua</a>
-                    <?php /* this is the jquery-ui popup link for the HuKua */ ?>
-                        <a id="hukuatip" class="hukuatip"  href="#">
-                            <img style="width:20px" src="/images/qmark-small-bw.png">
-                            <span id="hukuatipmsg"></span>
-                        </a> 
-             <?php
-             } else { /* Show Pen Kua links */
-             ?>
+                <?php /* this is the jquery-ui popup link for the HuKua */ ?>
+                <a id="hukuatip" class="hukuatip"  href="#">
+                    <img style="width:20px" src="/images/qmark-small-bw.png">
+                    <span id="hukuatipmsg"></span>
+                </a> 
+               </div>
+            </div>
+            <?php
+            } else { /* Show Pen Kua links */
+            ?>
+            <div id='here3' class='textWrapper'>
+                <div class='subtextWrapper'>
                 <a style="font-size:16pt" href='/index.php?flipped=1&f_tossed=<?= $_REQUEST['t'] ?>&f_final=<?= $_REQUEST['f'] ?>'>View the Pen Kua</a>
-                    <?php /* this is the jquery-ui popup link for the HuKua */ ?>?
-                        <a id="penkuatip" class="penkuatip"  href="#">
-                            <img style="width:20px" src="/images/qmark-small-bw.png">
-                            <span id="penkuatipmsg"></span>
-                        </a> 
+                <?php /* this is the jquery-ui popup link for the HuKua */ ?>
+                <a id="penkuatip" class="penkuatip"  href="#">
+                    <img style="width:20px" src="/images/qmark-small-bw.png">
+                    <span id="penkuatipmsg"></span>
+                </a> 
+                </div>
             </div>
             <?php
              }
@@ -172,10 +181,6 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
              * 
              */    
 
-
-
-            //require get_cfg_var("iching_root")."/lib/accordian1.php";
-
              ?>
 
 <?php
@@ -188,7 +193,8 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
  *  First Title
  */
 ?>
-        <h3 style="font-size:1.2em !important" class="eTitle tColors"><?= $t['pseq'] ?> (<?= $t['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($t['pseq']) ? $t['pseq'] : 0) ?>"><?= $t['trans'] ?></a>
+        <!-- h3 style="font-size:1.2em !important" class="eTitle tColors"><?= $t['pseq'] ?> (<?= $t['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($t['pseq']) ? $t['pseq'] : 0) ?>"><?= $t['trans'] ?></a -->
+        <h3 style="font-size:1.2em !important" class="eTitle tColors"><?= $t['pseq'] ?> (<?= $t['title'] ?>) <?= $t['trans'] ?>
             <div style="float:right">
             <a href="/cignite/index.php/main/hexagrams/edit/<?= $t['pseq']?>" target="_blank">
                 <img style="width:20px" src="/images/edit.png">
@@ -304,7 +310,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
     if ($t['bseq'] != $f['bseq'] ) {  /* if T == F then there are no moving lines, so skip */
         /* make and shwo hexs - same as above */
         $ret = makeHex(str_split($t['binary']), $d, uniqid(), "fade_tossed");
-        print "<div class='container'>\n${ret['hexes']}\n";
+        print "<div id='here1' class='container'>\n${ret['hexes']}</div>\n";
 
          /* same as abive - save old image links
           * 
@@ -415,7 +421,13 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         <?php
         /* this is teh end of the cast */
         } else { /* T == F, so nothign to show */
-                echo "<div style='font-size:18pt'> There are no Moving Lines </div>\n";
+            ?>
+    <div class='textWrapper'>
+        <div class='subtextWrapper'>
+            <span style='padding:25px;font-size: 12pt'>There are no moving lines</span>
+        </div>    
+    </div>  
+            <?php
         } 
         
         /* convert to int ?  hmmm aren;t they ints alrady in database  FIXME */

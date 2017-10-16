@@ -137,8 +137,8 @@ $(document).ready(function () {
 
 
     if ($(window).width() < 767) {
-        $(".awrapper").css({
-            "width": "95%"
-        });
+//        $(".awrapper").css({
+//            "width": "95%"
+//        });
     }
 });

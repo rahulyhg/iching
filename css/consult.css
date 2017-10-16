@@ -1,3 +1,14 @@
+html { 
+    background: url(/images/ripples.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+
+
 .notice {
     background-color: lightyellow;
     font-style:  italic;
@@ -19,7 +30,7 @@
     font-size:11pt !important;
     line-height: 1 !important;
     color: black !important;
-    
+
 }
 
 /*, .randomtip, .entropytip, .r-decaytip ,r-decaytip */
@@ -30,7 +41,9 @@
 
 
 
-
+body {
+    background-color: transparent !important;
+}
 
 body > section {
     width: 90% !important;
@@ -38,8 +51,8 @@ body > section {
 }
 
 #pageContent {
-width:auto !important;
-max-width:auto !important;
+    width:auto !important;
+    max-width:auto !important;
 }
 
 .container {
@@ -48,12 +61,53 @@ max-width:auto !important;
 .container {
     margin: 40px;
     padding: 0px;
+
     display: flex;
     flex-direction: column;
     align-items: center; 
     justify-content: center;
 }
 
+.container-top {
+    border-radius: 25px;
+    max-width: 432px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+
+    /*    margin: 6% !important;*/
+    padding: 3% !important;
+    
+    background-color: rgba(62, 11, 255, 0.11);
+    border-radius: 25px;
+    border: 1px solid cornflowerblue;    
+
+}
+.textWrapper {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+}
+.subtextWrapper {
+    border: 1px solid #6d3105;
+    background-color: #ebd5ec;
+    border-radius: 12px;
+    padding: 0px !important;
+    text-align: center; 
+    width:250px;
+}
+#hukuatip > img {
+    padding-bottom: 4px;
+    margin-left: 12px;
+}
+#penkuatip > img {
+    padding-bottom: 4px;
+    margin-left: 12px;
+}
 body > section {
     max-width: auto;
     margin: auto;
@@ -76,7 +130,8 @@ address {
     border:3px solid cyan;
 }
 .qbox {
-    border:1px solid grey;
+    border: 1px solid whitesmoke;
+    border-radius: 8px;
     margin: 0px;
     padding: 10px;
     display: flex;
@@ -84,7 +139,11 @@ address {
     align-items: center; 
     justify-content: center;
     max-width:280px;
+    background-image: url(/images/raysic.jpg);
+    background-size:  cover;
+
 }
+
 /*    .leftCol {
         float:left;
         width:60%;
