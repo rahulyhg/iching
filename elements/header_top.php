@@ -16,14 +16,19 @@ mb_regex_encoding("UTF-8");
     
     ?>
     
+        <!-- vendor includes -->
         <script src="/vendor/components/jquery/jquery.min.js"></script>
         <script src="/vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>    
         <script type="text/javascript" src="/vendor/qtip/jquery.qtip.js"></script>
+        <!-- jquery -->
         <script type="text/javascript" src="/js/script.js"></script>    
+	<script src="/vendor/jquery-ui/jquery-ui.min.js"></script>        
+`        <!-- local js -->
         <script type="text/javascript" src="/js/consult.js"></script>    
 	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet">
-	<script src="/vendor/jquery-ui/jquery-ui.min.js"></script>        
+        <!-- accordian -->
 	<script src="/js/accordian.js"></script>        
+        <script type="text/javascript" src="/dom-to-image/src/dom-to-image.js"></script>
         
         
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">//-->

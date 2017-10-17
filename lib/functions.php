@@ -202,19 +202,23 @@ function getToss() {
             }
         }
         $tossed = $newTossed;
+//        var_dump($delta);
         // it gets recalced later, so clear it
         $delta = array(0, 0, 0, 0, 0, 0); //reset it 
     }
 
 // back to the normal  processing
 
+        //var_dump($delta);
     for ($i = 0; $i < 6; $i++) {
         if (($tossed[$i] == 6) || ($tossed[$i] == 9)) {
             $delta[$i] = 1;
         }
     }
+      //  var_dump($delta);
     // confused as to why this has to be reversed 
-    //$delta = array_reverse($delta);
+//    $delta = array_reverse($delta);
+//        var_dump($delta);
 
     $final = getFinal($tossed);
     //override it static
@@ -293,7 +297,7 @@ EOX;
 
     $query = $sql . "'$final_bin'";
     $finalData = $GLOBALS['dbh']->getData($query);
-
+// upside down here var_dump($delta);
     $res = array('tossed' => $tossedData, 'delta' => $delta, 'final' => $finalData);
     return($res);
 }

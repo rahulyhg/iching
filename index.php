@@ -17,7 +17,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 
 <section id="pageContent">
 
-    <div if = 'here2' class="container container-top">
+    <div id = 'here2' class="container container-top">
     
         <div class="row1">
             <span class="btn btn-warning"><a href="index.php">RESET</a></span>
@@ -119,6 +119,12 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         $d = $ary['delta'];
         $t['date'] = $dates['data']; /* throw in a date fro file retreival later */
 
+//        var_dump($d);
+//            $d = array_reverse($d);
+  
+//        var_dump($d);
+  
+        
         /* save all data as a json file... later this will be retreivable */
         saveToFile($t, $d, $f);
         
@@ -140,7 +146,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         $f_hukua = makeHuKua($f['binary']);
         ?>
     <script>
-    $(".container-top").css("background-color","rgb(242, 240, 255");
+        $(".container-top").css("background-image","url(/images/qboxbg2.png");
+        $(".container-top").css("background-size","cover");
+
     </script>
              <?php 
              /* the 't' query param is only set when you are viewing the Hu Kua.  't' and 'f' are set
@@ -156,19 +164,20 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                     <img style="width:20px" src="/images/qmark-small-bw.png">
                     <span id="hukuatipmsg"></span>
                 </a> 
-               </div>
+               </div
             </div>
             <?php
             } else { /* Show Pen Kua links */
             ?>
             <div id='here3' class='textWrapper'>
                 <div class='subtextWrapper'>
-                <a style="font-size:16pt" href='/index.php?flipped=1&f_tossed=<?= $_REQUEST['t'] ?>&f_final=<?= $_REQUEST['f'] ?>'>View the Pen Kua</a>
+               
                 <?php /* this is the jquery-ui popup link for the HuKua */ ?>
                 <a id="penkuatip" class="penkuatip"  href="#">
                     <img style="width:20px" src="/images/qmark-small-bw.png">
                     <span id="penkuatipmsg"></span>
                 </a> 
+
                 </div>
             </div>
             <?php
@@ -193,27 +202,60 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 /* *************************************************************************** */
 ?>
 <div class="awrapper">
+    <?php /* this is the tool bar */ ?>
+    <div style="border:0px solid red;background-color: transparent;padding:4px;">
+        <span>        
+            <!--span style="padding-left:15px" id="expand1">[+] </span>
+            <span style="padding-left:15px" id="collapse1">[-] </span>
+            <span style="padding-left:15px" id="grab"> [GR] </span-->
+            <?php /* EXPAND BUTTON */ ?>
+            <span style="padding-left:15px">
+                <a id="expcol" class="accordion-expand-all" href="#">[EXPAND]</a>
+            </span>
+            <?php /* FINAL HEX EDIT BUTTON */ ?>
+            <span style="padding-left:15px">
+                <a href="/cignite/index.php/main/hexagrams/edit/<?= $t['pseq'] ?>" target="_blank">
+                    <img style="border:4px solid white;width:30px" src="/images/edit.png">
+                </a>
+            </span>
+            <?php /* NOTES EDIT BUTTON */ ?>
+            <span style="padding-left:15px">
+                <a href="/cignite/index.php/main/notes/edit/<?= $t['pseq'] ?>" target="_blank">
+                    <img style="border:4px solid white;width:30px" src="/images/addnotes.png">
+                </a>
+            </span>
+            <?php /* FONT SIZE */ ?>
+            <span style="padding-left:15px"><span class="expcol" id="larger1">[+]</spam></span>
+            <span style="padding-left:15px"><span class="expcol" id="larger2">[++]</spam></span>
+            <span style="padding-left:15px"><span class="expcol" id="larger3">[+++]</spam></span>
+        </span>
+    </div>
     <div id="accordion1">
 <?php 
 /*
  *  First Title
  */
 ?>
-        <!-- h3 style="font-size:1.2em !important" class="eTitle tColors"><?= $t['pseq'] ?> (<?= $t['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($t['pseq']) ? $t['pseq'] : 0) ?>"><?= $t['trans'] ?></a -->
-        <h3 style="font-size:1.2em !important" class="eTitle tColors"><?= $t['pseq'] ?> (<?= $t['title'] ?>) <?= $t['trans'] ?>
-            <div style="float:right">
-            <a href="/cignite/index.php/main/hexagrams/edit/<?= $t['pseq']?>" target="_blank">
-                <img style="width:20px" src="/images/edit.png">
-            </a>
-            <a href="/cignite/index.php/main/notes/edit/<?= $t['pseq']?>" target="_blank">
-                <img style="width:20px" src="/images/addnotes.png">
-            </a>
-            </div>
+        <h3 id="firstheaader" style="font-size:1.2em !important" class="eTitle t_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+            <?= $t['pseq'] ?> (<?= $t['title'] ?>) <?= $t['trans'] ?>
+            <?php /* this invisible one pixel line control the collapse with of the accordian */?>
+            <br><img style="min-width:300px" src="images/thinline350.png">
         </h3>
-        <div>
+
+        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                <p>
+                    <b>The Original Text</b>
+                </p>
+
             <p>
-                <?= $t['judge_old'] ?></p>
-            <p><?= $t['judge_exp'] ?></p>
+                <i><?= $t['judge_old'] ?></i>
+            </p>
+                <p>
+                    <b>The Expanded Text</b>
+                </p>
+            <p>
+                    <?= $t['judge_exp'] ?>
+            </p>
         </div>
 
 <?php 
@@ -221,86 +263,125 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
  *  First Trigrams
  */
 ?>
-            <h3 class="eTrigrams tColors">The Trigrams</h3>
-            <div>
-                <p>
-                    The Upper Trigram<br>
-                    <?= $t['tri_upper'] ?><br>
-                    The Lower Trigram<br>
-                    <?= $t['tri_lower'] ?><br>
-                </p>
-                Explanation of the Trigrams
-                <p>
+        <h3 style="font-size:1.2em !important" class="eTrigrams tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+            The Trigrams
+        </h3>
+        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+            <p>
+                <b>The Upper Trigram</b>
+            </p>
+            <p>
+                <?= $t['tri_upper'] ?>
+            </p>
+            <p>
+                <b>The Lower Trigram</b>
+            </p>
+            <p>
+                <?= $t['tri_lower'] ?><br>
+            </p>
+            <p>
+                <b>Explanation of the Trigrams</b>
+            </p>
+            <p>
                 <?= $t['explanation'] ?>
-
-            </div>
+            </p>
+        </div>
+        
 <?php 
 /*
  *  First image
  */
 ?>
-            <h3 class="eImage  tColors">Image</h3>
-            <div>
-                <p>
-                    <b>The Ancient Assocated Image</b>
-                </p>
-                <p>
-                    <i><?= $t['image_old'] ?></i>
-                </p>
-                <p>
-                    <?php
-                    if ( file_exists(get_cfg_var("iching_root")."/images/symbol/image".$t['pseq'].".jpg")) {
-                        $fn = "/images/symbol/image".$t['pseq'].".jpg";
-                        print "<img style='width:70%' src='${fn}'>";
-
-                    } else {
-                        print "[no image yet]";
-                    }
-                    ?>
-                <p>
-                    <b>Commentary and Explanation of the Image</b>
-                </p>
-                <p>
-                    <?= $t['image_exp'] ?>
-                </p>
-            </div>
+        <h3 style="font-size:1.2em !important" class="eImage  tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+            Image
+        </h3>
+        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+            <p>
+                <b>The Ancient Assocated Image</b>
+            </p>
+            <p>
+                <i><?= $t['image_old'] ?></i>
+            </p>
+            <p>
+                <?php
+                if (file_exists(get_cfg_var("iching_root") . "/images/symbol/image" . $t['pseq'] . ".jpg")) {
+                    $fn = "/images/symbol/image" . $t['pseq'] . ".jpg";
+                    print "<img style='width:70%' src='${fn}'>";
+                } else {
+                    print "[no image yet]";
+                }
+                ?>
+            <p>
+                <b>Commentary and Explanation of the Image</b>
+            </p>
+            <p>
+                <?= $t['image_exp'] ?>
+            </p>
+        </div>
 <?php 
 /*
  *  First Notes
  */  
 ?>
             
-            <h3 class="eImage  tColors">Notes</h3>
-            <div>
-                <?php echo getNotes($t['pseq']) ?>
-            </div>
+        <h3 style="font-size:1.2em !important" class="eImage  tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+            Notes
+        </h3>
+
+        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+            <p>
+            <?php echo getNotes($t['pseq']) ?>
+            </p>
+        </div>
 
 <?php
+/*
+ *  The Lines
+ */  
+//var_dump($d);
     if ($t['bseq'] != $f['bseq'] ) {  /* if T == F then there are no moving lines, so skip */
-        for ($i = 0; $i < 6; $i++) {
+//        for ($i = 0; $i < 6; $i++) {
+        for ($i = 5; $i >= 0; $i-- ) {
+  //          var_dump($i);
             if ($d[$i] == 1) {
-                $j = $i + 1;
+//                $j = $i + 1;
+                $j = 6-$i ;
                 //var_dump($j);
                 ?>
-                <h3 class="eLines lColors"><?= $t['line_' . $j] ?></h3>
-                <div>
-                    <div class="content line_org" id="line_<?= $j ?>_org"><?= $t['line_' . $j . '_org'] ?></div>
-                    <div class="content line_exp" id="line_<?= $j ?>_exp"><?= $t['line_' . $j . '_exp'] ?></div>
-                </div>
-            <?php
+                        <h3 style="font-size:1.2em !important" class="eLines lColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                        <?= $t['line_' . $j] ?>
+                        </h3>
+                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                            <div class="content line_org" id="line_<?= $j ?>_org">
+                                <p>
+                                    <?= $t['line_' . $j . '_org'] ?>
+                                </p>
+                            </div>
+                            <div class="content line_exp" id="line_<?= $j ?>_exp">
+                                <p>
+                                    <?= $t['line_' . $j . '_exp'] ?>
+                                </p>
+                            </div>
+                        </div>
+                <?php
             }
         }
         ?>
-            <h3 class="eImage  xColors">Transitional Hexagram</h3>
-            <div>
-                <p>
-                <h2><a href="/show.php?hex=<?= $ret['tpseq'] ?>"><?= $ret['tpseq'] ?>
-                    <?= $GLOBALS['dbh']->getHexFieldByPseq("hexagrams","trans",$ret['tpseq']);?>
-                    </a></h2>
-                    <?= $GLOBALS['dbh']->getHexFieldByPseq("hexagrams","judge_exp",$ret['tpseq']);?>
-                </p>
-                <p>
-            </div>
+        <h3 style="font-size:1.2em !important" class="eImage  xColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+            Transitional Hexagram
+        </h3>
+        <div>
+            <p>
+                <b>
+            <a href="/show.php?hex=<?= $ret['tpseq'] ?>"><?= $ret['tpseq'] ?>
+                    <?= $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "trans", $ret['tpseq']); ?>
+                </a>
+                </b>
+            </p>
+            <p>
+            <?= $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "judge_exp", $ret['tpseq']); ?>
+            </p>
+        </div>
         <?php        
     }
 ?>
@@ -333,14 +414,34 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         ?>
     </div>
         <script>
-    $(".container-top").css("background-color","rgb(242, 240, 255");
-    </script>
+    $(".container-top").css("background-image","url(/images/qboxbg2.png");
+        $(".container-top").css("background-size","cover");
+        </script>
 
     <?php
 /* *************************************************************************** */
     if ($t['bseq'] != $f['bseq'] ) {  /* if T == F then there are no moving lines, so skip */
 ?>
+
+
 <div class="awrapper">
+
+    <div style="border:0px solid red;background-color: transparent;padding:4px;">
+        <span>        
+            <?php /* FINAL HEX EDIT BUTTON */ ?>
+            <span style="padding-left:15px">
+                <a href="/cignite/index.php/main/hexagrams/edit/<?= $f['pseq'] ?>" target="_blank">
+                    <img style="border:4px solid white;width:30px"  src="/images/edit.png">
+                </a>
+            </span>
+            <?php /* NOTE BUTTON */ ?>
+            <span style="padding-left:15px">
+                <a href="/cignite/index.php/main/notes/edit/<?= $f['pseq'] ?>" target="_blank">
+                    <img style="border:4px solid white;width:30px"  src="/images/addnotes.png">
+                </a>
+            </span>
+        </span>
+    </div>
     <div id="accordion2">
 
 <?php 
@@ -348,20 +449,23 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
  *  Second Hex Title
  */  
 ?>
-        <h3 style="font-size:1.2em !important" class="eTitle fColors"><?= $f['pseq'] ?> (<?= $f['title'] ?>) <a target="blank_" href="show.php?hex=<?= (isset($f['pseq']) ? $f['pseq'] : 0) ?>"><?= $f['trans'] ?></a>
-            <div style="float:right">
-            <a href="/cignite/index.php/main/hexagrams/edit/<?= $f['pseq']?>" target="_blank">
-                <img style="width:20px" src="/images/edit.png">
-            </a>
-            <a href="/cignite/index.php/main/notes/edit/<?= $f['pseq']?>" target="_blank">
-                <img style="width:20px" src="/images/addnotes.png">
-            </a>
-            </div>
+            
+        <h3 style="font-size:1.2em !important" class="eTitle f_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+            <?= $f['pseq'] ?> (<?= $f['title'] ?>) <?= $f['trans'] ?>
+            <?php /* this invisible one pixel line control the collapse with of the accordian */?>
+            <br><img style="min-width:300px" src="images/thinline350.png">
+
         </h3>
-        <div>
+        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
             <p>
-                <?= $f['judge_old'] ?></p>
-            <p><?= $f['judge_exp'] ?></p>
+                <i><?= $f['judge_old'] ?></i>
+            </p>
+                <p>
+                    <b>The Expanded Text</b>
+                </p>
+            <p>
+                    <?= $f['judge_exp'] ?>
+            </p>
         </div>
 
 <?php 
@@ -369,17 +473,28 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
  *  Second Trigrams
  */  
 ?>
-            <h3 class="eTrigrams fColors">The Trigrams</h3>
-            <div>
+        <h3 style="font-size:1.2em !important" class="eTrigrams fColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+ The Trigrams
+        </h3>
+        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                 <p>
-                    The Upper Trigram<br>
-                    <?= $f['tri_upper'] ?><br>
-                    The Lower Trigram<br>
+                    <b>The Upper Trigram</b>
+                </p>
+                <p>
+                    <?= $f['tri_upper'] ?>
+                </p>
+                <p>
+                    <b>The Lower Trigram</b>
+                </p>
+                <p>
                     <?= $f['tri_lower'] ?><br>
                 </p>
-                Explanation of the Trigrams
+                <p>
+                <b>Explanation of the Trigrams</b>
+                </p>
                 <p>
                 <?= $f['explanation'] ?>
+                </p>
 
             </div>
 <?php 
@@ -387,8 +502,10 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
  *  Second Image
  */  
 ?>
-            <h3 class="eImage  fColors">Image</h3>
-            <div>
+       <h3 style="font-size:1.2em !important" class="eImage  fColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+            Image
+       </h3>
+        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                 <p>
                     <b>The Ancient Assocated Image</b>
                 </p>
@@ -417,29 +534,43 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
  *  Second Notes
  */  
 ?>
-            <h3 class="eImage  fColors">Notes</h3>
-            <div>
+       <h3 style="font-size:1.2em !important" class="eImage  fColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+            Notes
+            <h3>
+        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                <p>
                 <?php echo getNotes($f['pseq']) ?>
+                </p>
             </div>
     </div>
 </div>
 <?php
     }/* *************************************************************************** */
-?>
-    
+    ?>
+            
 
-        <?php
-        /* this is teh end of the cast */
+            <?php
+            /* this is teh end of the cast */
         } else { /* T == F, so nothign to show */
             ?>
-    <div class='textWrapper'>
+            <div  class='textWrapper'>
+                <div class='subtextWrapper'>
+                    <span style='padding:25px;font-size: 18pt'>No Moving Lines</span>
+                </div>    
+            </div>  
+
+            <?php
+        }
+        ?>
+    <div style='padding:25px' class='textWrapper'>
         <div class='subtextWrapper'>
-            <span style='padding:25px;font-size: 12pt'>There are no moving lines</span>
+            <form style="padding:10px">
+                 <input type="submit" name="download" value="Download this Casting">
+            </form>
         </div>    
     </div>  
-            <?php
-        } 
-        
+
+    <?php
         /* convert to int ?  hmmm aren;t they ints alrady in database  FIXME */
         $ti = intval($t['bseq']); 
         $fi = intval($f['bseq']);

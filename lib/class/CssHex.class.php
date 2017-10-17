@@ -9,13 +9,14 @@ class CssHex {
         
     }
     public function drawHex($bin, $delta, $script, $boxnum,$uid) {
-
+//$boxnum = 7-$boxnum;
 //var_dump($bin);
 //var_dump($delta);
         
         $h = "<div class='box" . $boxnum . "' id='box" . $boxnum . "'>\n";
         for ($k = 0; $k < 6; $k++) {
             $l = $k + 1;
+//            $l = 6-$k ;
             if ($bin[$k] == 1) { //yang
                 if ($delta[$k] == 1) { //moving yang
                     list($code, $js) = $this->drawXYang($boxnum, $l,$uid);

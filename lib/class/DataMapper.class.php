@@ -98,6 +98,7 @@ class DataMapper {
 
     public function chex2bin($h) {
         $query = "SELECT bseq from hexagrams where pseq=${h}";
+        //var_dump($query);
         $sth = $this->o->prepare($query);
         $sth->execute();
         $bin = $sth->fetch();
