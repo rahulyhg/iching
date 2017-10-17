@@ -171,7 +171,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             ?>
             <div id='here3' class='textWrapper'>
                 <div class='subtextWrapper'>
-               
+                <a style="font-size:16pt" href='/index.php?flipped=1&f_tossed=<?= $_REQUEST['t'] ?>&f_final=<?= $_REQUEST['f'] ?>'>View the Pen Kua</a>
                 <?php /* this is the jquery-ui popup link for the HuKua */ ?>
                 <a id="penkuatip" class="penkuatip"  href="#">
                     <img style="width:20px" src="/images/qmark-small-bw.png">
