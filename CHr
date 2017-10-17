@@ -1,2 +1,3 @@
 sudo chown -R jw *
 sudo chown -R www-data questions
+sudo chown -R www-data id

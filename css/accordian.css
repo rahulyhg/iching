@@ -16,7 +16,11 @@
         
     }
     .tColors {
-        background-color: darkgreen;
+        background-color:  green;
+        color:yellow;
+    }
+    .t_titleColors {
+        background-color: darkolivegreen;
         color:yellow;
     }
     .lColors {
@@ -31,6 +35,10 @@
         background-color: brown;
         color:yellow;
     }
+    .f_titleColors {
+        background-color: sienna;
+        color:yellow;
+    }
 
     .eTitle {
         font-size: 24pt !important;
@@ -39,12 +47,12 @@
     .eTrigrams {
         font-size: 18pt;
         font-weight: bold;
-        padding-left:50px !important;
+        padding-left:0px !important;
     }
     .eImage {
         font-size: 18pt;
         font-weight: bold;
-        padding-left:50px !important;
+        padding-left:0px !important;
     }
 
 
@@ -53,6 +61,20 @@
     .eLines {
         font-size: 18pt;
         font-weight: bold;
-        padding-left:50px !important;
+        padding-left:0px !important;
     }
     
+    #firstheader {
+        min-width:350px !important;
+    }
+    
+    .expcol {
+        font-size:18pt;
+        font-weight:bold;
+        color:white;
+    }
+    #expcol {
+        font-size:18pt;
+        font-weight:bold;
+        color:white;
+    }
