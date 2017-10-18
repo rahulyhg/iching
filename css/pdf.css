@@ -10,4 +10,15 @@ and open the template in the editor.
 
 body {
     background-color: lightcyan;
+    padding:50px;
+}
+
+h1 {
+    text-align: center;
+}
+h2 {
+    text-align: center;
+}
+p {
+    font-size: 13pt;
 }

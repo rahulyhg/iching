@@ -1,10 +1,11 @@
 <?php
 mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
+
 ?>
 <html lang="en" class="">
     <head>
-        <meta property='og:image' content='https://www.concrete5.org/themes/version_4/images/logo.png' />
+        <!-- meta property='og:image' content='https://www.concrete5.org/themes/version_4/images/logo.png' /-->
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <title>Dharma Clock Project</title>
         <meta name="description" content="I Ching is a book of wisdom, an oracle a math system, and a philosophy - access all of them here" />
