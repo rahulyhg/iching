@@ -7,19 +7,25 @@ html {
 }
 
 
-#debug {
+#msg {
     z-index:1000;
     border:2px solid black;
-    display: flex;
+/*    display: flex;
     flex-direction: column;
     align-items: center; 
-    justify-content: center;
+    justify-content: center;*/
     position: absolute;
     min-width:500px;
     top:10px;
-    background-color:   antiquewhite;
+    background-color: aquamarine;
+    border-radius: 12px;
+    font-size:10pt;
+    padding:3px;
+    
 }
-
+#msg  a:link{
+    font-weight:bold;
+}
 .notice {
     background-color: lightyellow;
     font-style:  italic;
