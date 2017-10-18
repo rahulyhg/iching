@@ -3,6 +3,15 @@
 /* 'iching_root' is defined in the php.ini file, this way is it always correct for whatever maching is being used */
 require get_cfg_var("iching_root") . "/elements/header.php";
 require get_cfg_var("iching_root") . "/vendor/autoload.php";
+require get_cfg_var("iching_root") . "/lib/md2pdf/vendor/autoload.php";
+
+//define('DOMPDF_ENABLE_AUTOLOAD', false);
+//require_once get_cfg_var("iching_root") . "/lib/md2pdf/vendor/dompdf/dompdf/dompdf_config.inc.php";
+
+//require get_cfg_var("iching_root") . "/lib/dompdf/vendor/autoload.php";
+//require get_cfg_var("iching_root") . "/lib/md2pdf/vendor/dompdf/dompdf/src/Options.php";
+    
+//require get_cfg_var("iching_root") . "/lib/querypath/vendor/autoload.php";
 require get_cfg_var("iching_root") . "/conf/config.php";
 require get_cfg_var("iching_root") . "/lib/init.php";
 require get_cfg_var("iching_root") . "/lib/functions.php";
@@ -88,11 +97,10 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         $dates = getDates();
         
         /* set question to 'Query for <date>' if it is blank */
-        if (!isset($_REQUEST['question'])) {
+        if (  (!isset($_REQUEST['question']) || (strlen($_REQUEST['question'])<1) )) {
 //            $_REQUEST['question'] = "Query for ".$dates['human'];
             $_REQUEST['question'] = "no question, but an answer";
         }
-        
         /* determine which qua we are in, default is Pen-Kua */
         if (!isset($_REQUEST['kua'])) {
             $_REQUEST['kua']="Pen-Kua";
@@ -117,16 +125,16 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         $t = $ary['tossed'][0];
         $f = $ary['final'][0];
         $d = $ary['delta'];
-        $t['date'] = $dates['data']; /* throw in a date fro file retreival later */
+        $t['ddate'] = $dates['data']; /* throw in a date fro file retreival later */
+        $t['hdate'] = $dates['human']; /* throw in a date fro file retreival later */
+        $t['question'] = $_REQUEST['question']; /* throw in a date fro file retreival later */
 
 //        var_dump($d);
 //            $d = array_reverse($d);
   
 //        var_dump($d);
   
-        
-        /* save all data as a json file... later this will be retreivable */
-        saveToFile($t, $d, $f);
+
         
         /* 'fix' is special column for editing notes.  Show any 'fix' comments if they exist */
         print showFixes($t);
@@ -183,7 +191,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             <?php
              }
 
-             
+        
+        /* save all data as a json file... later this will be retreivable */
+        saveToFile($t, $d, $f);             
              
             /*
              * This showed the images of the hex, before the css version replaced
@@ -562,13 +572,13 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             <?php
         }
         ?>
-    <div style='padding:25px' class='textWrapper'>
-        <div class='subtextWrapper'>
-            <form style="padding:10px">
-                 <input type="submit" name="download" value="Download this Casting">
-            </form>
-        </div>    
-    </div>  
+            <div  style="padding-bottom:20px" class='textWrapper'>
+                <div class='subtextWrapper'>
+            <div id="download" style="font-variant-caps: all-small-caps ; font-weight: bold;color:black">
+                <a href="<?= $_SESSION['dlfile'] ?>">Download<br>
+            </div>
+            </div>
+            </div>
 
     <?php
         /* convert to int ?  hmmm aren;t they ints alrady in database  FIXME */

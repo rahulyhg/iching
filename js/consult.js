@@ -1,15 +1,21 @@
 $(document).ready(function () {
 
-$('#f_final').blur(function()
-{
-    if( !$(this).val() ) {
-        var v = $("#f_final").attr("placeholder");
-        $(this).val(v);
-    }
+    $('#download').click(function ()
+    {
+    e.preventDefault();  //stop the browser from following
+    window.location.href = '/questions';
 });
 
+    $('#f_final').blur(function ()
+    {
+        if (!$(this).val()) {
+            var v = $("#f_final").attr("placeholder");
+            $(this).val(v);
+        }
+    });
+
     $("#f_tossed").mouseout(function () {
-        if (!($("#f_tossed").val())) { 
+        if (!($("#f_tossed").val())) {
         } else {
             var pseq = $("#f_tossed").val();
             var durl = "/api/func.php?func=getHexnumOppositeByPseq&pseq=" + pseq;
@@ -23,7 +29,7 @@ $('#f_final').blur(function()
                 jsonpCallback: 'callback',
                 type: 'GET',
                 success: function (json) {
-    //                $("#f_final").attr("placeholder", json['ret']);
+                    //                $("#f_final").attr("placeholder", json['ret']);
                     $("#f_final").val(json['ret']);
                 },
                 error: function () {
@@ -168,63 +174,63 @@ $('#f_final').blur(function()
 // ajust foro screen
 
 
- //   if ($(window).width() < 767) {
+    //   if ($(window).width() < 767) {
 //        $(".awrapper").css({
 //            "width": "95%"
 //        });
- //   }
+    //   }
 
 
 
-var headers = $('[id^=accordion] .accordion-header');
-var contentAreas = $('[id^=accordion] .ui-accordion-content ').hide().first().show().end();
-var expandLink = $('.accordion-expand-all');
+    var headers = $('[id^=accordion] .accordion-header');
+    var contentAreas = $('[id^=accordion] .ui-accordion-content ').hide().first().show().end();
+    var expandLink = $('.accordion-expand-all');
 
 // add the accordion functionality
-headers.click(function() {
-    // close all panels
-    contentAreas.slideUp();
-    // open the appropriate panel
-    $(this).next().slideDown();
-    // reset Expand all button
-    expandLink.text('Expand all')
-        .data('isAllOpen', false);
-    // stop page scroll
-    return false;
-});
+    headers.click(function () {
+        // close all panels
+        contentAreas.slideUp();
+        // open the appropriate panel
+        $(this).next().slideDown();
+        // reset Expand all button
+        expandLink.text('Expand all')
+                .data('isAllOpen', false);
+        // stop page scroll
+        return false;
+    });
 
 // hook up the expand/collapse all
-expandLink.click(function(){
-    var isAllOpen = !$(this).data('isAllOpen');
-    console.log({isAllOpen: isAllOpen, contentAreas: contentAreas})
-    contentAreas[isAllOpen? 'slideDown': 'slideUp']();
-    
-    expandLink.text(isAllOpen? '[collapse]': '[EXPAND]')
-    contentAreas[isAllOpen? 'slideDown': 'slideUp']();
-    
-    expandLink.text(isAllOpen? '[collapse]': '[EXPAND]')
-                .data('isAllOpen', isAllOpen);    
-});
+    expandLink.click(function () {
+        var isAllOpen = !$(this).data('isAllOpen');
+        console.log({isAllOpen: isAllOpen, contentAreas: contentAreas})
+        contentAreas[isAllOpen ? 'slideDown' : 'slideUp']();
+
+        expandLink.text(isAllOpen ? '[collapse]' : '[EXPAND]')
+        contentAreas[isAllOpen ? 'slideDown' : 'slideUp']();
+
+        expandLink.text(isAllOpen ? '[collapse]' : '[EXPAND]')
+                .data('isAllOpen', isAllOpen);
+    });
 
     $("#larger1").click(function () {
-        $("p").css("font-size","large");
+        $("p").css("font-size", "large");
     });
     $("#larger1").hover(function () {
-        $('#larger1').css("cursor","hand");
+        $('#larger1').css("cursor", "hand");
     });
 
-        $("#larger2").click(function () {
-        $("p").css("font-size","x-large");
+    $("#larger2").click(function () {
+        $("p").css("font-size", "x-large");
     });
     $("#larger2").hover(function () {
-        $('#larger2').css("cursor","hand");
+        $('#larger2').css("cursor", "hand");
     });
 
     $("#larger3").click(function () {
-        $("p").css("font-size","xx-large");
+        $("p").css("font-size", "xx-large");
     });
     $("#larger3").hover(function () {
-        $('#larger3').css("cursor","hand");
+        $('#larger3').css("cursor", "hand");
     });
 
 //    
