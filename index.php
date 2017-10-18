@@ -35,7 +35,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         </div>
 
         <!-- ------------------------------------------------------------>
-
+    <div id="msg" >
+        This site is <a href="https://github.com/baardev/iching">super beta</a>.  It currently needs writers, editors, programmers, philosophers, designers and more.  If you would like to contribute to <a href="/book/ichingbook/_book/">this project</a>, <a href="mailto:duncan.stroud@gmail.com">let me know</a>.
+    </div>
         <?php
         //var_dump($_REQUEST);
         if (!isset($_REQUEST['flipped'])) { /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
@@ -109,9 +111,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         <?php
     } else { /* there has been a coin toss */
         ?>
-    <div id="debug" >
-        ccc
-    </div>
+
     <?php
         
         
