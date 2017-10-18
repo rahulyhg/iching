@@ -5,3 +5,4 @@ sudo chown -R jw *
 sudo chown -R jw .git
 sudo chown -R http questions
 sudo chown -R http id
+sudo chmod -R a+rw  id
