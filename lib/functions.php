@@ -3,6 +3,8 @@
 //$dbh = new DataMapper();
 //DataMapper$stuff = $mapper->fetchAllHexByPseq(11,TRUE);    
 require get_cfg_var("iching_root") . "/lib/class/CssHex.class.php";
+require_once get_cfg_var("iching_root") . "/lib/class/Tosser.class.php";
+
 
 function getNotes($pseq) {
     $hex = $GLOBALS['dbh']->getNotes($pseq);
@@ -774,133 +776,66 @@ function tobin($ary) {
 }
 
 function tossit() {
-    //var_dump($_REQUEST);
-    //return anything as it will get overwritten in getToss();
+    $tosser = new Tosser();
+    
     if (isset($_REQUEST['f_tossed'])) {
+        /* return anything as it will get overwritten by the manually entered vals in getToss(); */
         $r = array(6, 7, 8, 9, 6, 7);
         return($r);
     }
     if (isset($_REQUEST['mode'])) {
         if ($_REQUEST['mode'] == "plum") {
-            $r = getPlumBlossomArray();
-
-            //$r = array(rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9));
-            //var_dump($r);
+            $r = $tosser->getPlum();
             return($r);
         }
         if ($_REQUEST['mode'] == "r-decay") {
-            $r = getHotBits();
-            //$r = array(rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9), rand(6,9));
-            //var_dump($r);
+            $r = $tosser->getHotBits();
+//            $r = getHotBits();
             return($r);
         }
     }
-
     if (isset($_REQUEST['mode'])) {
-        $throw = array(null, null, null, null, null, null);
         if ($_REQUEST['mode'] == "random.org") {
-            for ($i = 0; $i < 6; $i++) {
-                $id = uniqid();
-                $f = "./throw.sh ${id} ${i}";
-                $run = trim(system($f));
-                $flip = file_get_contents("id/${id}");
-
-                switch ($flip) {
-                    case 0:
-                        $throw[$i] = 6;
-                        break;
-                    case 1:
-                        $throw[$i] = 7;
-                        break;
-                    case 2:
-                        $throw[$i] = 8;
-                        break;
-                    case 3:
-                        $throw[$i] = 9;
-                        break;
-                }
-//                sleep(5);
-            }
+            $r = $tosser->getRandomOrg();
         }
-        return($throw);
+        return($r);
     }
 }
 
-/*
-  //   Find a quiet place, and take a few moments to relax and meditate on your query. Concentrate on your question or the situation for which you seek guidance.
-  //Taking the 50 sticks in your hand, remove one stick and set it aside.
 
-  $sticks = 50 -1;
-  //With the 49 sticks remaining, divide them into two (right side and left side) and place them down side by side.
-  $left_floor = rand (1,48);
-  $right_floor = $sticks - $left;
 
-  // 4 Take the bunch on the right side (with your right hand), and remove one stick, placing it on your left hand,
-  //between your ring (fourth) and little finger (pinkie).
-  $right_hand - $right_floor -1;
-  // 5 From the left-side bunch, remove groups of four sticks at a time, until four or less sticks are left. Set this aside.
-  $left_floor_remaining = ($left_floor % 4);
-  $left_floor_remaining = ($left_floor_remaining == 0 ? 4 : $left_floor_remaining);
-  // 6 Taking back the right-side bunch, remove four sticks at a time again, until four of less remain. Set this aside.
-  $right_floor_remaining = ($rightfloor_ % 4);
-  $right_floor_remaining = ($right_floor_remaining == 0 ? 4 : $right_floor_remaining);
-  // 7 Place the remainder from the left-hand bunch between the ring finger and the middle finger and the remainder from the
-  $left_hand = $left_floor_remaining;
-
-  //right-hand bunch between the middle finger and index finger of the left hand.
-  $left_hand += $right_floor_remaining;
-  //Take all the sticks from your left hand and set them aside. Gather the remaining sticks and divide them into two bunches.
-  $remaining = $sticks - $left_hand;
- */
-
-//function sql($vars) {
-//    global $dbh;
-//    $sql = "UPDATE hexagrams set " . $vars['name'] . " = :val WHERE ID = " . $vars['i'];
-//    $sth = $dbh->o->prepare($sql);
-//    $sth->execute(array(":val" => $vars['val']));
+//function getHotBits() {
+//
+//    $lines = array();
+//    for ($i = 0; $i < 6; $i++) {
+//        $hotbits = getCleanHotBits();
+//        $line = null;
+//        foreach ($hotbits as $tb) {
+//            $c = ($tb % 2) + 2;
+//            $line += ($tb % 2) + 2;
+//        }
+//        array_push($lines, $line);
+//    }
+//    //var_dump($lines);
+//    return($lines);
 //}
-//function getAllHexes() {
-//    global $dbh;
-//    $sql = "SELECT * from hexagrams";
-//    $sth = $dbh->o->prepare($sql);
-//    $sth->execute();
-//    $ah = $sth->fetchAll();
-//    return($ah);
+//
+//function getCleanHotBits() {
+//    $intAry = array();
+//    $hotbitsURL = "http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=3&fmt=c&apikey=HB1P93mBRUA23F7HUF5MCpyZ2PS";
+//    $str = file_get_contents($hotbitsURL);
+////    $str = "/* Random data from the HotBits radioactive random number generator */\nunsigned char hotBits[3] = {\n    10, 240, 151\n};";
+//
+//    preg_match('/[\d].*[\d]/', $str, $matches, PREG_OFFSET_CAPTURE);
+//    $str = ($matches[0][0]);
+//    $hotbits = explode(",", $str);
+//
+//    foreach ($hotbits as $h) {
+//        array_push($intAry, intval(trim($h)));
+//    }
+//    //var_dump($intAry);
+//    return($intAry);
 //}
-
-
-function getHotBits() {
-
-    $lines = array();
-    for ($i = 0; $i < 6; $i++) {
-        $hotbits = getCleanHotBits();
-        $line = null;
-        foreach ($hotbits as $tb) {
-            $c = ($tb % 2) + 2;
-            $line += ($tb % 2) + 2;
-        }
-        array_push($lines, $line);
-    }
-    //var_dump($lines);
-    return($lines);
-}
-
-function getCleanHotBits() {
-    $intAry = array();
-    $hotbitsURL = "http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=3&fmt=c&apikey=HB1P93mBRUA23F7HUF5MCpyZ2PS";
-    $str = file_get_contents($hotbitsURL);
-//    $str = "/* Random data from the HotBits radioactive random number generator */\nunsigned char hotBits[3] = {\n    10, 240, 151\n};";
-
-    preg_match('/[\d].*[\d]/', $str, $matches, PREG_OFFSET_CAPTURE);
-    $str = ($matches[0][0]);
-    $hotbits = explode(",", $str);
-
-    foreach ($hotbits as $h) {
-        array_push($intAry, intval(trim($h)));
-    }
-    //var_dump($intAry);
-    return($intAry);
-}
 
 function oldlogout($t, $str = null) {
     $dumpStr = str_replace("\n", '<br />', var_export($t, TRUE));
@@ -986,80 +921,6 @@ function fromtoprint($b, $h, $f) {
 function microtime_float() {
     list($usec, $sec) = explode(" ", microtime());
     return ((float) $usec + (float) $sec);
-}
-
-function getPlumBlossomArray() {
-
-
-    $hex = array();
-    $m = 0;
-    for ($k = 0; $k < 6; $k++) {
-        $now = microtime_float() * 10000;
-        $nowAry = str_split("" . $now);
-
-        $combo = array();
-
-        $ci1 = rand_seq(0, 5, 5);
-        $ci2 = rand_seq(6, 11, 5);
-
-        array_push($combo, ($nowAry[$ci1[0]] + $nowAry[$ci2[5]]));
-        array_push($combo, ($nowAry[$ci1[1]] + $nowAry[$ci2[4]]));
-        array_push($combo, ($nowAry[$ci1[2]] + $nowAry[$ci2[3]]));
-        array_push($combo, ($nowAry[$ci1[3]] + $nowAry[$ci2[2]]));
-        array_push($combo, ($nowAry[$ci1[4]] + $nowAry[$ci2[1]]));
-        array_push($combo, ($nowAry[$ci1[5]] + $nowAry[$ci2[0]]));
-
-        $recombo = array();
-
-        $rci1 = rand_seq(0, 2, 2);
-        $rci2 = rand_seq(3, 5, 2);
-
-        array_push($recombo, ($combo[$rci1[0]] + $combo[$rci2[2]]) % 4);
-        array_push($recombo, ($combo[$rci1[1]] + $combo[$rci2[1]]) % 4);
-        array_push($recombo, ($combo[$rci1[2]] + $combo[$rci2[0]]) % 4);
-
-        for ($l = 0; $l < 3; $l++) {
-            //if ($recombo[$l] == 0) {
-            $recombo[$l] = ($recombo[$l] % 2) + 2;
-            //}
-        }
-        $ts = $recombo[0] . "," . $recombo[1] . "," . $recombo[2];
-        $t = $recombo[0] + $recombo[1] + $recombo[2];
-//        print "[$t]  ";
-
-
-        usleep(rand(rand(1000, 10000), rand(10000, 100000)));
-        array_push($hex, $t);
-        $m++;
-    }
-    //var_dump($hex);
-    return($hex);
-}
-
-function rand_seq($fromto, $to = null, $limit = null) {
-
-    if (is_null($to)) {
-        $to = $fromto;
-        $fromto = 0;
-    }
-
-    if (is_null($limit)) {
-        $limit = $to - $fromto + 1;
-    }
-    $randArr = array();
-
-    for ($i = $fromto; $i <= $to; $i++) {
-        $randArr[] = $i;
-    }
-    $result = array();
-
-    for ($i = 0; $i < $limit || sizeof($randArr) > 0; $i++) {
-        $index = mt_rand(0, sizeof($randArr) - 1); // select rand index / выбираем случайный индекс массива 
-        $result[] = $randArr[$index]; // add random element / добавляем случайный элемент массива 
-        array_splice($randArr, $index, 1); // remove it=) / удаляем его =)
-    }
-
-    return $result;
 }
 
 function secondsToTime($ss) {

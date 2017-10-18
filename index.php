@@ -45,23 +45,39 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                 <form id = "tosstype" method="POST" action="?c=<?= microtime_float() ?>">
                     <input type="hidden" name="flipped" value="1">
                     <div class="row2">
-                        <input id="qfield" type="text" name="question" placeholder="question" value=""></p>
- 
+                        <p>
+                        <input id="qfield" type="text" name="question" placeholder="question" value="">
+                        </p> 
                         <a id="plumtip" class="plumtip" href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="plum" value="plum" checked > 
                             <span class="text_mdcaps" id="plummsg">Modern Plum</span>    
                         </p>
 
+                        <p>
                         <a id="randomtip" class="randomtip" href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="random.org" value="random.org"> 
                             <span class="text_mdcaps" id="random.orgmsg">random.org</span>
                         </p>
 
+                            <?php
+                            /*get statuys of decay server */
+                            $status = file_get_contents(get_cfg_var("iching_root") . "/data/store/hotbitsdown");
+                            if ($status != 1) {
+                            ?>
+                        <p>
                         <a id="r-decaytip" class="r-decaytip"  href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="r-decay" value="r-decay"> 
                             <span class="text_mdcaps" id="r-decaymsg">r-decay</span>
                         </p>
+                            <?php } else {?>
+                        <p>
+                        <a id="r-decaytip" class="r-decaytip"  href="#"><img src="images/qmark.png"></a> 
+                            <!-- input type="radio" name="mode" id="r-decay" value="r-decay"--> 
+                            <span  style="color:darkslategray;font-size: 10pt" id="r-decaymsg" >(decay server down)</span>
+                        </p>
 
+                        
+                            <?php } ?>
                         <!--a id="entropytip" class="entropytip qtip-content ui-widget-content"  href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="entropy" value="entropy"> 
                             <span class="text_mdcaps" id="entropymsg">entropy</span>
@@ -92,6 +108,14 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         </div>
         <?php
     } else { /* there has been a coin toss */
+        ?>
+    <div id="debug" >
+        ccc
+    </div>
+    <?php
+        
+        
+        
         
         /* get date formats for rpesenation and data */
         $dates = getDates();
