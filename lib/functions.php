@@ -6,22 +6,22 @@ require get_cfg_var("iching_root") . "/lib/class/CssHex.class.php";
 
 function getNotes($pseq) {
     $hex = $GLOBALS['dbh']->getNotes($pseq);
-        $out = "";
-$hex[0]['pseq'] = null;
-$hex[0]['bseq'] = null;
-$hex[0]['oseq'] = null;
-$hex[0]['binary'] = null;
-$hex[0]['balance'] = null;
-$hex[0]['tri_upper_bin'] = null;
-$hex[0]['tri_lower_bin'] = null;
-    
-    
+    $out = "";
+    $hex[0]['pseq'] = null;
+    $hex[0]['bseq'] = null;
+    $hex[0]['oseq'] = null;
+    $hex[0]['binary'] = null;
+    $hex[0]['balance'] = null;
+    $hex[0]['tri_upper_bin'] = null;
+    $hex[0]['tri_lower_bin'] = null;
+
+
     foreach ($hex[0] as $key => $val) {
         if ($val) {
             $out .= "<b>$key: </b> $val<br>\n";
         }
     }
-    
+
     if (!$out) {
         $out = "There are no notes yet.";
     }
@@ -43,12 +43,451 @@ function showComment($t) {
     }
 }
 
+function tryFopen($fileName, $mode) {
+//      var_dump($fileName);
+    try {
+        $fp = fopen($fileName, $mode);
+        if (!$fp) {
+            throw new Exception('File open failed.');
+        }
+    } catch (Exception $e) {
+        print "<div style='width:1000px'>";
+
+        var_dump($fileName);
+        print "<hr>";
+        var_dump($e);
+        print "</div>";
+    }
+    return($fp);
+}
+
+function pvar_dump($x) {
+    print "<div style='width:1000px'>";
+    var_dump($x);
+    print "</div>";
+}
+
+function makeMDfile($alldata) {
+    $t = $alldata['t'];
+    $d = $alldata['d'];
+    $f = $alldata['f'];
+    $homeurl = $alldata['homeurl'];
+    $hdate = $t['human'];
+    $ddate = $t['data'];
+    $question = $t['question'];
+    
+    $out = "";
+    $out .= "*** Original Hexagram ***:  ![Alt text](${homeurl}/images/hex/small/hexagram" . sprintf("%02d", $t['pseq']) . ".png)\n\n";
+    $out .= "*** Resulting Hexagram ***: ![Alt text](${homeurl}/images/hex/small/hexagram" . sprintf("%02d", $f['pseq']) . ".png)\n\n";
+    foreach ($alldata as $key => $val) {
+        if (is_array($val) or ( $val instanceof Traversable)) {
+            foreach ($val as $key1 => $val1) {
+                if (is_array($val1) or ( $val1 instanceof Traversable)) {
+                    
+                } else {
+                    $out .= "\n";
+                    $out .= "***$key1:*** $val1\n";
+                    $out .= "\n";
+                }
+            }
+        } else {
+            $out .= "\n";
+            $out .= "*** $key: *** $val\n";
+            $out .= "\n";
+        }
+    }
+    return($out);
+}
+
+/* * ******************************************************************* */
+/* This is mainly an import of 'makemds.php' */
+/* * ******************************************************************* */
+
+function makeMDfromTemplate($alldata) {
+    $t = $alldata['t'];
+    $d = $alldata['d'];
+    $f = $alldata['f'];
+    $homeurl = $alldata['homeurl'];
+    $hdate = $t['hdate'];
+    $ddate = $t['ddate'];
+    $question = $t['question'];
+    
+        
+    
+    $trx_pseq = $_SESSION['trx_pseq'];
+    $txhex = $GLOBALS['dbh']->getHex($trx_pseq);
+
+//    pvar_dump($txhex);
+//    pvar_dump($txhex[0]['trans']);
+//    pvar_dump($txhex[0]['judge_old']);
+//    pvar_dump($txhex[0]['judge_exp']);
+    
+    $t_image = $homeurl."/images/hex/small/hexagram" . f($t['pseq']) . ".png";
+    $f_image = $homeurl."/images/hex/small/hexagram" . f($f['pseq']) . ".png";
+
+    include(get_cfg_var("iching_root") . "/book/templates/template.class.php");
+    $type = 'pseq';
+    $cols = getcols();
+
+    $ftpseq = sprintf("%02s", $t['pseq']);
+    $ffpseq = sprintf("%02s", $f['pseq']);
+
+    $thex = mdgethex($ftpseq);
+    $fhex = mdgethex($ffpseq);
+
+    $page = new Template(get_cfg_var("iching_root") . "/book/templates/pdf.tpl");
+    $page->set("hdate", $hdate);
+    $page->set("question", "'${question}'");
+
+    
+    $page->set("trx_judge_old",$txhex[0]['judge_old']);
+    $page->set("trx_judge_exp",$txhex[0]['judge_exp']);
+ //        pvar_dump($txhex[0]['trans']);
+//    pvar_dump($txhex[0]['judge_old']);
+//    pvar_dump($txhex[0]['judge_exp']);
+    $trx_image = $homeurl."/images/hex/small/hexagram" . f($txhex[0]['pseq']) . ".png";
+    $page->set("trx_image",$trx_image);
+    $page->set("trx_transtitle", $txhex[0]['pseq']." (".$txhex[0]['binary']." = ".$txhex[0]['bseq'].") ". $txhex[0]['trans']." / ".$txhex[0]['title']);
+    $page->set("trx_intro","The moving lines are the lines that, due to their extreme condition, 'flip' to 
+their opposite, and as a result, a new hexagram is created. Likewise, if we then subtract the binary value of the first hexagram from the 
+final hexagram, we end up with a binary number that represents the difference 
+between the two, and this binary number maps to yet another hexagram.  We call 
+this hexagram 'transitional' as it a full hexagram that represent the moving lines. For the first and second hexagrams shown here, the transitional hexagram is ");
+   $page->set("trx_title","The Transitioning Hexagram");
+ 
+    
+    /* tossed hex */
+    $page->set("t_image", $t_image);
+    $page->set("t_id", f($thex[0]['pseq']));
+    $page->set("t_trans", $thex[0]['trans']);
+    $page->set("t_title", $thex[0]['title']);
+    $page->set("t_transtitle", $fhex[0]['trans']." / ".$thex[0]['title']);
+    $page->set("t_pseq", f($thex[0]['pseq']));
+    $page->set("t_bseq", f($thex[0]['bseq']));
+    $page->set("t_binary", $thex[0]['binary']);
+    $page->set("t_dir", $thex[0]['iq32_dir']);
+    $page->set("t_tri_upper", $thex[0]['tri_upper']);
+    $page->set("t_tri_lower", $thex[0]['tri_lower']);
+    $page->set("t_judge_old", $thex[0]['judge_old']);
+    $page->set("t_judge_exp", $thex[0]['judge_exp']);
+    $page->set("t_image_old", $thex[0]['image_old']);
+    $page->set("t_image_exp", $thex[0]['image_exp']);
+
+    $movinglines = "The Moving Lines";
+    if ($thex[0]['pseq'] == $fhex[0]['pseq']) {
+        $movinglines = "There are no moving lines";
+    }
+    $page->set("movinglines", $movinglines);
+    /* no moving lines */
+    for ($j = 0; $j < 6; $j++) {
+        $i = $j + 1;
+        if ($d[$j]) {
+            $page->set("t_line_${i}", $thex[0]['line_' . $i]);
+            $page->set("t_line_${i}_org", $thex[0]['line_' . $i . '_org']);
+            $page->set("t_line_${i}_exp", $thex[0]['line_' . $i . '_exp']);
+        } else {
+            $page->set("t_line_${i}", "");
+            $page->set("t_line_${i}_org", "");
+            $page->set("t_line_${i}_exp", "");
+        }
+    }
+//        $page->set("t_fix", $thex[0]['fix']);
+//        $page->set("t_comment", $thex[0]['comment']);
+
+    /* final hex */
+
+    if ($thex[0]['pseq'] != $fhex[0]['pseq']) {
+
+        $page->set("label_resulting_hex", "The Resulting Hexagram:");
+        $page->set("label_hexagram", "Hexagram:");
+        $page->set("label_binary", "Binary Sequence:");
+        $page->set("label_dir", "Direction:");
+        $page->set("label_upper_tri", "Upper trigram:");
+        $page->set("label_lower_tri", "Lower trigram:");
+        $page->set("label_judge_old", "The Judgment:");
+        $page->set("label_judge_exp", "An Explanation of the Judgment");
+        $page->set("label_image_old", "The 'IMAGE' of the hexagram");
+        $page->set("label_image_exp", "An Explanation of the 'IMAGE'");
+
+        $page->set("f_image", $f_image);
+        $page->set("f_id", f($fhex[0]['pseq']));
+        $page->set("f_transtitle", $fhex[0]['trans']." / ".$fhex[0]['title']);
+        $page->set("f_trans", $fhex[0]['trans']);
+        $page->set("f_title", $fhex[0]['title']);
+        $page->set("f_pseq", f($fhex[0]['pseq']));
+        $page->set("f_bseq", f($fhex[0]['bseq']));
+        $page->set("f_binary", "(".$fhex[0]['binary'].")");
+        $page->set("f_dir", $fhex[0]['iq32_dir']);
+        $page->set("f_tri_upper", $fhex[0]['tri_upper']);
+        $page->set("f_tri_lower", $fhex[0]['tri_lower']);
+        $page->set("f_judge_old", $fhex[0]['judge_old']);
+        $page->set("f_judge_exp", $fhex[0]['judge_exp']);
+        $page->set("f_image_old", $fhex[0]['image_old']);
+        $page->set("f_image_exp", $fhex[0]['image_exp']);
+    } else {
+        $page->set("trx_title","");
+        $page->set("label_resulting_hex", "");
+        $page->set("label_hexagram", "");
+        $page->set("label_binary", "");
+        $page->set("label_dir", "");
+        $page->set("label_upper_tri", "");
+        $page->set("label_lower_tri", "");
+        $page->set("label_judge_old", "");
+        $page->set("label_judge_exp", "");
+        $page->set("label_image_old", "");
+        $page->set("label_image_exp", "");
+
+        $page->set("trx_judge_old","");
+        $page->set("trx_judge_exp","");
+        $page->set("trx_image","");
+        $page->set("trx_transtitle","");
+        $page->set("trx_intro","");
+    
+
+        $page->set("f_image", "");
+        $page->set("f_id", "");
+        $page->set("f_trans", "");
+        $page->set("f_title", "");
+        $page->set("f_transtitle", "");
+        $page->set("f_pseq", "");
+        $page->set("f_bseq", "");
+        $page->set("f_binary", "");
+        $page->set("f_dir", "");
+        $page->set("f_tri_upper", "");
+        $page->set("f_tri_lower", "");
+        $page->set("f_judge_old", "");
+        $page->set("f_judge_exp", "");
+        $page->set("f_image_old", "");
+        $page->set("f_image_exp", "");
+    }
+    /**
+     * Loads our layout template, settings its title and content.
+     */
+    $layout = new Template(get_cfg_var("iching_root") . "/book/templates/layout.tpl");
+    $layout->set("content", $page->output());
+
+    /**
+     * Outputs the page with the user's page.
+     */
+    $fpage = $layout->output();
+
+    return($fpage);
+}
+
+/* these are functions for the above */
+
+function getids($ary) {
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
+    $sql = "SELECT " . $ary['bseq'] . "," . $ary['pseq'] . " from hexagrams order by " . $ary['pseq'] . " asc";
+    $sth = $dbh->prepare($sql);
+    $sth->execute();
+    $ids = $sth->fetchAll();
+    $c = array();
+    foreach ($ids as $id) {
+//        var_dump($id);exit;
+//        array_push($c, $id[$type]);
+    }
+    return($ids);
+}
+
+function getcols() {
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
+    $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'iching' AND TABLE_NAME = 'hexagrams'";
+    $sth = $dbh->prepare($sql);
+    $sth->execute();
+    $cols = $sth->fetchAll();
+    $c = array();
+    foreach ($cols as $col) {
+        array_push($c, $col['COLUMN_NAME']);
+    }
+    return($c);
+}
+
+function mdgethex($pseq) {
+    //  var_dump($bseq);
+    $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
+    //$binary = sprintf("%06d", hex2bin($bseq));
+    $sql = <<<EOX
+    SELECT 
+        `fix`
+        ,`comment`
+        ,`filename`
+        ,pseq
+        ,bseq
+        ,`binary`
+        ,title
+        ,trans
+        ,trigrams
+               ,(SELECT distinct concat(
+            ' TITLE: **',trigrams.title,' / ', trigrams.trans,'**',
+            ' ELEMENT: **',trigrams.t_element,'**',
+            ' POLARITY: **',trigrams.polarity,'**',
+            ' PLANET: **',trigrams.planet,'**'
+            )   FROM
+            hexagrams
+            Inner Join trigrams ON hexagrams.tri_upper_bin = trigrams.bseq 
+            WHERE hexagrams.pseq = '${pseq}' limit 1
+            ) as tri_upper
+        ,(SELECT distinct concat(
+            ' TITLE: **',trigrams.title,'**',
+            ' TRANS: **',trigrams.trans,'**',
+            ' ELEMENT: **',trigrams.t_element,'**',
+            ' POLARITY: **',trigrams.polarity,'**',
+            ' PLANET: **',trigrams.planet,'**'
+            )   FROM
+            hexagrams
+            Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
+            WHERE hexagrams.pseq = '${pseq}' limit 1
+         ) as tri_lower
+        ,iq32_dir
+        ,explanation
+        ,judge_old
+        ,judge_exp
+        ,image_old
+        ,image_exp
+        ,line_1
+        ,line_1_org
+        ,line_1_exp
+        ,line_2
+        ,line_2_org
+        ,line_2_exp
+        ,line_3
+        ,line_3_org
+        ,line_3_exp
+        ,line_4
+        ,line_4_org
+        ,line_4_exp
+        ,line_5
+        ,line_5_org
+        ,line_5_exp
+        ,line_6
+        ,line_6_org
+        ,line_6_exp
+
+FROM hexagrams
+    WHERE hexagrams.pseq =       
+EOX;
+//    $sql = "SELECT * from hexagrams where ${bseq}=${id}";
+    $sql = $sql . "'${pseq}'";
+    $sth = $dbh->prepare($sql);
+    $sth->execute();
+    $hex = $sth->fetchAll(PDO::FETCH_ASSOC);
+    return($hex);
+}
+
+/* * ******************************************************************** */
+/* end of 'makemds.php' */
+/* * ******************************************************************** */
+
 function saveToFile($t, $d, $f) {
     /* remove whitespces and extention from question to use as filename */
-    $fn = "questions/" . mb_ereg_replace(" ", "_", $_REQUEST['question'] . ".txt");
-    $json = json_encode(array(array('question' => $_REQUEST['question']), $t, $d, $f), JSON_PRETTY_PRINT);
+    $fname = "questions/" . mb_ereg_replace(" ", "_", $_REQUEST['question']);
+    $fname = mb_ereg_replace("\?", "", $fname);
+    $fname = mb_ereg_replace("\"", "", $fname);
+    $fname = mb_ereg_replace("\'", "", $fname);
+    $fname = mb_ereg_replace("\!", "", $fname);
+    $fname = mb_ereg_replace("\,", "_", $fname);
+    $fname .= $t['ddate'];
+    
+    $homeurl = "http://" . $_SERVER['SERVER_NAME'];
+
+    $fn = $fname . ".txt";
+
+    $alldata = array(
+        'question' => $_REQUEST['question'],
+        't' => $t,
+        'd' => $d,
+        'f' => $f,
+        'homeurl' => $homeurl
+    );
+    $json = json_encode($alldata, JSON_PRETTY_PRINT);
     file_put_contents($fn, $json);
-    return TRUE;
+
+//    pvar_dump($alldata);
+    //$out = makeMDfile($alldata);
+
+    $out = makeMDfromTemplate($alldata);
+
+
+    /*     * *************************************************** */
+    /* make out filenames, and write the markdown to a file */
+    /*     * *************************************************** */
+    $outMd = get_cfg_var("iching_root") . "/" . $fname . ".md";
+    $outPdf = get_cfg_var("iching_root") . "/" . $fname . ".pdf";
+    $outHtml = get_cfg_var("iching_root") . "/" . $fname . ".html";
+
+
+    $f = tryFopen($outMd, "w");
+    fwrite($f, $out);
+    fclose($f);
+
+    /*     * *************************************************** */
+    /* convert MARKDOWN to HTML */
+    /*     * *************************************************** */
+    $markdown = file_get_contents($outMd);
+    $markdownParser = new \Michelf\MarkdownExtra();
+    $html = $markdownParser->transform($markdown);
+
+    /*     * *************************************************** */
+    /* add CSS to the HTML and save to file */
+    /*     * *************************************************** */
+    $cssfile = "$homeurl/css/pdf.css";
+//    var_dump($cssfile);
+    $html = "<html>\n<head>\n<link rel='stylesheet' type='text/css' href='$cssfile'>\n</head>\n<body>" . $html . "</body></html>";
+//    $html = "<html>\n<head>\n</head>\n<body>" . $html . "</body></html>";
+
+    $f = tryFopen($outHtml, "w");
+    fwrite($f, $html);
+    fclose($f);
+
+
+    /*     * *************************************************** */
+    /* load the HTML into a DOM parser and process any links */
+    /*     * *************************************************** */
+    $dom = \HTML5::loadHTML($html);
+    $links = htmlqp($dom, 'a');
+    foreach ($links as $link) {
+        $href = $link->attr('href');
+        if (substr($href, 0, 1) == '/' && substr($href, 1, 1) != '/') {
+            $link->attr('href', $domain_name . $href);
+        }
+    }
+    $html = \HTML5::saveHTML($dom);
+
+    $f = tryFopen($outHtml, "w");
+    fwrite($f, $html);
+    fclose($f);
+
+
+    /*     * *************************************************** */
+    /* have to mke system call becaus dompdf is not orking */
+    /*     * *************************************************** */
+    $call = "/usr/bin/wkhtmltopdf $outHtml $outPdf";
+    system($call);
+
+    $_SESSION['dlfile'] = $homeurl . "/" . $fname . ".pdf";
+
+    /*     * *************************************************** */
+    /* load the HTML into dompdf, render it and write it */
+    /*     * *************************************************** */
+
+////   // use Dompdf\Options;
+////$options = new Options();
+////$options->set('enable_html5_parser', true);
+////$dompdf = new Dompdf($options);
+//
+//    $dompdf = new \Dompdf\Dompdf();//  DOMPDF();
+//    $dompdf->load_html($html);
+////    var_dump($dompdf);
+//    $dompdf->render();
+//    $output = $dompdf->output();
+//    
+//    $f = fopen($outPdf, "w");
+//    fwrite($f, $output);
+//    fclose($f);
+
+
+    return(TRUE);
 }
 
 function showFixes($t) {
@@ -117,6 +556,7 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
     $trx_pseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq", implode($Thex));
     $final_pseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "pseq", implode($newHex));
 
+    $_SESSION['trx_pseq'] = $trx_pseq;
     $tossed_bseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "bseq", implode($tossed));
     $trx_bseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "bseq", implode($Thex));
     $final_bseq = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "bseq", implode($newHex));
@@ -158,7 +598,7 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
     $out .= "<script>\n$(document).ready(function () {\n" . $script . "});\n</script>\n";
     $out .= "</div>\n";
 
-    return(array('hexes'=>$out,'tpseq'=>$trx_pseq));
+    return(array('hexes' => $out, 'tpseq' => $trx_pseq));
 }
 
 function getToss() {
@@ -208,14 +648,13 @@ function getToss() {
     }
 
 // back to the normal  processing
-
-        //var_dump($delta);
+    //var_dump($delta);
     for ($i = 0; $i < 6; $i++) {
         if (($tossed[$i] == 6) || ($tossed[$i] == 9)) {
             $delta[$i] = 1;
         }
     }
-      //  var_dump($delta);
+    //  var_dump($delta);
     // confused as to why this has to be reversed 
 //    $delta = array_reverse($delta);
 //        var_dump($delta);
