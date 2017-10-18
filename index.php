@@ -1,6 +1,6 @@
-
 <?php
 /* 'iching_root' is defined in the php.ini file, this way is it always correct for whatever maching is being used */
+require get_cfg_var("iching_root") . "/elements/header_top.php";
 require get_cfg_var("iching_root") . "/elements/header.php";
 require get_cfg_var("iching_root") . "/vendor/autoload.php";
 require get_cfg_var("iching_root") . "/lib/md2pdf/vendor/autoload.php";
@@ -42,7 +42,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             ?>
             <div class="qbox">
 
-                <form id = "tosstype" method="POST" action="">
+                <form id = "tosstype" method="POST" action="?c=<?= microtime_float() ?>">
                     <input type="hidden" name="flipped" value="1">
                     <div class="row2">
                         <input id="qfield" type="text" name="question" placeholder="question" value=""></p>
@@ -192,7 +192,10 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
              }
 
         
-        /* save all data as a json file... later this will be retreivable */
+        /* save all data as a json file... later this will be retreivable 
+         * this had to go here so it coudl read a $_SERVER had that needs to get set first 
+         */
+             
         saveToFile($t, $d, $f);             
              
             /*

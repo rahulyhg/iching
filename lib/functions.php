@@ -142,9 +142,7 @@ function makeMDfromTemplate($alldata) {
     
     $page->set("trx_judge_old",$txhex[0]['judge_old']);
     $page->set("trx_judge_exp",$txhex[0]['judge_exp']);
- //        pvar_dump($txhex[0]['trans']);
-//    pvar_dump($txhex[0]['judge_old']);
-//    pvar_dump($txhex[0]['judge_exp']);
+
     $trx_image = $homeurl."/images/hex/small/hexagram" . f($txhex[0]['pseq']) . ".png";
     $page->set("trx_image",$trx_image);
     $page->set("trx_transtitle", $txhex[0]['pseq']." (".$txhex[0]['binary']." = ".$txhex[0]['bseq'].") ". $txhex[0]['trans']." / ".$txhex[0]['title']);
@@ -172,6 +170,10 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     $page->set("t_judge_exp", $thex[0]['judge_exp']);
     $page->set("t_image_old", $thex[0]['image_old']);
     $page->set("t_image_exp", $thex[0]['image_exp']);
+    
+
+    
+    
 
     $movinglines = "The Moving Lines";
     if ($thex[0]['pseq'] == $fhex[0]['pseq']) {
@@ -180,15 +182,16 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     $page->set("movinglines", $movinglines);
     /* no moving lines */
     for ($j = 0; $j < 6; $j++) {
-        $i = $j + 1;
+        $i = 6 - $j ;
         if ($d[$j]) {
             $page->set("t_line_${i}", $thex[0]['line_' . $i]);
             $page->set("t_line_${i}_org", $thex[0]['line_' . $i . '_org']);
             $page->set("t_line_${i}_exp", $thex[0]['line_' . $i . '_exp']);
         } else {
-            $page->set("t_line_${i}", "");
-            $page->set("t_line_${i}_org", "");
-            $page->set("t_line_${i}_exp", "");
+            $page->set("t_line_${i}", "<span style='color:darkgray'>".$thex[0]['line_' . $i]."</span>");
+//            $page->set("t_line_${i}", "&nbsp;");
+            $page->set("t_line_${i}_org", "<span style='color:darkgray'>".$thex[0]['line_' . $i . '_org']."</span>");
+            $page->set("t_line_${i}_exp", "<span style='color:darkgray'>".$thex[0]['line_' . $i . '_exp']."</span>");
         }
     }
 //        $page->set("t_fix", $thex[0]['fix']);
@@ -225,40 +228,41 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
         $page->set("f_image_old", $fhex[0]['image_old']);
         $page->set("f_image_exp", $fhex[0]['image_exp']);
     } else {
-        $page->set("trx_title","");
-        $page->set("label_resulting_hex", "");
-        $page->set("label_hexagram", "");
-        $page->set("label_binary", "");
-        $page->set("label_dir", "");
-        $page->set("label_upper_tri", "");
-        $page->set("label_lower_tri", "");
-        $page->set("label_judge_old", "");
-        $page->set("label_judge_exp", "");
-        $page->set("label_image_old", "");
-        $page->set("label_image_exp", "");
+        /* these must be set to black so as not to appear in the template */
+        $page->set("trx_title","X");
+        $page->set("label_resulting_hex", "X");
+        $page->set("label_hexagram", "X");
+        $page->set("label_binary", "X");
+        $page->set("label_dir", "X");
+        $page->set("label_upper_tri", "X");
+        $page->set("label_lower_tri", "X");
+        $page->set("label_judge_old", "X");
+        $page->set("label_judge_exp", "X");
+        $page->set("label_image_old", "X");
+        $page->set("label_image_exp", "X");
 
-        $page->set("trx_judge_old","");
-        $page->set("trx_judge_exp","");
-        $page->set("trx_image","");
-        $page->set("trx_transtitle","");
-        $page->set("trx_intro","");
+        $page->set("trx_judge_old","X");
+        $page->set("trx_judge_exp","X");
+        $page->set("trx_image","X");
+        $page->set("trx_transtitle","X");
+        $page->set("trx_intro","X");
     
 
-        $page->set("f_image", "");
-        $page->set("f_id", "");
-        $page->set("f_trans", "");
-        $page->set("f_title", "");
-        $page->set("f_transtitle", "");
-        $page->set("f_pseq", "");
-        $page->set("f_bseq", "");
-        $page->set("f_binary", "");
-        $page->set("f_dir", "");
-        $page->set("f_tri_upper", "");
-        $page->set("f_tri_lower", "");
-        $page->set("f_judge_old", "");
-        $page->set("f_judge_exp", "");
-        $page->set("f_image_old", "");
-        $page->set("f_image_exp", "");
+        $page->set("f_image", "X");
+        $page->set("f_id", "X");
+        $page->set("f_trans", "X");
+        $page->set("f_title", "X");
+        $page->set("f_transtitle", "X");
+        $page->set("f_pseq", "X");
+        $page->set("f_bseq", "X");
+        $page->set("f_binary", "X");
+        $page->set("f_dir", "X");
+        $page->set("f_tri_upper", "X");
+        $page->set("f_tri_lower", "X");
+        $page->set("f_judge_old", "X");
+        $page->set("f_judge_exp", "X");
+        $page->set("f_image_old", "X");
+        $page->set("f_image_exp", "X");
     }
     /**
      * Loads our layout template, settings its title and content.
@@ -387,7 +391,7 @@ function saveToFile($t, $d, $f) {
     $fname = mb_ereg_replace("\'", "", $fname);
     $fname = mb_ereg_replace("\!", "", $fname);
     $fname = mb_ereg_replace("\,", "_", $fname);
-    $fname .= $t['ddate'];
+    $fname .= "-".$t['ddate'];
     
     $homeurl = "http://" . $_SERVER['SERVER_NAME'];
 
