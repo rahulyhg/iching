@@ -105,7 +105,7 @@ function makeMDfile($alldata) {
 /* This is mainly an import of 'makemds.php' */
 /* * ******************************************************************* */
 
-function makeMDfromTemplate($alldata) {
+function makeMDfromTemplate($alldata,$homeurl) {
     $t = $alldata['t'];
     $d = $alldata['d'];
     $f = $alldata['f'];
@@ -245,12 +245,12 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
 
         $page->set("trx_judge_old","X");
         $page->set("trx_judge_exp","X");
-        $page->set("trx_image","X");
+        $page->set("trx_image",$homeurl."/images/thinline350.png");
         $page->set("trx_transtitle","X");
         $page->set("trx_intro","X");
     
 
-        $page->set("f_image", "X");
+        $page->set("f_image", $homeurl."/images/thinline350.png");
         $page->set("f_id", "X");
         $page->set("f_trans", "X");
         $page->set("f_title", "X");
@@ -415,7 +415,7 @@ function saveToFile($t, $d, $f) {
 //    pvar_dump($alldata);
     //$out = makeMDfile($alldata);
 
-    $out = makeMDfromTemplate($alldata);
+    $out = makeMDfromTemplate($alldata,$homeurl);
 
 
     /*     * *************************************************** */
@@ -471,9 +471,12 @@ function saveToFile($t, $d, $f) {
     /*     * *************************************************** */
     /* have to mke system call becaus dompdf is not orking */
     /*     * *************************************************** */
-    $call = "/usr/bin/wkhtmltopdf $outHtml $outPdf";
-    system($call);
-
+    $call = get_cfg_var("iching_root")."/utils/makePdf.sh $outHtml $outPdf";
+//    var_dump($call);
+    $call =  "nohup sudo -u ".get_cfg_var("iching_user")." ".$call. "  >> ".get_cfg_var("iching_root")."/log/wkhtmltopdf.log 2>&1";
+//   $rs = system("nohup sudo -u ".get_cfg_var("iching_user")." ".$call. "  >> ".get_cfg_var("iching_root")."/log/wkhtmltopdf.log 2>&1");
+var_dump($call);
+system($call);
     $_SESSION['dlfile'] = $homeurl . "/" . $fname . ".pdf";
 
     /*     * *************************************************** */
