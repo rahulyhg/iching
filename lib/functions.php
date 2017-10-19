@@ -472,10 +472,10 @@ function saveToFile($t, $d, $f) {
     /* have to mke system call becaus dompdf is not orking */
     /*     * *************************************************** */
     $call = get_cfg_var("iching_root")."/utils/makePdf.sh $outHtml $outPdf";
-//    var_dump($call);
+   
     $call =  "nohup sudo -u ".get_cfg_var("iching_user")." ".$call. "  >> ".get_cfg_var("iching_root")."/log/wkhtmltopdf.log 2>&1";
 //   $rs = system("nohup sudo -u ".get_cfg_var("iching_user")." ".$call. "  >> ".get_cfg_var("iching_root")."/log/wkhtmltopdf.log 2>&1");
-var_dump($call);
+pvar_dump($call);
 system($call);
     $_SESSION['dlfile'] = $homeurl . "/" . $fname . ".pdf";
 
