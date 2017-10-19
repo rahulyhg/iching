@@ -802,41 +802,6 @@ function tossit() {
     }
 }
 
-
-
-//function getHotBits() {
-//
-//    $lines = array();
-//    for ($i = 0; $i < 6; $i++) {
-//        $hotbits = getCleanHotBits();
-//        $line = null;
-//        foreach ($hotbits as $tb) {
-//            $c = ($tb % 2) + 2;
-//            $line += ($tb % 2) + 2;
-//        }
-//        array_push($lines, $line);
-//    }
-//    //var_dump($lines);
-//    return($lines);
-//}
-//
-//function getCleanHotBits() {
-//    $intAry = array();
-//    $hotbitsURL = "http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=3&fmt=c&apikey=HB1P93mBRUA23F7HUF5MCpyZ2PS";
-//    $str = file_get_contents($hotbitsURL);
-////    $str = "/* Random data from the HotBits radioactive random number generator */\nunsigned char hotBits[3] = {\n    10, 240, 151\n};";
-//
-//    preg_match('/[\d].*[\d]/', $str, $matches, PREG_OFFSET_CAPTURE);
-//    $str = ($matches[0][0]);
-//    $hotbits = explode(",", $str);
-//
-//    foreach ($hotbits as $h) {
-//        array_push($intAry, intval(trim($h)));
-//    }
-//    //var_dump($intAry);
-//    return($intAry);
-//}
-
 function oldlogout($t, $str = null) {
     $dumpStr = str_replace("\n", '<br />', var_export($t, TRUE));
     $dumpStr = str_replace("\"", '\'', $dumpStr);
