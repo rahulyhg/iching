@@ -3,6 +3,7 @@ shopt -u dotglob
 
 sudo chown -R jw *
 sudo chown -R jw .git
-sudo chown -R http questions
-sudo chown -R http id
+sudo chown -R www-data questions
+sudo chown -R www-data id
 sudo chmod -R a+rw  id
+

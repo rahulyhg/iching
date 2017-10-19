@@ -395,8 +395,11 @@ function saveToFile($t, $d, $f) {
     $fname = mb_ereg_replace("\,", "_", $fname);
     $fname .= "-".$t['ddate'];
     
+    $test_server_name = get_cfg_var("iching_test_server_name");
+    if (!isset($_SERVER['SERVER_NAME'])) { /* empty when running form (for testing) command line */
+        $_SERVER['SERVER_NAME'] = $test_server_name;
+    }
     $homeurl = "http://" . $_SERVER['SERVER_NAME'];
-
     $fn = $fname . ".txt";
 
     $alldata = array(
