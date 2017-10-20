@@ -1,4 +1,6 @@
 <?php
+session_start();
+//var_dump(session_id());
 #mb_internal_encoding("UTF-8");
 #mb_regex_encoding("UTF-8");
 

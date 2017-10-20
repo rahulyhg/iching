@@ -15,6 +15,19 @@
         width:100% !important;
         
     }
+    .accordion-expand-all {
+        color:black !important;
+        font-weight: bold !important;
+        /* font-size:  xxx-large; */
+        font-size:  17pt;
+
+    }
+
+/*    #btnEC {
+        color:darkgreen !important;
+        background-image: url(/images/btn_expand.png);
+        background-size:  cover;
+    }*/
     .tColors {
         background-color:  green;
         color:yellow;
@@ -68,7 +81,7 @@
         min-width:350px !important;
     }
     
-    .expcol {
+/*    .expcol {
         font-size:18pt;
         font-weight:bold;
         color:white;
@@ -77,4 +90,4 @@
         font-size:18pt;
         font-weight:bold;
         color:white;
-    }
+    }*/

@@ -193,7 +193,7 @@ $(document).ready(function () {
         // open the appropriate panel
         $(this).next().slideDown();
         // reset Expand all button
-        expandLink.text('Expand all')
+        expandLink.text('[+]')
                 .data('isAllOpen', false);
         // stop page scroll
         return false;
@@ -203,12 +203,18 @@ $(document).ready(function () {
     expandLink.click(function () {
         var isAllOpen = !$(this).data('isAllOpen');
         console.log({isAllOpen: isAllOpen, contentAreas: contentAreas})
+        
+        if (isAllOpen) {
+            $("#btnEC").css("color","darkgreen");
+        } else {
+            $("#btnEC").css("color","darkred");
+        }
         contentAreas[isAllOpen ? 'slideDown' : 'slideUp']();
 
-        expandLink.text(isAllOpen ? '[collapse]' : '[EXPAND]')
+        expandLink.text(isAllOpen ? '[-]' : '[+]')
         contentAreas[isAllOpen ? 'slideDown' : 'slideUp']();
 
-        expandLink.text(isAllOpen ? '[collapse]' : '[EXPAND]')
+        expandLink.text(isAllOpen ? '[-]' : '[+]')
                 .data('isAllOpen', isAllOpen);
     });
 

@@ -12,10 +12,10 @@ class Tosser {
     public function getRandomOrg() {
         $throw = array(null, null, null, null, null, null);
         for ($i = 0; $i < 6; $i++) {
-            $id = uniqid();
-            $f = "./throw.sh ${id} ${i}";
+            $uid = session_id();//uniqid();
+            $f = get_cfg_var("iching_root")."/throw.sh ${uid} ${i}";
             $run = trim(system($f));
-            $flip = file_get_contents("id/${id}");
+            $flip = file_get_contents("id/${uid}");
 
             switch ($flip) {
                 case 0:
@@ -32,14 +32,26 @@ class Tosser {
                     break;
             }
         }
+        
+        $this->logit("=> getRandomOrg()",$throw);
         return($throw);
     }
 
+    private function logit($name,$data) {
+        $f= fopen(get_cfg_var("iching_root")."/log/toss.log", "w");
+        fwrite($f, $name."\n");
+        $tstamp = date("F d, Y h:i:s A");
+        fwrite($f,$tstamp."\n");
+        $t = var_export($data,TRUE);
+        fwrite($f,$t);
+        fwrite($f,"\n====================================================\n");        
+        fclose($f);
+    }
     public function getHotBits() {
         $lines = array();
-        $id= uniqid("hb_"); /* used to save and inspect values */
+        $uid= "hb_".session_id();//uniqid("hb_"); /* used to save and inspect values */
         for ($i = 0; $i < 6; $i++) {
-            $hotbits = $this->getCleanHotBits($id);
+            $hotbits = $this->getCleanHotBits($uid);
             $line = null;
             foreach ($hotbits as $tb) {
                 $c = ($tb % 2) + 2;
@@ -47,6 +59,7 @@ class Tosser {
             }
             array_push($lines, $line);
         }
+        $this->logit("=> getHotBits()",$lines);
         return($lines);
     }
 
@@ -120,6 +133,8 @@ class Tosser {
             $m++;
         }
         //var_dump($hex);
+            $this->logit("=> getPlum()",$hex);
+
         return($hex);
     }
 

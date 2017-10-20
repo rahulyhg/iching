@@ -1,4 +1,5 @@
 <?php
+
 /* 'iching_root' is defined in the php.ini file, this way is it always correct for whatever maching is being used */
 require get_cfg_var("iching_root") . "/elements/header_top.php";
 require get_cfg_var("iching_root") . "/elements/header.php";
@@ -35,9 +36,11 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         </div>
 
         <!-- ------------------------------------------------------------>
-    <div id="msg" >
+<?php /*
+        <div id="msg" >
         This site is <a href="https://github.com/baardev/iching">super beta</a>.  It currently needs writers, editors, programmers, philosophers, designers and more.  If you would like to contribute to <a href="/book/ichingbook/_book/">this project</a>, <a href="mailto:duncan.stroud@gmail.com">let me know</a>.
     </div>
+*/?>        
         <?php
         //var_dump($_REQUEST);
         if (!isset($_REQUEST['flipped'])) { /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
@@ -218,6 +221,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         
         /* save all data as a json file... later this will be retreivable 
          * this had to go here so it coudl read a $_SERVER had that needs to get set first 
+         * 
+         * This also maked the *.md files, which are turned into *.html files, 
+         * which are turned into *.pdf files
          */
              
         saveToFile($t, $d, $f);             
@@ -242,29 +248,12 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
     <?php /* this is the tool bar */ ?>
     <div style="border:0px solid red;background-color: transparent;padding:4px;">
         <span>        
-            <!--span style="padding-left:15px" id="expand1">[+] </span>
-            <span style="padding-left:15px" id="collapse1">[-] </span>
-            <span style="padding-left:15px" id="grab"> [GR] </span-->
-            <?php /* EXPAND BUTTON */ ?>
-            <span style="padding-left:15px">
-                <a id="expcol" class="accordion-expand-all" href="#">[EXPAND]</a>
-            </span>
-            <?php /* FINAL HEX EDIT BUTTON */ ?>
-            <span style="padding-left:15px">
-                <a href="/cignite/index.php/main/hexagrams/edit/<?= $t['pseq'] ?>" target="_blank">
-                    <img style="border:4px solid white;width:30px" src="/images/edit.png">
-                </a>
-            </span>
-            <?php /* NOTES EDIT BUTTON */ ?>
-            <span style="padding-left:15px">
-                <a href="/cignite/index.php/main/notes/edit/<?= $t['pseq'] ?>" target="_blank">
-                    <img style="border:4px solid white;width:30px" src="/images/addnotes.png">
-                </a>
-            </span>
-            <?php /* FONT SIZE */ ?>
-            <span style="padding-left:15px"><span class="expcol" id="larger1">[+]</spam></span>
-            <span style="padding-left:15px"><span class="expcol" id="larger2">[++]</spam></span>
-            <span style="padding-left:15px"><span class="expcol" id="larger3">[+++]</spam></span>
+            <?php print putBtnExpand(); ?>
+            <?php print putBtnEdit($t['pseq']); ?>
+            <?php print putBtnUpdate($t['pseq']); ?>
+            <?php print putBtnSmTxt(); ?>
+            <?php print putBtnMedTxt(); ?>
+            <?php print putBtnLgTxt(); ?>
         </span>
     </div>
     <div id="accordion1">
@@ -273,7 +262,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
  *  First Title
  */
 ?>
-        <h3 id="firstheaader" style="font-size:1.2em !important" class="eTitle t_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+        <h3 id="firstheader" style="font-size:1.2em !important" class="eTitle t_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
             <?= $t['pseq'] ?> (<?= $t['title'] ?>) <?= $t['trans'] ?>
             <?php /* this invisible one pixel line control the collapse with of the accordian */?>
             <br><img style="min-width:300px" src="images/thinline350.png">
@@ -465,18 +454,8 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 
     <div style="border:0px solid red;background-color: transparent;padding:4px;">
         <span>        
-            <?php /* FINAL HEX EDIT BUTTON */ ?>
-            <span style="padding-left:15px">
-                <a href="/cignite/index.php/main/hexagrams/edit/<?= $f['pseq'] ?>" target="_blank">
-                    <img style="border:4px solid white;width:30px"  src="/images/edit.png">
-                </a>
-            </span>
-            <?php /* NOTE BUTTON */ ?>
-            <span style="padding-left:15px">
-                <a href="/cignite/index.php/main/notes/edit/<?= $f['pseq'] ?>" target="_blank">
-                    <img style="border:4px solid white;width:30px"  src="/images/addnotes.png">
-                </a>
-            </span>
+             <?php print putBtnEdit($t['pseq']); ?>
+             <?php print putBtnUpdate($t['pseq']); ?>
         </span>
     </div>
     <div id="accordion2">
@@ -599,13 +578,13 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             <?php
         }
         ?>
-            <div  style="padding-bottom:20px" class='textWrapper'>
-                <div class='subtextWrapper'>
-            <div id="download" style="font-variant-caps: all-small-caps ; font-weight: bold;color:black">
-                <a href="<?= $_SESSION['dlfile'] ?>">Download<br>
+        <div  style="padding-bottom:20px;left: 50%;right: 50%; position:absolute; z-index:100;top:10;" class='textWrapper'>
+            <div class='subtextWrapper'>
+                <div id="download" style="font-variant-caps: all-small-caps ; font-weight: bold;color:black">
+                    <a target="_blank" href="<?= $_SESSION['dlfile'] ?>">Download<br>
+                </div>
             </div>
-            </div>
-            </div>
+        </div>
 
     <?php
         /* convert to int ?  hmmm aren;t they ints alrady in database  FIXME */
@@ -687,4 +666,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 <?php
 require get_cfg_var("iching_root") . "/lib/popup_predefs.php"; /* has all the dovs for the jquery-ui popups */
 require get_cfg_var("iching_root") . "/elements/footer.php";
+
+$del = "rm ".get_cfg_var("iching_root")."/id/*".session_id()."*";
+system($del);
 ?>

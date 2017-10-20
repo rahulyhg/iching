@@ -69,6 +69,10 @@ function pvar_dump($x) {
     print "</div>";
 }
 
+
+/* DEPRICATED
+ * 
+ 
 function makeMDfile($alldata) {
     $t = $alldata['t'];
     $d = $alldata['d'];
@@ -100,187 +104,449 @@ function makeMDfile($alldata) {
     }
     return($out);
 }
+*/
+
+function mergeHex($t_image,$f_image) {
+
+    //$numberOfImages = 2;
+    /*
+     * JWFIX hardcoded numbers ? :(
+     */
+    $x = 80;
+    $y = 87;
+    $png = imagecreatetruecolor($x * 3, $y);
+    imagesavealpha($png, true);
+
+    /*
+     * JWFIX can't get th etansparency to work when I create the image... always black, so I set to white
+     */
+//    $trans_colour = imagecolorallocatealpha($png, 0, 0, 0, 127);
+//    imagefill($png, 0, 0, $trans_colour);
+    
+    $white = imagecolorallocate($png, 255, 255, 255); 
+    imagefill($png,0,0,$white); 
+
+
+//    $firstUrl = "http://slider.com/id/${t_image}";
+//    $secondUrl = "http://slider.com/id/${f_image}";
+
+    $firstUrl = $t_image;
+    $secondUrl = $f_image;
+
+
+    $outputImage = $png;
+
+    $first = imagecreatefrompng($firstUrl);
+    $second = imagecreatefrompng($secondUrl);
+
+    imagecopymerge($outputImage, $first, 0, 0, 0, 0, $x, $y, 100);
+    imagecopymerge($outputImage, $second, $x * 2, 0, 0, 0, $x, $y, 100);
+
+//    imagejpeg($outputImage, APPLICATION_PATH . 'test.png');
+//    $uid = uniqid();
+    $uid=session_id();
+    $fn = "/id/merge_${uid}.png";
+//    $fn = get_cfg_var("iching_root")."/id/merge_${uid}.png";
+    imagepng($outputImage, get_cfg_var("iching_root").$fn);
+
+    imagedestroy($outputImage);
+ 
+    return($fn);
+}
+
+function getServerPrefix() {
+    
+    $test_server_name = get_cfg_var("iching_test_server_name");
+    if (!isset($_SERVER['SERVER_NAME'])) { /* empty when running form (for testing) command line */
+        $_SERVER['SERVER_NAME'] = $test_server_name;
+    }
+    
+    return("http://" . $_SERVER['SERVER_NAME']);    
+}
+
+function makeAlphaBox($x,$y) {
+    $hexBox = imagecreatetruecolor($x, $y);
+    imagesavealpha($hexBox, true);
+    $white = imagecolorallocate($hexBox, 255, 255, 255);
+    imagefill($hexBox, 0, 0, $white);
+    return($hexBox);
+}
+
+function makeHexPng($t, $d, $f) {
+    //$homeurl = getServerPrefix();
+    $ta = str_split($t);
+    $fa = str_split($f);
+
+    $x = 80; //width of a line
+    $y = 11; // height of a line
+    $y_border = 4;
+
+    $newY = ($y * 6) + (5 * $y_border); // 6 lines plus borders
+    /* same probl;am as above...
+     * JWFIX can't get th etansparency to work when I create the image... always black, so I set to white
+     */
+
+    $hex1 = makeAlphaBox($x,$newY);
+
+
+    /* ***************************************************************
+     * make hexagram 1 
+     * ************************************************************** */
+    $i = array();
+    for ($k = 0; $k < 6; $k++) {
+        if ($ta[$k] == 1) {          // line = yang
+            if ($d[$k] == 1) {          // line = moving
+                $i[$k] = getServerPrefix().'/images/lines/9sm.png';
+            } else {                    // line = static
+                $i[$k] = getServerPrefix().'/images/lines/7sm.png';
+            }
+        } else {                    // line = yin
+            if ($d[$k] == 0) {          // line = static
+                $i[$k] = getServerPrefix().'/images/lines/8sm.png';
+            } else {                    //  line = moving
+                $i[$k] = getServerPrefix().'/images/lines/6sm.png';
+            }
+        }
+    }
+
+    /* load files into array */
+    $m = array();
+    for ($k = 0; $k < 6; $k++) {
+        $m[$k] = imagecreatefrompng($i[$k]);
+    }
+    /* stack on top of one another */
+    for ($k = 0; $k < 6; $k++) {
+        $dst_y = ($y * $k) + ($y_border * $k);
+        imagecopymerge($hex1, $m[$k], 0, $dst_y, 0, 0, $x, $y, 100);
+    }
+    /* I use a UID to save to file ... JWFIX shoudl I use a session id instead?*/
+    $u = uniqid();
+    
+    /* make the filename for the temporary image */
+    $hex1file =  get_cfg_var("iching_root")."/id/hex1_tmp_".session_id().".png";
+    $hex1fileUrl =  getServerPrefix()."/id/hex1_tmp_".session_id().".png";
+    
+    /* save the image */
+    imagepng($hex1,$hex1file);
+ 
+    /* clean up */
+    imagedestroy($hex1);
+    
+    /* ***************************************************************
+     * make hexagram 2 
+     * ************************************************************** */
+
+    $hex2 = makeAlphaBox($x,$newY);
+
+    $i = array();
+    for ($k = 0; $k < 6; $k++) {
+        if ($fa[$k] == 1) {
+            $i[$k] = getServerPrefix().'/images/lines/7sm.png';
+        } else {
+            $i[$k] = getServerPrefix().'/images/lines/8sm.png';
+        }
+    }
+
+
+    $m = array();
+    for ($k = 0; $k < 6; $k++) {
+        $m[$k] = imagecreatefrompng($i[$k]);
+    }
+
+    for ($k = 0; $k < 6; $k++) {
+        $dst_y = ($y * $k) + ($y_border * $k);
+        imagecopymerge($hex2, $m[$k], 0, $dst_y, 0, 0, $x, $y, 100);
+    }
+   
+    /* make the filename for the temporary image */
+    $hex2file =  get_cfg_var("iching_root")."/id/hex2_tmp_".session_id().".png";
+    $hex2fileUrl =  getServerPrefix()."/id/hex2_tmp_".session_id().".png";
+    //var_dump($_SESSION);
+    /* save the image */
+    imagepng($hex2,$hex2file);
+ 
+    /* clean up */
+    imagedestroy($hex2);
+
+    $isMovingLines = ($t != $f); /* 1 = moving lines, 0 = none */
+    /* we make both hexes and mergethem, but if there is only one we just send back one */
+
+    $finalFile = $hex1fileUrl;
+    if ($isMovingLines) {    
+       $finalFile = getServerPrefix().mergeHex($hex1fileUrl,$hex2fileUrl); /* mergeHex() does not rewturn URL, so do that here */
+    }
+    
+//    enlargeImage($finalFile,1.3);
+    
+    return(enlargeImage($finalFile,2));
+}
+
+function enlargeImage($originalFile, $pct) {
+    list($width, $height) = getimagesize($originalFile);
+//    var_dump($width);
+//    var_dump(getimagesize($originalFile));
+    $newWidth = $width * $pct;
+    $uid = uniqid("tmp_")."_".session_id();
+    /* assume png for now */
+    $targetFile = get_cfg_var("iching_root") . "/id/${uid}";
+
+
+    $info = getimagesize($originalFile);
+    $mime = $info['mime'];
+
+    switch ($mime) {
+        case 'image/jpeg':
+            $image_create_func = 'imagecreatefromjpeg';
+            $image_save_func = 'imagejpeg';
+            $new_image_ext = 'jpg';
+            break;
+
+        case 'image/png':
+            $image_create_func = 'imagecreatefrompng';
+            $image_save_func = 'imagepng';
+            $new_image_ext = 'png';
+            break;
+
+        case 'image/gif':
+            $image_create_func = 'imagecreatefromgif';
+            $image_save_func = 'imagegif';
+            $new_image_ext = 'gif';
+            break;
+
+        default:
+            throw new Exception('Unknown image type.');
+    }
+
+    $img = $image_create_func($originalFile);
+    list($width, $height) = getimagesize($originalFile);
+
+    $newHeight = ($height / $width) * $newWidth;
+    $tmp = imagecreatetruecolor($newWidth, $newHeight);
+    imagecopyresampled($tmp, $img, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+    if (file_exists($targetFile)) {
+        unlink($targetFile);
+    }
+    $image_save_func($tmp, "$targetFile.$new_image_ext");
+    //var_dump("$targetFile.$new_image_ext");
+    return("$targetFile.$new_image_ext");
+}
 
 /* * ******************************************************************* */
 /* This is mainly an import of 'makemds.php' */
 /* * ******************************************************************* */
 
-function makeMDfromTemplate($alldata,$homeurl) {
+function makeMDfromTemplate($alldata) {
+    /*
+     * Set all teh vars we need
+     */
     $t = $alldata['t'];
     $d = $alldata['d'];
     $f = $alldata['f'];
-    $homeurl = $alldata['homeurl'];
+    
+    //var_dump($t['trans']);
+    //getServerPrefix()$homeurl = $alldata['homeurl'];
     $hdate = $t['hdate'];
     $ddate = $t['ddate'];
     $question = $t['question'];
     
-        
-    
     $trx_pseq = $_SESSION['trx_pseq'];
     $txhex = $GLOBALS['dbh']->getHex($trx_pseq);
-
-//    pvar_dump($txhex);
-//    pvar_dump($txhex[0]['trans']);
-//    pvar_dump($txhex[0]['judge_old']);
-//    pvar_dump($txhex[0]['judge_exp']);
     
-    $t_image = $homeurl."/images/hex/small/hexagram" . f($t['pseq']) . ".png";
-    $f_image = $homeurl."/images/hex/small/hexagram" . f($f['pseq']) . ".png";
+    $fpage=null;
 
+              
+    /* 
+     * make image of tossed and final hex, with colored moving lines, for pdf heading
+     */
+    $t_image = getServerPrefix()."/id/hex1_tmp_".session_id().".png";
+//    $t_image = getServerPrefix()."/images/hex/small/hexagram" . f($t['pseq']) . ".png";
+    $f_image = getServerPrefix()."/images/hex/small/hexagram" . f($f['pseq']) . ".png";
+    /* makeHexPng() return the URL alrady */
+    $m_image =  makeHexPng($t['binary'], $d, $f['binary']);//makeHexPng();//mergeHex($t_image,$f_image);
+    //var_dump($m_image);
+    /*
+     * load the template processing class
+     */
     include(get_cfg_var("iching_root") . "/book/templates/template.class.php");
-    $type = 'pseq';
-    $cols = getcols();
+    $type = 'pseq'; /* select the 'pseq' vale to search by */
+    $cols = getcols(); /* get the column names from the database */
 
-    $ftpseq = sprintf("%02s", $t['pseq']);
-    $ffpseq = sprintf("%02s", $f['pseq']);
+    /*
+     * make sure they are 0 leading
+     */
+    $ftpseq = f($t['pseq']);
+    $ffpseq = f($f['pseq']);
+//    $ftpseq = sprintf("%02s", $t['pseq']);
+//    $ffpseq = sprintf("%02s", $f['pseq']);
 
-    $thex = mdgethex($ftpseq);
-    $fhex = mdgethex($ffpseq);
+    $thex = mdgethex($ftpseq); /* this gets the first hex data from the database*/
+    $fhex = mdgethex($ffpseq); /* this, the second */
 
-    $page = new Template(get_cfg_var("iching_root") . "/book/templates/pdf.tpl");
-    $page->set("hdate", $hdate);
-    $page->set("question", "'${question}'");
 
+    /*
+     * create new template instances for each part of the final PDF
+     */
+    $page_title = new Template(get_cfg_var("iching_root") . "/templates/pdf_title.tpl");
+    $page_hex1 = new Template(get_cfg_var("iching_root") . "/templates/pdf_hex1.tpl");
+    $page_lines = new Template(get_cfg_var("iching_root") . "/templates/pdf_lines.tpl");
+    $page_hex2 = new Template(get_cfg_var("iching_root") . "/templates/pdf_hex2.tpl");
+    $page_trx = new Template(get_cfg_var("iching_root") . "/templates/pdf_trx.tpl");
+
+    /*
+     * set the vars for the title template
+     */
+    $page_title->set("hdate", $hdate);
+    $page_title->set("question", "'${question}'");
+    $page_title->set("merged", $m_image);
+
+    /*
+     * set the vars for the transitional hexgram template
+     */    
+    $page_trx->set("trx_judge_old",$txhex[0]['judge_old']);
+    $page_trx->set("trx_judge_exp",$txhex[0]['judge_exp']);
+    $trx_image = getServerPrefix()."/images/hex/small/hexagram" . f($txhex[0]['pseq']) . ".png";
+    $page_trx->set("trx_image",$trx_image);
+    $page_trx->set("trx_transtitle", $txhex[0]['pseq']." (".$txhex[0]['binary']." = ".$txhex[0]['bseq'].") ". $txhex[0]['trans']." / ".$txhex[0]['title']);
     
-    $page->set("trx_judge_old",$txhex[0]['judge_old']);
-    $page->set("trx_judge_exp",$txhex[0]['judge_exp']);
-
-    $trx_image = $homeurl."/images/hex/small/hexagram" . f($txhex[0]['pseq']) . ".png";
-    $page->set("trx_image",$trx_image);
-    $page->set("trx_transtitle", $txhex[0]['pseq']." (".$txhex[0]['binary']." = ".$txhex[0]['bseq'].") ". $txhex[0]['trans']." / ".$txhex[0]['title']);
-    $page->set("trx_intro","The moving lines are the lines that, due to their extreme condition, 'flip' to 
+    /*
+     * JWFIX all the labels and  shoud probably be in a config file, with language support
+     */
+    $page_trx->set("trx_intro","The moving lines are the lines that, due to their extreme condition, 'flip' to 
 their opposite, and as a result, a new hexagram is created. Likewise, if we then subtract the binary value of the first hexagram from the 
 final hexagram, we end up with a binary number that represents the difference 
 between the two, and this binary number maps to yet another hexagram.  We call 
 this hexagram 'transitional' as it a full hexagram that represent the moving lines. For the first and second hexagrams shown here, the transitional hexagram is ");
-   $page->set("trx_title","The Transitioning Hexagram");
- 
-    
-    /* tossed hex */
-    $page->set("t_image", $t_image);
-    $page->set("t_id", f($thex[0]['pseq']));
-    $page->set("t_trans", $thex[0]['trans']);
-    $page->set("t_title", $thex[0]['title']);
-    $page->set("t_transtitle", $fhex[0]['trans']." / ".$thex[0]['title']);
-    $page->set("t_pseq", f($thex[0]['pseq']));
-    $page->set("t_bseq", f($thex[0]['bseq']));
-    $page->set("t_binary", $thex[0]['binary']);
-    $page->set("t_dir", $thex[0]['iq32_dir']);
-    $page->set("t_tri_upper", $thex[0]['tri_upper']);
-    $page->set("t_tri_lower", $thex[0]['tri_lower']);
-    $page->set("t_judge_old", $thex[0]['judge_old']);
-    $page->set("t_judge_exp", $thex[0]['judge_exp']);
-    $page->set("t_image_old", $thex[0]['image_old']);
-    $page->set("t_image_exp", $thex[0]['image_exp']);
-    
+    $page_trx->set("trx_title","The Transitioning Hexagram");
+    $page_trx->set("label_judge_old", "The Judgment:");
+    $page_trx->set("label_judge_exp", "An Explanation of the Judgment");
 
-    
-    
-
-    $movinglines = "The Moving Lines";
-    if ($thex[0]['pseq'] == $fhex[0]['pseq']) {
-        $movinglines = "There are no moving lines";
-    }
-    $page->set("movinglines", $movinglines);
-    /* no moving lines */
-    for ($j = 0; $j < 6; $j++) {
-        $i = 6 - $j ;
-        if ($d[$j]) {
-            $page->set("t_line_${i}", $thex[0]['line_' . $i]);
-            $page->set("t_line_${i}_org", $thex[0]['line_' . $i . '_org']);
-            $page->set("t_line_${i}_exp", $thex[0]['line_' . $i . '_exp']);
-        } else {
-            $page->set("t_line_${i}", "<span style='color:darkgray'>".$thex[0]['line_' . $i]."</span>");
-//            $page->set("t_line_${i}", "&nbsp;");
-            $page->set("t_line_${i}_org", "<span style='color:darkgray'>".$thex[0]['line_' . $i . '_org']."</span>");
-            $page->set("t_line_${i}_exp", "<span style='color:darkgray'>".$thex[0]['line_' . $i . '_exp']."</span>");
-        }
-    }
-//        $page->set("t_fix", $thex[0]['fix']);
-//        $page->set("t_comment", $thex[0]['comment']);
-
-    /* final hex */
-
-    if ($thex[0]['pseq'] != $fhex[0]['pseq']) {
-
-        $page->set("label_resulting_hex", "The Resulting Hexagram:");
-        $page->set("label_hexagram", "Hexagram:");
-        $page->set("label_binary", "Binary Sequence:");
-        $page->set("label_dir", "Direction:");
-        $page->set("label_upper_tri", "Upper trigram:");
-        $page->set("label_lower_tri", "Lower trigram:");
-        $page->set("label_judge_old", "The Judgment:");
-        $page->set("label_judge_exp", "An Explanation of the Judgment");
-        $page->set("label_image_old", "The 'IMAGE' of the hexagram");
-        $page->set("label_image_exp", "An Explanation of the 'IMAGE'");
-
-        $page->set("f_image", $f_image);
-        $page->set("f_id", f($fhex[0]['pseq']));
-        $page->set("f_transtitle", $fhex[0]['trans']." / ".$fhex[0]['title']);
-        $page->set("f_trans", $fhex[0]['trans']);
-        $page->set("f_title", $fhex[0]['title']);
-        $page->set("f_pseq", f($fhex[0]['pseq']));
-        $page->set("f_bseq", f($fhex[0]['bseq']));
-        $page->set("f_binary", "(".$fhex[0]['binary'].")");
-        $page->set("f_dir", $fhex[0]['iq32_dir']);
-        $page->set("f_tri_upper", $fhex[0]['tri_upper']);
-        $page->set("f_tri_lower", $fhex[0]['tri_lower']);
-        $page->set("f_judge_old", $fhex[0]['judge_old']);
-        $page->set("f_judge_exp", $fhex[0]['judge_exp']);
-        $page->set("f_image_old", $fhex[0]['image_old']);
-        $page->set("f_image_exp", $fhex[0]['image_exp']);
-    } else {
-        /* these must be set to black so as not to appear in the template */
-        $page->set("trx_title","X");
-        $page->set("label_resulting_hex", "X");
-        $page->set("label_hexagram", "X");
-        $page->set("label_binary", "X");
-        $page->set("label_dir", "X");
-        $page->set("label_upper_tri", "X");
-        $page->set("label_lower_tri", "X");
-        $page->set("label_judge_old", "X");
-        $page->set("label_judge_exp", "X");
-        $page->set("label_image_old", "X");
-        $page->set("label_image_exp", "X");
-
-        $page->set("trx_judge_old","X");
-        $page->set("trx_judge_exp","X");
-        $page->set("trx_image",$homeurl."/images/thinline350.png");
-        $page->set("trx_transtitle","X");
-        $page->set("trx_intro","X");
-    
-
-        $page->set("f_image", $homeurl."/images/thinline350.png");
-        $page->set("f_id", "X");
-        $page->set("f_trans", "X");
-        $page->set("f_title", "X");
-        $page->set("f_transtitle", "X");
-        $page->set("f_pseq", "X");
-        $page->set("f_bseq", "X");
-        $page->set("f_binary", "X");
-        $page->set("f_dir", "X");
-        $page->set("f_tri_upper", "X");
-        $page->set("f_tri_lower", "X");
-        $page->set("f_judge_old", "X");
-        $page->set("f_judge_exp", "X");
-        $page->set("f_image_old", "X");
-        $page->set("f_image_exp", "X");
-    }
-    /**
-     * Loads our layout template, settings its title and content.
+    /*
+     * set the vars for the first hexagram template.
+     * First we set all the label string values
      */
-    $layout = new Template(get_cfg_var("iching_root") . "/book/templates/layout.tpl");
-    $layout->set("content", $page->output());
 
+    $page_hex1->set("label_resulting_hex", "The Resulting Hexagram:");
+    $page_hex1->set("label_hexagram", "Hexagram:");
+    $page_hex1->set("label_binary", "Binary Sequence:");
+    $page_hex1->set("label_dir", "Direction:");
+    $page_hex1->set("label_upper_tri", "Upper trigram:");
+    $page_hex1->set("label_lower_tri", "Lower trigram:");
+    $page_hex1->set("label_judge_old", "The Judgment:");
+    $page_hex1->set("label_judge_exp", "An Explanation of the Judgment");
+    $page_hex1->set("label_image_old", "The 'IMAGE' of the hexagram");
+    $page_hex1->set("label_image_exp", "An Explanation of the 'IMAGE'");
+    /*
+     * then we set the data values 
+     */    
+    $page_hex1->set("t_image", $t_image);
+    $page_hex1->set("t_id", f($thex[0]['pseq']));
+    $page_hex1->set("t_trans", $thex[0]['trans']);
+    $page_hex1->set("t_title", $thex[0]['title']);
+    $page_hex1->set("t_transtitle", $thex[0]['trans']." / ".$thex[0]['title']);
+    $page_hex1->set("t_pseq", f($thex[0]['pseq']));
+    $page_hex1->set("t_bseq", f($thex[0]['bseq']));
+    $page_hex1->set("t_binary", $thex[0]['binary']);
+    $page_hex1->set("t_dir", $thex[0]['iq32_dir']);
+    $page_hex1->set("t_tri_upper", $thex[0]['tri_upper']);
+    $page_hex1->set("t_tri_lower", $thex[0]['tri_lower']);
+    $page_hex1->set("t_judge_old", $thex[0]['judge_old']);
+    $page_hex1->set("t_judge_exp", $thex[0]['judge_exp']);
+    $page_hex1->set("t_image_old", $thex[0]['image_old']);
+    $page_hex1->set("t_image_exp", $thex[0]['image_exp']);
+
+    /*
+     * set isMovingLines flag
+     */
+    $isMovingLines = ($thex[0]['pseq'] != $fhex[0]['pseq']); /* 1 = moving lines, 0 = none */
+    
+    /* 
+     * set the label fro the moving lines
+     */
+    $movinglines = "There are no moving lines";
+    $page_lines->set("movinglines", $movinglines);
+    
+    if ($isMovingLines) { 
+        $movinglines = "The Moving Lines";
+    
+        $page_lines->set("movinglines", $movinglines); /* override */
+        /*
+         * loop through the lines setting the vars using CSS to highlight the moving lines
+         */
+        for ($j = 0; $j < 6; $j++) {
+            $i = 6 - $j ;
+            if ($d[$j]) {
+                $page_lines->set("t_line_${i}", $thex[0]['line_' . $i]);
+                $page_lines->set("t_line_${i}_org", $thex[0]['line_' . $i . '_org']);
+                $page_lines->set("t_line_${i}_exp", $thex[0]['line_' . $i . '_exp']);
+            } else {
+                $page_lines->set("t_line_${i}", "<span style='color:darkgray'>".$thex[0]['line_' . $i]."</span>");
+                $page_lines->set("t_line_${i}_org", "<span style='color:darkgray'>".$thex[0]['line_' . $i . '_org']."</span>");
+                $page_lines->set("t_line_${i}_exp", "<span style='color:darkgray'>".$thex[0]['line_' . $i . '_exp']."</span>");
+            }
+        }
+        
+        /*
+         * set vars for final hexagram
+         */
+
+        $page_hex2->set("label_resulting_hex", "The Resulting Hexagram:");
+        $page_hex2->set("label_hexagram", "Hexagram:");
+        $page_hex2->set("label_binary", "Binary Sequence:");
+        $page_hex2->set("label_dir", "Direction:");
+        $page_hex2->set("label_upper_tri", "Upper trigram:");
+        $page_hex2->set("label_lower_tri", "Lower trigram:");
+        $page_hex2->set("label_judge_old", "The Judgment:");
+        $page_hex2->set("label_judge_exp", "An Explanation of the Judgment");
+        $page_hex2->set("label_image_old", "The 'IMAGE' of the hexagram");
+        $page_hex2->set("label_image_exp", "An Explanation of the 'IMAGE'");
+
+        $page_hex2->set("f_image", $f_image);
+        $page_hex2->set("f_id", f($fhex[0]['pseq']));
+        $page_hex2->set("f_transtitle", $fhex[0]['trans']." / ".$fhex[0]['title']);
+        $page_hex2->set("f_trans", $fhex[0]['trans']);
+        $page_hex2->set("f_title", $fhex[0]['title']);
+        $page_hex2->set("f_pseq", f($fhex[0]['pseq']));
+        $page_hex2->set("f_bseq", f($fhex[0]['bseq']));
+        $page_hex2->set("f_binary", "(".$fhex[0]['binary'].")");
+        $page_hex2->set("f_dir", $fhex[0]['iq32_dir']);
+        $page_hex2->set("f_tri_upper", $fhex[0]['tri_upper']);
+        $page_hex2->set("f_tri_lower", $fhex[0]['tri_lower']);
+        $page_hex2->set("f_judge_old", $fhex[0]['judge_old']);
+        $page_hex2->set("f_judge_exp", $fhex[0]['judge_exp']);
+        $page_hex2->set("f_image_old", $fhex[0]['image_old']);
+        $page_hex2->set("f_image_exp", $fhex[0]['image_exp']);
+        
+        /**
+         * Loads our layout template, settings its title and content.
+         * There is one layout template for one hex only, and one for 2 hexes
+         */
+        
+        $layout = new Template(get_cfg_var("iching_root") . "/templates/layout_moving.tpl");    
+        $layout->set("title", $page_title->output());
+        $layout->set("hex1", $page_hex1->output());
+        $layout->set("lines", $page_lines->output());
+        $layout->set("hex2", $page_hex2->output());
+        $layout->set("trx", $page_trx->output());
+        $fpage = $layout->output();
+    } else { /* there are no nomoving lines */
+        $layout = new Template(get_cfg_var("iching_root") . "/templates/layout_static.tpl");    
+        $layout->set("title", $page_title->output());
+        $layout->set("hex1", $page_hex1->output());
+        $fpage = $layout->output();
+    }
     /**
-     * Outputs the page with the user's page.
+     * Outputs the page.
      */
     $fpage = $layout->output();
 
     return($fpage);
 }
 
-/* these are functions for the above */
+/* 
+ * this is functions for makeMDfromTemplate()
+ * JWFIX move this to the DataMapper class
+ */
 
 function getids($ary) {
     $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
@@ -288,7 +554,7 @@ function getids($ary) {
     $sth = $dbh->prepare($sql);
     $sth->execute();
     $ids = $sth->fetchAll();
-    $c = array();
+// $c = array();
     foreach ($ids as $id) {
 //        var_dump($id);exit;
 //        array_push($c, $id[$type]);
@@ -296,6 +562,10 @@ function getids($ary) {
     return($ids);
 }
 
+/* 
+ * this is functions for makeMDfromTemplate()
+ * JWFIX move this to the DataMapper class
+ */
 function getcols() {
     $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'iching' AND TABLE_NAME = 'hexagrams'";
@@ -309,6 +579,10 @@ function getcols() {
     return($c);
 }
 
+/* 
+ * this is functions for makeMDfromTemplate()
+ * JWFIX move this to the DataMapper class
+ */
 function mdgethex($pseq) {
     //  var_dump($bseq);
     $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
@@ -381,8 +655,7 @@ EOX;
     return($hex);
 }
 
-/* * ******************************************************************** */
-/* end of 'makemds.php' */
+
 /* * ******************************************************************** */
 
 function saveToFile($t, $d, $f) {
@@ -395,32 +668,31 @@ function saveToFile($t, $d, $f) {
     $fname = mb_ereg_replace("\,", "_", $fname);
     $fname .= "-".$t['ddate'];
     
-    $test_server_name = get_cfg_var("iching_test_server_name");
-    if (!isset($_SERVER['SERVER_NAME'])) { /* empty when running form (for testing) command line */
-        $_SERVER['SERVER_NAME'] = $test_server_name;
-    }
-    $homeurl = "http://" . $_SERVER['SERVER_NAME'];
-    $fn = $fname . ".txt";
 
     $alldata = array(
         'question' => $_REQUEST['question'],
         't' => $t,
         'd' => $d,
-        'f' => $f,
-        'homeurl' => $homeurl
+        'f' => $f
     );
-    $json = json_encode($alldata, JSON_PRETTY_PRINT);
-    file_put_contents($fn, $json);
+    
+/* no need to save any of this right now */
+//    /*
+//     * first just save teh raw json data in /questions/<question>_<timestamp>.json
+//     */
+//    $fn = $fname . ".json";
+//    $json = json_encode($alldata, JSON_PRETTY_PRINT);
+//    file_put_contents($fn, $json);
 
-//    pvar_dump($alldata);
-    //$out = makeMDfile($alldata);
+    /*
+     * Now make the MarkDown file 
+     */
+    $out = makeMDfromTemplate($alldata);
 
-    $out = makeMDfromTemplate($alldata,$homeurl);
 
-
-    /*     * *************************************************** */
+    /* *************************************************** */
     /* make out filenames, and write the markdown to a file */
-    /*     * *************************************************** */
+    /* *************************************************** */
     $outMd = get_cfg_var("iching_root") . "/" . $fname . ".md";
     $outPdf = get_cfg_var("iching_root") . "/" . $fname . ".pdf";
     $outHtml = get_cfg_var("iching_root") . "/" . $fname . ".html";
@@ -430,17 +702,17 @@ function saveToFile($t, $d, $f) {
     fwrite($f, $out);
     fclose($f);
 
-    /*     * *************************************************** */
+    /* *************************************************** */
     /* convert MARKDOWN to HTML */
-    /*     * *************************************************** */
+    /* *************************************************** */
     $markdown = file_get_contents($outMd);
     $markdownParser = new \Michelf\MarkdownExtra();
     $html = $markdownParser->transform($markdown);
 
-    /*     * *************************************************** */
+    /* *************************************************** */
     /* add CSS to the HTML and save to file */
-    /*     * *************************************************** */
-    $cssfile = "$homeurl/css/pdf.css";
+    /* *************************************************** */
+    $cssfile = getServerPrefix()."/css/pdf.css";
 //    var_dump($cssfile);
     $html = "<html>\n<head>\n<link rel='stylesheet' type='text/css' href='$cssfile'>\n</head>\n<body>" . $html . "</body></html>";
 //    $html = "<html>\n<head>\n</head>\n<body>" . $html . "</body></html>";
@@ -450,9 +722,9 @@ function saveToFile($t, $d, $f) {
     fclose($f);
 
 
-    /*     * *************************************************** */
+    /* *************************************************** */
     /* load the HTML into a DOM parser and process any links */
-    /*     * *************************************************** */
+    /* *************************************************** */
     $dom = \HTML5::loadHTML($html);
     $links = htmlqp($dom, 'a');
     foreach ($links as $link) {
@@ -467,20 +739,10 @@ function saveToFile($t, $d, $f) {
     fwrite($f, $html);
     fclose($f);
 
-
-    /*     * *************************************************** */
-    /* have to mke system call becaus dompdf is not orking */
-    /*     * *************************************************** */
-    $call = get_cfg_var("iching_root")."/utils/makePdf.sh $outHtml $outPdf";
-   
-    $call =  "nohup sudo -u ".get_cfg_var("iching_user")." ".$call. "  >> ".get_cfg_var("iching_root")."/log/wkhtmltopdf.log 2>&1";
-
-    system($call);
-    $_SESSION['dlfile'] = $homeurl . "/" . $fname . ".pdf";
-
-    /*     * *************************************************** */
-    /* load the HTML into dompdf, render it and write it */
-    /*     * *************************************************** */
+    /* *************************************************** 
+     * load the HTML into dompdf, render it and write it 
+     * DOES NOT WORK!
+     *************************************************** */
 
 ////   // use Dompdf\Options;
 ////$options = new Options();
@@ -497,6 +759,25 @@ function saveToFile($t, $d, $f) {
 //    fwrite($f, $output);
 //    fclose($f);
 
+    
+    /* *************************************************** 
+    /* have to mAke system call because dompdf is not Working 
+     * See docs on the more complicated aspects of doign this 
+     * on a headless server :/  Needs virtual X11 frame buffers
+    *************************************************** */
+    $call = get_cfg_var("iching_root")."/utils/makePdf.sh $outHtml $outPdf";
+   
+    $call =  "nohup sudo -u ".get_cfg_var("iching_user")." ".$call. "  >> ".get_cfg_var("iching_root")."/log/wkhtmltopdf.log 2>&1";
+
+    system($call);
+    
+    /*
+     * Save the final URL fro the download link on the homepage
+     */
+    $_SESSION['dlfile'] = getServerPrefix() . "/" . $fname . ".pdf";
+    
+    unlink($outMd);
+    unlink($outHtml); 
 
     return(TRUE);
 }
@@ -539,9 +820,11 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
 
 
     $out = "<div id='${uid}'>\n";
-//    $hex1 = code that builds '$tossed' hex
-//    $script = gathered code to print into page
-//    $newHex = the resutl of $tossed and $delta    
+    /*
+     * $hex1 = code that builds '$tossed' hex
+     * $script = gathered code to print into page
+     * $newHex = the resutl of $tossed and $delta
+     */
 
     list($hex1, $script, $newHex) = $cssHex->drawHex($tossed, $delta, $script, 1, $uid);
     $out .= "<div id='tossed_${uid}' class='" . (($whichToFade == "fade_tossed") ? "faded" : "live") . "'>\n" . $hex1 . "</div>\n";
@@ -654,11 +937,11 @@ function getToss() {
         }
         $tossed = $newTossed;
 //        var_dump($delta);
-        // it gets recalced later, so clear it
+        /* it gets recalced later, so clear it */
         $delta = array(0, 0, 0, 0, 0, 0); //reset it 
     }
 
-// back to the normal  processing
+    /* back to the normal  processing */
     //var_dump($delta);
     for ($i = 0; $i < 6; $i++) {
         if (($tossed[$i] == 6) || ($tossed[$i] == 9)) {
@@ -671,15 +954,16 @@ function getToss() {
 //        var_dump($delta);
 
     $final = getFinal($tossed);
-    //override it static
+    /*override if static */
     if (isset($_REQUEST['f_final'])) {
         $final = $newFinal;
     }
 
-
-    $tossed_bin = tobin($tossed);
+    $tossed_bin = tobin($tossed); /* convert (6,7,8,9) arrays to (1,0) arrays */
     $final_bin = tobin($final);
 
+    /* JWFIX move to db class */
+    
     $sql = <<<EOX
     SELECT 
         fix
@@ -747,11 +1031,11 @@ EOX;
 
     $query = $sql . "'$final_bin'";
     $finalData = $GLOBALS['dbh']->getData($query);
-// upside down here var_dump($delta);
+
     $res = array('tossed' => $tossedData, 'delta' => $delta, 'final' => $finalData);
     return($res);
 }
-
+/* JWFIX move to DB class */
 function getTri() {
     $sql = "SELECT * FROM trigrams";
     return($GLOBALS['dbh']->getData($sql));
@@ -848,7 +1132,7 @@ function logout($t) {
 EOX;
     echo $debugBlock;
 }
-
+/* JWFIX move to DB class */
 function getTransByBin($bin) {
     global $dbh;
     $sql = "SELECT trans from hexagrams where bseq=${bin}";
@@ -905,74 +1189,121 @@ function secondsToTime($ss) {
     return sprintf("%010d", $ss) . " = $Y years, $M months, $d days, $h hours, $m minutes, $s seconds\n";
 }
 
-$x = <<<XXX
-microseconds since Jan 1 1970 is a 10 int, 4 dec number
-
-1000000000 = 32 years, 1 months, 24 days, 1 hours, 46 minutes, 40 seconds
-0100000000 = 3 years, 2 months, 17 days, 9 hours, 46 minutes, 40 seconds
-0010000000 = 0 years, 3 months, 25 days, 17 hours, 46 minutes, 40 seconds
-0001000000 = 0 years, 0 months, 11 days, 13 hours, 46 minutes, 40 seconds
-0000100000 = 0 years, 0 months, 1 days, 3 hours, 46 minutes, 40 seconds
-0000010000 = 0 years, 0 months, 0 days, 2 hours, 46 minutes, 40 seconds
-0000001000 = 0 years, 0 months, 0 days, 0 hours, 16 minutes, 40 seconds
-0000000100 = 0 years, 0 months, 0 days, 0 hours, 1 minutes, 40 seconds
-0000000010 = 0 years, 0 months, 0 days, 0 hours, 0 minutes, 10 seconds
-0000000001 = 0 years, 0 months, 0 days, 0 hours, 0 minutes, 1 seconds
-        
-1000000000 = 32 years
-
-0100000000 = 3 years
-0010000000 = 4 months
-0001000000 = 11 days 
-
-0000100000 = 1 day   
-0000010000 = 3 hours    
-0000001000 = 16 minutes 
-
-0000000100 = 2 minutes  
-0000000010 = 10 seconds 
-0000000001 = 1 second   
-   
-0000000000.1000        
-0000000000.0100        
-0000000000.0010       
-0000000000.0001        
-
-
+//$x = <<<XXX
+//microseconds since Jan 1 1970 is a 10 int, 4 dec number
+//
+//1000000000 = 32 years, 1 months, 24 days, 1 hours, 46 minutes, 40 seconds
+//0100000000 = 3 years, 2 months, 17 days, 9 hours, 46 minutes, 40 seconds
+//0010000000 = 0 years, 3 months, 25 days, 17 hours, 46 minutes, 40 seconds
+//0001000000 = 0 years, 0 months, 11 days, 13 hours, 46 minutes, 40 seconds
+//0000100000 = 0 years, 0 months, 1 days, 3 hours, 46 minutes, 40 seconds
+//0000010000 = 0 years, 0 months, 0 days, 2 hours, 46 minutes, 40 seconds
+//0000001000 = 0 years, 0 months, 0 days, 0 hours, 16 minutes, 40 seconds
+//0000000100 = 0 years, 0 months, 0 days, 0 hours, 1 minutes, 40 seconds
+//0000000010 = 0 years, 0 months, 0 days, 0 hours, 0 minutes, 10 seconds
+//0000000001 = 0 years, 0 months, 0 days, 0 hours, 0 minutes, 1 seconds
+//        
 //1000000000 = 32 years
+//
+//0100000000 = 3 years
+//0010000000 = 4 months
+//0001000000 = 11 days 
+//
+//0000100000 = 1 day   
+//0000010000 = 3 hours    
+//0000001000 = 16 minutes 
+//
+//0000000100 = 2 minutes  
+//0000000010 = 10 seconds 
+//0000000001 = 1 second   
+//   
+//0000000000.1000        
+//0000000000.0100        
+//0000000000.0010       
+//0000000000.0001        
+//
+//
+////1000000000 = 32 years
+//
+//1                               0100000000 = 3 years
+//2                           0010000000 = 4 months  
+//3                       0001000000 = 11 days 
+//4                   0000100000 = 1 day  
+//5               0000010000 = 3 hours    
+//6           0000001000 = 16 minutes         
+//7           0000000100 = 2 minutes  
+//8               0000000010 = 10 seconds 
+//9                   0000000001 = 1 second    
+//10                      0000000000.1000        
+//11                          0000000000.0100        
+//12                              0000000000.0010       
+//        
+////13  0000000000.0001        
+//
+//Now we hve 6 numbers
+//    
+//                    1
+//                2
+//            3
+//            4
+//                5
+//                    6
+//        
+//        
+//Now we ave three
+//    
+//        
+//        
+//11110010000111110001101011010       
+//        
+//101100111011110101011001011000
+//    
+//
+//XXX;
 
-1                               0100000000 = 3 years
-2                           0010000000 = 4 months  
-3                       0001000000 = 11 days 
-4                   0000100000 = 1 day  
-5               0000010000 = 3 hours    
-6           0000001000 = 16 minutes         
-7           0000000100 = 2 minutes  
-8               0000000010 = 10 seconds 
-9                   0000000001 = 1 second    
-10                      0000000000.1000        
-11                          0000000000.0100        
-12                              0000000000.0010       
-        
-//13  0000000000.0001        
 
-Now we hve 6 numbers
-    
-                    1
-                2
-            3
-            4
-                5
-                    6
-        
-        
-Now we ave three
-    
-        
-        
-11110010000111110001101011010       
-        
-101100111011110101011001011000
-    
-
-XXX;
+            function putBtnExpand() {
+            echo ""
+                . "<span>"
+                    . "<a id ='btnEC' style='text-decoration: none' class='accordion-expand-all' href='#'>[+]</a>"
+                . "</span>\n";
+            }
+            
+            function putBtnEdit($pseq) {
+            echo ""
+                . "<span>"
+                    . "<a href='/cignite/index.php/main/hexagrams/edit/${pseq}' target='_blank'>"
+                        . "<img class='uibtn'  src='/images/btn_edit.png'>"
+                    . "</a>"
+                . "</span>\n";
+            }
+            
+            function putBtnUpdate($pseq) {
+                echo ""
+                . "<span>"
+                    . "<a href='/cignite/index.php/main/notes/edit/${pseq}' target='_blank'>"
+                        . "<img class='uibtn' src='/images/btn_update.png'>"
+                    . "</a>"
+                . "</span>\n";
+            }
+            
+            function putBtnSmTxt() {
+                echo ""
+                . "<span>"
+                        . "<img class='uibtn' id='larger1'  src='/images/btn_smalltxt.png'>"
+                . "</span>\n";
+            }
+            
+            function putBtnMedTxt() {
+                echo ""
+                . "<span>"
+                        . "<img class='uibtn' id='larger2'  src='/images/btn_medtxt.png'>"
+                . "</span>\n";
+            }
+            
+            function putBtnLgTxt() {
+                echo ""
+                . "<span>"
+                        . "<img class='uibtn' id='larger3'  src='/images/btn_lgtxt.png'>"
+                . "</span>\n";
+            }
