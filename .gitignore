@@ -33,3 +33,12 @@ book/ichingbook/
 vendor/autoload.php
 nbproject/
 SAVE
+astro/js/
+astro/tile.jpg
+book/iching_book/
+cignite/vendor/
+id/
+initdb.sql
+lib/md2pdf/composer.json
+lib/md2pdf/vendor/
+log/
