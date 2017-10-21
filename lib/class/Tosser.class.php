@@ -44,7 +44,7 @@ class Tosser {
                     foreach ($nary as $n) {
                         $nt += $n;
                     }
-                    $anums[$planet] = ($nt % 4) + 6;
+                    $anums[$planet] = ($this->sumnums($nt) % 4) + 6;
                 }
             }
         }
@@ -62,6 +62,18 @@ class Tosser {
         return($throw);
     }
 
+    private function sumnums($n) {
+        if ($n>10) {
+            $na = str_split($n);
+            $at=0;
+            foreach ($na as $a) {
+                $at += $a;
+            }
+            return($this->sumnums($at));
+        } else {
+            return($n);
+        }
+    }
     public function getRandomOrg() {
         $throw = array(null, null, null, null, null, null);
         for ($i = 0; $i < 6; $i++) {

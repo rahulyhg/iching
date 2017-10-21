@@ -72,8 +72,8 @@
         <p>
             These are numbers generated from the current, exacxt, location of the planets. 
            We use the classical astrological assignment the six planets that make up teh zodiac.  
-           For more of this see the 
-           <a href="">documentation</a>. 
+           For more on this see the 
+           <a href="/book/ichingbook/_book/instructions.html#planetary">documentation</a>. 
            <br>
            This option is also a good choice for throwing the hexagrams of "now".
             

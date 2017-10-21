@@ -14,7 +14,7 @@ foreach ($ids as $id) {
     $fbseq = sprintf("%02s",$id['bseq']);
     $hex = mdgethex($fpseq,$fbseq, $id);
     
-    var_dump($hex);
+    //var_dump($hex);
     /**
      * Creates a new template for the user's page.
      * Fills it with mockup data just for testing.
