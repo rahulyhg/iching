@@ -8,46 +8,64 @@ class Tosser {
     public function __construct() {
         
     }
-        public function getAstro() {
-        $throw = array(null, null, null, null, null, null);
-        
-        $astroUrl = getServerPrefix()."/astro/as.html";
-        file_put_contents("/tmp/x.tmp",$astroUrl);
-        $astroJson = file_get_contents($astroUrl);
-        
-        return($astroJson);
-        
-        for ($i = 0; $i < 6; $i++) {
-            $uid = session_id();//uniqid();
-            $f = get_cfg_var("iching_root")."/throw.sh ${uid} ${i}";
-            $run = trim(system($f));
-            $flip = file_get_contents("id/${uid}");
 
-            switch ($flip) {
-                case 0:
-                    $throw[$i] = 6;
-                    break;
-                case 1:
-                    $throw[$i] = 7;
-                    break;
-                case 2:
-                    $throw[$i] = 8;
-                    break;
-                case 3:
-                    $throw[$i] = 9;
-                    break;
+    public function getAstro() {
+
+
+        $astroRoot = get_cfg_var("iching_root") . "/astro";
+        system(get_cfg_var("iching_root") . "/astro/getJson.sh ${astroRoot}");
+
+        $astroUrl = getServerPrefix() . "/astro/js/astrodataJson.html";
+        $astroPage = file_get_contents($astroUrl);
+
+        $this->logit("astro debug", $astroPage);
+
+        $search_pattern = "/.*>(\{.*\})<.*/s";
+        $clean = "<div>" . preg_replace($search_pattern, "$1", $astroPage) . "</div>";
+        $dom = new DOMDocument();
+        $dom->loadHTML($clean);
+
+        $myDivs = $dom->getElementsByTagName('div');
+        foreach ($myDivs as $key => $value) {
+            $result[] = $value->nodeValue;
+        }
+        $astroJson = $result[0];
+        $astroObj = json_decode($astroJson, true);
+
+        $anums = array();
+
+        foreach ($astroObj as $planet => $pary) {
+            if ($planet != "Sun") {
+                if (isset($pary['RA'])) {
+                    $nodec = str_replace(".", "", $pary['RA']['S']);
+                    $nary = str_split($nodec);
+                    $nt = 0;
+                    foreach ($nary as $n) {
+                        $nt += $n;
+                    }
+                    $anums[$planet] = ($nt % 4) + 6;
+                }
             }
         }
-        
-        $this->logit("=> getRandomOrg()",$throw);
+
+        $throw = array(
+            $anums['Moon'],
+            $anums['Mercury'],
+            $anums['Venus'],
+            $anums['Mars'],
+            $anums['Jupiter'],
+            $anums['Saturn'],
+        );
+
+        $this->logit("=> getAstro()", $throw);
         return($throw);
     }
 
     public function getRandomOrg() {
         $throw = array(null, null, null, null, null, null);
         for ($i = 0; $i < 6; $i++) {
-            $uid = session_id();//uniqid();
-            $f = get_cfg_var("iching_root")."/throw.sh ${uid} ${i}";
+            $uid = session_id(); //uniqid();
+            $f = get_cfg_var("iching_root") . "/throw.sh ${uid} ${i}";
             $run = trim(system($f));
             $flip = file_get_contents("id/${uid}");
 
@@ -66,24 +84,25 @@ class Tosser {
                     break;
             }
         }
-        
-        $this->logit("=> getRandomOrg()",$throw);
+
+        $this->logit("=> getRandomOrg()", $throw);
         return($throw);
     }
 
-    private function logit($name,$data) {
-        $f= fopen(get_cfg_var("iching_root")."/log/toss.log", "w");
-        fwrite($f, $name."\n");
+    private function logit($name, $data) {
+        $f = fopen(get_cfg_var("iching_root") . "/log/toss.log", "a");
+        fwrite($f, $name . "\n");
         $tstamp = date("F d, Y h:i:s A");
-        fwrite($f,$tstamp."\n");
-        $t = var_export($data,TRUE);
-        fwrite($f,$t);
-        fwrite($f,"\n====================================================\n");        
+        fwrite($f, $tstamp . "\n");
+        $t = var_export($data, TRUE);
+        fwrite($f, $t);
+        fwrite($f, "\n====================================================\n");
         fclose($f);
     }
+
     public function getHotBits() {
         $lines = array();
-        $uid= "hb_".session_id();//uniqid("hb_"); /* used to save and inspect values */
+        $uid = "hb_" . session_id(); //uniqid("hb_"); /* used to save and inspect values */
         for ($i = 0; $i < 6; $i++) {
             $hotbits = $this->getCleanHotBits($uid);
             $line = null;
@@ -93,7 +112,7 @@ class Tosser {
             }
             array_push($lines, $line);
         }
-        $this->logit("=> getHotBits()",$lines);
+        $this->logit("=> getHotBits()", $lines);
         return($lines);
     }
 
@@ -109,10 +128,10 @@ class Tosser {
         $hotbits = explode(",", $str);
         $end = microtime();
         $tdelta = $end - $start;
-        $f = fopen("id/${id}","w");
+        $f = fopen("id/${id}", "w");
         $fb = var_export($f, TRUE);
         fwrite($f, $fb);
-        fwrite($f, $$tdelta."\n");
+        fwrite($f, $$tdelta . "\n");
         fclose($f);
 
         foreach ($hotbits as $h) {
@@ -167,7 +186,7 @@ class Tosser {
             $m++;
         }
         //var_dump($hex);
-            $this->logit("=> getPlum()",$hex);
+        $this->logit("=> getPlum()", $hex);
 
         return($hex);
     }

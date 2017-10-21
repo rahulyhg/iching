@@ -55,7 +55,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                         </p>
                         <a id="astrotip" class="astrotip" href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="astro" value="astro" checked > 
-                            <span class="text_mdcaps" id="plummsg">Planetary</span>    
+                            <span class="text_mdcaps" id="astromsg">Planetary</span>    
                         </p>
 
                         <p>

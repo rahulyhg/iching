@@ -399,6 +399,23 @@ function makeMDfromTemplate($alldata) {
     $page_title->set("hdate", $hdate);
     $page_title->set("question", "'${question}'");
     $page_title->set("merged", $m_image);
+    
+    $tosstype = "";
+        if ($_REQUEST['mode'] == "plum") {
+            $tosstype = "Modern Plum Method";
+        }
+        if ($_REQUEST['mode'] == "r-decay") {
+            $r = $tosser->getHotBits();
+            $tosstype = "Fermi Lab's 'HotBits' radioactive decay random number generator";
+        }
+        if ($_REQUEST['mode'] == "random.org") {
+            $tosstype = "Random.org's random coin toss";
+        }
+
+        if ($_REQUEST['mode'] == "astro") {
+            $tosstype = "Real-time planetary positions";
+        }    
+    $page_title->set("tosstype", $tosstype);
 
     /*
      * set the vars for the transitional hexgram template
@@ -898,7 +915,7 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
 function getToss() {
     $tossed = tossit();
 
-
+//var_dump($tossed);
     $delta = array(0, 0, 0, 0, 0, 0);
 
     // if we are using static number we have to do it diffenely
@@ -1082,10 +1099,12 @@ function tossit() {
 //            $r = getHotBits();
             return($r);
         }
-    }
-    if (isset($_REQUEST['mode'])) {
         if ($_REQUEST['mode'] == "random.org") {
             $r = $tosser->getRandomOrg();
+        }
+
+        if ($_REQUEST['mode'] == "astro") {
+            $r = $tosser->getAstro();
         }
         return($r);
     }

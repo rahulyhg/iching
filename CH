@@ -7,4 +7,6 @@ sudo chown -R http questions
 sudo chmod -R a+rw questions
 sudo chown -R http id
 sudo chmod -R a+rw  id
+sudo chown -R http astro
+sudo chmod -R a+rw  astro
 sudo chmod -R 777 log
