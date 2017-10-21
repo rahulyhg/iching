@@ -32,6 +32,7 @@ session_start();
         <!-- accordian -->
 	<script src="/js/accordian.js"></script>        
         <!--script type="text/javascript" src="/dom-to-image/src/dom-to-image.js"></script-->
+        <script src="/astro/js/as.js"></script>
         
         
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">//-->

@@ -5,14 +5,6 @@ require get_cfg_var("iching_root") . "/elements/header_top.php";
 require get_cfg_var("iching_root") . "/elements/header.php";
 require get_cfg_var("iching_root") . "/vendor/autoload.php";
 require get_cfg_var("iching_root") . "/lib/md2pdf/vendor/autoload.php";
-
-//define('DOMPDF_ENABLE_AUTOLOAD', false);
-//require_once get_cfg_var("iching_root") . "/lib/md2pdf/vendor/dompdf/dompdf/dompdf_config.inc.php";
-
-//require get_cfg_var("iching_root") . "/lib/dompdf/vendor/autoload.php";
-//require get_cfg_var("iching_root") . "/lib/md2pdf/vendor/dompdf/dompdf/src/Options.php";
-    
-//require get_cfg_var("iching_root") . "/lib/querypath/vendor/autoload.php";
 require get_cfg_var("iching_root") . "/conf/config.php";
 require get_cfg_var("iching_root") . "/lib/init.php";
 require get_cfg_var("iching_root") . "/lib/functions.php";
@@ -53,9 +45,17 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                         <p>
                         <input id="qfield" type="text" name="question" placeholder="question" value="">
                         </p> 
+                        <?php /*
+                         *  The 'tip' functions are in /js/consult.js 
+                         * The actual text is in /lib/popup_predefs.php
+                         */?>
                         <a id="plumtip" class="plumtip" href="#"><img src="images/qmark.png"></a> 
-                            <input type="radio" name="mode" id="plum" value="plum" checked > 
+                            <input type="radio" name="mode" id="plum" value="plum"  > 
                             <span class="text_mdcaps" id="plummsg">Modern Plum</span>    
+                        </p>
+                        <a id="astrotip" class="astrotip" href="#"><img src="images/qmark.png"></a> 
+                            <input type="radio" name="mode" id="astro" value="astro" checked > 
+                            <span class="text_mdcaps" id="plummsg">Planetary</span>    
                         </p>
 
                         <p>

@@ -8,6 +8,40 @@ class Tosser {
     public function __construct() {
         
     }
+        public function getAstro() {
+        $throw = array(null, null, null, null, null, null);
+        
+        $astroUrl = getServerPrefix()."/astro/as.html";
+        file_put_contents("/tmp/x.tmp",$astroUrl);
+        $astroJson = file_get_contents($astroUrl);
+        
+        return($astroJson);
+        
+        for ($i = 0; $i < 6; $i++) {
+            $uid = session_id();//uniqid();
+            $f = get_cfg_var("iching_root")."/throw.sh ${uid} ${i}";
+            $run = trim(system($f));
+            $flip = file_get_contents("id/${uid}");
+
+            switch ($flip) {
+                case 0:
+                    $throw[$i] = 6;
+                    break;
+                case 1:
+                    $throw[$i] = 7;
+                    break;
+                case 2:
+                    $throw[$i] = 8;
+                    break;
+                case 3:
+                    $throw[$i] = 9;
+                    break;
+            }
+        }
+        
+        $this->logit("=> getRandomOrg()",$throw);
+        return($throw);
+    }
 
     public function getRandomOrg() {
         $throw = array(null, null, null, null, null, null);

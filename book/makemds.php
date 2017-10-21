@@ -3,6 +3,7 @@
 
 require "../lib/functions.php";
 include("templates/template.class.php");
+
 $type = 'pseq';
 $ids = getids(array('bseq'=>'bseq','pseq'=>'pseq'));
 $cols = getcols();
@@ -76,7 +77,7 @@ foreach ($ids as $id) {
     file_put_contents($f,$fpage);
 }
 
-function getids($ary) {
+function xgetids($ary) {
     $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT ".$ary['bseq'].",".$ary['pseq']." from hexagrams order by ".$ary['pseq']." asc";
     $sth = $dbh->prepare($sql);
@@ -90,7 +91,7 @@ function getids($ary) {
     return($ids);
 }
 
-function getcols() {
+function xgetcols() {
     $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'iching' AND TABLE_NAME = 'hexagrams'";
     $sth = $dbh->prepare($sql);
@@ -104,7 +105,7 @@ function getcols() {
 }
 
 
-function mdgethex($pseq,$bseq, $id) {
+function xmdgethex($pseq,$bseq, $id) {
   //  var_dump($bseq);
     $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $binary = sprintf("%06d",hex2bin($bseq));

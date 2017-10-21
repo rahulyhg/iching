@@ -67,6 +67,17 @@
             Confucian version, which is the only one that survived to this day.  The Lao Tzu 
             version, undoubtedly less moralistic and judgmental, did not
         </p>
+    </div>    <!-- ----------------------------------------------------------------------->
+    <div id="astrotipmsg" title="Planetary Positions">
+        <p>
+            These are numbers generated from the current, exacxt, location of the planets. 
+           We use the classical astrological assignment the six planets that make up teh zodiac.  
+           For more of this see the 
+           <a href="">documentation</a>. 
+           <br>
+           This option is also a good choice for throwing the hexagrams of "now".
+            
+        </p>
     </div>
     <!-- ----------------------------------------------------------------------->
     <div id="hukuamsg" title="The Hu Kua">

@@ -142,6 +142,15 @@ $(document).ready(function () {
 //        content: 'CURRENTY DISABLED - This is the "real" random, as it is theoretically impossible to predict decay.  The only problem with this memthod is I would need actually radioactive material to  get it to work, or find a source, like the old Fermi Lab service, which provides these types of randm numbers',
 //    
     $(function () {
+        $("#astrotipmsg").dialog({
+            autoOpen: false
+        });
+        $("#astrotip").on("click", function () {
+            $("#astrotipmsg").dialog("open");
+        });
+    });
+    
+    $(function () {
         $("#r-decaytipmsg").dialog({
             autoOpen: false
         });
