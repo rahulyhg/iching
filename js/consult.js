@@ -267,16 +267,16 @@ $(document).ready(function () {
 //        $('#collapse1').css("cursor","hand");
 //    });
 
-    $("#grab").click(function () {
-        var node = document.getElementById('qfield');
-        domtoimage.toPng(node)
-                .then(function (dataUrl) {
-                    var img = new Image();
-                    img.src = dataUrl;
-                    document.body.appendChild(img);
-                })
-                .catch(function (error) {
-                    console.error('oops, something went wrong!', error);
-                });
-    });
+//    $("#grab").click(function () {
+//        var node = document.getElementById('qfield');
+//        domtoimage.toPng(node)
+//                .then(function (dataUrl) {
+//                    var img = new Image();
+//                    img.src = dataUrl;
+//                    document.body.appendChild(img);
+//                })
+//                .catch(function (error) {
+//                    console.error('oops, something went wrong!', error);
+//                });
+//    });
 });
