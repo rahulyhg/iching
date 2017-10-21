@@ -13,7 +13,8 @@ class Tosser {
 
 
         $astroRoot = get_cfg_var("iching_root") . "/astro";
-        system(get_cfg_var("iching_root") . "/astro/getJson.sh ${astroRoot}");
+        $astroCalc = getServerPrefix()."/astro/as.html";
+        system(get_cfg_var("iching_root") . "/astro/getJson.sh ${astroRoot} ${astroCalc}");
 
         $astroUrl = getServerPrefix() . "/astro/js/astrodataJson.html";
         $astroPage = file_get_contents($astroUrl);
