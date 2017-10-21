@@ -1,5 +1,6 @@
 # make the files
 #------------------------
+rm ichingbook/_book/hexagrams/*.html
 php ./makemds.php
 
 # get and remote updaes
