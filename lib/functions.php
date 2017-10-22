@@ -466,6 +466,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     $page_hex1->set("label_dir", "Direction:");
     $page_hex1->set("label_upper_tri", "Upper trigram:");
     $page_hex1->set("label_lower_tri", "Lower trigram:");
+    $page_hex1->set("label_explanation", "Explanation:");
     $page_hex1->set("label_judge_old", "The Judgment:");
     $page_hex1->set("label_judge_exp", "An Explanation of the Judgment");
     $page_hex1->set("label_image_old", "The 'IMAGE' of the hexagram");
@@ -482,6 +483,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     $page_hex1->set("t_bseq", f($thex[0]['bseq']));
     $page_hex1->set("t_binary", $thex[0]['binary']);
     $page_hex1->set("t_dir", $thex[0]['iq32_dir']);
+    $page_hex1->set("t_explanation", $thex[0]['explanation']);
     $page_hex1->set("t_tri_upper", $thex[0]['tri_upper']);
     $page_hex1->set("t_tri_lower", $thex[0]['tri_lower']);
     $page_hex1->set("t_judge_old", $thex[0]['judge_old']);
@@ -528,6 +530,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
         $page_hex2->set("label_hexagram", "Hexagram:");
         $page_hex2->set("label_binary", "Binary Sequence:");
         $page_hex2->set("label_dir", "Direction:");
+        $page_hex2->set("label_explanation", "Explanation:");
         $page_hex2->set("label_upper_tri", "Upper trigram:");
         $page_hex2->set("label_lower_tri", "Lower trigram:");
         $page_hex2->set("label_judge_old", "The Judgment:");
@@ -544,6 +547,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
         $page_hex2->set("f_bseq", f($fhex[0]['bseq']));
         $page_hex2->set("f_binary", "(".$fhex[0]['binary'].")");
         $page_hex2->set("f_dir", $fhex[0]['iq32_dir']);
+        $page_hex2->set("f_explanation", $fhex[0]['explanation']);
         $page_hex2->set("f_tri_upper", $fhex[0]['tri_upper']);
         $page_hex2->set("f_tri_lower", $fhex[0]['tri_lower']);
         $page_hex2->set("f_judge_old", $fhex[0]['judge_old']);
@@ -1360,9 +1364,15 @@ function secondsToTime($ss) {
 function c($s) {
 //  https://www.functions-online.com/preg_replace.html
         $r = preg_replace('/<p>\s*(.*)\s*<\/p>\s*$/s', '$1', $s);
-        
         dbug($r);
         return($r);
-
-    
 }
+function htmlize($s) {
+//  https://www.functions-online.com/preg_replace.html
+        //$r = preg_replace('/\n\n/s', '\n<p></p>\n', $s);
+        $r = preg_replace("/\r/","",$s);
+        $r = preg_replace("/(\n)/",'<br/>$1',$r);
+        $r = preg_replace("/(\n\n)/",'$1<p></p>$1',$r);
+        return($r);
+}
+    

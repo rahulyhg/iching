@@ -26,11 +26,18 @@
 
 <hr>
 
+**[@label_explanation]** 
+
+[@f_explanation]
+
+
+<hr>
+
 **[@label_judge_old]** 
 >[@f_judge_old]
 
 **[@label_judge_exp]** 
->[@f_judge_exp]
+[@f_judge_exp]
 
 <hr>
 
@@ -38,5 +45,5 @@
 >[@f_image_old]
 
 **[@label_image_exp]** 
->[@f_image_exp]
+[@f_image_exp]
 

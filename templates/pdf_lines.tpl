@@ -15,7 +15,7 @@
 
 >*[@t_line_1_org]*
 
-> >[@t_line_1_exp]
+[@t_line_1_exp]
 
 <hr>
 
@@ -23,7 +23,7 @@
 
 >*[@t_line_2_org]*
 
-> >[@t_line_2_exp]
+[@t_line_2_exp]
 
 <hr>
 
@@ -31,7 +31,7 @@
 
 >*[@t_line_3_org]*
 
-> >*[@t_line_3_exp]*
+[@t_line_3_exp]*
 
 <hr>
 
@@ -39,7 +39,7 @@
 
 >*[@t_line_4_org]*
 
-> >*[@t_line_4_exp]*
+[@t_line_4_exp]*
 
 <hr>
 
@@ -47,7 +47,7 @@
 
 >*[@t_line_5_org]*
 
-> >[@t_line_5_exp]
+[@t_line_5_exp]
 
 <hr>
 
@@ -55,7 +55,7 @@
 
 >*[@t_line_6_org]*
 
-> >[@t_line_6_exp]
+[@t_line_6_exp]
 
 </div>
 

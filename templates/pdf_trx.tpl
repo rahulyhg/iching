@@ -22,5 +22,5 @@
 
 **[@label_judge_exp]** 
 
->[@trx_judge_exp]
+[@trx_judge_exp]
 

@@ -24,13 +24,19 @@ The Cast Hexagram:
 
 <hr>
 
+**[@label_explanation]** 
+
+[@t_explanation]
+
+<hr>
+
 **[@label_judge_old]** 
 
-> [@t_judge_old]
+>[@t_judge_old]
 
 **[@label_judge_exp]** 
 
-> [@t_judge_exp]
+[@t_judge_exp]
 
 <hr>
 
@@ -40,6 +46,6 @@ The Cast Hexagram:
 
 **[@label_image_exp]** 
 
-> [@t_image_exp]
+[@t_image_exp]
 
 

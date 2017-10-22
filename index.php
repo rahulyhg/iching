@@ -286,10 +286,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                     <b>The Expanded Text</b>
                 </p>
             <p>
-                    <?= $t['judge_exp'] ?>
+                    <?= htmlize($t['judge_exp']) ?>
             </p>
         </div>
-
 <?php 
 /*
  *  First Trigrams
@@ -315,7 +314,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                 <b>Explanation of the Trigrams</b>
             </p>
             <p>
-                <?= $t['explanation'] ?>
+                <?= htmlize($t['explanation']) ?>
             </p>
         </div>
         
@@ -347,7 +346,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                 <b>Commentary and Explanation of the Image</b>
             </p>
             <p>
-                <?= $t['image_exp'] ?>
+                <?= htmlize($t['image_exp']) ?>
             </p>
         </div>
 <?php 
@@ -391,7 +390,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                             </div>
                             <div class="content line_exp" id="line_<?= $j ?>_exp">
                                 <p>
-                                    <?= $t['line_' . $j . '_exp'] ?>
+                                    <?= htmlize($t['line_' . $j . '_exp']) ?>
                                 </p>
                             </div>
                         </div>
@@ -411,7 +410,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                 </b>
             </p>
             <p>
-            <?= $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "judge_exp", $ret['tpseq']); ?>
+            <?= htmlize($GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "judge_exp", $ret['tpseq'])); ?>
             </p>
         </div>
         <?php        
@@ -486,10 +485,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                     <b>The Expanded Text</b>
                 </p>
             <p>
-                    <?= $f['judge_exp'] ?>
+                    <?= htmlize($f['judge_exp']) ?>
             </p>
         </div>
-
 <?php 
 /*
  *  Second Trigrams
@@ -515,7 +513,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                 <b>Explanation of the Trigrams</b>
                 </p>
                 <p>
-                <?= $f['explanation'] ?>
+                <?= htmlize($f['explanation']) ?>
                 </p>
 
             </div>
@@ -548,7 +546,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                     <b>Commentary and Explanation of the Image</b>
                 </p>
                 <p>
-                    <?= $f['image_exp'] ?>
+                    <?= htmlize($f['image_exp']) ?>
                 </p>
             </div>
 <?php 
