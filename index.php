@@ -1,4 +1,7 @@
 <?php
+        if (isset($_REQUEST['f_final'])) {
+            $_REQUEST['mode']="manual";
+        }
 
 /* 'iching_root' is defined in the php.ini file, this way is it always correct for whatever maching is being used */
 require get_cfg_var("iching_root") . "/elements/header_top.php";
@@ -22,7 +25,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
     <div id = 'here2' class="container container-top">
     
         <div class="row1">
-            <span class="btn btn-warning"><a href="index.php">RESET</a></span>
+            <span class="btn btn-warning"><a id='reset' href='index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'>RESET</a></span>
             <span class="btn btn-danger"><a style="color:white;font-weight: bold;" href="/book/ichingbook/_book/">DOCS</a></span>
             <span class="btn btn-danger"><a style="color:white;" href="show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >Browse</a></span>    <p>
         </div>
@@ -34,7 +37,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
     </div>
 */?>        
         <?php
-        //var_dump($_REQUEST);
+        dbug($_REQUEST);
         if (!isset($_REQUEST['flipped'])) { /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
             ?>
             <div class="qbox">
@@ -43,7 +46,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                     <input type="hidden" name="flipped" value="1">
                     <div class="row2">
                         <p>
-                        <input id="qfield" type="text" name="question" placeholder="question" value="">
+                        <input id="qfield" type="text" name="question" placeholder="question" value="<?php echo (isset($_REQUEST['debugon']) ? "debugging..." : "" )?>">
+                        <input type="checkbox" name="debug" id="debugon" value="1"  <?php echo (isset($_REQUEST['debugon']) ? "checked" : "" )?> >
+
                         </p> 
                         <?php /*
                          *  The 'tip' functions are in /js/consult.js 
@@ -92,7 +97,8 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                         <span class="text_mdcaps" id="aculturalmsg">Acultural</span> <input type="radio" name="trans" id="acultural" value="acultural"  > <a id="aculturaltip" href="#"><img src="images/g-qmark.png"></a></p>
 
 
-                        <input class = "btn btn-info" style="width:100%" type="submit" value="Cast Coins">
+
+                        <input id="castbutton" class = "btn btn-info" style="width:100%" type="submit" value="Cast Coins">
                     </div>
                 </form>
                 <form method="POST" action="">
@@ -106,7 +112,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                         ?>
                         <input class = "doublenum" id="f_tossed" type="text" name="f_tossed" placeholder="<?= $fromNum ?>" value="">
                         <input class = "doublenum" id="f_final" type="text" name="f_final" placeholder="<?= $toNum ?>" value="">
-                        <input class = "btn btn-primary" type="submit" value="Show">
+                        <input id="manualTossed" class = "btn btn-primary" type="submit" value="Show">
                     </div>
                 </form>
             </div>
@@ -263,7 +269,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
  */
 ?>
         <h3 id="firstheader" style="font-size:1.2em !important" class="eTitle t_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-            <?= $t['pseq'] ?> (<?= $t['title'] ?>) <?= $t['trans'] ?>
+            <?= c($t['pseq']) ?> (<?= c($t['title']) ?>) <?= c($t['trans']) ?>
             <?php /* this invisible one pixel line control the collapse with of the accordian */?>
             <br><img style="min-width:300px" src="images/thinline350.png">
         </h3>
@@ -418,7 +424,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 /* *************************************************************************** */
 ?>
 
-     <div if = 'here2' class="container container-top">
+     <div id = 'here2' class="container container-top">
     <?php
     if ($t['bseq'] != $f['bseq'] ) {  /* if T == F then there are no moving lines, so skip */
         /* make and shwo hexs - same as above */
@@ -467,7 +473,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 ?>
             
         <h3 style="font-size:1.2em !important" class="eTitle f_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-            <?= $f['pseq'] ?> (<?= $f['title'] ?>) <?= $f['trans'] ?>
+            <?= c($f['pseq']) ?> (<?= c($f['title']) ?>) <?= c($f['trans']) ?>
             <?php /* this invisible one pixel line control the collapse with of the accordian */?>
             <br><img style="min-width:300px" src="images/thinline350.png">
 

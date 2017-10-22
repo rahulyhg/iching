@@ -5,6 +5,11 @@ html {
     -o-background-size: cover;
     background-size: cover;
 }
+.xdebug-error, .xe-notice {
+    background-color:lightpink !important;
+    border:3px solid orange !important;
+    padding:15px !important;
+}
 
 
 #msg {
@@ -184,6 +189,7 @@ address {
 }
 .doublenum {
     width:50px;
+    font-size:14pt;
 }
 .text_smcaps {
     font-size:1em;

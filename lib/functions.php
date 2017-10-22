@@ -335,6 +335,18 @@ function enlargeImage($originalFile, $pct) {
 /* * ******************************************************************* */
 /* This is mainly an import of 'makemds.php' */
 /* * ******************************************************************* */
+function dbug($v) {
+    $bt = debug_backtrace();
+    $caller = array_shift($bt);
+    if (isset($_REQUEST['debugon'])) {
+//        $d = array('FROM'=>$caller,'INSPECTION'=>$v);
+        $val = var_export($v,TRUE);
+        print "<div  style='font-weight:bold;background-color:white;border:3px solid red;width:90%'>".$caller['file']."=>".$caller['line']."<pre style='font-weight:normal;font-size:8pt'>[[$val]]</pre></div>";
+        return(TRUE);
+    } else {
+        return(FALSE);
+    }
+}
 
 function makeMDfromTemplate($alldata) {
     /*
@@ -401,20 +413,25 @@ function makeMDfromTemplate($alldata) {
     $page_title->set("merged", $m_image);
     
     $tosstype = "";
-        if ($_REQUEST['mode'] == "plum") {
-            $tosstype = "Modern Plum Method";
-        }
-        if ($_REQUEST['mode'] == "r-decay") {
-            $r = $tosser->getHotBits();
-            $tosstype = "Fermi Lab's 'HotBits' radioactive decay random number generator";
-        }
-        if ($_REQUEST['mode'] == "random.org") {
-            $tosstype = "Random.org's random coin toss";
-        }
+    
+    if ($_REQUEST['mode'] == "manual") {
+        $tosstype = "Manually Selected Hexagrams";
+    }
+    if ($_REQUEST['mode'] == "plum") {
+        $tosstype = "Modern Plum Method";
+    }
+    if ($_REQUEST['mode'] == "r-decay") {
+        $r = $tosser->getHotBits();
+        $tosstype = "Fermi Lab's 'HotBits' radioactive decay random number generator";
+    }
+    if ($_REQUEST['mode'] == "random.org") {
+        $tosstype = "Random.org's random coin toss";
+    }
 
-        if ($_REQUEST['mode'] == "astro") {
-            $tosstype = "Real-time planetary positions";
-        }    
+    if ($_REQUEST['mode'] == "astro") {
+        $tosstype = "Real-time planetary positions";
+    }    
+    
     $page_title->set("tosstype", $tosstype);
 
     /*
@@ -424,7 +441,7 @@ function makeMDfromTemplate($alldata) {
     $page_trx->set("trx_judge_exp",$txhex[0]['judge_exp']);
     $trx_image = getServerPrefix()."/images/hex/small/hexagram" . f($txhex[0]['pseq']) . ".png";
     $page_trx->set("trx_image",$trx_image);
-    $page_trx->set("trx_transtitle", $txhex[0]['pseq']." (".$txhex[0]['binary']." = ".$txhex[0]['bseq'].") ". $txhex[0]['trans']." / ".$txhex[0]['title']);
+    $page_trx->set("trx_transtitle", c($txhex[0]['pseq'])." (".c($txhex[0]['binary'])." = ".c($txhex[0]['bseq']).") ". c($txhex[0]['trans'])." / ".c($txhex[0]['title']));
     
     /*
      * JWFIX all the labels and  shoud probably be in a config file, with language support
@@ -460,7 +477,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     $page_hex1->set("t_id", f($thex[0]['pseq']));
     $page_hex1->set("t_trans", $thex[0]['trans']);
     $page_hex1->set("t_title", $thex[0]['title']);
-    $page_hex1->set("t_transtitle", $thex[0]['trans']." / ".$thex[0]['title']);
+    $page_hex1->set("t_transtitle", c($thex[0]['trans'])." / ".c($thex[0]['title']));
     $page_hex1->set("t_pseq", f($thex[0]['pseq']));
     $page_hex1->set("t_bseq", f($thex[0]['bseq']));
     $page_hex1->set("t_binary", $thex[0]['binary']);
@@ -520,7 +537,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
 
         $page_hex2->set("f_image", $f_image);
         $page_hex2->set("f_id", f($fhex[0]['pseq']));
-        $page_hex2->set("f_transtitle", $fhex[0]['trans']." / ".$fhex[0]['title']);
+        $page_hex2->set("f_transtitle", c($fhex[0]['trans'])." / ".c($fhex[0]['title']));
         $page_hex2->set("f_trans", $fhex[0]['trans']);
         $page_hex2->set("f_title", $fhex[0]['title']);
         $page_hex2->set("f_pseq", f($fhex[0]['pseq']));
@@ -923,9 +940,21 @@ function getToss() {
     $newTossed = null;
 
     if (isset($_REQUEST['f_tossed'])) {
-        $newTossed = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_tossed']))));
-        $newFinal = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_final']))));
-
+        $counter = 0;
+        while ( (count($newTossed) !=6) && ($counter < 3) ) {
+            $newTossed = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_tossed']))));
+            $counter++;
+        }
+        $counter = 0;
+        while ( (count($newFinal) !=6)&& ($counter < 3) ) {
+            $newFinal = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_final']))));
+            $counter++;
+        }
+        
+        if ($counter >= 3) {
+            print ("<div stype='padding:15px;class='btn-danger'>count=".count($newTossed)."/".count($newFinal)."  Sorry, there is a problem somewhere.  Hit reset and try again</div> ");
+            die();
+        }
         for ($i = 0; $i < 6; $i++) {
             if (($newTossed[$i] != $newFinal[$i])) {
                 if ($newFinal[$i] == 1) {   // if newFinal == 1 then newTossed == 0
@@ -1291,7 +1320,7 @@ function secondsToTime($ss) {
             function putBtnEdit($pseq) {
             echo ""
                 . "<span>"
-                    . "<a href='/cignite/index.php/main/hexagrams/edit/${pseq}' target='_blank'>"
+                    . "<a href='/cignite/index.php/main/hexagrams/edit/".$GLOBALS['dbh']->chex2bin($pseq)."' target='_blank'>"
                         . "<img class='uibtn'  src='/images/btn_edit.png'>"
                     . "</a>"
                 . "</span>\n";
@@ -1300,7 +1329,7 @@ function secondsToTime($ss) {
             function putBtnUpdate($pseq) {
                 echo ""
                 . "<span>"
-                    . "<a href='/cignite/index.php/main/notes/edit/${pseq}' target='_blank'>"
+                    . "<a href='/cignite/index.php/main/notes/edit/$".$GLOBALS['dbh']->chex2bin($pseq)."' target='_blank'>"
                         . "<img class='uibtn' src='/images/btn_update.png'>"
                     . "</a>"
                 . "</span>\n";
@@ -1326,3 +1355,14 @@ function secondsToTime($ss) {
                         . "<img class='uibtn' id='larger3'  src='/images/btn_lgtxt.png'>"
                 . "</span>\n";
             }
+            
+            
+function c($s) {
+//  https://www.functions-online.com/preg_replace.html
+        $r = preg_replace('/<p>\s*(.*)\s*<\/p>\s*$/s', '$1', $s);
+        
+        dbug($r);
+        return($r);
+
+    
+}

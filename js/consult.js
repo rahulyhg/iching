@@ -1,10 +1,11 @@
 $(document).ready(function () {
 
-    $('#download').click(function ()
-    {
-    e.preventDefault();  //stop the browser from following
-    window.location.href = '/questions';
-});
+
+    
+    $('#download').click(function () {
+        e.preventDefault();  //stop the browser from following
+        window.location.href = '/questions';
+    });
 
     $('#f_final').blur(function ()
     {
@@ -14,6 +15,28 @@ $(document).ready(function () {
         }
     });
 
+    $("#castbutton").val("Enter Question");
+    $("#castbutton").css("background-color","grey");
+    $("#qfield").on('input',function(e){
+        $("#castbutton").css("background-color","green");
+        $("#castbutton").val("Cast Hexagram");
+    });
+
+    
+    $("#manualTossed").attr('disabled', 'disabled');
+    $("#manualTossed").val("Enter #'s");
+    $("#manualTossed").css("background-color","grey");
+    $("#manualTossed").change(function () {
+        $("#manualTossed").removeAttr('disabled');
+        $("#manualTossed").val('Show');
+        $("#manualTossed").css("background-color","green");
+    });
+        
+    $("#f_final").on('input',function(e){
+        $("#manualTossed").trigger("change");
+    });
+
+    
     $("#f_tossed").mouseout(function () {
         if (!($("#f_tossed").val())) {
         } else {
@@ -30,7 +53,8 @@ $(document).ready(function () {
                 type: 'GET',
                 success: function (json) {
                     //                $("#f_final").attr("placeholder", json['ret']);
-                    $("#f_final").val(json['ret']);
+//                    $("#f_final").val(json['ret']);
+  //                  $("#manualTossed").trigger("change");
                 },
                 error: function () {
                     alert("Request Failed");
@@ -39,7 +63,18 @@ $(document).ready(function () {
             });
         }
     });
+$("#debugon").click(function () {
+    console.log($('input[type=checkbox]').prop('checked'));
+    if ($('input[type=checkbox]').prop('checked') ) {
+        $("#qfield").val("debugging...");
+        $("#reset").attr("href","index.php?qfield=debugging&debugon=1");
+    } else {
+        $("#qfield").val("");
+        $("#reset").attr("href","index.php");
+   }
 
+    });
+    
 
     $("#tosstype").hover(function () {
         turnOffRadio();

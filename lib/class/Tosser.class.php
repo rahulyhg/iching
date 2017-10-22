@@ -13,7 +13,7 @@ class Tosser {
 
 
         $astroRoot = get_cfg_var("iching_root") . "/astro";
-        $astroCalc = getServerPrefix()."/astro/as.html";
+        $astroCalc = getServerPrefix() . "/astro/as.html";
         system(get_cfg_var("iching_root") . "/astro/getJson.sh ${astroRoot} ${astroCalc}");
 
         $astroUrl = getServerPrefix() . "/astro/js/astrodataJson.html";
@@ -37,14 +37,18 @@ class Tosser {
 
         foreach ($astroObj as $planet => $pary) {
             if ($planet != "Sun") {
-                if (isset($pary['RA'])) {
-                    $nodec = str_replace(".", "", $pary['RA']['S']);
-                    $nary = str_split($nodec);
-                    $nt = 0;
-                    foreach ($nary as $n) {
-                        $nt += $n;
+                if ($planet != "planet") {
+                    if ($planet != "localtime") {
+                        if (isset($pary['RA'])) {
+                            $nodec = str_replace(".", "", $pary['RA']['S']);
+                            $nary = str_split($nodec);
+                            $nt = 0;
+                            foreach ($nary as $n) {
+                                $nt += $n;
+                            }
+                            $anums[$planet] = ($this->sumnums($nt) % 4) + 6;
+                        }
                     }
-                    $anums[$planet] = ($this->sumnums($nt) % 4) + 6;
                 }
             }
         }
@@ -63,9 +67,9 @@ class Tosser {
     }
 
     private function sumnums($n) {
-        if ($n>10) {
+        if ($n > 10) {
             $na = str_split($n);
-            $at=0;
+            $at = 0;
             foreach ($na as $a) {
                 $at += $a;
             }
@@ -74,6 +78,7 @@ class Tosser {
             return($n);
         }
     }
+
     public function getRandomOrg() {
         $throw = array(null, null, null, null, null, null);
         for ($i = 0; $i < 6; $i++) {
