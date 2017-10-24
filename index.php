@@ -466,15 +466,14 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 
     <div style="border:0px solid red;background-color: transparent;padding:4px;">
         <span>        
-             <?php print putBtnEdit($t['pseq']); ?>
-             <?php print putBtnUpdate($t['pseq']); ?>
+             <?php print putBtnEdit($f['pseq']); ?>
+             <?php print putBtnUpdate($f['pseq']); ?>
         </span>
     </div>
     <div id="accordion2">
 
 <?php 
-/*
- *  Second Hex Title
+/*  Second Hex Title
  */  
 ?>
             
