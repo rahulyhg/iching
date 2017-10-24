@@ -1365,7 +1365,7 @@ function secondsToTime($ss) {
             function putBtnUpdate($pseq) {
                 echo ""
                 . "<span>"
-                    . "<a href='/cignite/index.php/main/notes/edit/$".$GLOBALS['dbh']->chex2bin($pseq)."' target='_blank'>"
+                    . "<a href='/cignite/index.php/main/notes/edit/".$GLOBALS['dbh']->chex2bin($pseq)."' target='_blank'>"
                         . "<img class='uibtn' src='/images/btn_update.png'>"
                     . "</a>"
                 . "</span>\n";

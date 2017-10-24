@@ -22,9 +22,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
     <div id = 'here2' class="container container-top">
     
         <div class="row1">
-            <span class="btn btn-warning"><a id='reset' href='index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'>RESET</a></span>
-            <span class="btn btn-danger"><a style="color:white;font-weight: bold;" href="/book/ichingbook/_book/">DOCS</a></span>
-            <span class="btn btn-danger"><a style="color:white;" href="show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >Browse</a></span>    <p>
+            <span class="btn btn-warning"><a  id='reset' href='index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'>RESET</a></span>
+            <span class="btn btn-danger"><a target="_blank" style="color:white;font-weight: bold;" href="/book/ichingbook/_book/">DOCS</a></span>
+            <span class="btn btn-danger"><a target="_blank" style="color:white;" href="show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >Browse</a></span>    <p>
         </div>
 
         <!-- ------------------------------------------------------------>
