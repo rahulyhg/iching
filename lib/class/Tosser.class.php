@@ -12,9 +12,9 @@ class Tosser {
     public function getAstro() {
 
 
-        $astroRoot = get_cfg_var("iching_root") . "/astro";
+        $astroRoot = getRootDir(). "/astro";
         $astroCalc = getServerPrefix() . "/astro/as.html";
-        system(get_cfg_var("iching_root") . "/astro/getJson.sh ${astroRoot} ${astroCalc}");
+        system(getRootDir(). "/astro/getJson.sh ${astroRoot} ${astroCalc}");
 
         $astroUrl = getServerPrefix() . "/astro/js/astrodataJson.html";
         $astroPage = file_get_contents($astroUrl);
@@ -83,7 +83,7 @@ class Tosser {
         $throw = array(null, null, null, null, null, null);
         for ($i = 0; $i < 6; $i++) {
             $uid = session_id(); //uniqid();
-            $f = get_cfg_var("iching_root") . "/throw.sh ${uid} ${i}";
+            $f = getRootDir(). "/throw.sh ${uid} ${i}";
             $run = trim(system($f));
             $flip = file_get_contents("id/${uid}");
 
@@ -108,7 +108,7 @@ class Tosser {
     }
 
     private function logit($name, $data) {
-        $f = fopen(get_cfg_var("iching_root") . "/log/toss.log", "a");
+        $f = fopen(getRootDir(). "/log/toss.log", "a");
         fwrite($f, $name . "\n");
         $tstamp = date("F d, Y h:i:s A");
         fwrite($f, $tstamp . "\n");

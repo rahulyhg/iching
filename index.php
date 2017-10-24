@@ -3,14 +3,11 @@
             $_REQUEST['mode']="manual";
         }
 
+require "lib/functions.php";
+
 /* 'iching_root' is defined in the php.ini file, this way is it always correct for whatever maching is being used */
-require get_cfg_var("iching_root") . "/elements/header_top.php";
-require get_cfg_var("iching_root") . "/elements/header.php";
-require get_cfg_var("iching_root") . "/vendor/autoload.php";
-require get_cfg_var("iching_root") . "/lib/md2pdf/vendor/autoload.php";
-require get_cfg_var("iching_root") . "/conf/config.php";
-require get_cfg_var("iching_root") . "/lib/init.php";
-require get_cfg_var("iching_root") . "/lib/functions.php";
+//require getRootDir(). "/elements/header_top.php";
+require getRootDir(). "/elements/header.php";
 
 //var_dump($_dbh);
 $a = null; /* this is used later for a global var, but prob shoud try and remove it FIXME*/
@@ -71,7 +68,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 
                             <?php
                             /*get statuys of decay server */
-                            $status = file_get_contents(get_cfg_var("iching_root") . "/data/store/hotbitsdown");
+                            $status = file_get_contents(getRootDir(). "/data/store/hotbitsdown");
                             if ($status != 1) {
                             ?>
                         <p>
@@ -335,7 +332,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             </p>
             <p>
                 <?php
-                if (file_exists(get_cfg_var("iching_root") . "/images/symbol/image" . $t['pseq'] . ".jpg")) {
+                if (file_exists(getRootDir(). "/images/symbol/image" . $t['pseq'] . ".jpg")) {
                     $fn = "/images/symbol/image" . $t['pseq'] . ".jpg";
                     print "<img style='width:70%' src='${fn}'>";
                 } else {
@@ -440,7 +437,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 
           */
         
-          //require get_cfg_var("iching_root")."/lib/accordian2.php";
+          //require getRootDir()."/lib/accordian2.php";
 
         ?>
     </div>
@@ -534,7 +531,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                 </p>
                 <p>
                     <?php
-                    if ( file_exists(get_cfg_var("iching_root")."/images/symbol/image".$f['pseq'].".jpg")) {
+                    if ( file_exists(getRootDir()."/images/symbol/image".$f['pseq'].".jpg")) {
                         $fn = "/images/symbol/image".$f['pseq'].".jpg";
                         print "<img style='width:70%' src='${fn}'>";
 
@@ -668,9 +665,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 </section>
 
 <?php
-require get_cfg_var("iching_root") . "/lib/popup_predefs.php"; /* has all the dovs for the jquery-ui popups */
-require get_cfg_var("iching_root") . "/elements/footer.php";
+require getRootDir(). "/lib/popup_predefs.php"; /* has all the dovs for the jquery-ui popups */
+require getRootDir(). "/elements/footer.php";
 
-$del = "rm ".get_cfg_var("iching_root")."/id/*".session_id()."*";
+$del = "rm ".getRootDir()."/id/*".session_id()."*";
 system($del);
 ?>

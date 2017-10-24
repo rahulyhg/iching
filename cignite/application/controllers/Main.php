@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-require get_cfg_var("iching_root") . "/lib/init.php";
+
 require get_cfg_var("iching_root") . "/lib/functions.php";
 
 class Main extends CI_Controller {

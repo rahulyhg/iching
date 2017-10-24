@@ -1,8 +1,8 @@
 <?php
 
-require get_cfg_var("iching_root") . "/lib/init.php";
-require get_cfg_var("iching_root") . "/lib/functions.php";
-require_once get_cfg_var("iching_root") . "/lib/class/Tosser.class.php";
+
+require getRootDir(). "/lib/functions.php";
+require_once getRootDir(). "/lib/class/Tosser.class.php";
 ?>
 
 
@@ -17,9 +17,9 @@ print_r($r);
 function getAstro() {
 
 
-    $astroRoot = get_cfg_var("iching_root") . "/astro";
+    $astroRoot = getRootDir(). "/astro";
     $astroCalc = getServerPrefix() . "/astro/as.html";
-    system(get_cfg_var("iching_root") . "/astro/getJson.sh ${astroRoot} ${astroCalc}");
+    system(getRootDir(). "/astro/getJson.sh ${astroRoot} ${astroCalc}");
 
     $astroUrl = getServerPrefix() . "/astro/js/astrodataJson.html";
     $astroPage = file_get_contents($astroUrl);

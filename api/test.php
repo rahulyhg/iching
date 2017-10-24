@@ -1,6 +1,5 @@
 <?php
-require get_cfg_var("iching_root") . "/lib/init.php";
-require get_cfg_var("iching_root") . "/lib/functions.php";
+require "../lib/functions.php";
 
 $url = "http://slider.com/api/func.php?";
 

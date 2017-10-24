@@ -1,9 +1,41 @@
 <?php
 
-//$dbh = new DataMapper();
-//DataMapper$stuff = $mapper->fetchAllHexByPseq(11,TRUE);    
-require get_cfg_var("iching_root") . "/lib/class/CssHex.class.php";
-require_once get_cfg_var("iching_root") . "/lib/class/Tosser.class.php";
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require_once getRootDir(). "/lib/class/LoadIni.class.php";
+require_once getRootDir()."/lib/class/DataMapper.class.php";
+require_once getRootDir(). "/lib/class/CssHex.class.php";
+require_once getRootDir(). "/lib/class/Tosser.class.php";
+
+$ini = LoadIni::init("iching");
+$dbh = new DataMapper($ini);
+
+require getRootDir(). "/vendor/autoload.php";
+require getRootDir(). "/lib/md2pdf/vendor/autoload.php";
+require getRootDir(). "/conf/config.php";
+
+
+function getRootDir() {
+    $runtime = "dev";
+    if (isset($_SERVER['runtime'])) {
+        $runtime = $_SERVER['runtime'];
+    }
+    $dir = get_cfg_var("iching.${runtime}.root");
+    return($dir);
+}
+function getTestServer() {
+    $runtime = $_SERVER['runtime'];
+    $srv = get_cfg_var("iching.${runtime}.testServer");
+    return($srv);
+}
+function getUser() {
+    $runtime = $_SERVER['runtime'];
+    $un = get_cfg_var("iching.${runtime}.user");
+    return($un);
+}
 
 
 function getNotes($pseq) {
@@ -146,8 +178,8 @@ function mergeHex($t_image,$f_image) {
 //    $uid = uniqid();
     $uid=session_id();
     $fn = "/id/merge_${uid}.png";
-//    $fn = get_cfg_var("iching_root")."/id/merge_${uid}.png";
-    imagepng($outputImage, get_cfg_var("iching_root").$fn);
+//    $fn = getRootDir()."/id/merge_${uid}.png";
+    imagepng($outputImage, getRootDir().$fn);
 
     imagedestroy($outputImage);
  
@@ -156,7 +188,7 @@ function mergeHex($t_image,$f_image) {
 
 function getServerPrefix() {
     
-    $test_server_name = get_cfg_var("iching_test_server_name");
+    $test_server_name = getTestServer();
     if (!isset($_SERVER['SERVER_NAME'])) { /* empty when running form (for testing) command line */
         $_SERVER['SERVER_NAME'] = $test_server_name;
     }
@@ -223,7 +255,7 @@ function makeHexPng($t, $d, $f) {
     $u = uniqid();
     
     /* make the filename for the temporary image */
-    $hex1file =  get_cfg_var("iching_root")."/id/hex1_tmp_".session_id().".png";
+    $hex1file =  getRootDir()."/id/hex1_tmp_".session_id().".png";
     $hex1fileUrl =  getServerPrefix()."/id/hex1_tmp_".session_id().".png";
     
     /* save the image */
@@ -259,7 +291,7 @@ function makeHexPng($t, $d, $f) {
     }
    
     /* make the filename for the temporary image */
-    $hex2file =  get_cfg_var("iching_root")."/id/hex2_tmp_".session_id().".png";
+    $hex2file =  getRootDir()."/id/hex2_tmp_".session_id().".png";
     $hex2fileUrl =  getServerPrefix()."/id/hex2_tmp_".session_id().".png";
     //var_dump($_SESSION);
     /* save the image */
@@ -288,7 +320,7 @@ function enlargeImage($originalFile, $pct) {
     $newWidth = $width * $pct;
     $uid = uniqid("tmp_")."_".session_id();
     /* assume png for now */
-    $targetFile = get_cfg_var("iching_root") . "/id/${uid}";
+    $targetFile = getRootDir(). "/id/${uid}";
 
 
     $info = getimagesize($originalFile);
@@ -380,7 +412,7 @@ function makeMDfromTemplate($alldata) {
     /*
      * load the template processing class
      */
-    include(get_cfg_var("iching_root") . "/book/templates/template.class.php");
+    include(getRootDir(). "/book/templates/template.class.php");
     $type = 'pseq'; /* select the 'pseq' vale to search by */
     $cols = getcols(); /* get the column names from the database */
 
@@ -399,11 +431,11 @@ function makeMDfromTemplate($alldata) {
     /*
      * create new template instances for each part of the final PDF
      */
-    $page_title = new Template(get_cfg_var("iching_root") . "/templates/pdf_title.tpl");
-    $page_hex1 = new Template(get_cfg_var("iching_root") . "/templates/pdf_hex1.tpl");
-    $page_lines = new Template(get_cfg_var("iching_root") . "/templates/pdf_lines.tpl");
-    $page_hex2 = new Template(get_cfg_var("iching_root") . "/templates/pdf_hex2.tpl");
-    $page_trx = new Template(get_cfg_var("iching_root") . "/templates/pdf_trx.tpl");
+    $page_title = new Template(getRootDir(). "/templates/pdf_title.tpl");
+    $page_hex1 = new Template(getRootDir(). "/templates/pdf_hex1.tpl");
+    $page_lines = new Template(getRootDir(). "/templates/pdf_lines.tpl");
+    $page_hex2 = new Template(getRootDir(). "/templates/pdf_hex2.tpl");
+    $page_trx = new Template(getRootDir(). "/templates/pdf_trx.tpl");
 
     /*
      * set the vars for the title template
@@ -560,7 +592,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
          * There is one layout template for one hex only, and one for 2 hexes
          */
         
-        $layout = new Template(get_cfg_var("iching_root") . "/templates/layout_moving.tpl");    
+        $layout = new Template(getRootDir(). "/templates/layout_moving.tpl");    
         $layout->set("title", $page_title->output());
         $layout->set("hex1", $page_hex1->output());
         $layout->set("lines", $page_lines->output());
@@ -568,7 +600,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
         $layout->set("trx", $page_trx->output());
         $fpage = $layout->output();
     } else { /* there are no nomoving lines */
-        $layout = new Template(get_cfg_var("iching_root") . "/templates/layout_static.tpl");    
+        $layout = new Template(getRootDir(). "/templates/layout_static.tpl");    
         $layout->set("title", $page_title->output());
         $layout->set("hex1", $page_hex1->output());
         $fpage = $layout->output();
@@ -731,9 +763,9 @@ function saveToFile($t, $d, $f) {
     /* *************************************************** */
     /* make out filenames, and write the markdown to a file */
     /* *************************************************** */
-    $outMd = get_cfg_var("iching_root") . "/" . $fname . ".md";
-    $outPdf = get_cfg_var("iching_root") . "/" . $fname . ".pdf";
-    $outHtml = get_cfg_var("iching_root") . "/" . $fname . ".html";
+    $outMd = getRootDir(). "/" . $fname . ".md";
+    $outPdf = getRootDir(). "/" . $fname . ".pdf";
+    $outHtml = getRootDir(). "/" . $fname . ".html";
 
 
     $f = tryFopen($outMd, "w");
@@ -803,9 +835,9 @@ function saveToFile($t, $d, $f) {
      * See docs on the more complicated aspects of doign this 
      * on a headless server :/  Needs virtual X11 frame buffers
     *************************************************** */
-    $call = get_cfg_var("iching_root")."/utils/makePdf.sh $outHtml $outPdf";
+    $call = getRootDir()."/utils/makePdf.sh $outHtml $outPdf";
    
-    $call =  "nohup sudo -u ".get_cfg_var("iching_user")." ".$call. "  >> ".get_cfg_var("iching_root")."/log/wkhtmltopdf.log 2>&1";
+    $call =  "nohup sudo -u ". getUser()." ".$call. "  >> ".getRootDir()."/log/wkhtmltopdf.log 2>&1";
 
     system($call);
     

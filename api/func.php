@@ -1,7 +1,7 @@
 <?php
 
-require get_cfg_var("iching_root") . "/lib/init.php";
-require get_cfg_var("iching_root") . "/lib/functions.php";
+require "../lib/functions.php";
+
 
 
 //$str = '{"request":{"carrier":{},"codeType":{},"flightNumber":{},"departing":true,"date":{"year":"2013","month":"10","day":"4","interpreted":"2013-10-04","error":"The date specified is not within the expected range. Earliest allowed date 2017-09-16"},"url":"https://api.flightstats.com/flex/schedules/rest/v1/jsonp/flight/AA/100/departing/2013/10/4"},"scheduledFlights":[],"appendix":{},"error":{"httpStatusCode":400,"errorCode":"DATE_OUT_OF_RANGE","errorId":"a20d7562-a890-4917-8683-f6413e142559","errorMessage":"The date specified is not within the expected range. Earliest allowed date 2017-09-16"}}';

@@ -1,9 +1,7 @@
 <?php
-require get_cfg_var("iching_root") . "/elements/header.php";
-require get_cfg_var("iching_root") . "/vendor/autoload.php";
-require get_cfg_var("iching_root") . "/conf/config.php";
-require get_cfg_var("iching_root") . "/lib/init.php";
-require get_cfg_var("iching_root") . "/lib/functions.php";
+require "lib/functions.php";
+require getRootDir() . "/elements/header.php";
+
 ?>
 
 <section>
