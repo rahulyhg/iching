@@ -1,4 +1,4 @@
 [@title]
 [@hex1]
 
-<h6>The Dharma Clock Project</h6>
+<h6>BabelBrowser.com</h6>

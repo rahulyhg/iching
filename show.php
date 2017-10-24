@@ -5,7 +5,7 @@ require getRootDir() . "/elements/header.php";
 ?>
 
 <section>
-    <!-- div class="content"><strong> The Dharma Clock Project's I Ching page</strong></div-->
+    <!-- div class="content"><strong> BabelBrowser's I Ching page</strong></div-->
 </section>
 <section id="pageContent">
 

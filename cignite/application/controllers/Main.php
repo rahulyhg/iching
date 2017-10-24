@@ -21,7 +21,7 @@ class Main extends CI_Controller {
     }
 
     public function index() {
-        echo "<h1>The Dharma Clock annotator</h1>"; //Just an example to ensure that we get into the function
+        echo "<h1>The BabelBrowser annotator</h1>"; //Just an example to ensure that we get into the function
         die();
     }
 

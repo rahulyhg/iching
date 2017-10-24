@@ -14,7 +14,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 ?>
 
 <section>
-    <!-- div class="content"><strong> The Dharma Clock Project's I Ching page</strong></div-->
+    <!-- div class="content"><strong> BabelBrowser's I Ching page</strong></div-->
 </section>
 
 <section id="pageContent">

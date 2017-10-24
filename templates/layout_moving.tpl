@@ -4,4 +4,4 @@
 [@hex2]
 [@trx]
 
-<h6><i>The Dharma Clock Project</i></h6>
+<h6><i>BabelBrowser.com</i></h6>
