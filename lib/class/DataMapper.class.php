@@ -6,14 +6,14 @@ class DataMapper {
     public $o;
 
     public function __construct($ini) {
-        $name   = $ini['db.name'];
+        $name = $ini['db.name'];
         $server = $ini['db.server'];
-        $user   = $ini['db.user'];
-        $pass   = $ini['db.pass'];
-        
+        $user = $ini['db.user'];
+        $pass = $ini['db.pass'];
+
         $dsn = "mysql:host=${server};dbname=${name};charset=utf8mb4";
-//var_dump($dsn);
-        $dbh=null;
+//dbug($dsn);
+        $dbh = null;
         try {
             $dbh = new PDO($dsn, $user, $pass);
             $this->pdo = $dbh;
@@ -22,7 +22,7 @@ class DataMapper {
             $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         } catch (Exception $e) {
             echo 'Exception -> ';
-            var_dump($e->getMessage());
+            dbug($e->xdebug_message);
             die();
         }
     }
@@ -35,7 +35,7 @@ class DataMapper {
             $stmt = $this->pdo->prepare($q);
         } catch (Exception $e) {
             echo 'Exception -> ';
-            var_dump($e->getMessage());
+            dbug ($e->xdebug_message);
         }
 
         if (!($res = $stmt->execute($qargs))) {
@@ -165,6 +165,18 @@ class DataMapper {
         $sth = $this->o->prepare($query);
         $sth->execute();
         $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return($res);
+    }
+
+    public function site_authuser($u, $p) {
+        $query = "SELECT * FROM `site_user` WHERE username='$u' and password='$p'";
+        $_SESSION['username'] = $u;
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $res = $sth->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($res);
+        $count = count($res);
+        var_dump($count);
         return($res);
     }
 

@@ -3,8 +3,8 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-
-require get_cfg_var("iching_root") . "/lib/functions.php";
+/* JWFIX need to find a way to make the global vars constant and default 8*/
+require get_cfg_var("iching.dev.root") . "/lib/functions.php";
 
 class Main extends CI_Controller {
 

@@ -1,5 +1,6 @@
 <?php
-require get_cfg_var("iching_root") . "/lib/functions.php";
+ require "../lib/functions.php";
+require getRootDir(). "/lib/functions.php";
 
 $h = "http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=3&fmt=c&pseudo=pseudo";
 
