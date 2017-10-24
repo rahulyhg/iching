@@ -1,0 +1,6 @@
+#!/bin/sh
+
+rsync -avr --exclude-from  'exclude-live.txt' /home/jw/sites/iching/ /home/jw/sites/babelbrowser  --delete
+cd /home/jw/sites/babelbrowser
+./CHr
+

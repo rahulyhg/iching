@@ -1,0 +1,11 @@
+.htaccess
+CHr
+.git/*
+.gitignore
+id/*
+id
+questions/*
+questions
+log/*
+log
+astro/js/astrodataJson.html
