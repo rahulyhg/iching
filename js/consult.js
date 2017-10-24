@@ -159,6 +159,22 @@ $("#debugon").click(function () {
             $("#penkuamsg").dialog("open");
         });
     });
+    $(function () {
+        $("#donatemsg").dialog({
+            autoOpen: false
+        });
+        $("#donatetip").hover(
+            function () {
+                $(this).css({"background-color":"red"});
+                $("#donatemsg").dialog("open");
+            }, 
+				
+            function () {
+               //$(this).css({"background-color":"blue"});
+               // $("#donatemsg").dialog("close");
+            
+        });
+    });
 
     //    
 //    

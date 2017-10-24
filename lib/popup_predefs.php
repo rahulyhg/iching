@@ -92,6 +92,16 @@
             The "Pen Kua" are the hexagrams arrived at by tossing coins or yarrow sticks, etc. This is the most common form of the hexagrams; the ones we usually think of when he think of the I Ching.
         </p>
     </div>
-
+    <!-- ----------------------------------------------------------------------->
+    <div id="donatemsg" title="Contribute">
+        Help move this project forward with the editors, writers, designers, programmers, hosting costs, etc., it needs.
+        <p>
+          <img src="/images/bitcoin_addr.png">
+        <p></p>
+        <span style="font-size:9pt">1JSPBvhepQMVV9znim5eo9bE7BGkK5N2te</span>  
+    </p>
+    </div>
+    
+    
 
 </div>

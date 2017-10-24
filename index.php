@@ -267,8 +267,18 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 ?>
         <h3 id="firstheader" style="font-size:1.2em !important" class="eTitle t_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
             <?= c($t['pseq']) ?> (<?= c($t['title']) ?>) <?= c($t['trans']) ?>
+
+            <a id="donatetip" class="donatetip"  href="#">
+                <div id="donate" class="btn btn-warning" title="Plea">
+                    <b>Donate to this project</b>
+                </div>
+                <span id="donatetipmsg"></span>
+            </a> 
+
+
             <?php /* this invisible one pixel line control the collapse with of the accordian */?>
             <br><img style="min-width:300px" src="images/thinline350.png">
+
         </h3>
 
         <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
@@ -470,6 +480,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             
         <h3 style="font-size:1.2em !important" class="eTitle f_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
             <?= c($f['pseq']) ?> (<?= c($f['title']) ?>) <?= c($f['trans']) ?>
+
             <?php /* this invisible one pixel line control the collapse with of the accordian */?>
             <br><img style="min-width:300px" src="images/thinline350.png">
 
@@ -668,6 +679,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 require getRootDir(). "/lib/popup_predefs.php"; /* has all the dovs for the jquery-ui popups */
 require getRootDir(). "/elements/footer.php";
 
+/* clean up anythign laying around */
 $del = "rm ".getRootDir()."/id/*".session_id()."*";
 system($del);
 ?>

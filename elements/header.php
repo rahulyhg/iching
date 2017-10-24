@@ -38,6 +38,7 @@ session_start();
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">//-->
         <link rel="stylesheet" media="screen" type="text/css" href="/css/style.css" />
         <link rel="stylesheet" media="screen" type="text/css" href="/css/drawhex.css" />
+        <link rel="stylesheet" media="screen" type="text/css" href="/css/sides.css" />
         <!-- overload this if other page -->
         <link rel="stylesheet" media="screen" type="text/css" href="/css<?= ($_SERVER['PHP_SELF'] == "/show.php" ? "/show" : "/consult") ?>.css" />
         <!-- Latest compiled and minified CSS -->
