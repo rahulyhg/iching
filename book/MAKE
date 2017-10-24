@@ -54,4 +54,4 @@ git push
 
 #./UP
 
-cd ~/src/iching/book
+cd ..
