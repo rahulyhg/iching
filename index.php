@@ -9,6 +9,9 @@ require "lib/functions.php";
 //require getRootDir(). "/elements/header_top.php";
 require getRootDir(). "/elements/header.php";
 
+        if (isset($_REQUEST['suggestions'])) {
+            $GLOBALS['dbh']->putSuggestion($_REQUEST['suggestions']);
+        }
 //var_dump($_dbh);
 $a = null; /* this is used later for a global var, but prob shoud try and remove it FIXME*/
 ?>
@@ -113,7 +116,40 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
                     </div>
                 </form>
             </div>
-        </div>
+
+    
+    
+    
+    
+    
+    
+    
+    <?php 
+    /* *************************************************************************
+     * Suggestion box
+     ************************************************************************ */
+    ?>
+            <div style="margin-top:30px" class="qboxSug">
+                <form method="POST" action="">
+                    <div><textarea id="sugField"  maxlength="2000" minlength="32" rows="4" cols="25" wrap="soft" type="textarea" name="suggestions" placeholder="Send me suggestions, comments, bugs, wishlists, opinions, etc.  If you want to be contacted, include your email. (max:2K, min:32)" value=""></textarea></div>
+                        <div style="margin-top:15px"><input id="sugSend" class = "btn btn-primary text_smcaps" type="submit" value="LET ME KNOW"></div>
+                </form>
+            </div>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>
         <?php
     } else { /* there has been a coin toss */
         ?>

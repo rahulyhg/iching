@@ -22,13 +22,22 @@ $(document).ready(function () {
         $("#castbutton").val("Cast Hexagram");
     });
 
+    $("#sugSend").val("Enter Msg");
+    $("#sugSend").css("background-color","grey");
+    $("#sugField").on('input',function(e){
+        var sterm = $("#sugField").val().toString();
+        if (sterm.length > 32) { 
+            $("#sugSend").css("background-color","green");
+            $("#sugSend").val("Let Me Know");
+        }
+    });
     
     $("#manualTossed").attr('disabled', 'disabled');
-    $("#manualTossed").val("Enter #'s");
+    $("#manualTossed").val("Enter #");
     $("#manualTossed").css("background-color","grey");
     $("#manualTossed").change(function () {
         $("#manualTossed").removeAttr('disabled');
-        $("#manualTossed").val('Show');
+        $("#manualTossed").val('Display');
         $("#manualTossed").css("background-color","green");
     });
         

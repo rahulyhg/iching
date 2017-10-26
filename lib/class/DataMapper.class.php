@@ -174,12 +174,24 @@ class DataMapper {
         $sth = $this->o->prepare($query);
         $sth->execute();
         $res = $sth->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($res);
+        //var_dump($res);
         $count = count($res);
-        var_dump($count);
+        //var_dump($count);
         return($res);
     }
 
+    public function putSuggestion($sug) {
+        try {
+            $query = "insert into site_suggestions (suggestion,dtstamp) values (:sug,NOW())";
+            $sth = $this->o->prepare($query);
+            $sth->bindParam(":sug", $sug,PDO::PARAM_STR);
+            $sth->execute();
+            return(1);
+        } catch (PDOException $e) {
+            dbug($e->xdebug_message,TRUE);
+            die("FATAL ERROR");                   
+        }
+    }
     public function subSearch($searchStr) {
         $sr = array();
 

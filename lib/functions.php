@@ -501,10 +501,10 @@ function enlargeImage($originalFile, $pct) {
 /* This is mainly an import of 'makemds.php' */
 /* * ******************************************************************* */
 
-function dbug($v) {
+function dbug($v,$force=null) {
     $bt = debug_backtrace();
     $caller = array_shift($bt);
-    if (isset($_REQUEST['debugon'])) {
+    if (  (isset($_REQUEST['debugon'])) ||($force)) {
 //        $d = array('FROM'=>$caller,'INSPECTION'=>$v);
         $val = print_r($v, TRUE);
         print "<div id='dbug' >" . $caller['file'] . "=>" . $caller['line'] . "<pre style='font-weight:normal;font-size:8pt'>*$val*</pre></div>";
