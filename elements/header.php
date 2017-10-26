@@ -26,9 +26,10 @@ session_start();
         <!-- jquery -->
         <script type="text/javascript" src="/js/script.js"></script>    
 	<script src="/vendor/jquery-ui/jquery-ui.min.js"></script>        
+	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 `        <!-- local js -->
         <script type="text/javascript" src="/js/consult.js"></script>    
-	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+        <script type="text/javascript" src="/js/show.js"></script>    
         <!-- accordian -->
 	<script src="/js/accordian.js"></script>        
         <!--script type="text/javascript" src="/dom-to-image/src/dom-to-image.js"></script-->

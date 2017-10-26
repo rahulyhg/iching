@@ -35,7 +35,7 @@ class DataMapper {
             $stmt = $this->pdo->prepare($q);
         } catch (Exception $e) {
             echo 'Exception -> ';
-            dbug ($e->xdebug_message);
+            dbug($e->xdebug_message);
         }
 
         if (!($res = $stmt->execute($qargs))) {
@@ -180,4 +180,110 @@ class DataMapper {
         return($res);
     }
 
+    public function subSearch($searchStr) {
+        $sr = array();
+
+
+        $sr["comment"] = $this->subResults($searchStr, "comment");
+        $sr["title"] = $this->subResults($searchStr, "title");
+        $sr["trans"] = $this->subResults($searchStr, "trans");
+        $sr["trigrams"] = $this->subResults($searchStr, "trigrams");
+        $sr["tri_upper"] = $this->subResults($searchStr, "tri_upper");
+        $sr["tri_lower"] = $this->subResults($searchStr, "tri_lower");
+        $sr["iq32_dir"] = $this->subResults($searchStr, "iq32_dir");
+        $sr["iq32_theme"] = $this->subResults($searchStr, "iq32_theme");
+        $sr["iq32_desc"] = $this->subResults($searchStr, "iq32_desc");
+        $sr["explanation"] = $this->subResults($searchStr, "explanation");
+        $sr["judge_old"] = $this->subResults($searchStr, "judge_old");
+        $sr["judge_exp"] = $this->subResults($searchStr, "judge_exp");
+        $sr["image_old"] = $this->subResults($searchStr, "image_old");
+        $sr["image_exp"] = $this->subResults($searchStr, "image_exp");
+        $sr["line_1_org"] = $this->subResults($searchStr, "line_1_org");
+        $sr["line_1_exp"] = $this->subResults($searchStr, "line_1_exp");
+        $sr["line_2_org"] = $this->subResults($searchStr, "line_2_org");
+        $sr["line_2_exp"] = $this->subResults($searchStr, "line_2_exp");
+        $sr["line_3_org"] = $this->subResults($searchStr, "line_3_org");
+        $sr["line_3_exp"] = $this->subResults($searchStr, "line_3_exp");
+        $sr["line_4_org"] = $this->subResults($searchStr, "line_4_org");
+        $sr["line_4_exp"] = $this->subResults($searchStr, "line_4_exp");
+        $sr["line_5_org"] = $this->subResults($searchStr, "line_5_org");
+        $sr["line_5_exp"] = $this->subResults($searchStr, "line_5_exp");
+        $sr["line_6_org"] = $this->subResults($searchStr, "line_6_org");
+        $sr["line_6_exp"] = $this->subResults($searchStr, "line_6_exp");
+
+
+
+
+        $final = formatSearch($sr, $searchStr);
+        return($final);
+    }
+
+    private function subResults($searchStr, $field) {
+
+        //https://dev.mysql.com/doc/refman/5.7/en/fulltext-natural-language.html
+
+        $query = <<<EOX
+            SELECT pseq ,${field}
+            FROM 
+              hexagrams 
+            WHERE MATCH 
+              (${field})
+                 AGAINST
+              ('${searchStr}'  IN NATURAL LANGUAGE MODE);
+EOX;
+
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $r = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return($r);
+    }
+
+    public function searchResults($str, $field) {
+
+        //https://dev.mysql.com/doc/refman/5.7/en/fulltext-natural-language.html
+        $query = <<<EOX
+                
+            SELECT pseq ,${field},
+            MATCH 
+              (${field}) 
+                AGAINST
+              ('${str}'  IN NATURAL LANGUAGE MODE) AS score
+            FROM 
+              hexagrams 
+            WHERE MATCH 
+              (${field})
+                 AGAINST
+              ('${str}'  IN NATURAL LANGUAGE MODE);
+EOX;
+
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $r = $sth->fetchAll(PDO::FETCH_ASSOC);
+        $res = var_export($r, TRUE);
+        $out = "";
+        foreach ($r as $p) {
+            $out .= "<div><b><a href='/show.php?pseq=" . $p['pseq'] . "'>hexagram " . $p['pseq'] . " (" . $this->getHexFieldByPseq("hexagrams", "trans", $p['pseq']) . " )</a></b>:</div>";
+            $out .= "${field} Commentary<div style='font-size:8pt; border:1px solid grey; margin-left:20px'>" . highlight($str, $p[$field]) . "</div>";
+            //$out .= "Image Commentary<div style='font-size:8pt; border:1px solid grey; margin-left:20px'>".highlight($str,$p['image_exp'])."</div>";  
+            foreach ($p as $key => $val) {
+                
+            }
+        }
+
+        $final = "<div style='max-width:80%;overflow:scroll; word-break:break-all;height:400px;'>" . count($r) . " hexagrams with " . highlight($str, $str) . " by score $out</div>";
+
+        return($final);
+    }
+    
+    public function getStopWords() {
+        $query = "SELECT * FROM INFORMATION_SCHEMA.INNODB_FT_DEFAULT_STOPWORD";
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $r = $sth->fetchAll(PDO::FETCH_ASSOC);
+        $simpleArray = array();
+        foreach ($r as $s) {
+            array_push($simpleArray,$s['value']);
+        }
+        return($simpleArray);
+    }
 }

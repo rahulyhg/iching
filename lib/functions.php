@@ -1,22 +1,20 @@
 <?php
 
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once getRootDir(). "/lib/class/LoadIni.class.php";
-require_once getRootDir()."/lib/class/DataMapper.class.php";
-require_once getRootDir(). "/lib/class/CssHex.class.php";
-require_once getRootDir(). "/lib/class/Tosser.class.php";
+require_once getRootDir() . "/lib/class/LoadIni.class.php";
+require_once getRootDir() . "/lib/class/DataMapper.class.php";
+require_once getRootDir() . "/lib/class/CssHex.class.php";
+require_once getRootDir() . "/lib/class/Tosser.class.php";
 
 $ini = LoadIni::init("iching");
 $dbh = new DataMapper($ini);
 
-require getRootDir(). "/vendor/autoload.php";
-require getRootDir(). "/lib/md2pdf/vendor/autoload.php";
-require getRootDir(). "/conf/config.php";
-
+require getRootDir() . "/vendor/autoload.php";
+require getRootDir() . "/lib/md2pdf/vendor/autoload.php";
+require getRootDir() . "/conf/config.php";
 
 function getRootDir() {
     $runtime = "dev";
@@ -26,17 +24,18 @@ function getRootDir() {
     $dir = get_cfg_var("iching.${runtime}.root");
     return($dir);
 }
+
 function getTestServer() {
     $runtime = $_SERVER['runtime'];
     $srv = get_cfg_var("iching.${runtime}.testServer");
     return($srv);
 }
+
 function getUser() {
     $runtime = $_SERVER['runtime'];
     $un = get_cfg_var("iching.${runtime}.user");
     return($un);
 }
-
 
 function getNotes($pseq) {
     $hex = $GLOBALS['dbh']->getNotes($pseq);
@@ -49,7 +48,7 @@ function getNotes($pseq) {
     $hex[0]['tri_upper_bin'] = null;
     $hex[0]['tri_lower_bin'] = null;
 
-
+    /* JWFIX not not appearing... see notes for 50 (cauldron) judge_exp */
     foreach ($hex[0] as $key => $val) {
         if ($val) {
             $out .= "<b>$key: </b> $val<br>\n";
@@ -60,6 +59,31 @@ function getNotes($pseq) {
         $out = "There are no notes yet.";
     }
     return($out);
+}
+
+function highlight($part, $whole) {
+    /* if the string is in quotes, we know it is a phrase */
+    $isPhrase = 0;
+    
+    $isPhrase = preg_match("/\"/", $part);
+
+    if (strpos("\"", $part)) {
+        $isPhrase = 1;
+    } 
+    /* remove quotes used in strings by mysql */
+    $part = str_replace("\"", "", $part);
+    /* makie all loqwecase for array_diif */
+    $partAry = array(strtolower($part));
+    if ($isPhrase == 0) {
+        $partAry = explode(" ", $part);
+    }
+    foreach ($partAry as $word) {
+        $search_pattern = "/" . $word . "/si";
+        $replace_with = "<span style='color:red;font-weight:bold'>" . $word . "</span>";
+        $whole = preg_replace($search_pattern, $replace_with, $whole);
+    }
+
+    return($whole);
 }
 
 function getEdStatus($t) {
@@ -101,44 +125,153 @@ function pvar_dump($x) {
     print "</div>";
 }
 
+function formatSearch($s, $searchStr) {
+    $sary = array();
+    $psary = array(64);
+    for ($i = 0; $i < 64; $i++) {
+        $psary[$i] = array();
+    }
+
+    $out = "";
+    foreach ($s as $field => $topcat) {  //$fiels = 'judge_exp',   $topcat = array of search results
+        foreach ($topcat as $p) {  // $p = colname associative arrays ($field amd pseq)
+            $pseq = $p['pseq'];
+
+            $content = $p[$field];
+            $tary = array($field => $content);
+            if (isset($psary[$pseq])) {
+                array_push($psary[$pseq], $tary);
+            }
+        }
+    }
+
+
+    $labels = array(
+        'comment' => 'Comments',
+        'title' => 'Title',
+        'trans' => 'Translated Title',
+        'trigrams' => 'Trigrams',
+        'tri_upper' => 'Upper Trigram',
+        'tri_lower' => 'Lower Trigram',
+        'iq32_dir' => 'IQ32 Direction',
+        'iq32_theme' => 'IQ32 Theme',
+        'iq32_desc' => 'IQ32 Description',
+        'explanation' => 'Explanation of Trigrams',
+        'judge_old' => 'Original Judgement',
+        'judge_exp' => 'Explanation of the Judgment',
+        'image_old' => 'Original Image Text',
+        'image_exp' => 'Explanation of the Image',
+        'line_1_org' => 'Original Line 1 Text',
+        'line_1_exp' => 'Explanation on Line 1',
+        'line_2_org' => 'Original Line 2 Text',
+        'line_2_exp' => 'Explanation on Line 2',
+        'line_3_org' => 'Original Line 3 Text',
+        'line_3_exp' => 'Explanation on Line 3',
+        'line_4_org' => 'Original Line 4 Text',
+        'line_4_exp' => 'Explanation on Line 4',
+        'line_5_org' => 'Original Line 5 Text',
+        'line_5_exp' => 'Explanation on Line 5',
+        'line_6_org' => 'Original Line 6 Text',
+        'line_6_exp' => 'Explanation on Line 6'
+    );
+
+    $psary = array_filter($psary);
+    /*
+     * JWFIX I have a close DOV but no open, as that properly centers the page, but this means I 
+     * have a div problem farther up :(  
+     */
+    $out .= "[<b>" . $searchStr . "</b>] found in " . count($psary) . " hexagrams</div>";
+    for ($i = 0; $i < 64; $i++) {
+        if (isset($psary[$i])) {
+            $out .= "<div id='searchbox01'><img style='width:30px;margin:3px;' src='/images/hex/small/hexagram" . f($i) . ".png'><b><a target='_blank' href='/show.php?hex=" . $i . "'>" . $i . " / " . $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "trans", $i) . " </a></b>\n";
+            foreach ($psary[$i] as $key => $ary) {
+                //        if (isset($ary)) {
+                $out .= "<div id='searchbox02'>" . $labels[key($ary)] . "\n";
+                foreach ($ary as $field => $content) {
+                    $out .= "<div id='searchbox03'>" . highlight($searchStr, $content) . "</div>\n";
+                }
+                //      }
+                $out .= "</div>\n";
+            }
+            $out .= "</div>\n";
+        }
+
+    }
+    return($out);
+
+}
+
+function make_comparer() {
+    // Normalize criteria up front so that the comparer finds everything tidy
+    $criteria = func_get_args();
+    foreach ($criteria as $index => $criterion) {
+        $criteria[$index] = is_array($criterion) ? array_pad($criterion, 3, null) : array($criterion, SORT_ASC, null);
+    }
+
+    return function($first, $second) use (&$criteria) {
+        foreach ($criteria as $criterion) {
+            // How will we compare this round?
+            list($column, $sortOrder, $projection) = $criterion;
+            $sortOrder = $sortOrder === SORT_DESC ? -1 : 1;
+
+            // If a projection was defined project the values now
+            if ($projection) {
+                $lhs = call_user_func($projection, $first[$column]);
+                $rhs = call_user_func($projection, $second[$column]);
+            } else {
+                $lhs = $first[$column];
+                $rhs = $second[$column];
+            }
+
+            // Do the actual comparison; do not return if equal
+            if ($lhs < $rhs) {
+                return -1 * $sortOrder;
+            } else if ($lhs > $rhs) {
+                return 1 * $sortOrder;
+            }
+        }
+
+        return 0; // tiebreakers exhausted, so $first == $second
+    };
+}
 
 /* DEPRICATED
  * 
- 
-function makeMDfile($alldata) {
-    $t = $alldata['t'];
-    $d = $alldata['d'];
-    $f = $alldata['f'];
-    $homeurl = $alldata['homeurl'];
-    $hdate = $t['human'];
-    $ddate = $t['data'];
-    $question = $t['question'];
-    
-    $out = "";
-    $out .= "*** Original Hexagram ***:  ![Alt text](${homeurl}/images/hex/small/hexagram" . sprintf("%02d", $t['pseq']) . ".png)\n\n";
-    $out .= "*** Resulting Hexagram ***: ![Alt text](${homeurl}/images/hex/small/hexagram" . sprintf("%02d", $f['pseq']) . ".png)\n\n";
-    foreach ($alldata as $key => $val) {
-        if (is_array($val) or ( $val instanceof Traversable)) {
-            foreach ($val as $key1 => $val1) {
-                if (is_array($val1) or ( $val1 instanceof Traversable)) {
-                    
-                } else {
-                    $out .= "\n";
-                    $out .= "***$key1:*** $val1\n";
-                    $out .= "\n";
-                }
-            }
-        } else {
-            $out .= "\n";
-            $out .= "*** $key: *** $val\n";
-            $out .= "\n";
-        }
-    }
-    return($out);
-}
-*/
 
-function mergeHex($t_image,$f_image) {
+  function makeMDfile($alldata) {
+  $t = $alldata['t'];
+  $d = $alldata['d'];
+  $f = $alldata['f'];
+  $homeurl = $alldata['homeurl'];
+  $hdate = $t['human'];
+  $ddate = $t['data'];
+  $question = $t['question'];
+
+  $out = "";
+  $out .= "*** Original Hexagram ***:  ![Alt text](${homeurl}/images/hex/small/hexagram" . sprintf("%02d", $t['pseq']) . ".png)\n\n";
+  $out .= "*** Resulting Hexagram ***: ![Alt text](${homeurl}/images/hex/small/hexagram" . sprintf("%02d", $f['pseq']) . ".png)\n\n";
+  foreach ($alldata as $key => $val) {
+  if (is_array($val) or ( $val instanceof Traversable)) {
+  foreach ($val as $key1 => $val1) {
+  if (is_array($val1) or ( $val1 instanceof Traversable)) {
+
+  } else {
+  $out .= "\n";
+  $out .= "***$key1:*** $val1\n";
+  $out .= "\n";
+  }
+  }
+  } else {
+  $out .= "\n";
+  $out .= "*** $key: *** $val\n";
+  $out .= "\n";
+  }
+  }
+  return($out);
+  }
+ */
+
+function mergeHex($t_image, $f_image) {
 
     //$numberOfImages = 2;
     /*
@@ -154,9 +287,9 @@ function mergeHex($t_image,$f_image) {
      */
 //    $trans_colour = imagecolorallocatealpha($png, 0, 0, 0, 127);
 //    imagefill($png, 0, 0, $trans_colour);
-    
-    $white = imagecolorallocate($png, 255, 255, 255); 
-    imagefill($png,0,0,$white); 
+
+    $white = imagecolorallocate($png, 255, 255, 255);
+    imagefill($png, 0, 0, $white);
 
 
 //    $firstUrl = "http://slider.com/id/${t_image}";
@@ -176,27 +309,27 @@ function mergeHex($t_image,$f_image) {
 
 //    imagejpeg($outputImage, APPLICATION_PATH . 'test.png');
 //    $uid = uniqid();
-    $uid=session_id();
+    $uid = session_id();
     $fn = "/id/merge_${uid}.png";
 //    $fn = getRootDir()."/id/merge_${uid}.png";
-    imagepng($outputImage, getRootDir().$fn);
+    imagepng($outputImage, getRootDir() . $fn);
 
     imagedestroy($outputImage);
- 
+
     return($fn);
 }
 
 function getServerPrefix() {
-    
+
     $test_server_name = getTestServer();
     if (!isset($_SERVER['SERVER_NAME'])) { /* empty when running form (for testing) command line */
         $_SERVER['SERVER_NAME'] = $test_server_name;
     }
-    
-    return("http://" . $_SERVER['SERVER_NAME']);    
+
+    return("http://" . $_SERVER['SERVER_NAME']);
 }
 
-function makeAlphaBox($x,$y) {
+function makeAlphaBox($x, $y) {
     $hexBox = imagecreatetruecolor($x, $y);
     imagesavealpha($hexBox, true);
     $white = imagecolorallocate($hexBox, 255, 255, 255);
@@ -218,25 +351,25 @@ function makeHexPng($t, $d, $f) {
      * JWFIX can't get th etansparency to work when I create the image... always black, so I set to white
      */
 
-    $hex1 = makeAlphaBox($x,$newY);
+    $hex1 = makeAlphaBox($x, $newY);
 
 
-    /* ***************************************************************
+    /*     * **************************************************************
      * make hexagram 1 
      * ************************************************************** */
     $i = array();
     for ($k = 0; $k < 6; $k++) {
         if ($ta[$k] == 1) {          // line = yang
             if ($d[$k] == 1) {          // line = moving
-                $i[$k] = getServerPrefix().'/images/lines/9sm.png';
+                $i[$k] = getServerPrefix() . '/images/lines/9sm.png';
             } else {                    // line = static
-                $i[$k] = getServerPrefix().'/images/lines/7sm.png';
+                $i[$k] = getServerPrefix() . '/images/lines/7sm.png';
             }
         } else {                    // line = yin
             if ($d[$k] == 0) {          // line = static
-                $i[$k] = getServerPrefix().'/images/lines/8sm.png';
+                $i[$k] = getServerPrefix() . '/images/lines/8sm.png';
             } else {                    //  line = moving
-                $i[$k] = getServerPrefix().'/images/lines/6sm.png';
+                $i[$k] = getServerPrefix() . '/images/lines/6sm.png';
             }
         }
     }
@@ -251,31 +384,31 @@ function makeHexPng($t, $d, $f) {
         $dst_y = ($y * $k) + ($y_border * $k);
         imagecopymerge($hex1, $m[$k], 0, $dst_y, 0, 0, $x, $y, 100);
     }
-    /* I use a UID to save to file ... JWFIX shoudl I use a session id instead?*/
+    /* I use a UID to save to file ... JWFIX shoudl I use a session id instead? */
     $u = uniqid();
-    
+
     /* make the filename for the temporary image */
-    $hex1file =  getRootDir()."/id/hex1_tmp_".session_id().".png";
-    $hex1fileUrl =  getServerPrefix()."/id/hex1_tmp_".session_id().".png";
-    
+    $hex1file = getRootDir() . "/id/hex1_tmp_" . session_id() . ".png";
+    $hex1fileUrl = getServerPrefix() . "/id/hex1_tmp_" . session_id() . ".png";
+
     /* save the image */
-    imagepng($hex1,$hex1file);
- 
+    imagepng($hex1, $hex1file);
+
     /* clean up */
     imagedestroy($hex1);
-    
-    /* ***************************************************************
+
+    /*     * **************************************************************
      * make hexagram 2 
      * ************************************************************** */
 
-    $hex2 = makeAlphaBox($x,$newY);
+    $hex2 = makeAlphaBox($x, $newY);
 
     $i = array();
     for ($k = 0; $k < 6; $k++) {
         if ($fa[$k] == 1) {
-            $i[$k] = getServerPrefix().'/images/lines/7sm.png';
+            $i[$k] = getServerPrefix() . '/images/lines/7sm.png';
         } else {
-            $i[$k] = getServerPrefix().'/images/lines/8sm.png';
+            $i[$k] = getServerPrefix() . '/images/lines/8sm.png';
         }
     }
 
@@ -289,14 +422,14 @@ function makeHexPng($t, $d, $f) {
         $dst_y = ($y * $k) + ($y_border * $k);
         imagecopymerge($hex2, $m[$k], 0, $dst_y, 0, 0, $x, $y, 100);
     }
-   
+
     /* make the filename for the temporary image */
-    $hex2file =  getRootDir()."/id/hex2_tmp_".session_id().".png";
-    $hex2fileUrl =  getServerPrefix()."/id/hex2_tmp_".session_id().".png";
+    $hex2file = getRootDir() . "/id/hex2_tmp_" . session_id() . ".png";
+    $hex2fileUrl = getServerPrefix() . "/id/hex2_tmp_" . session_id() . ".png";
     //var_dump($_SESSION);
     /* save the image */
-    imagepng($hex2,$hex2file);
- 
+    imagepng($hex2, $hex2file);
+
     /* clean up */
     imagedestroy($hex2);
 
@@ -304,13 +437,13 @@ function makeHexPng($t, $d, $f) {
     /* we make both hexes and mergethem, but if there is only one we just send back one */
 
     $finalFile = $hex1fileUrl;
-    if ($isMovingLines) {    
-       $finalFile = getServerPrefix().mergeHex($hex1fileUrl,$hex2fileUrl); /* mergeHex() does not rewturn URL, so do that here */
+    if ($isMovingLines) {
+        $finalFile = getServerPrefix() . mergeHex($hex1fileUrl, $hex2fileUrl); /* mergeHex() does not rewturn URL, so do that here */
     }
-    
+
 //    enlargeImage($finalFile,1.3);
-    
-    return(enlargeImage($finalFile,2));
+
+    return(enlargeImage($finalFile, 2));
 }
 
 function enlargeImage($originalFile, $pct) {
@@ -318,9 +451,9 @@ function enlargeImage($originalFile, $pct) {
 //    var_dump($width);
 //    var_dump(getimagesize($originalFile));
     $newWidth = $width * $pct;
-    $uid = uniqid("tmp_")."_".session_id();
+    $uid = uniqid("tmp_") . "_" . session_id();
     /* assume png for now */
-    $targetFile = getRootDir(). "/id/${uid}";
+    $targetFile = getRootDir() . "/id/${uid}";
 
 
     $info = getimagesize($originalFile);
@@ -367,13 +500,14 @@ function enlargeImage($originalFile, $pct) {
 /* * ******************************************************************* */
 /* This is mainly an import of 'makemds.php' */
 /* * ******************************************************************* */
+
 function dbug($v) {
     $bt = debug_backtrace();
     $caller = array_shift($bt);
     if (isset($_REQUEST['debugon'])) {
 //        $d = array('FROM'=>$caller,'INSPECTION'=>$v);
-        $val = var_export($v,TRUE);
-        print "<div  style='font-weight:bold;background-color:white;border:3px solid red;width:90%'>".$caller['file']."=>".$caller['line']."<pre style='font-weight:normal;font-size:8pt'>[[$val]]</pre></div>";
+        $val = print_r($v, TRUE);
+        print "<div id='dbug' >" . $caller['file'] . "=>" . $caller['line'] . "<pre style='font-weight:normal;font-size:8pt'>*$val*</pre></div>";
         return(TRUE);
     } else {
         return(FALSE);
@@ -387,32 +521,32 @@ function makeMDfromTemplate($alldata) {
     $t = $alldata['t'];
     $d = $alldata['d'];
     $f = $alldata['f'];
-    
+
     //var_dump($t['trans']);
     //getServerPrefix()$homeurl = $alldata['homeurl'];
     $hdate = $t['hdate'];
     $ddate = $t['ddate'];
     $question = $t['question'];
-    
+
     $trx_pseq = $_SESSION['trx_pseq'];
     $txhex = $GLOBALS['dbh']->getHex($trx_pseq);
-    
-    $fpage=null;
 
-              
-    /* 
+    $fpage = null;
+
+
+    /*
      * make image of tossed and final hex, with colored moving lines, for pdf heading
      */
-    $t_image = getServerPrefix()."/id/hex1_tmp_".session_id().".png";
+    $t_image = getServerPrefix() . "/id/hex1_tmp_" . session_id() . ".png";
 //    $t_image = getServerPrefix()."/images/hex/small/hexagram" . f($t['pseq']) . ".png";
-    $f_image = getServerPrefix()."/images/hex/small/hexagram" . f($f['pseq']) . ".png";
+    $f_image = getServerPrefix() . "/images/hex/small/hexagram" . f($f['pseq']) . ".png";
     /* makeHexPng() return the URL alrady */
-    $m_image =  makeHexPng($t['binary'], $d, $f['binary']);//makeHexPng();//mergeHex($t_image,$f_image);
+    $m_image = makeHexPng($t['binary'], $d, $f['binary']); //makeHexPng();//mergeHex($t_image,$f_image);
     //var_dump($m_image);
     /*
      * load the template processing class
      */
-    include(getRootDir(). "/book/templates/template.class.php");
+    include(getRootDir() . "/book/templates/template.class.php");
     $type = 'pseq'; /* select the 'pseq' vale to search by */
     $cols = getcols(); /* get the column names from the database */
 
@@ -424,18 +558,18 @@ function makeMDfromTemplate($alldata) {
 //    $ftpseq = sprintf("%02s", $t['pseq']);
 //    $ffpseq = sprintf("%02s", $f['pseq']);
 
-    $thex = mdgethex($ftpseq); /* this gets the first hex data from the database*/
+    $thex = mdgethex($ftpseq); /* this gets the first hex data from the database */
     $fhex = mdgethex($ffpseq); /* this, the second */
 
 
     /*
      * create new template instances for each part of the final PDF
      */
-    $page_title = new Template(getRootDir(). "/templates/pdf_title.tpl");
-    $page_hex1 = new Template(getRootDir(). "/templates/pdf_hex1.tpl");
-    $page_lines = new Template(getRootDir(). "/templates/pdf_lines.tpl");
-    $page_hex2 = new Template(getRootDir(). "/templates/pdf_hex2.tpl");
-    $page_trx = new Template(getRootDir(). "/templates/pdf_trx.tpl");
+    $page_title = new Template(getRootDir() . "/templates/pdf_title.tpl");
+    $page_hex1 = new Template(getRootDir() . "/templates/pdf_hex1.tpl");
+    $page_lines = new Template(getRootDir() . "/templates/pdf_lines.tpl");
+    $page_hex2 = new Template(getRootDir() . "/templates/pdf_hex2.tpl");
+    $page_trx = new Template(getRootDir() . "/templates/pdf_trx.tpl");
 
     /*
      * set the vars for the title template
@@ -443,9 +577,9 @@ function makeMDfromTemplate($alldata) {
     $page_title->set("hdate", $hdate);
     $page_title->set("question", "'${question}'");
     $page_title->set("merged", $m_image);
-    
+
     $tosstype = "";
-    
+
     if ($_REQUEST['mode'] == "manual") {
         $tosstype = "Manually Selected Hexagrams";
     }
@@ -462,28 +596,28 @@ function makeMDfromTemplate($alldata) {
 
     if ($_REQUEST['mode'] == "astro") {
         $tosstype = "Real-time planetary positions";
-    }    
-    
+    }
+
     $page_title->set("tosstype", $tosstype);
 
     /*
      * set the vars for the transitional hexgram template
-     */    
-    $page_trx->set("trx_judge_old",$txhex[0]['judge_old']);
-    $page_trx->set("trx_judge_exp",$txhex[0]['judge_exp']);
-    $trx_image = getServerPrefix()."/images/hex/small/hexagram" . f($txhex[0]['pseq']) . ".png";
-    $page_trx->set("trx_image",$trx_image);
-    $page_trx->set("trx_transtitle", c($txhex[0]['pseq'])." (".c($txhex[0]['binary'])." = ".c($txhex[0]['bseq']).") ". c($txhex[0]['trans'])." / ".c($txhex[0]['title']));
-    
+     */
+    $page_trx->set("trx_judge_old", $txhex[0]['judge_old']);
+    $page_trx->set("trx_judge_exp", $txhex[0]['judge_exp']);
+    $trx_image = getServerPrefix() . "/images/hex/small/hexagram" . f($txhex[0]['pseq']) . ".png";
+    $page_trx->set("trx_image", $trx_image);
+    $page_trx->set("trx_transtitle", c($txhex[0]['pseq']) . " (" . c($txhex[0]['binary']) . " = " . c($txhex[0]['bseq']) . ") " . c($txhex[0]['trans']) . " / " . c($txhex[0]['title']));
+
     /*
      * JWFIX all the labels and  shoud probably be in a config file, with language support
      */
-    $page_trx->set("trx_intro","The moving lines are the lines that, due to their extreme condition, 'flip' to 
+    $page_trx->set("trx_intro", "The moving lines are the lines that, due to their extreme condition, 'flip' to 
 their opposite, and as a result, a new hexagram is created. Likewise, if we then subtract the binary value of the first hexagram from the 
 final hexagram, we end up with a binary number that represents the difference 
 between the two, and this binary number maps to yet another hexagram.  We call 
 this hexagram 'transitional' as it a full hexagram that represent the moving lines. For the first and second hexagrams shown here, the transitional hexagram is ");
-    $page_trx->set("trx_title","The Transitioning Hexagram");
+    $page_trx->set("trx_title", "The Transitioning Hexagram");
     $page_trx->set("label_judge_old", "The Judgment:");
     $page_trx->set("label_judge_exp", "An Explanation of the Judgment");
 
@@ -505,12 +639,12 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     $page_hex1->set("label_image_exp", "An Explanation of the 'IMAGE'");
     /*
      * then we set the data values 
-     */    
+     */
     $page_hex1->set("t_image", $t_image);
     $page_hex1->set("t_id", f($thex[0]['pseq']));
     $page_hex1->set("t_trans", $thex[0]['trans']);
     $page_hex1->set("t_title", $thex[0]['title']);
-    $page_hex1->set("t_transtitle", c($thex[0]['trans'])." / ".c($thex[0]['title']));
+    $page_hex1->set("t_transtitle", c($thex[0]['trans']) . " / " . c($thex[0]['title']));
     $page_hex1->set("t_pseq", f($thex[0]['pseq']));
     $page_hex1->set("t_bseq", f($thex[0]['bseq']));
     $page_hex1->set("t_binary", $thex[0]['binary']);
@@ -527,33 +661,33 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
      * set isMovingLines flag
      */
     $isMovingLines = ($thex[0]['pseq'] != $fhex[0]['pseq']); /* 1 = moving lines, 0 = none */
-    
-    /* 
+
+    /*
      * set the label fro the moving lines
      */
     $movinglines = "There are no moving lines";
     $page_lines->set("movinglines", $movinglines);
-    
-    if ($isMovingLines) { 
+
+    if ($isMovingLines) {
         $movinglines = "The Moving Lines";
-    
+
         $page_lines->set("movinglines", $movinglines); /* override */
         /*
          * loop through the lines setting the vars using CSS to highlight the moving lines
          */
         for ($j = 0; $j < 6; $j++) {
-            $i = 6 - $j ;
+            $i = 6 - $j;
             if ($d[$j]) {
                 $page_lines->set("t_line_${i}", $thex[0]['line_' . $i]);
                 $page_lines->set("t_line_${i}_org", $thex[0]['line_' . $i . '_org']);
                 $page_lines->set("t_line_${i}_exp", $thex[0]['line_' . $i . '_exp']);
             } else {
-                $page_lines->set("t_line_${i}", "<span style='color:darkgray'>".$thex[0]['line_' . $i]."</span>");
-                $page_lines->set("t_line_${i}_org", "<span style='color:darkgray'>".$thex[0]['line_' . $i . '_org']."</span>");
-                $page_lines->set("t_line_${i}_exp", "<span style='color:darkgray'>".$thex[0]['line_' . $i . '_exp']."</span>");
+                $page_lines->set("t_line_${i}", "<span style='color:darkgray'>" . $thex[0]['line_' . $i] . "</span>");
+                $page_lines->set("t_line_${i}_org", "<span style='color:darkgray'>" . $thex[0]['line_' . $i . '_org'] . "</span>");
+                $page_lines->set("t_line_${i}_exp", "<span style='color:darkgray'>" . $thex[0]['line_' . $i . '_exp'] . "</span>");
             }
         }
-        
+
         /*
          * set vars for final hexagram
          */
@@ -572,12 +706,12 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
 
         $page_hex2->set("f_image", $f_image);
         $page_hex2->set("f_id", f($fhex[0]['pseq']));
-        $page_hex2->set("f_transtitle", c($fhex[0]['trans'])." / ".c($fhex[0]['title']));
+        $page_hex2->set("f_transtitle", c($fhex[0]['trans']) . " / " . c($fhex[0]['title']));
         $page_hex2->set("f_trans", $fhex[0]['trans']);
         $page_hex2->set("f_title", $fhex[0]['title']);
         $page_hex2->set("f_pseq", f($fhex[0]['pseq']));
         $page_hex2->set("f_bseq", f($fhex[0]['bseq']));
-        $page_hex2->set("f_binary", "(".$fhex[0]['binary'].")");
+        $page_hex2->set("f_binary", "(" . $fhex[0]['binary'] . ")");
         $page_hex2->set("f_dir", $fhex[0]['iq32_dir']);
         $page_hex2->set("f_explanation", $fhex[0]['explanation']);
         $page_hex2->set("f_tri_upper", $fhex[0]['tri_upper']);
@@ -586,13 +720,12 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
         $page_hex2->set("f_judge_exp", $fhex[0]['judge_exp']);
         $page_hex2->set("f_image_old", $fhex[0]['image_old']);
         $page_hex2->set("f_image_exp", $fhex[0]['image_exp']);
-        
+
         /**
          * Loads our layout template, settings its title and content.
          * There is one layout template for one hex only, and one for 2 hexes
          */
-        
-        $layout = new Template(getRootDir(). "/templates/layout_moving.tpl");    
+        $layout = new Template(getRootDir() . "/templates/layout_moving.tpl");
         $layout->set("title", $page_title->output());
         $layout->set("hex1", $page_hex1->output());
         $layout->set("lines", $page_lines->output());
@@ -600,7 +733,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
         $layout->set("trx", $page_trx->output());
         $fpage = $layout->output();
     } else { /* there are no nomoving lines */
-        $layout = new Template(getRootDir(). "/templates/layout_static.tpl");    
+        $layout = new Template(getRootDir() . "/templates/layout_static.tpl");
         $layout->set("title", $page_title->output());
         $layout->set("hex1", $page_hex1->output());
         $fpage = $layout->output();
@@ -613,7 +746,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     return($fpage);
 }
 
-/* 
+/*
  * this is functions for makeMDfromTemplate()
  * JWFIX move this to the DataMapper class
  */
@@ -632,10 +765,11 @@ function getids($ary) {
     return($ids);
 }
 
-/* 
+/*
  * this is functions for makeMDfromTemplate()
  * JWFIX move this to the DataMapper class
  */
+
 function getcols() {
     $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
     $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'iching' AND TABLE_NAME = 'hexagrams'";
@@ -649,10 +783,11 @@ function getcols() {
     return($c);
 }
 
-/* 
+/*
  * this is functions for makeMDfromTemplate()
  * JWFIX move this to the DataMapper class
  */
+
 function mdgethex($pseq) {
     //  var_dump($bseq);
     $dbh = new PDO('mysql:host=localhost;dbname=iching;charset=utf8mb4', 'ichingDBuser', '1q2w3e');
@@ -725,7 +860,6 @@ EOX;
     return($hex);
 }
 
-
 /* * ******************************************************************** */
 
 function saveToFile($t, $d, $f) {
@@ -736,8 +870,8 @@ function saveToFile($t, $d, $f) {
     $fname = mb_ereg_replace("\'", "", $fname);
     $fname = mb_ereg_replace("\!", "", $fname);
     $fname = mb_ereg_replace("\,", "_", $fname);
-    $fname .= "-".$t['ddate'];
-    
+    $fname .= "-" . $t['ddate'];
+
 
     $alldata = array(
         'question' => $_REQUEST['question'],
@@ -745,8 +879,8 @@ function saveToFile($t, $d, $f) {
         'd' => $d,
         'f' => $f
     );
-    
-/* no need to save any of this right now */
+
+    /* no need to save any of this right now */
 //    /*
 //     * first just save teh raw json data in /questions/<question>_<timestamp>.json
 //     */
@@ -760,29 +894,29 @@ function saveToFile($t, $d, $f) {
     $out = makeMDfromTemplate($alldata);
 
 
-    /* *************************************************** */
+    /*     * ************************************************** */
     /* make out filenames, and write the markdown to a file */
-    /* *************************************************** */
-    $outMd = getRootDir(). "/" . $fname . ".md";
-    $outPdf = getRootDir(). "/" . $fname . ".pdf";
-    $outHtml = getRootDir(). "/" . $fname . ".html";
+    /*     * ************************************************** */
+    $outMd = getRootDir() . "/" . $fname . ".md";
+    $outPdf = getRootDir() . "/" . $fname . ".pdf";
+    $outHtml = getRootDir() . "/" . $fname . ".html";
 
 
     $f = tryFopen($outMd, "w");
     fwrite($f, $out);
     fclose($f);
 
-    /* *************************************************** */
+    /*     * ************************************************** */
     /* convert MARKDOWN to HTML */
-    /* *************************************************** */
+    /*     * ************************************************** */
     $markdown = file_get_contents($outMd);
     $markdownParser = new \Michelf\MarkdownExtra();
     $html = $markdownParser->transform($markdown);
 
-    /* *************************************************** */
+    /*     * ************************************************** */
     /* add CSS to the HTML and save to file */
-    /* *************************************************** */
-    $cssfile = getServerPrefix()."/css/pdf.css";
+    /*     * ************************************************** */
+    $cssfile = getServerPrefix() . "/css/pdf.css";
 //    var_dump($cssfile);
     $html = "<html>\n<head>\n<link rel='stylesheet' type='text/css' href='$cssfile'>\n</head>\n<body>" . $html . "</body></html>";
 //    $html = "<html>\n<head>\n</head>\n<body>" . $html . "</body></html>";
@@ -792,9 +926,9 @@ function saveToFile($t, $d, $f) {
     fclose($f);
 
 
-    /* *************************************************** */
+    /*     * ************************************************** */
     /* load the HTML into a DOM parser and process any links */
-    /* *************************************************** */
+    /*     * ************************************************** */
     $dom = \HTML5::loadHTML($html);
     $links = htmlqp($dom, 'a');
     foreach ($links as $link) {
@@ -809,10 +943,10 @@ function saveToFile($t, $d, $f) {
     fwrite($f, $html);
     fclose($f);
 
-    /* *************************************************** 
+    /*     * ************************************************** 
      * load the HTML into dompdf, render it and write it 
      * DOES NOT WORK!
-     *************************************************** */
+     * ************************************************** */
 
 ////   // use Dompdf\Options;
 ////$options = new Options();
@@ -829,25 +963,25 @@ function saveToFile($t, $d, $f) {
 //    fwrite($f, $output);
 //    fclose($f);
 
-    
-    /* *************************************************** 
-    /* have to mAke system call because dompdf is not Working 
+
+    /*     * ************************************************** 
+      /* have to mAke system call because dompdf is not Working
      * See docs on the more complicated aspects of doign this 
      * on a headless server :/  Needs virtual X11 frame buffers
-    *************************************************** */
-    $call = getRootDir()."/utils/makePdf.sh $outHtml $outPdf";
-   
-    $call =  "nohup sudo -u ". getUser()." ".$call. "  >> ".getRootDir()."/log/wkhtmltopdf.log 2>&1";
+     * ************************************************** */
+    $call = getRootDir() . "/utils/makePdf.sh $outHtml $outPdf";
+
+    $call = "nohup sudo -u " . getUser() . " " . $call . "  >> " . getRootDir() . "/log/wkhtmltopdf.log 2>&1";
 
     system($call);
-    
+
     /*
      * Save the final URL fro the download link on the homepage
      */
     $_SESSION['dlfile'] = getServerPrefix() . "/" . $fname . ".pdf";
-    
+
     unlink($outMd);
-    unlink($outHtml); 
+    unlink($outHtml);
 
     return(TRUE);
 }
@@ -977,18 +1111,18 @@ function getToss() {
 
     if (isset($_REQUEST['f_tossed'])) {
         $counter = 0;
-        while ( (count($newTossed) !=6) && ($counter < 3) ) {
+        while ((count($newTossed) != 6) && ($counter < 3)) {
             $newTossed = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_tossed']))));
             $counter++;
         }
         $counter = 0;
-        while ( (count($newFinal) !=6)&& ($counter < 3) ) {
+        while ((count($newFinal) != 6) && ($counter < 3)) {
             $newFinal = str_split(sprintf("%06d", decbin($GLOBALS['dbh']->chex2bin($_REQUEST['f_final']))));
             $counter++;
         }
-        
+
         if ($counter >= 3) {
-            print ("<div stype='padding:15px;class='btn-danger'>count=".count($newTossed)."/".count($newFinal)."  Sorry, there is a problem somewhere.  Hit reset and try again</div> ");
+            print ("<div stype='padding:15px;class='btn-danger'>count=" . count($newTossed) . "/" . count($newFinal) . "  Sorry, there is a problem somewhere.  Hit reset and try again</div> ");
             die();
         }
         for ($i = 0; $i < 6; $i++) {
@@ -1036,7 +1170,7 @@ function getToss() {
 //        var_dump($delta);
 
     $final = getFinal($tossed);
-    /*override if static */
+    /* override if static */
     if (isset($_REQUEST['f_final'])) {
         $final = $newFinal;
     }
@@ -1045,7 +1179,7 @@ function getToss() {
     $final_bin = tobin($final);
 
     /* JWFIX move to db class */
-    
+
     $sql = <<<EOX
     SELECT 
         fix
@@ -1117,7 +1251,9 @@ EOX;
     $res = array('tossed' => $tossedData, 'delta' => $delta, 'final' => $finalData);
     return($res);
 }
+
 /* JWFIX move to DB class */
+
 function getTri() {
     $sql = "SELECT * FROM trigrams";
     return($GLOBALS['dbh']->getData($sql));
@@ -1148,7 +1284,7 @@ function tobin($ary) {
 
 function tossit() {
     $tosser = new Tosser();
-    
+
     if (isset($_REQUEST['f_tossed'])) {
         /* return anything as it will get overwritten by the manually entered vals in getToss(); */
         $r = array(6, 7, 8, 9, 6, 7);
@@ -1216,7 +1352,9 @@ function logout($t) {
 EOX;
     echo $debugBlock;
 }
+
 /* JWFIX move to DB class */
+
 function getTransByBin($bin) {
     global $dbh;
     $sql = "SELECT trans from hexagrams where bseq=${bin}";
@@ -1346,65 +1484,64 @@ function secondsToTime($ss) {
 //XXX;
 
 
-            function putBtnExpand() {
-            echo ""
-                . "<span>"
-                    . "<a id ='btnEC' style='text-decoration: none' class='accordion-expand-all' href='#'>[+]</a>"
-                . "</span>\n";
-            }
-            
-            function putBtnEdit($pseq) {
-            echo ""
-                . "<span>"
-                    . "<a href='/cignite/index.php/main/hexagrams/edit/".$GLOBALS['dbh']->chex2bin($pseq)."' target='_blank'>"
-                        . "<img class='uibtn'  src='/images/btn_edit.png'>"
-                    . "</a>"
-                . "</span>\n";
-            }
-            
-            function putBtnUpdate($pseq) {
-                echo ""
-                . "<span>"
-                    . "<a href='/cignite/index.php/main/notes/edit/".$GLOBALS['dbh']->chex2bin($pseq)."' target='_blank'>"
-                        . "<img class='uibtn' src='/images/btn_update.png'>"
-                    . "</a>"
-                . "</span>\n";
-            }
-            
-            function putBtnSmTxt() {
-                echo ""
-                . "<span>"
-                        . "<img class='uibtn' id='larger1'  src='/images/btn_smalltxt.png'>"
-                . "</span>\n";
-            }
-            
-            function putBtnMedTxt() {
-                echo ""
-                . "<span>"
-                        . "<img class='uibtn' id='larger2'  src='/images/btn_medtxt.png'>"
-                . "</span>\n";
-            }
-            
-            function putBtnLgTxt() {
-                echo ""
-                . "<span>"
-                        . "<img class='uibtn' id='larger3'  src='/images/btn_lgtxt.png'>"
-                . "</span>\n";
-            }
-            
-            
+function putBtnExpand() {
+    echo ""
+    . "<span>"
+    . "<a id ='btnEC' style='text-decoration: none' class='accordion-expand-all' href='#'>[+]</a>"
+    . "</span>\n";
+}
+
+function putBtnEdit($pseq) {
+    echo ""
+    . "<span>"
+    . "<a href='/cignite/index.php/main/hexagrams/edit/" . $GLOBALS['dbh']->chex2bin($pseq) . "' target='_blank'>"
+    . "<img class='uibtn'  src='/images/btn_edit.png'>"
+    . "</a>"
+    . "</span>\n";
+}
+
+function putBtnUpdate($pseq) {
+    echo ""
+    . "<span>"
+    . "<a href='/cignite/index.php/main/notes/edit/" . $GLOBALS['dbh']->chex2bin($pseq) . "' target='_blank'>"
+    . "<img class='uibtn' src='/images/btn_update.png'>"
+    . "</a>"
+    . "</span>\n";
+}
+
+function putBtnSmTxt() {
+    echo ""
+    . "<span>"
+    . "<img class='uibtn' id='larger1'  src='/images/btn_smalltxt.png'>"
+    . "</span>\n";
+}
+
+function putBtnMedTxt() {
+    echo ""
+    . "<span>"
+    . "<img class='uibtn' id='larger2'  src='/images/btn_medtxt.png'>"
+    . "</span>\n";
+}
+
+function putBtnLgTxt() {
+    echo ""
+    . "<span>"
+    . "<img class='uibtn' id='larger3'  src='/images/btn_lgtxt.png'>"
+    . "</span>\n";
+}
+
 function c($s) {
 //  https://www.functions-online.com/preg_replace.html
-        $r = preg_replace('/<p>\s*(.*)\s*<\/p>\s*$/s', '$1', $s);
-        dbug($r);
-        return($r);
+    $r = preg_replace('/<p>\s*(.*)\s*<\/p>\s*$/s', '$1', $s);
+    dbug($r);
+    return($r);
 }
+
 function htmlize($s) {
 //  https://www.functions-online.com/preg_replace.html
-        //$r = preg_replace('/\n\n/s', '\n<p></p>\n', $s);
-        $r = preg_replace("/\r/","",$s);
-        $r = preg_replace("/(\n)/",'<br/>$1',$r);
-        $r = preg_replace("/(\n\n)/",'$1<p></p>$1',$r);
-        return($r);
+    //$r = preg_replace('/\n\n/s', '\n<p></p>\n', $s);
+    $r = preg_replace("/\r/", "", $s);
+    $r = preg_replace("/(\n)/", '<br/>$1', $r);
+    $r = preg_replace("/(\n\n)/", '$1<p></p>$1', $r);
+    return($r);
 }
-    
