@@ -1,7 +1,12 @@
 $(document).ready(function () {
 
-
-    
+//setTimeout( function(){ 
+//    $('#presentationlayer').css("visiblity","visible");
+//  }  , 3000 );
+//     
+//     
+     
+     
     $('#download').click(function () {
         e.preventDefault();  //stop the browser from following
         window.location.href = '/questions';
@@ -14,8 +19,14 @@ $(document).ready(function () {
             $(this).val(v);
         }
     });
+    
+    
+    $("#nowbutton").click(function () {
+        $("#qfield").val("Your Tao of Now");
+   });
 
-    $("#castbutton").val("Enter Question");
+
+    $("#castbutton").val("Or Enter Question Below");
     $("#castbutton").css("background-color","grey");
     $("#qfield").on('input',function(e){
         $("#castbutton").css("background-color","green");
@@ -33,11 +44,11 @@ $(document).ready(function () {
     });
     
     $("#manualTossed").attr('disabled', 'disabled');
-    $("#manualTossed").val("Enter #");
-    $("#manualTossed").css("background-color","grey");
+    $("#manualTossed").val("Enter 2 Hex Nums");
+    $("#manualTossed").css("background-color","#222222");
     $("#manualTossed").change(function () {
         $("#manualTossed").removeAttr('disabled');
-        $("#manualTossed").val('Display');
+        $("#manualTossed").val('Show Hexagrams');
         $("#manualTossed").css("background-color","green");
     });
         
@@ -61,7 +72,7 @@ $(document).ready(function () {
                 jsonpCallback: 'callback',
                 type: 'GET',
                 success: function (json) {
-                    //                $("#f_final").attr("placeholder", json['ret']);
+                                    $("#f_final").attr("placeholder", json['ret']);
 //                    $("#f_final").val(json['ret']);
   //                  $("#manualTossed").trigger("change");
                 },
@@ -240,6 +251,31 @@ $("#debugon").click(function () {
         });
     });
 
+
+    $(function () {
+        $("#qtr1tipmsg").dialog({
+            autoOpen: false
+        });
+        $("#qtr1tip").on("click", function () {
+            $("#qtr1tipmsg").dialog("open");
+        });
+    });
+    $(function () {
+        $("#qtr2tipmsg").dialog({
+            autoOpen: false
+        });
+        $("#qtr2tip").on("click", function () {
+            $("#qtr2tipmsg").dialog("open");
+        });
+    });
+    $(function () {
+        $("#qtr3tipmsg").dialog({
+            autoOpen: false
+        });
+        $("#qtr3tip").on("click", function () {
+            $("#qtr3tipmsg").dialog("open");
+        });
+    });
 // ajust foro screen
 
 

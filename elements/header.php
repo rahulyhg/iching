@@ -11,14 +11,7 @@ session_start();
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <title>BabelBrowser</title>
         <meta name="description" content="I Ching is a book of wisdom, an oracle a math system, and a philosophy - access all of them here" />
-        
-    <?php 
-    
-    if ( $_SERVER['PHP_SELF'] == "/index.php") {
-    }
-    
-    ?>
-    
+
         <!-- vendor includes -->
         <script src="/vendor/components/jquery/jquery.min.js"></script>
         <script src="/vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>    
@@ -26,8 +19,10 @@ session_start();
         <!-- jquery -->
         <script type="text/javascript" src="/js/script.js"></script>    
 	<script src="/vendor/jquery-ui/jquery-ui.min.js"></script>        
-	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet">
-`        <!-- local js -->
+	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
+        <!-- local js -->
+        <!-- script type="text/javascript" src="/js/spin.js"></script>    
+        <script type="text/javascript" src="/js/jquery.spin.js"></script -->    
         <script type="text/javascript" src="/js/consult.js"></script>    
         <script type="text/javascript" src="/js/show.js"></script>    
         <!-- accordian -->
@@ -48,5 +43,6 @@ session_start();
         <link rel="stylesheet" href="/css/accordian.css">
     </head>
 <body>
+      
 <!-- header>
 </header -->

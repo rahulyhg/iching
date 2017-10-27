@@ -1,5 +1,0 @@
-cd ik
-find -maxdepth 1  -name "ik*.txt" -exec ./proc2 {} \; 
-cd -
-mysql -uroot -p1q2w3e iching < iching.sql 
-php ./read.php

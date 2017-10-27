@@ -14,7 +14,7 @@ $dbh = new DataMapper($ini);
 
 require getRootDir() . "/vendor/autoload.php";
 require getRootDir() . "/lib/md2pdf/vendor/autoload.php";
-require getRootDir() . "/conf/config.php";
+//require getRootDir() . "/conf/config.php";
 
 function getRootDir() {
     $runtime = "dev";
@@ -1355,44 +1355,44 @@ EOX;
 
 /* JWFIX move to DB class */
 
-function getTransByBin($bin) {
-    global $dbh;
-    $sql = "SELECT trans from hexagrams where bseq=${bin}";
-    $sth = $dbh->o->prepare($sql);
-    $sth->execute();
-    $hex = $sth->fetch();
-    return($hex['trans']);
-}
+//function getTransByBin($bin) {
+//    global $dbh;
+//    $sql = "SELECT trans from hexagrams where bseq=${bin}";
+//    $sth = $dbh->o->prepare($sql);
+//    $sth->execute();
+//    $hex = $sth->fetch();
+//    return($hex['trans']);
+//}
 
 function f($n) {
     return(sprintf("%02d", $n));
 }
 
-function fromtoprint($b, $h, $f) {
-//    var_dump($b);
-//    var_dump($h);
-    $x = $b - $f['bseq'];
-//    echo "${b} - ${f['bseq']} = ${x}";
-    if ($x < 0) {
-        $x = $x + 63;
-//        echo " + 63 ";
-    }
-//    echo " = ". $x."\n";
-
-
-    $s = "To get from ";
-    $s .= "<a href=\"show.php?bin=" . $f['bseq'] . " target=\"blank_\">";
-    $s .= "<img class=\"smallerheximg\" src=\"images/hex/hexagram" . f($f['pseq']) . ".png\">";
-    $s .= $f['pseq'] . "/ [b:" . $f['bseq'] . "]";
-    $s .= $f['trans'];
-    $s .= "</a> to";
-    $s .= "<a href=\"show.php?bin=" . $b . " target=\"blank_\">";
-    $s .= "<img class=\"smallerheximg\" src=\"images/hex/hexagram" . f($h) . ".png\">";
-    $s .= $h . "/ [b:" . $b . "]" . getTransByBin($b);
-    $s .= "</a> you need...<p>";
-
-    return($s);
-}
+//function fromtoprint($b, $h, $f) {
+////    var_dump($b);
+////    var_dump($h);
+//    $x = $b - $f['bseq'];
+////    echo "${b} - ${f['bseq']} = ${x}";
+//    if ($x < 0) {
+//        $x = $x + 63;
+////        echo " + 63 ";
+//    }
+////    echo " = ". $x."\n";
+//
+//
+//    $s = "To get from ";
+//    $s .= "<a href=\"show.php?bin=" . $f['bseq'] . " target=\"blank_\">";
+//    $s .= "<img class=\"smallerheximg\" src=\"images/hex/hexagram" . f($f['pseq']) . ".png\">";
+//    $s .= $f['pseq'] . "/ [b:" . $f['bseq'] . "]";
+//    $s .= $f['trans'];
+//    $s .= "</a> to";
+//    $s .= "<a href=\"show.php?bin=" . $b . " target=\"blank_\">";
+//    $s .= "<img class=\"smallerheximg\" src=\"images/hex/hexagram" . f($h) . ".png\">";
+//    $s .= $h . "/ [b:" . $b . "]" . getTransByBin($b);
+//    $s .= "</a> you need...<p>";
+//
+//    return($s);
+//}
 
 function microtime_float() {
     list($usec, $sec) = explode(" ", microtime());

@@ -12,8 +12,7 @@ class DataMapper {
         $pass = $ini['db.pass'];
 
         $dsn = "mysql:host=${server};dbname=${name};charset=utf8mb4";
-//dbug($dsn);
-        $dbh = null;
+
         try {
             $dbh = new PDO($dsn, $user, $pass);
             $this->pdo = $dbh;

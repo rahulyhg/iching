@@ -25,9 +25,9 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
     <div id = 'here2' class="container container-top">
     
         <div class="row1">
-            <span class="btn btn-warning"><a  id='reset' href='index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'>RESET</a></span>
+            <span class="btn btn-warning"><a  style="font-weight: bold;" id='reset' href='index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'>RESET</a></span>
             <span class="btn btn-danger"><a target="_blank" style="color:white;font-weight: bold;" href="/book/ichingbook/_book/">DOCS</a></span>
-            <span class="btn btn-danger"><a target="_blank" style="color:white;" href="show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >Browse</a></span>    <p>
+            <span class="btn btn-success"><a target="_blank" style="color:white;font-weight: bold;" href="show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >BROWSE</a></span>    <p>
         </div>
 
         <!-- ------------------------------------------------------------>
@@ -40,16 +40,39 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         dbug($_REQUEST);
         if (!isset($_REQUEST['flipped'])) { /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
             ?>
-            <div class="qbox">
-
+<?php 
+/* *****************************************
+ * The Tao of Now
+ * *****************************************/
+?>            <div class="qbox">
+                        <input id="nowbutton" class = "btn btn-info" style="width:100%;color:black;font-weight:bold" type="submit" value="Click for 'Tao of Now'">
+            </div>
+<?php 
+/* *****************************************
+ * The help for Tao of Now
+ * *****************************************/
+?>
+            <div class="qtrtip" id="qtr1tip">
+                <img src="/images/qmark.png"/>
+            </div>
+<?php 
+/* *****************************************
+ * The main question box
+ * *****************************************/
+?>
+        
+            <div style="margin-top:12px;" class="qbox">
+                
+                        <input id="castbutton" class = "btn btn-info" style="width:100%" type="submit" value="Cast Coins">
                 <form id = "tosstype" method="POST" action="?c=<?= microtime_float() ?>">
                     <input type="hidden" name="flipped" value="1">
                     <div class="row2">
                         <p>
-                        <input id="qfield" type="text" name="question" placeholder="question" value="<?php echo (isset($_REQUEST['debugon']) ? "debugging..." : "" )?>">
+                        <input id="qfield" type="text" name="question" placeholder="Enter a Question or Thought" value="<?php echo (isset($_REQUEST['debugon']) ? "debugging..." : "" )?>">
                         <input type="checkbox" name="debug" id="debugon" value="1"  <?php echo (isset($_REQUEST['debugon']) ? "checked" : "" )?> >
 
                         </p> 
+                        
                         <?php /*
                          *  The 'tip' functions are in /js/consult.js 
                          * The actual text is in /lib/popup_predefs.php
@@ -95,17 +118,33 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 
                         <span class="text_mdcaps" id="baynesmsg">Wilhelm/Baynes</span> <input type="radio" name="trans" id="baynes" value="baynes" checked > <a id="baynestip" href="#"><img src="images/g-qmark.png"></a></p> 
                         <span class="text_mdcaps" id="aculturalmsg">Acultural</span> <input type="radio" name="trans" id="acultural" value="acultural"  > <a id="aculturaltip" href="#"><img src="images/g-qmark.png"></a></p>
-
-
-
-                        <input id="castbutton" class = "btn btn-info" style="width:100%" type="submit" value="Cast Coins">
                     </div>
                 </form>
+            </div>
+        
+        
+        
+        
+        
+<?php 
+/* *****************************************
+ * The help for main question box
+ * *****************************************/
+?>
+            <div class="qtrtip" id="qtr2tip">
+                <img src="/images/qmark.png"/>
+            </div>
+<?php 
+/* *****************************************
+ * The Compare 2 hex box
+ * *****************************************/
+?>
+        
+            <div style="margin-top:12px;" class="qbox">
                 <form method="POST" action="">
                     <input type="hidden" name="flipped" value="1">
                     <div class="row3">
-                        <div class="text_smcaps">Or enter 2 hex nums    </div>
-
+                        <!-- div class="text_smcaps">Or enter 2 hex nums    </div -->
                         <?php
                         $fromNum = rand(1,64);
                         $toNum = $GLOBALS['dbh']->getHexnumOppositeByPseq($fromNum);
@@ -123,15 +162,23 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
     
     
     
-    
     <?php 
-    /* *************************************************************************
-     * Suggestion box
-     ************************************************************************ */
-    ?>
-            <div style="margin-top:30px" class="qboxSug">
+/* *****************************************
+ * The help for The Compare 2 hex box
+ * *****************************************/
+?>
+            <div class="qtrtip" id="qtr3tip">
+                <img src="/images/qmark.png"/>
+            </div>
+<?php 
+/* *****************************************
+ * The suggestin box
+ * *****************************************/
+?>
+
+            <div style="margin-top:12px" class="qboxSug">
                 <form method="POST" action="">
-                    <div><textarea id="sugField"  maxlength="2000" minlength="32" rows="4" cols="25" wrap="soft" type="textarea" name="suggestions" placeholder="Send me suggestions, comments, bugs, wishlists, opinions, etc.  If you want to be contacted, include your email. (max:2K, min:32)" value=""></textarea></div>
+                    <div><textarea id="sugField"  maxlength="2000" minlength="32" rows="4" cols="30" wrap="soft" type="textarea" name="suggestions" placeholder="Send me suggestions, comments, bugs, wishlists, opinions, etc.  If you want to be contacted, include your email. (max:2K, min:32)" value=""></textarea></div>
                         <div style="margin-top:15px"><input id="sugSend" class = "btn btn-primary text_smcaps" type="submit" value="LET ME KNOW"></div>
                 </form>
             </div>

@@ -1,3 +1,13 @@
+body {
+    /* display:none; */
+}
+#presentationlayer {
+    width:100% !important;
+    height:100% !important;
+    background-color: #00b3ee;
+    position:absolute;
+}
+
 html { 
     background: url(/images/ripples.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -103,7 +113,7 @@ body > section {
     /*    margin: 6% !important;*/
     padding: 3% !important;
     
-    background-color: rgba(62, 11, 255, 0.11);
+    /*background-color: rgba(62, 11, 255, 0.11);*/
     border-radius: 25px;
     border: 0px solid cornflowerblue;    
 
@@ -152,6 +162,42 @@ address {
 .select {
     border:3px solid cyan;
 }
+
+.qtrtip {
+    border-radius: 28px !important;
+/*    max-width:42px !important;
+    max-height:42px !important;*/
+    min-width:42px !important;
+    min-height:42px !important;
+    cursor:pointer;
+    float:right;
+    position: relative;
+    left: 174px;
+    top: -48px;
+    border: 1px solid whitesmoke;
+    margin: 0px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    background-image: url(/images/raysic.jpg);
+    background-size:  cover;
+}
+.qtr1tip > img {
+    width:32px;
+    height:32px;
+}
+
+#qtr1tipmsg,#qtr2tipmsg,#qtr3tipmsg {
+    font-size:10pt;
+}
+
+.btn {
+/*    margin-left:11px;
+        margin-right:11px;
+        font-variant-caps:  small-caps;*/
+}
 .qbox {
     border: 1px solid whitesmoke;
     border-radius: 8px;
@@ -162,6 +208,7 @@ address {
     align-items: center; 
     justify-content: center;
     max-width:280px;
+    min-width:280px;
     background-image: url(/images/raysic.jpg);
     background-size:  cover;
 
@@ -190,6 +237,10 @@ address {
         width:40%;
         font-size:8pt;
     }*/
+
+#tosstype {
+    width:90%;
+}
 .content {
     border:0px solid grey;
     font-size:10pt;
@@ -244,6 +295,8 @@ address {
     color:darkred;
 }
 #qfield {
+    padding:4px;
+    margin-top:10px;
     width:100%;
 }
 .heximg {
