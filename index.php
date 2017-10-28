@@ -41,7 +41,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
              * *****************************************/
             if (!isset($_REQUEST['flipped'])) {
             ?>
-                <img class="qtrtip" id="qtr1tip" style="visibility:hidden" src="/images/qmark.png"/>
+                <img class="qtrtip" id="qtr0tip" style="visibility:hidden" src="/images/qmark.png"/>
             <?php
             }
             ?>

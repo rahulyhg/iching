@@ -257,6 +257,7 @@ $("#debugon").click(function () {
             autoOpen: false
         });
         $("#qtr1tip").on("click", function () {
+            console.log(1);
             $("#qtr1tipmsg").dialog("open");
         });
     });
