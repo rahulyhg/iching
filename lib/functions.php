@@ -918,8 +918,8 @@ function saveToFile($t, $d, $f) {
      */
     $_SESSION['dlfile'] = getServerPrefix() . "/" . $fname . ".pdf";
 
-    unlink($outMd);
-    unlink($outHtml);
+//    unlink($outMd);
+//    unlink($outHtml);
 
     return(TRUE);
 }
