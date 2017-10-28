@@ -904,8 +904,12 @@ function saveToFile($t, $d, $f) {
      * on a headless server :/  Needs virtual X11 frame buffers
      * ************************************************** */
     $call = getRootDir() . "/utils/makePdf.sh $outHtml $outPdf";
-
     $call = "nohup sudo -u " . getUser() . " " . $call . "  >> " . getRootDir() . "/log/wkhtmltopdf.log 2>&1";
+    $logcall = 'echo "'.$call.'" >> '. getRootDir() . '/log/wkhtmltopdf.log 2>&1';
+   
+    dbug($logcall);
+    system($logcall);
+    
 
     system($call);
 
