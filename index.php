@@ -282,6 +282,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         $(".container-top").css("background-size","cover");
 
     </script>
+    ?>
              <?php 
              /* the 't' query param is only set when you are viewing the Hu Kua.  't' and 'f' are set
               * as params to the 'view Hu Kua' link so the user can navigate back to the original vua the 'view Pen Kua'
@@ -346,14 +347,15 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
     <div style="border:0px solid red;background-color: transparent;padding:4px;">
         <span>        
             <?php print putBtnExpand(); ?>
-            <?php print putBtnEdit($t['pseq']); ?>
-            <?php print putBtnUpdate($t['pseq']); ?>
+            <?php print putBtnEdit($t['bseq']); ?>
+            <?php print putBtnUpdate($t['bseq']); ?>
             <?php print putBtnSmTxt(); ?>
             <?php print putBtnMedTxt(); ?>
             <?php print putBtnLgTxt(); ?>
         </span>
     </div>
-    <div id="accordion1">
+</div>
+    <div style = "min-width:80%;max-width:80%" id="accordion1">
 <?php 
 /*
  *  First Title
@@ -462,7 +464,10 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 
         <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
             <p>
-            <?php echo getNotes($t['pseq']) ?>
+            <?php
+
+                echo getNotes($t['pseq']) ;
+            ?>
             </p>
         </div>
 
@@ -554,17 +559,15 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 /* *************************************************************************** */
     if ($t['bseq'] != $f['bseq'] ) {  /* if T == F then there are no moving lines, so skip */
 ?>
-
-
 <div class="awrapper">
 
     <div style="border:0px solid red;background-color: transparent;padding:4px;">
         <span>        
-             <?php print putBtnEdit($f['pseq']); ?>
-             <?php print putBtnUpdate($f['pseq']); ?>
+             <?php print putBtnEdit($f['bseq']); ?>
+             <?php print putBtnUpdate($f['bseq']); ?>
         </span>
     </div>
-    <div id="accordion2">
+    <div style = "min-width:80%;max-width:80%" id="accordion2">
 
 <?php 
 /*  Second Hex Title
@@ -655,14 +658,22 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
  *  Second Notes
  */  
 ?>
-       <h3 style="font-size:1.2em !important" class="eImage  fColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+        
+        <h3 style="font-size:1.2em !important" class="eImage  tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
             Notes
-            <h3>
+        </h3>
+
         <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                <p>
-                <?php echo getNotes($f['pseq']) ?>
-                </p>
-            </div>
+            <p>
+                
+            <?php 
+                echo getNotes($f['pseq']);
+                ?>
+            </p>
+        </div>
+        
+        
+
     </div>
 </div>
 <?php

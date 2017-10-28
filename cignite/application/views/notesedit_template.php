@@ -33,14 +33,21 @@ a:hover
 </style>
 </head>
 <body>
-    <?php 
-    echo " <h3>";
-    echo $this->vars['name']."(".$this->vars['pseq'].")";
-    echo " <a href='/show.php?hex=".$this->vars['pseq']."'><img style='width:30px' src='/images/hex/small/hexagram".$this->vars['pseq'].".png'></a>";
-    echo "  op: ".$this->vars['oname']."(".$this->vars['opseq'].")";
-    echo " <a href='/show.php?hex=".$this->vars['opseq']."'><img style='width:30px' src='/images/hex/small/hexagram".$this->vars['opseq'].".png'></a>";
-    echo " </h3>";
-    ?>
+    <h3>
+    <div style="border:1px solid black">
+        Hex:<?= $this->vars['pseq']?> <?= $this->vars['name']?> (bin: <?= $this->vars['bseq'] ?>)
+        <a href='/show.php?hex="<?=$this->vars['pseq']?>"'><img style='width:30px' src='/images/hex/small/hexagram<?=$this->vars['pseq']?>.png'></a>
+    </div>
+    
+    op: 
+    
+    <div style="border:1px solid black">
+        Hex:<?= $this->vars['opseq']?> <?= $this->vars['oname'] ?> (bin: <?=$this->vars['obseq']?>)
+        <a href='/show.php?hex="<?=$this->vars['opseq']?>"'><img style='width:30px' src='/images/hex/small/hexagram<?=$this->vars['opseq']?>.png'></a>
+    </div>
+    
+    </h3>
+    
 <!-- Beginning header -->
 <!--    <div>
         <a href='< ?php echo site_url('examples/offices_management')?>'>Offices</a> | 

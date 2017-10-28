@@ -250,6 +250,7 @@ EOX;
 
     public function getNotes($h) {
         $query = "SELECT * from notes where pseq=${h}";
+        //dbug($query);
         $sth = $this->o->prepare($query);
         $sth->execute();
         return($sth->fetchAll(PDO::FETCH_ASSOC));
@@ -296,6 +297,13 @@ EOX;
         return($ohexnum);
     }
 
+    public function getHexnumOppositeByBseq($bseq) {
+        $bin = $bseq;//$bin = $this->getHexFieldByPseq("hexagrams", "bseq", $bseq);
+        $obin = 63 - $bin;
+        $ohexnum = $obin;//$this->cbin2hex($obin);
+        return($ohexnum);
+    }
+
     public function getHexFieldByBinary($table, $field, $bin) {
         $query = "SELECT $field from $table where `binary` = '${bin}'";
         $sth = $this->o->prepare($query);
@@ -306,6 +314,14 @@ EOX;
 
     public function getHexFieldByPseq($table, $field, $pseq) {
         $query = "SELECT $field from $table where pseq = ${pseq}";
+        //var_dump($query);
+        $sth = $this->o->prepare($query);
+        $sth->execute();
+        $bin = $sth->fetch();
+        return($bin[$field]);
+    }    
+    public function getHexFieldByBseq($table, $field, $bseq) {
+        $query = "SELECT $field from $table where bseq = ${bseq}";
         //var_dump($query);
         $sth = $this->o->prepare($query);
         $sth->execute();

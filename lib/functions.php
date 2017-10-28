@@ -48,7 +48,8 @@ function getNotes($pseq) {
     $hex[0]['tri_upper_bin'] = null;
     $hex[0]['tri_lower_bin'] = null;
 
-    /* JWFIX not not appearing... see notes for 50 (cauldron) judge_exp */
+    //dbug($hex);
+    /* JWFIX notes not appearing... see notes for 50 (cauldron) judge_exp */
     foreach ($hex[0] as $key => $val) {
         if ($val) {
             $out .= "<b>$key: </b> $val<br>\n";
@@ -907,7 +908,7 @@ function saveToFile($t, $d, $f) {
     $call = "nohup sudo -u " . getUser() . " " . $call . "  >> " . getRootDir() . "/log/wkhtmltopdf.log 2>&1";
     $logcall = 'echo "'.$call.'" >> '. getRootDir() . '/log/wkhtmltopdf.log 2>&1';
    
-    dbug($logcall);
+    //dbug($logcall);
     system($logcall);
     
 
@@ -918,8 +919,8 @@ function saveToFile($t, $d, $f) {
      */
     $_SESSION['dlfile'] = getServerPrefix() . "/" . $fname . ".pdf";
 
-//    unlink($outMd);
-//    unlink($outHtml);
+    unlink($outMd);
+    unlink($outHtml);
 
     return(TRUE);
 }
@@ -1366,19 +1367,19 @@ function putBtnExpand() {
     . "</span>\n";
 }
 
-function putBtnEdit($pseq) {
+function putBtnEdit($bseq) {
     echo ""
     . "<span>"
-    . "<a href='/cignite/index.php/main/hexagrams/edit/" . $GLOBALS['dbh']->chex2bin($pseq) . "' target='_blank'>"
+    . "<a href='/cignite/index.php/main/hexagrams/edit/" . $bseq . "' target='_blank'>"
     . "<img class='uibtn'  src='/images/btn_edit.png'>"
     . "</a>"
     . "</span>\n";
 }
 
-function putBtnUpdate($pseq) {
+function putBtnUpdate($bseq) {
     echo ""
     . "<span>"
-    . "<a href='/cignite/index.php/main/notes/edit/" . $GLOBALS['dbh']->chex2bin($pseq) . "' target='_blank'>"
+    . "<a href='/cignite/index.php/main/notes/edit/" . $bseq . "' target='_blank'>"
     . "<img class='uibtn' src='/images/btn_update.png'>"
     . "</a>"
     . "</span>\n";

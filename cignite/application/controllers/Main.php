@@ -28,6 +28,29 @@ class Main extends CI_Controller {
     public function hexagrams() {
         $crud = new grocery_CRUD();
         $crud->set_table('hexagrams');
+        
+               $bseq = $this->uri->segments[4];        
+        $obseq = $GLOBALS['dbh']->getHexnumOppositeByBseq($bseq) ;
+        
+        
+        $pseq = $GLOBALS['dbh']->getHexFieldByBseq("hexagrams", "pseq",$bseq) ;
+        $name = $GLOBALS['dbh']->getHexFieldByBseq("hexagrams", "trans",$bseq) ;
+        
+        $opseq = $GLOBALS['dbh']->getHexFieldByBseq("hexagrams", "pseq",$obseq) ;
+       
+        $oname = $GLOBALS['dbh']->getHexFieldByBseq("hexagrams", "trans",$obseq) ;
+
+        $this->vars = array(
+             'name'=>$name
+            ,'oname'=>$oname
+            ,'pseq'=>sprintf("%02d",$pseq)
+            ,'opseq'=>sprintf("%02d",$opseq)
+            ,'bseq'=>sprintf("%02d",$bseq)
+            ,'obseq'=>sprintf("%02d",$obseq)
+        );
+        
+        
+        
         $output = $crud->render();
 
         $this->_hexedit_output($output);
@@ -36,20 +59,29 @@ class Main extends CI_Controller {
     function _hexedit_output($output = null) {
         $this->load->view('hexedit_template.php', $output);
     }
+    
     public function notes() {
         $crud = new grocery_CRUD();
         $crud->set_table('notes');
         
-        $pseq = $this->uri->segments[4];
-        $name = $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "trans",$pseq) ;
-        $opseq = $GLOBALS['dbh']->getHexnumOppositeByPseq($pseq) ;
-        $oname = $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "trans",$opseq) ;
+        $bseq = $this->uri->segments[4];        
+        $obseq = $GLOBALS['dbh']->getHexnumOppositeByBseq($bseq) ;
+        
+        
+        $pseq = $GLOBALS['dbh']->getHexFieldByBseq("hexagrams", "pseq",$bseq) ;
+        $name = $GLOBALS['dbh']->getHexFieldByBseq("hexagrams", "trans",$bseq) ;
+        
+        $opseq = $GLOBALS['dbh']->getHexFieldByBseq("hexagrams", "pseq",$obseq) ;
+       
+        $oname = $GLOBALS['dbh']->getHexFieldByBseq("hexagrams", "trans",$obseq) ;
 
         $this->vars = array(
              'name'=>$name
             ,'oname'=>$oname
             ,'pseq'=>sprintf("%02d",$pseq)
             ,'opseq'=>sprintf("%02d",$opseq)
+            ,'bseq'=>sprintf("%02d",$bseq)
+            ,'obseq'=>sprintf("%02d",$obseq)
         );
         
 //        $this->load->view('notesedit_template', $this->vars);
