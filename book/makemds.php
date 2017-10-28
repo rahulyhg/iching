@@ -12,7 +12,7 @@ foreach ($ids as $id) {
     
     $fpseq = sprintf("%02s",$id['pseq']);
     $fbseq = sprintf("%02s",$id['bseq']);
-    $hex = mdgethex($fpseq,$fbseq, $id);
+    $hex = xmdgethex($fpseq,$fbseq, $id);
     
     //var_dump($hex);
     /**
@@ -112,7 +112,7 @@ function xmdgethex($pseq,$bseq, $id) {
     $sql=<<<EOX
     SELECT 
         `fix`
-        ,`comment`
+                    ,`comment`
         ,`filename`
         ,pseq
         ,bseq
@@ -121,21 +121,20 @@ function xmdgethex($pseq,$bseq, $id) {
         ,trans
         ,trigrams
                ,(SELECT distinct concat(
-            ' TITLE: **',trigrams.title,' / ', trigrams.trans,'**',
-            ' ELEMENT: **',trigrams.t_element,'**',
-            ' POLARITY: **',trigrams.polarity,'**',
-            ' PLANET: **',trigrams.planet,'**'
+                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans,' - ',
+                trigrams.t_element,', ',
+                trigrams.polarity,', ',
+                trigrams.planet,', '
             )   FROM
             hexagrams
             Inner Join trigrams ON hexagrams.tri_upper_bin = trigrams.bseq 
             WHERE hexagrams.pseq = '${pseq}' limit 1
             ) as tri_upper
         ,(SELECT distinct concat(
-            ' TITLE: **',trigrams.title,'**',
-            ' TRANS: **',trigrams.trans,'**',
-            ' ELEMENT: **',trigrams.t_element,'**',
-            ' POLARITY: **',trigrams.polarity,'**',
-            ' PLANET: **',trigrams.planet,'**'
+                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans,' - ',
+                trigrams.t_element,', ',
+                trigrams.polarity,', ',
+                trigrams.planet,', '
             )   FROM
             hexagrams
             Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 

@@ -44,7 +44,177 @@ class DataMapper {
         return($res);
     }
 
-    public function getData($query) {
+    public function getData($param) {
+        //dbug($param);
+
+        $query = <<<EOX
+        SELECT 
+            fix
+            ,proofed
+            ,`comment`
+                        ,filename
+            ,pseq
+            ,bseq
+            ,`binary`
+            ,title
+            ,trans
+            ,trigrams
+                   ,(SELECT distinct concat(
+                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans,' - ',
+                trigrams.t_element,', ',
+                trigrams.polarity,', ',
+                trigrams.planet,', '
+                )   FROM
+                hexagrams
+                Inner Join trigrams ON hexagrams.tri_upper_bin = trigrams.bseq 
+                WHERE hexagrams.binary = ? limit 1
+                ) as tri_upper
+            ,(SELECT distinct concat(
+                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans,' - ',
+                trigrams.t_element,', ',
+                trigrams.polarity,', ',
+                trigrams.planet,', '
+                )   FROM
+                hexagrams
+                Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
+                WHERE hexagrams.binary = ? limit 1
+             ) as tri_lower
+            ,iq32_dir
+            ,explanation
+            ,judge_old
+            ,judge_exp
+            ,image_old
+            ,image_exp
+            ,line_1
+            ,line_1_org
+            ,line_1_exp
+            ,line_2
+            ,line_2_org
+            ,line_2_exp
+            ,line_3
+            ,line_3_org
+            ,line_3_exp
+            ,line_4
+            ,line_4_org
+            ,line_4_exp
+            ,line_5
+            ,line_5_org
+            ,line_5_exp
+            ,line_6
+            ,line_6_org
+            ,line_6_exp
+
+    FROM hexagrams
+        WHERE hexagrams.`binary` = ?
+EOX;
+
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $param, PDO::PARAM_STR);
+            $stmt->bindParam(2, $param, PDO::PARAM_STR);
+            $stmt->bindParam(3, $param, PDO::PARAM_STR);
+//            $stmt->bindParam(':hexbin1', $param, PDO::PARAM_STR);
+//            $stmt->bindParam(':hexbin2', $param, PDO::PARAM_STR);
+//            $stmt->bindParam(':hexbin3', $param, PDO::PARAM_STR);
+            $stmt->execute();
+            $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return($r);
+        } catch (Exception $e) {
+            echo 'Exception -> ';
+            dbug($e->xdebug_message);
+            die();
+        }
+
+//        $q = $this->ex($query, array());
+//        var_dump($q);
+//        $r = $q->fetchAll(PDO::FETCH_ASSOC);
+//        return($r);
+    }
+
+    public function getDataAlt($param) {
+        //dbug($param);
+
+        $query = <<<EOX
+      SELECT 
+                    `fix`
+        ,`comment`
+        ,`filename`
+        ,pseq
+        ,bseq
+        ,`binary`
+        ,title
+        ,trans
+        ,trigrams
+               ,(SELECT distinct concat(
+                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans,' - ',
+                trigrams.t_element,', ',
+                trigrams.polarity,', ',
+                trigrams.planet,', '
+            )   FROM
+            hexagrams
+            Inner Join trigrams ON hexagrams.tri_upper_bin = trigrams.bseq 
+            WHERE hexagrams.pseq = ? limit 1
+            ) as tri_upper
+        ,(SELECT distinct concat(
+                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans,' - ',
+                trigrams.t_element,', ',
+                trigrams.polarity,', ',
+                trigrams.planet,', '
+            )   FROM
+            hexagrams
+            Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
+            WHERE hexagrams.pseq = ? limit 1
+         ) as tri_lower
+        ,iq32_dir
+        ,explanation
+        ,judge_old
+        ,judge_exp
+        ,image_old
+        ,image_exp
+        ,line_1
+        ,line_1_org
+        ,line_1_exp
+        ,line_2
+        ,line_2_org
+        ,line_2_exp
+        ,line_3
+        ,line_3_org
+        ,line_3_exp
+        ,line_4
+        ,line_4_org
+        ,line_4_exp
+        ,line_5
+        ,line_5_org
+        ,line_5_exp
+        ,line_6
+        ,line_6_org
+        ,line_6_exp
+
+FROM hexagrams
+    WHERE hexagrams.pseq = ?      
+EOX;
+
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(1, $param, PDO::PARAM_STR);
+            $stmt->bindParam(2, $param, PDO::PARAM_STR);
+            $stmt->bindParam(3, $param, PDO::PARAM_STR);
+            $stmt->execute();
+            $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return($r);
+        } catch (Exception $e) {
+            echo 'Exception -> ';
+            dbug($e->xdebug_message);
+            die();
+        }
+
+//        $q = $this->ex($query, array());
+//        var_dump($q);
+//        $r = $q->fetchAll(PDO::FETCH_ASSOC);
+//        return($r);
+    }
+
+    public function BROKEgetData($query) {
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         return($stmt->fetchAll(PDO::FETCH_ASSOC));
@@ -54,7 +224,7 @@ class DataMapper {
 //        $r = $q->fetchAll(PDO::FETCH_ASSOC);
 //        return($r);
     }
-
+    
     public function fetchAllHexByPseq($pseq) {
         $query = "SELECT * FROM hexagrams WHERE pseq = :pseq";
         return($this->ex($query, array(':pseq' => $pseq), array())->fetchAll(PDO::FETCH_ASSOC));
