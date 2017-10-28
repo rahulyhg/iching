@@ -68,8 +68,8 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
             <input type="hidden" name="mode" value="astro">
             <input type="hidden" name="trans" value="baynes">
 
-            <span class="qbox"  style="background-image: url(/images/taoofnow.png) !important;background-size: contain !important; border:2px solid darkslategray">
-                <input id="nowbutton" type="image" name="submit" src="/images/taoofnow_clear.png" alt="Click for the Tao of Now" value="">
+            <span class="qbox"  id="nowbutton"  style="min-width:280px; min-height:80px; background-image: url(/images/taoofnow.png) !important;background-size: contain !important; border:2px solid darkslategray">
+                <!-- input id="nowbutton" type="image" name="submit" src="/images/taoofnow_clear.png" alt="Click for the Tao of Now" value="" -->
                 <!-- input id="nowbutton" class = "btn btn-info" style="color:black;font-weight:bold" type="submit" value="Click for 'Tao of Now'"-->
             </span>
             <?php 

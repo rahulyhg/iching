@@ -106,9 +106,9 @@
 
 
 
-
+<!-- body > div:nth-child(17)
     <!-- ----------------------------------------------------------------------->
-    <div id="qtr1tipmsg" title="Tao of Now">
+    <div id="qtr1tipmsg" style="width:80% !important" title="Tao of Now">
         <p>
         The "Tao of Now" casts the hexagrams not for any particular query, but for the current moment.  It does this by looking at the oldest measure of time known to man, the stars.  I calculate the position of the Moon, Mercury, Venus, Mars, Jupiter and Saturn down to 10e-14 of an arc second (which, for Saturn, is about 1 micrometer, or one-millionth of a millimeter).  So these numbers are always changing.  
         </p>

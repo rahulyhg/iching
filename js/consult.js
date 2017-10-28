@@ -6,6 +6,29 @@ $(document).ready(function () {
 //     
 //     
 
+$.fn.center = function () {
+   this.css("position","absolute");
+   this.css("top", ( $(window).height() - this.height() ) / 2  + "px");
+   this.css("left", ( $(window).width() - this.width() ) / 2 + "px");
+   return this;
+}
+
+$.fn.recss = function (e) {
+    e.preventDefault();
+    var top =  $(document).scrollTop();
+    console.log(top);
+
+    this.parent().css("width","80%");
+    this.parent().css("top",top + "px");
+    this.parent().css("left","10%");
+    this.parent().css("border","3px solid red");
+    this.parent().css("position","fixed");
+    console.log("recss");
+    //return($this);
+    
+};
+
+
      
     $('#download').click(function () {
         e.preventDefault();  //stop the browser from following
@@ -23,6 +46,14 @@ $(document).ready(function () {
     
     $("#nowbutton").click(function () {
         $("#qfield").val("Your Tao of Now");
+        
+        $.redirect('/index.php', {
+            flipped:"1"
+            ,mode:"astro"
+            ,trans:"baynes"
+//            ,debugon:"1"    
+        });
+        return(true);
    });
 
 
@@ -121,8 +152,10 @@ $("#debugon").click(function () {
         $("#xsubtipmsg").dialog({
             autoOpen: false
         });
-        $("#xsubtip").on("click", function () {
-            $("#xsubtipmsg").dialog("open");
+        $("#xsubtip").on("click", function ($e) {
+            var o= $("#xsubtipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
 
@@ -130,16 +163,20 @@ $("#debugon").click(function () {
         $("#plumtipmsg").dialog({
             autoOpen: false
         });
-        $("#plumtip").on("click", function () {
-            $("#plumtipmsg").dialog("open");
+        $("#plumtip").on("click", function ($e) {
+            var o = $("#plumtipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
     $(function () {
         $("#tosstypemsg").dialog({
             autoOpen: false
         });
-        $("#tosstypemsg").on("click", function () {
-            $("#tosstype").dialog("open");
+        $("#tosstype").on("click", function ($e) {
+            var o = $("#tosstypemsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
 
@@ -148,8 +185,10 @@ $("#debugon").click(function () {
         $("#testtipmsg").dialog({
             autoOpen: false
         });
-        $("#testtip").on("click", function () {
-            $("#testtipmsg").dialog("open");
+        $("#testtip").on("click", function ($e) {
+            var o = $("#testtipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
 
@@ -159,24 +198,31 @@ $("#debugon").click(function () {
         $("#randomtipmsg").dialog({
             autoOpen: false
         });
-        $("#randomtip").on("click", function () {
-            $("#randomtipmsg").dialog("open");
+        $("#randomtip").on("click", function ($e) {
+            var o = $("#randomtipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
     $(function () {
         $("#hukuamsg").dialog({
             autoOpen: false
         });
-        $("#hukuatip").on("click", function () {
-            $("#hukuamsg").dialog("open");
+        $("#hukuatip").on("click", function ($e) {
+            var o = $("#hukuamsg");
+            o.dialog("open");
+            o.recss($e);    
+            $e.preventDefault();
         });
     });
     $(function () {
         $("#penkuamsg").dialog({
             autoOpen: false
         });
-        $("#penkuatip").on("click", function () {
-            $("#penkuamsg").dialog("open");
+        $("#penkuatip").on("click", function ($e) {
+            var o = $("#penkuamsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
     $(function () {
@@ -184,9 +230,22 @@ $("#debugon").click(function () {
             autoOpen: false
         });
         $("#donatetip").hover(
-            function () {
+            function ($e) {
                 $(this).css({"background-color":"red"});
-                $("#donatemsg").dialog("open");
+                var o = $("#donatemsg");
+
+                $e.preventDefault();
+                var top =  $(document).scrollTop();
+
+                //    o.parent().css("width","80%");
+                o.parent().css("top",top + "px");
+                o.parent().css("left","10%");
+                o.parent().css("border","3px solid red");
+                o.parent().css("position","fixed"); 
+                
+                
+                o.dialog("open");
+//                o.recss($e);       
             }, 
 				
             function () {
@@ -204,8 +263,10 @@ $("#debugon").click(function () {
         $("#entropytipmsg").dialog({
             autoOpen: false
         });
-        $("#entropytip").on("click", function () {
-            $("#entropytipmsg").dialog("open");
+        $("#entropytip").on("click", function ($e) {
+            var o = $("#entropytipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
 //    
@@ -216,8 +277,10 @@ $("#debugon").click(function () {
         $("#astrotipmsg").dialog({
             autoOpen: false
         });
-        $("#astrotip").on("click", function () {
-            $("#astrotipmsg").dialog("open");
+        $("#astrotip").on("click", function ($e) {
+            var o = $("#astrotipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
     
@@ -225,8 +288,10 @@ $("#debugon").click(function () {
         $("#r-decaytipmsg").dialog({
             autoOpen: false
         });
-        $("#r-decaytip").on("click", function () {
-            $("#r-decaytipmsg").dialog("open");
+        $("#r-decaytip").on("click", function ($e) {
+            var o = $("#r-decaytipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
 //    $("#baynestip").qtip({
@@ -235,8 +300,10 @@ $("#debugon").click(function () {
         $("#baynestipmsg").dialog({
             autoOpen: false
         });
-        $("#baynestip").on("click", function () {
-            $("#baynestipmsg").dialog("open");
+        $("#baynestip").on("click", function ($e) {
+            var o = $("#baynestipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
 //    
@@ -246,8 +313,10 @@ $("#debugon").click(function () {
         $("#aculturaltipmsg").dialog({
             autoOpen: false
         });
-        $("#aculturaltip").on("click", function () {
-            $("#aculturaltipmsg").dialog("open");
+        $("#aculturaltip").on("click", function ($e) {
+            var o = $("#aculturaltipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
 
@@ -256,25 +325,30 @@ $("#debugon").click(function () {
         $("#qtr1tipmsg").dialog({
             autoOpen: false
         });
-        $("#qtr1tip").on("click", function () {
-            console.log(1);
-            $("#qtr1tipmsg").dialog("open");
+        $("#qtr1tip").on("click", function ($e) {
+            var o = $("#qtr1tipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
     $(function () {
         $("#qtr2tipmsg").dialog({
             autoOpen: false
         });
-        $("#qtr2tip").on("click", function () {
-            $("#qtr2tipmsg").dialog("open");
+        $("#qtr2tip").on("click", function ($e) {
+            var o = $("#qtr2tipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
     $(function () {
         $("#qtr3tipmsg").dialog({
             autoOpen: false
         });
-        $("#qtr3tip").on("click", function () {
-            $("#qtr3tipmsg").dialog("open");
+        $("#qtr3tip").on("click", function ($e) {
+            var o = $("#qtr3tipmsg");
+            o.dialog("open");
+            o.recss($e);       
         });
     });
 // ajust foro screen

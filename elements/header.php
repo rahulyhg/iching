@@ -23,6 +23,10 @@ session_start();
         <!-- local js -->
         <!-- script type="text/javascript" src="/js/spin.js"></script>    
         <script type="text/javascript" src="/js/jquery.spin.js"></script -->    
+        
+        
+        <script type="text/javascript" src="/js/jquery.center/jquery.center.js"></script>    
+        <script type="text/javascript" src="/js/jquery.redirect/jquery.redirect.js"></script>    
         <script type="text/javascript" src="/js/consult.js"></script>    
         <script type="text/javascript" src="/js/show.js"></script>    
         <!-- accordian -->
