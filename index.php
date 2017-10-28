@@ -23,180 +23,191 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
 <section id="pageContent">
 
     <div id = 'here2' class="container container-top">
-    
-        <div class="row1">
-            <span class="btn btn-warning"><a  style="font-weight: bold;" id='reset' href='index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'>RESET</a></span>
-            <span class="btn btn-danger"><a target="_blank" style="color:white;font-weight: bold;" href="/book/ichingbook/_book/">DOCS</a></span>
-            <span class="btn btn-success"><a target="_blank" style="color:white;font-weight: bold;" href="show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >BROWSE</a></span>    <p>
-        </div>
-
+        <?php 
+        /* *****************************************
+         * The Buttons
+         * *****************************************/
+        ?>   
+        <form>
+            <span style="flex-direction: row;" class="qbox qboxClear">
+                <span><a alt="RESET"                style="font-weight: bold;"             id='reset' href='index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'><img class="rdbbtns" src="/images/_reset.png"/></a></span>
+                <span><a alt="DOCS" target="_blank" style="color:white;font-weight: bold;"            href="/book/ichingbook/_book/"><img class="rdbbtns" src="/images/_docs.png"/></a></span>
+                <span><a alt="BROWSE" target="_blank" style="color:white;font-weight: bold;"            href="show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" ><img class="rdbbtns" src="/images/_browse.png"/></a></span> 
+            </span>
+            <?php 
+            /* *****************************************
+             * The Button Help  - it is rendered, but not displayed, for the initial page, to maintain alignment
+             * on the following pages it is not rendered, also to maintain alignment
+             * *****************************************/
+            if (!isset($_REQUEST['flipped'])) {
+            ?>
+                <img class="qtrtip" id="qtr1tip" style="visibility:hidden" src="/images/qmark.png"/>
+            <?php
+            }
+            ?>
+        </form>
         <!-- ------------------------------------------------------------>
-<?php /*
-        <div id="msg" >
-        This site is <a href="https://github.com/baardev/iching">super beta</a>.  It currently needs writers, editors, programmers, philosophers, designers and more.  If you would like to contribute to <a href="/book/ichingbook/_book/">this project</a>, <a href="mailto:duncan.stroud@gmail.com">let me know</a>.
-    </div>
-*/?>        
+        <?php 
+        /*
+         *   <div id="msg" >
+         *       This site is <a href="https://github.com/baardev/iching">super beta</a>.  It currently needs writers, editors, programmers, philosophers, designers and more.  If you would like to contribute to <a href="/book/ichingbook/_book/">this project</a>, <a href="mailto:duncan.stroud@gmail.com">let me know</a>.
+         *   </div>
+         */
+        ?>        
         <?php
         dbug($_REQUEST);
         if (!isset($_REQUEST['flipped'])) { /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
             ?>
-<?php 
-/* *****************************************
- * The Tao of Now
- * *****************************************/
-?>            <div class="qbox">
-                        <input id="nowbutton" class = "btn btn-info" style="width:100%;color:black;font-weight:bold" type="submit" value="Click for 'Tao of Now'">
-            </div>
-<?php 
-/* *****************************************
- * The help for Tao of Now
- * *****************************************/
-?>
-            <div class="qtrtip" id="qtr1tip">
-                <img src="/images/qmark.png"/>
-            </div>
-<?php 
-/* *****************************************
- * The main question box
- * *****************************************/
-?>
-        
-            <div style="margin-top:12px;" class="qbox">
-                
-                        <input id="castbutton" class = "btn btn-info" style="width:100%" type="submit" value="Cast Coins">
-                <form id = "tosstype" method="POST" action="?c=<?= microtime_float() ?>">
-                    <input type="hidden" name="flipped" value="1">
-                    <div class="row2">
-                        <p>
-                        <input id="qfield" type="text" name="question" placeholder="Enter a Question or Thought" value="<?php echo (isset($_REQUEST['debugon']) ? "debugging..." : "" )?>">
-                        <input type="checkbox" name="debug" id="debugon" value="1"  <?php echo (isset($_REQUEST['debugon']) ? "checked" : "" )?> >
+        <?php 
+        /* *****************************************
+         * The Tao of Now
+         * *****************************************/
+        ?>    
+        <form id = "tosstype" method="POST" action="?c=<?= microtime_float() ?><?= (isset($_REQUEST['debugon']) ? "&debugon=1" : "") ?>">
+            <input type="hidden" name="flipped" value="1">
+            <input type="hidden" name="mode" value="astro">
+            <input type="hidden" name="trans" value="baynes">
 
-                        </p> 
-                        
-                        <?php /*
-                         *  The 'tip' functions are in /js/consult.js 
-                         * The actual text is in /lib/popup_predefs.php
-                         */?>
-                        <a id="plumtip" class="plumtip" href="#"><img src="images/qmark.png"></a> 
-                            <input type="radio" name="mode" id="plum" value="plum"  > 
-                            <span class="text_mdcaps" id="plummsg">Modern Plum</span>    
-                        </p>
-                        <a id="astrotip" class="astrotip" href="#"><img src="images/qmark.png"></a> 
-                            <input type="radio" name="mode" id="astro" value="astro" checked > 
-                            <span class="text_mdcaps" id="astromsg">Planetary</span>    
-                        </p>
+            <span class="qbox"  style="background-image: url(/images/taoofnow.png) !important;background-size: contain !important; border:2px solid darkslategray">
+                <input id="nowbutton" type="image" name="submit" src="/images/taoofnow_clear.png" alt="Click for the Tao of Now" value="">
+                <!-- input id="nowbutton" class = "btn btn-info" style="color:black;font-weight:bold" type="submit" value="Click for 'Tao of Now'"-->
+            </span>
+            <?php 
+            /* *****************************************
+             * The help for Tao of Now
+             * *****************************************/
+            ?>
+            <img class="qtrtip" id="qtr1tip" src="/images/_info.png"/>
+        </form>
 
-                        <p>
-                        <a id="randomtip" class="randomtip" href="#"><img src="images/qmark.png"></a> 
-                            <input type="radio" name="mode" id="random.org" value="random.org"> 
-                            <span class="text_mdcaps" id="random.orgmsg">random.org</span>
-                        </p>
+        <?php 
+        /* *****************************************
+         * The main question box
+         * *****************************************/
+        ?>
 
-                            <?php
-                            /*get statuys of decay server */
-                            $status = file_get_contents(getRootDir(). "/data/store/hotbitsdown");
-                            if ($status != 1) {
-                            ?>
-                        <p>
-                        <a id="r-decaytip" class="r-decaytip"  href="#"><img src="images/qmark.png"></a> 
-                            <input type="radio" name="mode" id="r-decay" value="r-decay"> 
-                            <span class="text_mdcaps" id="r-decaymsg">r-decay</span>
-                        </p>
-                            <?php } else {?>
-                        <p>
-                        <a id="r-decaytip" class="r-decaytip"  href="#"><img src="images/qmark.png"></a> 
-                            <!-- input type="radio" name="mode" id="r-decay" value="r-decay"--> 
-                            <span  style="color:darkslategray;font-size: 10pt" id="r-decaymsg" >(decay server down)</span>
-                        </p>
+        <!-- form id = "tosstype" method="POST" action="?c=< ?= microtime_float() ?>"-->
+        <form id = "tosstype" method="POST" action="?c=1<?php echo (isset($_REQUEST['debugon']) ? "&debugon=1" : "") ?>">
+            <span class="qbox">  
+                <input id="castbutton" class = "btn btn-info" style="width:100%" type="submit" value="Cast Coins">
+                <input type="hidden" name="flipped" value="1">
+                <div class="row2">
+                    <p>
+                    <input id="qfield" type="text" name="question" placeholder="Enter a Question or Thought" value="<?php echo (isset($_REQUEST['debugon']) ? "debugging..." : "" )?>">
+                    <input type="checkbox" name="debug" id="debugon" value="1"  <?php echo (isset($_REQUEST['debugon']) ? "checked" : "" )?> >
 
-                        
-                            <?php } ?>
-                        <!--a id="entropytip" class="entropytip qtip-content ui-widget-content"  href="#"><img src="images/qmark.png"></a> 
-                            <input type="radio" name="mode" id="entropy" value="entropy"> 
-                            <span class="text_mdcaps" id="entropymsg">entropy</span>
-                        </p -->
+                    </p> 
 
-                        <span class="text_mdcaps" id="baynesmsg">Wilhelm/Baynes</span> <input type="radio" name="trans" id="baynes" value="baynes" checked > <a id="baynestip" href="#"><img src="images/g-qmark.png"></a></p> 
-                        <span class="text_mdcaps" id="aculturalmsg">Acultural</span> <input type="radio" name="trans" id="acultural" value="acultural"  > <a id="aculturaltip" href="#"><img src="images/g-qmark.png"></a></p>
-                    </div>
-                </form>
-            </div>
-        
-        
-        
-        
-        
-<?php 
-/* *****************************************
- * The help for main question box
- * *****************************************/
-?>
-            <div class="qtrtip" id="qtr2tip">
-                <img src="/images/qmark.png"/>
-            </div>
-<?php 
-/* *****************************************
- * The Compare 2 hex box
- * *****************************************/
-?>
-        
-            <div style="margin-top:12px;" class="qbox">
-                <form method="POST" action="">
-                    <input type="hidden" name="flipped" value="1">
-                    <div class="row3">
-                        <!-- div class="text_smcaps">Or enter 2 hex nums    </div -->
+                    <?php /*
+                     *  The 'tip' functions are in /js/consult.js 
+                     * The actual text is in /lib/popup_predefs.php
+                     */?>
+                    <a id="plumtip" class="plumtip" href="#"><img src="images/qmark.png"></a> 
+                        <input type="radio" name="mode" id="plum" value="plum"  > 
+                        <span class="text_mdcaps" id="plummsg">Modern Plum</span>    
+                    </p>
+                    <a id="astrotip" class="astrotip" href="#"><img src="images/qmark.png"></a> 
+                        <input type="radio" name="mode" id="astro" value="astro" checked > 
+                        <span class="text_mdcaps" id="astromsg">Planetary</span>    
+                    </p>
+
+                    <p>
+                    <a id="randomtip" class="randomtip" href="#"><img src="images/qmark.png"></a> 
+                        <input type="radio" name="mode" id="random.org" value="random.org"> 
+                        <span class="text_mdcaps" id="random.orgmsg">random.org</span>
+                    </p>
+
                         <?php
-                        $fromNum = rand(1,64);
-                        $toNum = $GLOBALS['dbh']->getHexnumOppositeByPseq($fromNum);
+                        /*get statuys of decay server */
+                        $status = file_get_contents(getRootDir(). "/data/store/hotbitsdown");
+                        if ($status != 1) {
                         ?>
-                        <input class = "doublenum" id="f_tossed" type="text" name="f_tossed" placeholder="<?= $fromNum ?>" value="">
-                        <input class = "doublenum" id="f_final" type="text" name="f_final" placeholder="<?= $toNum ?>" value="">
-                        <input id="manualTossed" class = "btn btn-primary" type="submit" value="Show">
-                    </div>
-                </form>
-            </div>
+                    <p>
+                    <a id="r-decaytip" class="r-decaytip"  href="#"><img src="images/qmark.png"></a> 
+                        <input type="radio" name="mode" id="r-decay" value="r-decay"> 
+                        <span class="text_mdcaps" id="r-decaymsg">r-decay</span>
+                    </p>
+                        <?php } else {?>
+                    <p>
+                    <a id="r-decaytip" class="r-decaytip"  href="#"><img src="images/qmark.png"></a> 
+                        <!-- input type="radio" name="mode" id="r-decay" value="r-decay"--> 
+                        <span  style="color:darkslategray;font-size: 10pt" id="r-decaymsg" >(decay server down)</span>
+                    </p>
 
-    
-    
-    
-    
-    
-    
-    <?php 
-/* *****************************************
- * The help for The Compare 2 hex box
- * *****************************************/
-?>
-            <div class="qtrtip" id="qtr3tip">
-                <img src="/images/qmark.png"/>
-            </div>
+
+                        <?php } ?>
+                    <!--a id="entropytip" class="entropytip qtip-content ui-widget-content"  href="#"><img src="images/qmark.png"></a> 
+                        <input type="radio" name="mode" id="entropy" value="entropy"> 
+                        <span class="text_mdcaps" id="entropymsg">entropy</span>
+                    </p -->
+
+                    <span class="text_mdcaps" id="baynesmsg">Wilhelm/Baynes</span> <input type="radio" name="trans" id="baynes" value="baynes" checked > <a id="baynestip" href="#"><img src="images/g-qmark.png"></a></p> 
+                    <span class="text_mdcaps" id="aculturalmsg">Acultural</span> <input type="radio" name="trans" id="acultural" value="acultural"  > <a id="aculturaltip" href="#"><img src="images/g-qmark.png"></a></p>
+                </div>
+            </span>        
+            <?php 
+            /* *****************************************
+             * The help for main question box
+             * *****************************************/
+            ?>
+            <img class="qtrtip" id="qtr2tip" src="/images/_info.png"/>
+        </form>
+
+        <?php 
+        /* *****************************************
+         * The Compare 2 hex box
+         * *****************************************/
+        ?>
+
+        <form method="POST" action="">
+            <span class="qbox">
+                <input type="hidden" name="flipped" value="1">
+                <div class="row3">
+                    <!-- div class="text_smcaps">Or enter 2 hex nums    </div -->
+                    <?php
+                    $fromNum = rand(1,64);
+                    $toNum = $GLOBALS['dbh']->getHexnumOppositeByPseq($fromNum);
+                    ?>
+                    <input class = "doublenum" id="f_tossed" type="text" name="f_tossed" placeholder="<?= $fromNum ?>" value="">
+                    <input class = "doublenum" id="f_final" type="text" name="f_final" placeholder="<?= $toNum ?>" value="">
+                    <input id="manualTossed" class = "btn btn-primary" type="submit" value="Show">
+                </div>
+            </span>
+            <?php 
+            /* *****************************************
+             * The help for The Compare 2 hex box
+             * *****************************************/
+            ?>
+            <img class="qtrtip" id="qtr3tip" src="/images/_info.png"/>
+        </form>
+    </div>
 <?php 
 /* *****************************************
  * The suggestin box
  * *****************************************/
 ?>
 
-            <div style="margin-top:12px" class="qboxSug">
-                <form method="POST" action="">
-                    <div><textarea id="sugField"  maxlength="2000" minlength="32" rows="4" cols="30" wrap="soft" type="textarea" name="suggestions" placeholder="Send me suggestions, comments, bugs, wishlists, opinions, etc.  If you want to be contacted, include your email. (max:2K, min:32)" value=""></textarea></div>
-                        <div style="margin-top:15px"><input id="sugSend" class = "btn btn-primary text_smcaps" type="submit" value="LET ME KNOW"></div>
-                </form>
-            </div>
+        <div class="qboxSug">
+    <form method="POST" action="">
+            <textarea id="sugField"  maxlength="2000" minlength="32" rows="2" wrap="soft" type="textarea" name="suggestions" placeholder="Send me suggestions, comments, bugs, wishlists, opinions, etc.  If you want to be contacted, include your email. (max:2K, min:32)" value=""></textarea>
+            <input id="sugSend" class = "btn btn-primary text_smcaps" type="submit" value="LET ME KNOW">
+    </form>
+        </div>
+ 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    </div>
         <?php
     } else { /* there has been a coin toss */
         ?>

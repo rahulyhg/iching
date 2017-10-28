@@ -164,25 +164,32 @@ address {
 }
 
 .qtrtip {
-    border-radius: 28px !important;
-/*    max-width:42px !important;
-    max-height:42px !important;*/
+/*    border-radius: 28px !important;
+    max-width:42px !important;
+    max-height:42px !important;
     min-width:42px !important;
     min-height:42px !important;
     cursor:pointer;
-    float:right;
+    float:left;
     position: relative;
     left: 174px;
     top: -48px;
     border: 1px solid whitesmoke;
-    margin: 0px;
+    margin: 6px;
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center; 
     justify-content: center;
-    background-image: url(/images/raysic.jpg);
-    background-size:  cover;
+    background-image: url(/images/raysicred.jpg);
+    background-size:  cover;*/
+    position: relative;
+    top: 3px;
+    right: 2px;
+    margin: 6px;
+    cursor:pointer;
+    width:30px;
+    height:30px;
 }
 .qtr1tip > img {
     width:32px;
@@ -194,14 +201,12 @@ address {
 }
 
 .btn {
-/*    margin-left:11px;
-        margin-right:11px;
-        font-variant-caps:  small-caps;*/
+
 }
 .qbox {
     border: 1px solid whitesmoke;
     border-radius: 8px;
-    margin: 0px;
+    margin: 4px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -211,7 +216,14 @@ address {
     min-width:280px;
     background-image: url(/images/raysic.jpg);
     background-size:  cover;
+    float:left;
+}.qboxClear { /* same as qbox without background or border */
+    border: 0px solid whitesmoke !important;
+    background-image: none !important;
+}
 
+.xqboxSug {
+border:1px solid red;
 }
 .qboxSug {
     border: 1px solid whitesmoke;
@@ -223,9 +235,10 @@ address {
     align-items: center; 
     text-align: center;
     justify-content: center;
-    max-width:280px;
-    background-image: url(/images/raysic.jpg);
+/*    max-width:280px;*/
+    background-image: url(/images/raysicgrn.jpg);
     background-size:  cover;
+    width:100%;
 
 }
 /*    .leftCol {
@@ -238,8 +251,15 @@ address {
         font-size:8pt;
     }*/
 
-#tosstype {
-    width:90%;
+
+.rdbbtns {
+    width:50px;
+    height:50px;
+    margin-left:17px;
+    margin-right:17px;
+    margin-top:3px;
+    margin-bottom:3px;
+
 }
 .content {
     border:0px solid grey;
@@ -337,5 +357,11 @@ address {
 
 #sugField {
     font-size:10pt;
+/*    float:left;*/
+    width:80%;
+}
+#sugSend {
+    float:right;
+    width:15%;
 }
 
