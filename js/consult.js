@@ -71,16 +71,19 @@ $(document).ready(function () {
             return(true);
         }
         e.preventDefault();
-        console.log(e.target.className);
-        console.log(e);
+        var w = $(window).innerWidth();
+        var h = $(window).innerHeight();
+        console.log(w);
+
+
         var top = $(document).scrollTop();
-        console.log(top);
-        this.parent().css("width", "80%");
+
+        this.parent().css("width", w*.8);
         this.parent().css("top", top + "px");
         this.parent().css("left", "10%");
         this.parent().css("border", "3px solid red");
         this.parent().css("position", "fixed");
-        console.log("recss");
+
     };
 
     
