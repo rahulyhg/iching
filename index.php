@@ -27,7 +27,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
          * The Buttons
          * *****************************************/
         ?>   
-        <form>
+        <form id="tosstype">
             <span style="flex-direction: row;" class="qbox qboxClear">
                 <span><a alt="RESET"                style="font-weight: bold;"             id='reset' href='index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'><img class="rdbbtns" src="/images/_reset.png"/></a></span>
                 <span><a alt="DOCS" target="_blank" style="color:white;font-weight: bold;"            href="/book/ichingbook/_book/"><img class="rdbbtns" src="/images/_docs.png"/></a></span>
@@ -158,7 +158,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
          * *****************************************/
         ?>
 
-        <form method="POST" action="">
+        <form id="tosstype" method="POST" action="">
             <span class="qbox">
                 <input type="hidden" name="flipped" value="1">
                 <div class="row3">

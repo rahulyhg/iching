@@ -213,6 +213,10 @@ address {
 .btn {
 
 }
+
+#tosstype, #manualinput {
+    min-width:330px;
+}
 .qbox {
     border: 1px solid whitesmoke;
     border-radius: 8px;

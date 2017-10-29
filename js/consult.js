@@ -6,30 +6,30 @@ $(document).ready(function () {
 //     
 //     
 
-$.fn.center = function () {
-   this.css("position","absolute");
-   this.css("top", ( $(window).height() - this.height() ) / 2  + "px");
-   this.css("left", ( $(window).width() - this.width() ) / 2 + "px");
-   return this;
-}
+    $.fn.center = function () {
+        this.css("position", "absolute");
+        this.css("top", ($(window).height() - this.height()) / 2 + "px");
+        this.css("left", ($(window).width() - this.width()) / 2 + "px");
+        return this;
+    }
 
-$.fn.recss = function (e) {
-    e.preventDefault();
-    var top =  $(document).scrollTop();
-    console.log(top);
+    $.fn.recss = function (e) {
+        e.preventDefault();
+        var top = $(document).scrollTop();
+        console.log(top);
 
-    this.parent().css("width","80%");
-    this.parent().css("top",top + "px");
-    this.parent().css("left","10%");
-    this.parent().css("border","3px solid red");
-    this.parent().css("position","fixed");
-    console.log("recss");
-    //return($this);
-    
-};
+        this.parent().css("width", "80%");
+        this.parent().css("top", top + "px");
+        this.parent().css("left", "10%");
+        this.parent().css("border", "3px solid red");
+        this.parent().css("position", "fixed");
+        console.log("recss");
+        //return($this);
+
+    };
 
 
-     
+
     $('#download').click(function () {
         e.preventDefault();  //stop the browser from following
         window.location.href = '/questions';
@@ -42,52 +42,52 @@ $.fn.recss = function (e) {
             $(this).val(v);
         }
     });
-    
+
     /* JWFIX how to read REQUEST to add debuigging? */
     $("#nowbutton").click(function () {
         $("#qfield").val("Your Tao of Now");
-        
+
         $.redirect('/index.php', {
-            flipped:"1"
-            ,mode:"astro"
-            ,trans:"baynes"
+            flipped: "1"
+            , mode: "astro"
+            , trans: "baynes"
 //            ,debugon:"1"    
         });
         return(true);
-   });
+    });
 
 
     $("#castbutton").val("Or Enter Question Below");
-    $("#castbutton").css("background-color","grey");
-    $("#qfield").on('input',function(e){
-        $("#castbutton").css("background-color","green");
+    $("#castbutton").css("background-color", "grey");
+    $("#qfield").on('input', function (e) {
+        $("#castbutton").css("background-color", "green");
         $("#castbutton").val("Cast Hexagram");
     });
 
     $("#sugSend").val("Enter Msg");
-    $("#sugSend").css("background-color","grey");
-    $("#sugField").on('input',function(e){
+    $("#sugSend").css("background-color", "grey");
+    $("#sugField").on('input', function (e) {
         var sterm = $("#sugField").val().toString();
-        if (sterm.length > 32) { 
-            $("#sugSend").css("background-color","green");
+        if (sterm.length > 32) {
+            $("#sugSend").css("background-color", "green");
             $("#sugSend").val("Let Me Know");
         }
     });
-    
+
     $("#manualTossed").attr('disabled', 'disabled');
     $("#manualTossed").val("Enter 2 Hex Nums");
-    $("#manualTossed").css("background-color","#222222");
+    $("#manualTossed").css("background-color", "#222222");
     $("#manualTossed").change(function () {
         $("#manualTossed").removeAttr('disabled');
         $("#manualTossed").val('Show Hexagrams');
-        $("#manualTossed").css("background-color","green");
+        $("#manualTossed").css("background-color", "green");
     });
-        
-    $("#f_final").on('input',function(e){
+
+    $("#f_final").on('input', function (e) {
         $("#manualTossed").trigger("change");
     });
 
-    
+
     $("#f_tossed").mouseout(function () {
         if (!($("#f_tossed").val())) {
         } else {
@@ -103,9 +103,9 @@ $.fn.recss = function (e) {
                 jsonpCallback: 'callback',
                 type: 'GET',
                 success: function (json) {
-                                    $("#f_final").attr("placeholder", json['ret']);
+                    $("#f_final").attr("placeholder", json['ret']);
 //                    $("#f_final").val(json['ret']);
-  //                  $("#manualTossed").trigger("change");
+                    //                  $("#manualTossed").trigger("change");
                 },
                 error: function () {
                     alert("Request Failed");
@@ -114,18 +114,18 @@ $.fn.recss = function (e) {
             });
         }
     });
-$("#debugon").click(function () {
-    console.log($('input[type=checkbox]').prop('checked'));
-    if ($('input[type=checkbox]').prop('checked') ) {
-        $("#qfield").val("debugging...");
-        $("#reset").attr("href","index.php?qfield=debugging&debugon=1");
-    } else {
-        $("#qfield").val("");
-        $("#reset").attr("href","index.php");
-   }
+    $("#debugon").click(function () {
+        console.log($('input[type=checkbox]').prop('checked'));
+        if ($('input[type=checkbox]').prop('checked')) {
+            $("#qfield").val("debugging...");
+            $("#reset").attr("href", "index.php?qfield=debugging&debugon=1");
+        } else {
+            $("#qfield").val("");
+            $("#reset").attr("href", "index.php");
+        }
 
     });
-    
+
 
     $("#tosstype").hover(function () {
         turnOffRadio();
@@ -153,9 +153,9 @@ $("#debugon").click(function () {
             autoOpen: false
         });
         $("#xsubtip").on("click", function ($e) {
-            var o= $("#xsubtipmsg");
+            var o = $("#xsubtipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
 
@@ -166,7 +166,7 @@ $("#debugon").click(function () {
         $("#plumtip").on("click", function ($e) {
             var o = $("#plumtipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
     $(function () {
@@ -176,7 +176,7 @@ $("#debugon").click(function () {
         $("#tosstype").on("click", function ($e) {
             var o = $("#tosstypemsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
 
@@ -188,7 +188,7 @@ $("#debugon").click(function () {
         $("#testtip").on("click", function ($e) {
             var o = $("#testtipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
 
@@ -201,7 +201,7 @@ $("#debugon").click(function () {
         $("#randomtip").on("click", function ($e) {
             var o = $("#randomtipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
     $(function () {
@@ -211,7 +211,7 @@ $("#debugon").click(function () {
         $("#hukuatip").on("click", function ($e) {
             var o = $("#hukuamsg");
             o.dialog("open");
-            o.recss($e);    
+            o.recss($e);
             $e.preventDefault();
         });
     });
@@ -222,7 +222,7 @@ $("#debugon").click(function () {
         $("#penkuatip").on("click", function ($e) {
             var o = $("#penkuamsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
     $(function () {
@@ -230,29 +230,28 @@ $("#debugon").click(function () {
             autoOpen: false
         });
         $("#donatetip").hover(
-            function ($e) {
-                $(this).css({"background-color":"red"});
-                var o = $("#donatemsg");
+                function ($e) {
+                    $(this).css({"background-color": "red"});
+                    var o = $("#donatemsg");
 
-                $e.preventDefault();
-                var top =  $(document).scrollTop();
+                    $e.preventDefault();
+                    var top = $(document).scrollTop();
 
-                //    o.parent().css("width","80%");
-                o.parent().css("top",top + "px");
-                o.parent().css("left","10%");
-                o.parent().css("border","3px solid red");
-                o.parent().css("position","fixed"); 
-                
-                
-                o.dialog("open");
+                    //    o.parent().css("width","80%");
+                    o.parent().css("top", top + "px");
+                    o.parent().css("left", "10%");
+                    o.parent().css("border", "3px solid red");
+                    o.parent().css("position", "fixed");
+
+
+                    o.dialog("open");
 //                o.recss($e);       
-            }, 
-				
-            function () {
-               //$(this).css({"background-color":"blue"});
-               // $("#donatemsg").dialog("close");
-            
-        });
+                },
+                function () {
+                    //$(this).css({"background-color":"blue"});
+                    // $("#donatemsg").dialog("close");
+
+                });
     });
 
     //    
@@ -266,7 +265,7 @@ $("#debugon").click(function () {
         $("#entropytip").on("click", function ($e) {
             var o = $("#entropytipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
 //    
@@ -280,10 +279,10 @@ $("#debugon").click(function () {
         $("#astrotip").on("click", function ($e) {
             var o = $("#astrotipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
-    
+
     $(function () {
         $("#r-decaytipmsg").dialog({
             autoOpen: false
@@ -291,7 +290,7 @@ $("#debugon").click(function () {
         $("#r-decaytip").on("click", function ($e) {
             var o = $("#r-decaytipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
 //    $("#baynestip").qtip({
@@ -303,7 +302,7 @@ $("#debugon").click(function () {
         $("#baynestip").on("click", function ($e) {
             var o = $("#baynestipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
 //    
@@ -316,7 +315,7 @@ $("#debugon").click(function () {
         $("#aculturaltip").on("click", function ($e) {
             var o = $("#aculturaltipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
 
@@ -328,7 +327,7 @@ $("#debugon").click(function () {
         $("#qtr1tip").on("click", function ($e) {
             var o = $("#qtr1tipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
     $(function () {
@@ -338,7 +337,7 @@ $("#debugon").click(function () {
         $("#qtr2tip").on("click", function ($e) {
             var o = $("#qtr2tipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
     $(function () {
@@ -348,7 +347,7 @@ $("#debugon").click(function () {
         $("#qtr3tip").on("click", function ($e) {
             var o = $("#qtr3tipmsg");
             o.dialog("open");
-            o.recss($e);       
+            o.recss($e);
         });
     });
 // ajust foro screen
@@ -383,11 +382,11 @@ $("#debugon").click(function () {
     expandLink.click(function () {
         var isAllOpen = !$(this).data('isAllOpen');
         console.log({isAllOpen: isAllOpen, contentAreas: contentAreas})
-        
+
         if (isAllOpen) {
-            $("#btnEC").css("color","darkgreen");
+            $("#btnEC").css("color", "darkgreen");
         } else {
-            $("#btnEC").css("color","darkred");
+            $("#btnEC").css("color", "darkred");
         }
         contentAreas[isAllOpen ? 'slideDown' : 'slideUp']();
 
@@ -450,4 +449,19 @@ $("#debugon").click(function () {
 //                    console.error('oops, something went wrong!', error);
 //                });
 //    });
+
+    if ($(window).width() < 767) {
+        $('#pageContent').css("margin-top","-58");
+        $('#debugon').css("display","none");
+        
+//        
+//        $("#fourcolumn-carousel .item").css({
+//            "display": "block"
+//        });
+//        $(".carousel-control").css({
+//            "display": "none"
+//        })
+    }
+
 });
+
