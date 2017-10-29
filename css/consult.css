@@ -423,5 +423,11 @@ html,body {
     #debugon {
         display:none;
     }
+    body {
+        background-color:whitesmoke;
+    }
+    .qboxSug {
+        display: none;
+    }
 }
 
