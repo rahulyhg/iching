@@ -16,9 +16,11 @@ $(document).ready(function () {
     $("body").css({"max-width": w + "px !important"});
     $("body").css({"max-height": h + "px !important"});
 //    $("body").css({"border": "3px solid black"});
+    $(".container").css({"max-height": h + "px !important"});
+    $(".container").css({"max-width": w + "px !important"});
+    $(".container").css({"margin-top": "2px !important"});
 
-
-    
+s    
 //    $(window).resize(function(){
 //        var w = $(window).width();
 //        var h = $(window).height();

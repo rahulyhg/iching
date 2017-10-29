@@ -357,7 +357,7 @@ $a = null;
                     </a> 
 
                     <?php /* this invisible one pixel line control the collapse with of the accordian */?>
-                    <!-- br><img style="min-width:300px" src="images/thinline350.png" -->
+                    <br><img style="min-width:300px" src="/images/thinline350.png">
                 </h3>
                 <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                     <p>
@@ -541,7 +541,7 @@ $a = null;
                                         <?php print putBtnUpdate($f['bseq']); ?>
                                     </span>
                                 </div>
-                                <div style = "min-width:80%;max-width:80%" id="accordion2">
+                                <div style = "min-width:100%;max-width:100%" id="accordion2">
                                 <?php 
                                 /*  Second Hex Title
                                  */  
@@ -549,7 +549,7 @@ $a = null;
                                 <h3 style="font-size:1.2em !important" class="eTitle f_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
                                     <?= c($f['pseq']) ?> (<?= c($f['title']) ?>) <?= c($f['trans']) ?>
                                     <?php /* this invisible one pixel line control the collapse with of the accordian */?>
-                                    <br><img style="min-width:300px" src="images/thinline350.png">
+                                    <br><img style="min-width:300px" src="/images/thinline350.png">
                                 </h3>
                                 <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                                     <p>
