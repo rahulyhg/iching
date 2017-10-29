@@ -340,7 +340,7 @@ $a = null;
                     </span>
                 </div>
             
-                <div style = "min-width:80%;max-width:80%" id="accordion1">
+                <div style = "min-width:100%;max-width:100%" id="accordion1">
                 <?php 
                 /*
                  *  First Title
