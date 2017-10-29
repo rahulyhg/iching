@@ -6,7 +6,8 @@ session_start();
 ?>
 <html lang="en" class="">
     <head>
-        <!-- meta property='og:image' content='https://www.concrete5.org/themes/version_4/images/logo.png' /-->
+        <meta name="viewport" content="width=360, initial-scale=1">
+<!-- meta property='og:image' content='https://www.concrete5.org/themes/version_4/images/logo.png' /-->
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <title>BabelBrowser</title>
         <meta name="description" content="I Ching is a book of wisdom, an oracle a math system, and a philosophy - access all of them here" />
