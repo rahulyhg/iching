@@ -9,3 +9,4 @@ questions
 log/*
 log
 astro/js/astrodataJson.html
+index.html
