@@ -3,7 +3,6 @@ session_start();
 //var_dump(session_id());
 #mb_internal_encoding("UTF-8");
 #mb_regex_encoding("UTF-8");
-
 ?>
 <html lang="en" class="">
     <head>
@@ -58,6 +57,10 @@ session_start();
         <link rel="stylesheet" href="/css/accordian.css">
     </head>
 <body>
-      
-<!-- header>
-</header -->
+<?php
+/*
+<header>
+</header>
+ * 
+ */
+?>

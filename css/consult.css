@@ -391,3 +391,10 @@ border:1px solid red;
     border: 1px solid slategray;
     background-color: darkolivegreen;
 }
+
+html,body {
+    height:100%;
+    margin: 0 !important;
+    padding: 0 !important;
+/*    overflow: hidden;*/
+}
