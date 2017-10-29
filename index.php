@@ -357,7 +357,7 @@ $a = null;
                     </a> 
 
                     <?php /* this invisible one pixel line control the collapse with of the accordian */?>
-                    <br><img style="min-width:300px" src="images/thinline350.png">
+                    <!-- br><img style="min-width:300px" src="images/thinline350.png" -->
                 </h3>
                 <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                     <p>
