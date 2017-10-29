@@ -43,7 +43,7 @@ $.fn.recss = function (e) {
         }
     });
     
-    
+    /* JWFIX how to read REQUEST to add debuigging? */
     $("#nowbutton").click(function () {
         $("#qfield").val("Your Tao of Now");
         

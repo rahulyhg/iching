@@ -12,7 +12,6 @@ require getRootDir(). "/elements/header.php";
         if (isset($_REQUEST['suggestions'])) {
             $GLOBALS['dbh']->putSuggestion($_REQUEST['suggestions']);
         }
-//var_dump($_dbh);
 $a = null; /* this is used later for a global var, but prob shoud try and remove it FIXME*/
 ?>
 
@@ -55,7 +54,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
          */
         ?>        
         <?php
-        dbug($_REQUEST);
+        dbug($_REQUEST,false);
         if (!isset($_REQUEST['flipped'])) { /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
             ?>
         <?php 
@@ -697,7 +696,7 @@ $a = null; /* this is used later for a global var, but prob shoud try and remove
         <div  style="padding-bottom:20px;left: 50%;right: 50%; position:absolute; z-index:100;top:10;" class='textWrapper'>
             <div class='subtextWrapper'>
                 <div id="download" style="font-variant-caps: all-small-caps ; font-weight: bold;color:black">
-                    <a target="_blank" href="<?= $_SESSION['dlfile'] ?>">Download<br>
+                    <a id="download_file" target="_blank" href="<?= $_SESSION['dlfile'] ?>">Download<br>
                 </div>
             </div>
         </div>

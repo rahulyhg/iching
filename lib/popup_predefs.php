@@ -94,7 +94,7 @@
     </div>
     <!-- ----------------------------------------------------------------------->
     <div id="donatemsg" title="Contribute">
-        Help move this project forward with the editors, writers, designers, programmers, hosting costs, etc., it needs.
+        If you like this site, please consider supporting it.
         <p>
           <img src="/images/bitcoin_addr.png">
         <p></p>

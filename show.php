@@ -32,7 +32,7 @@ require "lib/functions.php";
         <link rel="stylesheet" href="/vendor/twitter/bootstrap/dist/css/bootstrap.min.css">
     </head>
 <body>
-<?php dbug($_REQUEST); ?>    
+<?php dbug($_REQUEST,false); ?>    
 <section>
     <!-- div class="content"><strong> BabelBrowser's I Ching page</strong></div-->
 </section>

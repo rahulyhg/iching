@@ -13,37 +13,49 @@ session_start();
         <meta name="description" content="I Ching is a book of wisdom, an oracle a math system, and a philosophy - access all of them here" />
 
         <!-- vendor includes -->
+        
         <script src="/vendor/components/jquery/jquery.min.js"></script>
         <script src="/vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>    
         <script type="text/javascript" src="/vendor/qtip/jquery.qtip.js"></script>
+        
         <!-- jquery -->
+        
         <script type="text/javascript" src="/js/script.js"></script>    
 	<script src="/vendor/jquery-ui/jquery-ui.min.js"></script>        
-	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
-        <!-- local js -->
-        <!-- script type="text/javascript" src="/js/spin.js"></script>    
-        <script type="text/javascript" src="/js/jquery.spin.js"></script -->    
-        
+	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>       
         
         <script type="text/javascript" src="/js/jquery.center/jquery.center.js"></script>    
         <script type="text/javascript" src="/js/jquery.redirect/jquery.redirect.js"></script>    
+
+        <!-- local js -->
+        
         <script type="text/javascript" src="/js/consult.js"></script>    
         <script type="text/javascript" src="/js/show.js"></script>    
-        <!-- accordian -->
-	<script src="/js/accordian.js"></script>        
-        <!--script type="text/javascript" src="/dom-to-image/src/dom-to-image.js"></script-->
+        
+        <!-- jquery accordian -->
+	
+        <script src="/js/accordian.js"></script>        
+        
+        <!-- the astrological calc stuff -->
+        
         <script src="/astro/js/as.js"></script>
         
-        
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">//-->
+ 
         <link rel="stylesheet" media="screen" type="text/css" href="/css/style.css" />
         <link rel="stylesheet" media="screen" type="text/css" href="/css/drawhex.css" />
         <link rel="stylesheet" media="screen" type="text/css" href="/css/sides.css" />
-        <!-- overload this if other page -->
+        
+        <!-- show.css if on  the show.php page this if other page -->
+        
         <link rel="stylesheet" media="screen" type="text/css" href="/css<?= ($_SERVER['PHP_SELF'] == "/show.php" ? "/show" : "/consult") ?>.css" />
+
         <!-- Latest compiled and minified CSS -->
+
         <link rel="stylesheet" href="/vendor/twitter/bootstrap/dist/css/bootstrap.min.css">
-        <!-- accordian -->
+
+        <!-- accordian     the order of the CSS is not trivial.  They crash into each other easily-->
+
         <link rel="stylesheet" href="/css/accordian.css">
     </head>
 <body>

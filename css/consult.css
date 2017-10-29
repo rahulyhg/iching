@@ -15,6 +15,7 @@ body {
 
 #nowbutton {
     cursor: pointer;
+    border-radius: 51px !important;
     
 }
 html { 
@@ -195,7 +196,7 @@ address {
     position: relative;
     top: 3px;
     right: 2px;
-    margin: 6px;
+        margin: 24px 6px 6px 6px;
     cursor:pointer;
     width:30px;
     height:30px;
@@ -237,18 +238,15 @@ border:1px solid red;
 .qboxSug {
     border: 1px solid whitesmoke;
     border-radius: 8px;
-    margin: 0px;
+    margin: 10px;
     padding: 10px;
-/*    display: flex;
-    flex-direction: column;*/
-    align-items: center; 
-    text-align: center;
-    justify-content: center;
-/*    max-width:280px;*/
+    /* align-items: center; */
+    /* text-align: center; */
+    /* justify-content: center; */
+    /* max-width: 280px; */
     background-image: url(/images/raysicgrn.jpg);
-    background-size:  cover;
-    width:100%;
-
+    background-size: cover;
+    width: 100%;
 }
 /*    .leftCol {
         float:left;
@@ -274,9 +272,11 @@ border:1px solid red;
     font-weight:bold;
     background-color:white;
     border:3px solid red;
-    width:90%;
-    top:70px;
-    position:relative;
+    width: 40%;
+    top: 70px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 .content {
     border:0px solid grey;
