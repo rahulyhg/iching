@@ -8,8 +8,26 @@ $(document).ready(function () {
         $('#presentationlayer').css("visiblity","visible");
         }  , 3000 
     );
-     */
-     
+     */        
+    var w = $(window).width();
+    var h = $(window).height();
+//    w = w * .8;
+//    h = h * .8;
+    $("body").css({"max-width": w + "px"});
+    $("body").css({"max-height": h + "px"});
+//    $("body").css({"border": "3px solid black"});
+
+
+    
+//    $(window).resize(function(){
+//        var w = $(window).width();
+//        var h = $(window).height();
+//w = w*.8;
+//h = h*.8;
+//
+//        $("body").css({"max-width":w + "px"});
+//        $("body").css({"border":"3px solid red"});
+//    });
 
     /* *********************************************************
      * change the css if the screen is small
