@@ -429,5 +429,8 @@ html,body {
     .qboxSug {
         display: none;
     }
+    .qtrtip {
+        display: none;        
+    }
 }
 
