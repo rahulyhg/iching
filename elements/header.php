@@ -6,7 +6,7 @@ session_start();
 ?>
 <html lang="en" class="">
     <head>
-        <meta name="viewport" content="width=360, initial-scale=.4">
+        <meta name="viewport" content="width=360, initial-scale=.3">
 <!-- meta property='og:image' content='https://www.concrete5.org/themes/version_4/images/logo.png' /-->
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <title>BabelBrowser</title>
