@@ -181,6 +181,7 @@
  <filter  action="drop"  type="wildcard"  pattern="*gz"           />
  <filter  action="drop"  type="wildcard"  pattern="*html"           />
  <filter  action="drop"  type="wildcard"  pattern="*css"           />
+ <filter  action="drop"  type="wildcard"  pattern="*func*"           />
 
   <!-- Exclude URLs within UNIX-style hidden files or directories       -->
   <filter  action="drop"  type="regexp"    pattern="/\.[^/]*"     />
