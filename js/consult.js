@@ -1,40 +1,75 @@
 $(document).ready(function () {
 
-//setTimeout( function(){ 
-//    $('#presentationlayer').css("visiblity","visible");
-//  }  , 3000 );
-//     
-//     
+    /* *********************************************************
+     * timer to make a div visible after some time
+     * *********************************************************/
+    /*
+    setTimeout( function(){ 
+        $('#presentationlayer').css("visiblity","visible");
+        }  , 3000 
+    );
+     */
+     
 
+    /* *********************************************************
+     * change the css if the screen is small
+     * *********************************************************/
+    if ($(window).width() < 767) {
+        $('#pageContent').css("margin-top","-58");
+        $('#debugon').css("display","none");
+        /* below is anotehr way to do the same, but what is the diff? */
+        
+        /*
+        $("#fourcolumn-carousel .item").css({
+            "display": "block"
+        });
+        $(".carousel-control").css({
+            "display": "none"
+        })
+        */
+    }
+
+    /* *********************************************************
+     * functions to format and show popup help boxes 
+     * *********************************************************/
     $.fn.center = function () {
         this.css("position", "absolute");
         this.css("top", ($(window).height() - this.height()) / 2 + "px");
         this.css("left", ($(window).width() - this.width()) / 2 + "px");
         return this;
-    }
+    };
 
     $.fn.recss = function (e) {
+        /* ignore function if one of the top buttons were pressed */
+        if (e.target.className == "rdbbtns") {
+            return(true);
+        }
         e.preventDefault();
+        console.log(e.target.className);
+        console.log(e);
         var top = $(document).scrollTop();
         console.log(top);
-
         this.parent().css("width", "80%");
         this.parent().css("top", top + "px");
         this.parent().css("left", "10%");
         this.parent().css("border", "3px solid red");
         this.parent().css("position", "fixed");
         console.log("recss");
-        //return($this);
-
     };
 
-
-
-    $('#download').click(function () {
+    
+    /* *********************************************************
+     * How does this work?
+     * *********************************************************/
+    $('#download').click(function (e) {
         e.preventDefault();  //stop the browser from following
         window.location.href = '/questions';
     });
 
+    /* *********************************************************
+     * detects when leaving the final manually entered number, 
+     * and if empty, defaults to the value in placeholder
+     * *********************************************************/
     $('#f_final').blur(function ()
     {
         if (!$(this).val()) {
@@ -43,9 +78,13 @@ $(document).ready(function () {
         }
     });
 
+    /* *********************************************************
+     * manually creating a SUBMIT button fro the "Tao of Now" 
+     * *********************************************************/
     /* JWFIX how to read REQUEST to add debuigging? */
     $("#nowbutton").click(function () {
         $("#qfield").val("Your Tao of Now");
+        $("#nowbutton").attr("style","min-width:280px; min-height:80px; background-image: url(/images/newnow_dn.png) !important;background-size: cover !important; border:2px solid darkslategray");
 
         $.redirect('/index.php', {
             flipped: "1"
@@ -56,7 +95,9 @@ $(document).ready(function () {
         return(true);
     });
 
-
+    /* *********************************************************
+     * grey the "submit question" until enough chars have been entered
+     * *********************************************************/
     $("#castbutton").val("Or Enter Question Below");
     $("#castbutton").css("background-color", "grey");
     $("#qfield").on('input', function (e) {
@@ -64,18 +105,24 @@ $(document).ready(function () {
         $("#castbutton").val("Cast Hexagram");
     });
 
-    $("#sugSend").val("Enter Msg");
+    /* *********************************************************
+     * grey the "send msg" until enough chars have been entered
+     * *********************************************************/
+    $("#sugSend").val("Add Msg");
     $("#sugSend").css("background-color", "grey");
     $("#sugField").on('input', function (e) {
         var sterm = $("#sugField").val().toString();
         if (sterm.length > 32) {
             $("#sugSend").css("background-color", "green");
-            $("#sugSend").val("Let Me Know");
+            $("#sugSend").val("SEND");
         }
     });
 
+    /* *********************************************************
+     * grey the "submit" until enough chars have been entered
+     * *********************************************************/
     $("#manualTossed").attr('disabled', 'disabled');
-    $("#manualTossed").val("Enter 2 Hex Nums");
+    $("#manualTossed").val("Enter 2 Nums");
     $("#manualTossed").css("background-color", "#222222");
     $("#manualTossed").change(function () {
         $("#manualTossed").removeAttr('disabled');
@@ -83,11 +130,16 @@ $(document).ready(function () {
         $("#manualTossed").css("background-color", "green");
     });
 
+    /* *********************************************************
+     * update the manual input field as soon as you enter
+     * *********************************************************/
     $("#f_final").on('input', function (e) {
         $("#manualTossed").trigger("change");
     });
 
-
+    /* *********************************************************
+     * get the value for the final field as soon as you leave the intital field
+     * *********************************************************/
     $("#f_tossed").mouseout(function () {
         if (!($("#f_tossed").val())) {
         } else {
@@ -114,8 +166,12 @@ $(document).ready(function () {
             });
         }
     });
+    
+    /* *********************************************************
+     * turn debugging on/off
+     * *********************************************************/
     $("#debugon").click(function () {
-        console.log($('input[type=checkbox]').prop('checked'));
+        //console.log($('input[type=checkbox]').prop('checked'));
         if ($('input[type=checkbox]').prop('checked')) {
             $("#qfield").val("debugging...");
             $("#reset").attr("href", "index.php?qfield=debugging&debugon=1");
@@ -126,28 +182,25 @@ $(document).ready(function () {
 
     });
 
-
+    /* *********************************************************
+     * the box dims that hold qbox
+     * *********************************************************/
     $("#tosstype").hover(function () {
         turnOffRadio();
 //            $("#entropymsg").text("not yet enabled");
     });
 
-//jQuery("#tosstype").click(writeData);        
+    /* *********************************************************
+     * disables the abiluty to select a radio button 
+     * *********************************************************/
     function turnOffRadio() {
-//        $("#tosstype  input[id^=r-decay]:radio").attr('disabled',true);
         $("#tosstype  input[id^=entropy]:radio").attr('disabled', true);
         $("#tosstype  input[id^=acultural]:radio").attr('disabled', true);
     }
-
-//    $("#xsubtip").qtip({
-//        content: 'This is the transitional hexagram that is the difference between the original and the resulting hexagram.  Typically this transition is represented only by the moving lines of the original hexagram.  We rrive at this transition hexagram by subtracting the binary value of the original hex from the final hex (andd add 63 is less that zer0)final hexagram.  In this way, this transitional hex is the hexagram verion of the movong lines.',
-//    
-//    $("#plumtip").qtip({
-//        content: 'The Modern Plum technique is based on the ancient Mei Hua ("Plum Blossom") method of the Sung Synasty (920-1279ad).  It uses the current time as the "seed" for the casting.  This modern version also uses the current time of number of milliseconds since Jan. 1, 1970. An algorithm takes that number, <a href="/book/ichingbook/_book/instructions.html">transforms it to simulate three coins</a>.  This is done six time, with a random numner of milliseconds between each "toss".',
-//    
-//    $("#testtip").qtip({
-//        content: 'This randomly generates hexagrams using the PHP rand() function.  Mainly used for its speed as it does not access any services. Not a good option for proper use.',
-
+    
+    /* *********************************************************
+     * These are all the popup tip/help message functions
+     * *********************************************************/
     $(function () {
         $("#xsubtipmsg").dialog({
             autoOpen: false
@@ -180,7 +233,6 @@ $(document).ready(function () {
         });
     });
 
-
     $(function () {
         $("#testtipmsg").dialog({
             autoOpen: false
@@ -192,8 +244,6 @@ $(document).ready(function () {
         });
     });
 
-//            $("#randomtip").qtip({
-//        content: 'The "flipping" is actually being done by Random.Org, who are so meticulous about the quality and integrity of their randomness that they actually have different result based on the type of coin you use. For now, we are using three Bronze Sestertius coins from the Roman Empire of Antoninus Pius<img src="/images/reverse.png" style="width:60px;height:60px;passing 5px;float:right;"><img src="/images/obverse.png" style="width:60px;height:60px;passing 5px;float:right;">',
     $(function () {
         $("#randomtipmsg").dialog({
             autoOpen: false
@@ -212,7 +262,6 @@ $(document).ready(function () {
             var o = $("#hukuamsg");
             o.dialog("open");
             o.recss($e);
-            $e.preventDefault();
         });
     });
     $(function () {
@@ -225,53 +274,19 @@ $(document).ready(function () {
             o.recss($e);
         });
     });
-    $(function () {
-        $("#donatemsg").dialog({
-            autoOpen: false
-        });
-        $("#donatetip").hover(
-                function ($e) {
-                    $(this).css({"background-color": "red"});
-                    var o = $("#donatemsg");
+    
+//    currently disableld
+//    $(function () {
+//        $("#entropytipmsg").dialog({
+//            autoOpen: false
+//        });
+//        $("#entropytip").on("click", function ($e) {
+//            var o = $("#entropytipmsg");
+//            o.dialog("open");
+//            o.recss($e);
+//        });
+//    });
 
-                    $e.preventDefault();
-                    var top = $(document).scrollTop();
-
-                    //    o.parent().css("width","80%");
-                    o.parent().css("top", top + "px");
-                    o.parent().css("left", "10%");
-                    o.parent().css("border", "3px solid red");
-                    o.parent().css("position", "fixed");
-
-
-                    o.dialog("open");
-//                o.recss($e);       
-                },
-                function () {
-                    //$(this).css({"background-color":"blue"});
-                    // $("#donatemsg").dialog("close");
-
-                });
-    });
-
-    //    
-//    
-//    $("#entropytip").qtip({
-//        content: 'CURRENTY DISABLED - Entropy is how random numbers are genenrated for encruption purposed.  This randomness is often collected from hardware sources (variance in fan noise or HDD), either pre-existing ones such as mouse movements or specially provided randomness generators.  The problem with this method is it takes time to "collect" entropy.  If it is all used up, it could take many minutes to collect enough too throw the I Ching.',
-    $(function () {
-        $("#entropytipmsg").dialog({
-            autoOpen: false
-        });
-        $("#entropytip").on("click", function ($e) {
-            var o = $("#entropytipmsg");
-            o.dialog("open");
-            o.recss($e);
-        });
-    });
-//    
-//    $("#r-decaytip").qtip({
-//        content: 'CURRENTY DISABLED - This is the "real" random, as it is theoretically impossible to predict decay.  The only problem with this memthod is I would need actually radioactive material to  get it to work, or find a source, like the old Fermi Lab service, which provides these types of randm numbers',
-//    
     $(function () {
         $("#astrotipmsg").dialog({
             autoOpen: false
@@ -293,8 +308,7 @@ $(document).ready(function () {
             o.recss($e);
         });
     });
-//    $("#baynestip").qtip({
-//        content: 'This is the popular, traditional English translation of the German translation of the original Chinese text brougt back from China by the Jesuits',
+
     $(function () {
         $("#baynestipmsg").dialog({
             autoOpen: false
@@ -305,9 +319,7 @@ $(document).ready(function () {
             o.recss($e);
         });
     });
-//    
-//    $("#aculturaltip").qtip({
-//        content: 'CURRENTLY UNAVAILABLE - This is for the upcoming new translation that redefines the structure and the relationship of the hexagrams outside of the highly moral Confucian version, which is the only one that survided to this day.  The Lao Tzu version, undoubtedly less moralistic and judgemental, did not',
+    
     $(function () {
         $("#aculturaltipmsg").dialog({
             autoOpen: false
@@ -318,7 +330,6 @@ $(document).ready(function () {
             o.recss($e);
         });
     });
-
 
     $(function () {
         $("#qtr1tipmsg").dialog({
@@ -350,22 +361,42 @@ $(document).ready(function () {
             o.recss($e);
         });
     });
-// ajust foro screen
+    
+    /* *********************************************************
+     * Special case for popup over hover for donate tip
+     * *********************************************************/
+    $(function () {
+        $("#donatemsg").dialog({
+            autoOpen: false
+        });
+        $("#donatetip").hover(
+                function ($e) {
+                    $(this).css({"background-color": "red"});
+                    var o = $("#donatemsg");
 
+                    $e.preventDefault();
+                    var top = $(document).scrollTop();
 
-    //   if ($(window).width() < 767) {
-//        $(".awrapper").css({
-//            "width": "95%"
-//        });
-    //   }
-
-
-
+                    //    o.parent().css("width","80%");
+                    o.parent().css("top", top + "px");
+                    o.parent().css("left", "10%");
+                    o.parent().css("border", "3px solid red");
+                    o.parent().css("position", "fixed");
+                    o.dialog("open");
+                },
+                function () {
+                    //$(this).css({"background-color":"blue"});
+                    // $("#donatemsg").dialog("close");
+                });
+    });
+    
+    /* *********************************************************
+     * add the accordion functionality
+     * *********************************************************/
     var headers = $('[id^=accordion] .accordion-header');
     var contentAreas = $('[id^=accordion] .ui-accordion-content ').hide().first().show().end();
     var expandLink = $('.accordion-expand-all');
 
-// add the accordion functionality
     headers.click(function () {
         // close all panels
         contentAreas.slideUp();
@@ -378,10 +409,12 @@ $(document).ready(function () {
         return false;
     });
 
-// hook up the expand/collapse all
+    /* *********************************************************
+     * hook up the expand/collapse all
+     * *********************************************************/
     expandLink.click(function () {
         var isAllOpen = !$(this).data('isAllOpen');
-        console.log({isAllOpen: isAllOpen, contentAreas: contentAreas})
+        console.log({isAllOpen: isAllOpen, contentAreas: contentAreas});
 
         if (isAllOpen) {
             $("#btnEC").css("color", "darkgreen");
@@ -390,7 +423,7 @@ $(document).ready(function () {
         }
         contentAreas[isAllOpen ? 'slideDown' : 'slideUp']();
 
-        expandLink.text(isAllOpen ? '[-]' : '[+]')
+        expandLink.text(isAllOpen ? '[-]' : '[+]');
         contentAreas[isAllOpen ? 'slideDown' : 'slideUp']();
 
         expandLink.text(isAllOpen ? '[-]' : '[+]')
@@ -417,51 +450,6 @@ $(document).ready(function () {
     $("#larger3").hover(function () {
         $('#larger3').css("cursor", "hand");
     });
-
-//    
-//
-//    $("#expand1").click(function () {
-////        $('#accordion1 .ui-accordion-content').show();
-////        $('#accordion2 .ui-accordion-content').show();
-// $("#accordion1").accordion("destroy");
-// $("#accordion2").accordion("destroy");
-//    });
-//    $("#expand1").hover(function () {
-//        $('#expand1').css("cursor","hand");
-//    });
-//    $("#collapse1").click(function () {
-//        $("#accordion1").accordion();
-//        $("#accordion2").accordion();
-//    });
-//    $("#collapse1").hover(function () {
-//        $('#collapse1').css("cursor","hand");
-//    });
-
-//    $("#grab").click(function () {
-//        var node = document.getElementById('qfield');
-//        domtoimage.toPng(node)
-//                .then(function (dataUrl) {
-//                    var img = new Image();
-//                    img.src = dataUrl;
-//                    document.body.appendChild(img);
-//                })
-//                .catch(function (error) {
-//                    console.error('oops, something went wrong!', error);
-//                });
-//    });
-
-    if ($(window).width() < 767) {
-        $('#pageContent').css("margin-top","-58");
-        $('#debugon').css("display","none");
-        
-//        
-//        $("#fourcolumn-carousel .item").css({
-//            "display": "block"
-//        });
-//        $(".carousel-control").css({
-//            "display": "none"
-//        })
-    }
 
 });
 

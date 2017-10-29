@@ -20,7 +20,6 @@ session_start();
         
         <!-- jquery -->
         
-        <script type="text/javascript" src="/js/script.js"></script>    
 	<script src="/vendor/jquery-ui/jquery-ui.min.js"></script>        
 	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>       
         

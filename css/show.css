@@ -1,7 +1,4 @@
 
-.container {
-    width:auto !important;
-}
 
 body > section {
     width: 90% !important;
@@ -23,9 +20,10 @@ max-width:auto !important;
 }
 
 .container {
+    width:auto !important;
     margin: 40px;
     padding: 40px;
-    display: flex;
+/*    display: flex;*/
     flex-direction: column;
     align-items: center; 
     justify-content: center;
