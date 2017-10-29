@@ -20,7 +20,7 @@ $(document).ready(function () {
     $(".container").css({"max-width": w + "px !important"});
     $(".container").css({"margin-top": "2px !important"});
 
-s    
+    
 //    $(window).resize(function(){
 //        var w = $(window).width();
 //        var h = $(window).height();
