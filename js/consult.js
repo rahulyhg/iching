@@ -13,7 +13,7 @@ $(document).ready(function () {
     var h = $(window).height();
     w = w * .8;
     h = h * .8;
-   $("body").css({"max-width": "400px"});
+   $("body").css({"max-width": "360px"});
     $("body").css({"max-height": h + "px"});
     $("body").css({"border": "3px solid black"});
 
