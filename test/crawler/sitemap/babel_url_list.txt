@@ -21,10 +21,11 @@
 # http://www.example.com/foo/yyy?x=12&y=23 changefreq=weekly priority=0.3
 http://babelbrowser.com
 http://babelbrowser.com/?flipped=1&question=crawlerTest&mode=astro
-http://babelbrowser.com/?flipped=1&question=crawlerTest&mode=plum
-http://babelbrowser.com/?flipped=1&question=crawlerTest&mode=random.org
-http://babelbrowser.com/?flipped=1&f_tossed=11&f_final=12&mode=manual
+#http://babelbrowser.com/?flipped=1&question=crawlerTest&mode=plum
+#http://babelbrowser.com/?flipped=1&question=crawlerTest&mode=random.org
+#http://babelbrowser.com/?flipped=1&f_tossed=11&f_final=12&mode=manual
 http://babelbrowser.com/book/ichingbook/_book/
-http://babelbrowser.com/show.php?submit=Bin&hex=1&gotohex=1&bin=0&gotobin=0
-http://babelbrowser.com/show.php?hex=24&gotohex=24&bin=1&gotobin=1&search=tree&submit=Search
-http://babelbrowser.com/api/func.php?func=getHexnumOppositeByPseq&pseq=11
+http://babelbrowser.com/show.php
+#http://babelbrowser.com/show.php?submit=Bin&hex=1&gotohex=1&bin=0&gotobin=0
+#http://babelbrowser.com/show.php?hex=24&gotohex=24&bin=1&gotobin=1&search=tree&submit=Search
+#http://babelbrowser.com/api/func.php?func=getHexnumOppositeByPseq&pseq=11

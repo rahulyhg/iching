@@ -33,9 +33,9 @@
 -->
 <site
   base_url="http://babelbrowser.com/"
-  store_into="/home/jw/src/iching/sitemap.xml.gz"
+  store_into="/home/jw/src/babelbrowser/sitemap.xml"
   verbose="1"
-  >
+ >
 
   <!-- ********************************************************
           INPUTS
@@ -57,12 +57,12 @@
       changefreq - how often content at this URL is usually updated
       priority   - value 0.0 to 1.0 of relative importance in your site
   -->
-  <url  href="http://babelbrowser.com/?flipped=1&question=crawlerTest&mode=astro"  />
+  <url  href="http://babelbrowser.com/"  />
   <url
-     href="http://babelbrowser.com/?flipped=1&question=crawlerTest&mode=astro"
+     href="http://babelbrowser.com/"
      lastmod="2004-11-14T01:00:00-07:00"
-     changefreq="yearly"
-     priority="0.3"
+     changefreq="weekly"
+     priority="0.6"
   />
 
 
@@ -76,7 +76,7 @@
     Optional attributes:
       encoding   - encoding of the file if not US-ASCII
   -->
-  <urllist  path="babbel_url_list.txt"  encoding="UTF-8"  />
+  <urllist  path="/home/jw/sites/babelbrowser/test/crawler/sitemap/babel_url_list.txt"  encoding="UTF-8"  />
 
 
   <!-- ** MODIFY or DELETE **
@@ -89,14 +89,14 @@
 
     Optional attributes:
       default_file - name of the index or default file for directory URLs
-  -->
-  <directory  path="/images"    url="http://babelbrowser.com/images/" />
+  ->
+  <directory  path="/home/jw/sites/babelbrowser/images"    url="http://babelbrowser.com/images/" />
   <directory
      path="/home/jw/sites/babelbrowser"
      url="http://babelbrowser.com/"
      default_file="index.php"
   />
-
+-->
 
   <!-- ** MODIFY or DELETE **
     "accesslog" nodes tell the script to scan webserver log files to
@@ -110,9 +110,10 @@
       encoding   - encoding of the file if not US-ASCII
   -->
   <accesslog  path="/var/log/apache2/babelbrowser_access.log"       encoding="UTF-8"  />
-  <accesslog  path="/var/log/apache2/babelbrowser_access.log.1"     encoding="UTF-8"  />
-  <accesslog  path="/var/log/apache2/babelbrowser_access.log.1.gz"  encoding="UTF-8"  />
-
+  <!--
+  <accesslog  path="/var/log/apache2/babelbrowser_access.log.1"     encoding="UTF-8"
+  />  <accesslog  path="/var/log/apache2/babelbrowser_access.log.1.gz"  encoding="UTF-8"  />
+-->
 
   <!-- ** MODIFY or DELETE **
     "sitemap" nodes tell the script to scan other Sitemap files.  This can
@@ -121,9 +122,9 @@
 
     Required attributes:
       path       - path to the file
-  -->
+  ->
   <sitemap    path="/home/jw/sites/babelbrowser/sitemap.xml" />
-
+-->
 
   <!-- ********************************************************
           FILTERS
@@ -156,7 +157,30 @@
   ********************************************************* -->
 
   <!-- Exclude URLs that end with a '~'   (IE: emacs backup files)      -->
-  <filter  action="drop"  type="wildcard"  pattern="*~"           />
+  <filter  action="drop"  type="wildcard"  pattern="LIVE*"           />
+  <filter  action="drop"  type="wildcard"  pattern="CH*"           />
+  <filter  action="drop"  type="wildcard"  pattern="*test*"           />
+  <filter  action="drop"  type="wildcard"  pattern="*database*"           />
+  <filter  action="drop"  type="wildcard"  pattern="*.zip"           />
+  <filter  action="drop"  type="wildcard"  pattern="*.sql"           />
+  <filter  action="drop"  type="wildcard"  pattern="*/questions/*"           />
+  <filter  action="drop"  type="wildcard"  pattern="*/id/*"           />
+  <filter  action="drop"  type="wildcard"  pattern="*/data/*"           />
+  <filter  action="drop"  type="wildcard"  pattern="*/vendor/*"           />
+  <filter  action="drop"  type="wildcard"  pattern="*/js/*"           />
+ <filter  action="drop"  type="wildcard"  pattern="*/css/*"           />
+ <filter  action="drop"  type="wildcard"  pattern="*/fonts/*"           />
+ <filter  action="drop"  type="wildcard"  pattern="*git*"           />
+ <filter  action="drop"  type="wildcard"  pattern="*cignite*"           />
+ <filter  action="drop"  type="wildcard"  pattern="*images*"           />
+ <filter  action="drop"  type="wildcard"  pattern="*png"           />
+ <filter  action="drop"  type="wildcard"  pattern="*jpg"           />
+ <filter  action="drop"  type="wildcard"  pattern="*ico"           />
+ <filter  action="drop"  type="wildcard"  pattern="*gif"           />
+ <filter  action="drop"  type="wildcard"  pattern="*json"           />
+ <filter  action="drop"  type="wildcard"  pattern="*gz"           />
+ <filter  action="drop"  type="wildcard"  pattern="*html"           />
+ <filter  action="drop"  type="wildcard"  pattern="*css"           />
 
   <!-- Exclude URLs within UNIX-style hidden files or directories       -->
   <filter  action="drop"  type="regexp"    pattern="/\.[^/]*"     />
