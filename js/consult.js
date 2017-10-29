@@ -11,8 +11,8 @@ $(document).ready(function () {
      */        
     var w = $(window).width();
     var h = $(window).height();
-    w = w * .8;
-    h = h * .8;
+//    w = w * .8;
+//    h = h * .8;
     $("body").css({"max-width": w + "px"});
     $("body").css({"max-height": h + "px"});
 //    $("body").css({"border": "3px solid black"});
