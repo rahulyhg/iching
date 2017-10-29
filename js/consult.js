@@ -69,10 +69,10 @@ $(document).ready(function () {
     /* *********************************************************
      * How does this work?
      * *********************************************************/
-    $('#download').click(function (e) {
-        e.preventDefault();  //stop the browser from following
-        window.location.href = '/questions';
-    });
+//    $('#download').click(function (e) {
+//        e.preventDefault();  //stop the browser from following
+//        window.location.href = '/questions';
+//    });
 
     /* *********************************************************
      * detects when leaving the final manually entered number, 

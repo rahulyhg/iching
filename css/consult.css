@@ -270,8 +270,13 @@ border:1px solid red;
     margin-right:17px;
     margin-top:3px;
     margin-bottom:3px;
-
 }
+
+/* for some reason the buttons are 66px too far to the right JWFIX */
+#reset {
+/*        margin-left: 66px;*/
+}
+
 #dbug {
     font-weight:bold;
     background-color:white;

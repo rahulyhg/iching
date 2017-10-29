@@ -30,29 +30,6 @@ $a = null;
      * *****************************************/
     ?>   
     <div id = 'here2' class="container container-top">
-        <?php 
-        /* *****************************************
-         * The Buttons
-         * *****************************************/
-        ?>   
-        <form id="tosstype">
-            <span style="flex-direction: row;" class="qbox qboxClear">
-                <span><a alt="RESET"                  style="font-weight: bold;"             id='reset' href='/index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'><img class="rdbbtns" src="/images/_reset.png"/></a></span>
-                <span><a alt="DOCS" target="_blank"   style="color:white;font-weight: bold;"            href="/book/ichingbook/_book/">                                                             <img class="rdbbtns" src="/images/_docs.png"/></a></span>
-                <span><a alt="BROWSE" target="_blank" style="color:white;font-weight: bold;"            href="/show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >         <img class="rdbbtns" src="/images/_browse.png"/></a></span> 
-            </span>
-            <?php 
-            /* *****************************************
-             * The Button Help  - it is rendered, but not displayed, for the initial page, to maintain alignment
-             * on the following pages it is not rendered, also to maintain alignment
-             * *****************************************/
-            if (!isset($_REQUEST['flipped'])) {
-                ?>
-                <img class="qtrtip" id="qtr0tip" style="visibility:hidden" src="/images/qmark.png"/>
-                <?php
-            }
-            ?>
-        </form>
         <!-- ------------------------------------------------------------>
         <?php 
         /*
@@ -67,6 +44,29 @@ $a = null;
             /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
             ?>
             <?php 
+            /* *****************************************
+             * The Buttons
+             * *****************************************/
+            ?>   
+            <form id="tosstype">
+                <span style="flex-direction: row;" class="qbox qboxClear">
+                    <span><a alt="RESET"                  style="font-weight: bold;"             id='reset' href='/index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'><img class="rdbbtns" src="/images/_reset.png"/></a></span>
+                    <span><a alt="DOCS" target="_blank"   style="color:white;font-weight: bold;"            href="/book/ichingbook/_book/">                                                             <img class="rdbbtns" src="/images/_docs.png"/></a></span>
+                    <span><a alt="BROWSE" target="_blank" style="color:white;font-weight: bold;"            href="/show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >         <img class="rdbbtns" src="/images/_browse.png"/></a></span> 
+                </span>
+                <?php 
+                /* *****************************************
+                 * The Button Help  - it is rendered, but not displayed, for the initial page, to maintain alignment
+                 * on the following pages it is not rendered, also to maintain alignment
+                 * *****************************************/
+    //            if (!isset($_REQUEST['flipped'])) {
+    //                ? >
+    //                <img class="qtrtip" id="qtr0tip" style="visibility:hidden" src="/images/qmark.png"/>
+    //                < ?php
+    //            }
+                ?>
+            </form>
+            <?php
             /* *****************************************
              * The Tao of Now
              * *****************************************/
@@ -175,9 +175,9 @@ $a = null;
                         $fromNum = rand(1,64);
                         $toNum = $GLOBALS['dbh']->getHexnumOppositeByPseq($fromNum);
                         ?>
-                        <input class = "doublenum" id="f_tossed" type="text" name="f_tossed" placeholder="<?= $fromNum ?>" value="">
-                        <input class = "doublenum" id="f_final" type="text" name="f_final" placeholder="<?= $toNum ?>" value="">
-                        <input id="manualTossed" class = "btn btn-primary" type="submit" value="Show">
+                        <input class = "doublenum"       id="f_tossed"     type="text"   name="f_tossed" placeholder="<?= $fromNum ?>" value="">
+                        <input class = "doublenum"       id="f_final"      type="text"   name="f_final" placeholder="<?= $toNum ?>" value="">
+                        <input class = "btn btn-primary" id="manualTossed" type="submit" value="Show">
                     </div>
                 </span>
                 <?php 
@@ -207,6 +207,18 @@ $a = null;
             /* get date formats for rpesenation and data */
             $dates = getDates();
 
+            /* *****************************************
+             * The Buttons
+             * *****************************************/
+            ?>   
+                <span style="flex-direction: row;" class="qbox qboxClear">
+                    <span><a alt="RESET"                  style="font-weight: bold;"             id='reset' href='/index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'><img class="rdbbtns" src="/images/_reset.png"/></a></span>
+                    <span><a alt="DOCS" target="_blank"   style="color:white;font-weight: bold;"            href="/book/ichingbook/_book/">                                                             <img class="rdbbtns" src="/images/_docs.png"/></a></span>
+                    <span><a alt="BROWSE" target="_blank" style="color:white;font-weight: bold;"            href="/show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >         <img class="rdbbtns" src="/images/_browse.png"/></a></span> 
+                </span>
+            <?php
+            
+            
             /* set question to 'Query for <date>' if it is blank */
             if (  (!isset($_REQUEST['question']) || (strlen($_REQUEST['question'])<1) )) {
     //            $_REQUEST['question'] = "Query for ".$dates['human'];
