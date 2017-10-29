@@ -32,15 +32,26 @@ $(document).ready(function () {
     /* *********************************************************
      * change the css if the screen is small
      * *********************************************************/
-//    if ($(window).width() < 767) {
-//        console.log("screen x/y: " + $(window).width() + "/" + $(window).height());
-//        $('#debugon').css("display","none");
-//        /* below is anotehr way to do the same, but what is the diff? */
-//        
-//        
-//        $(".container").css({
-//            "margin-top": "2px"
-//        });
+    if ($(window).width() < 767) {
+        console.log("screen x/y: " + $(window).width() + "/" + $(window).height());
+
+        /* below is anotehr way to do the same, but what is the diff? */
+        
+        
+        $("#accordian1").css({
+            "min-width": "50% !important"
+        });
+        $("#accordian2").css({
+            "min-width": "50% !important"
+        });
+        $("#accordian1").css({
+            "max-width": "50% !important"
+        });
+        $("#accordian2").css({
+            "max-width": "50% !important"
+        });
+ 
+        
 //        $(".container").css({
 //            "max-width": "344px"
 //        });
@@ -48,12 +59,12 @@ $(document).ready(function () {
 //            "max-height": "667px"
 //        });
 //        
-//        /*
-//        $(".carousel-control").css({
-//            "display": "none"
-//        })
-//        */
-//    }
+        /*
+        $(".carousel-control").css({
+            "display": "none"
+        })
+        */
+    }
 
     /* *********************************************************
      * functions to format and show popup help boxes 

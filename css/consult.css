@@ -432,5 +432,10 @@ html,body {
     .qtrtip {
         display: none;        
     }
+    #accordian1,#accordian2 {
+        min-width:50% !important;
+        max-width:50% !important;
+    }
+   
 }
 
