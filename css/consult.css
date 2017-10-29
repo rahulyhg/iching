@@ -423,8 +423,8 @@ html,body {
     #debugon {
         display:none;
     }
-    body {
-        background-color:whitesmoke;
+    html { 
+        background: indianred; 
     }
     .qboxSug {
         display: none;
