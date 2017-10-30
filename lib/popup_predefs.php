@@ -117,8 +117,8 @@
         of a millimeter).  So these numbers are always changing.  
         </p>
         <p>
-         The "SHORT" button is not yet working, but it will show a very short "answer", 
-         like a few sentences, rather that a few pages.   
+         <b>The "SHORT" button is not yet working, but it will show a very short "answer", 
+             like a few sentences, rather than a few pages.</b>   
         </p>
         <p>
         Typically random numbers are used for querying the oracle, but for the 

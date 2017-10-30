@@ -417,10 +417,30 @@ html,body {
     background-color: whitesmoke;
     max-width: 300px;
 }
+#donateHP {
+    position: absolute;
+    top: 215px;
+    right: 50px;
+    text-align: center;
+    border: 1px solid black;
+    background-color: whitesmoke;
+    max-width: 300px;
+}
 
 #buttonSpacer {
     min-width:70px;
     max-width:70px;
+}
+
+/* is says trigger at 1030, but it actually triggers at 772 ? FIXME */
+
+@media only screen and (max-width: 1030px) {
+    #dlapp {
+        display: none;                
+    }
+    #donateHP {
+        display: none;                
+    }
 }
 @media only screen and (max-width: 768px) {
     /* For mobile phones: */

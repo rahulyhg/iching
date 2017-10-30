@@ -37,6 +37,18 @@ $a = null;
                 nothing more than the website wrapped in an application.  It is mainly for those who want to explore and give feedback.
             </div>
         </div>
+        <div id = "donateHP"class="container container-top">
+            <div style="font-size: 14pt; font-weight:bold">If you like this site, please consider supporting it.</div>
+
+      
+            <p>
+            <img style="border:1px solid grey;width:250px" src="/images/bitcoin_addr.png">
+            </p>
+                
+            <p>
+            <span style="font-size:10pt">1JSPBvhepQMVV9znim5eo9bE7BGkK5N2te</span>  
+            </p>
+        </div>
     <?php } ?>
     <div id = 'here2' class="container container-top">
         <!-- ------------------------------------------------------------>
