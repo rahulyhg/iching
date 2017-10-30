@@ -3,9 +3,20 @@
    width:80% !important; 
 }
 
-body {
-    /* display:none; */
+html { 
+    background: url(/images/ripples.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    
 }
+
+body,html {    
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 #presentationlayer {
     width:100% !important;
     height:100% !important;
@@ -17,13 +28,6 @@ body {
     cursor: pointer;
     border-radius: 51px !important;
     
-}
-html { 
-    background: url(/images/ripples.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
 }
 .xdebug-error, .xe-notice {
     background-color:lightpink !important;
