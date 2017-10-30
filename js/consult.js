@@ -126,7 +126,8 @@ $(document).ready(function () {
     /* JWFIX how to read REQUEST to add debuigging? */
     $("#nowbutton").click(function () {
         $("#qfield").val("Your Tao of Now");
-        $("#nowbutton").attr("style","min-width:280px; min-height:80px; background-image: url(/images/newnow_dn.png) !important;background-size: cover !important; border:2px solid darkslategray");
+        $("#nowbutton").attr("style","width:80px;");
+        $("#nowbutton").attr("src","/images/gears-anim.gif");
 
         $.redirect('/index.php', {
             flipped: "1"
@@ -135,6 +136,12 @@ $(document).ready(function () {
 //            ,debugon:"1"    
         });
         return(true);
+    });
+    /* *********************************************************
+     *
+     * *********************************************************/
+    $("#shortbutton").click(function (e) {
+        $("#qtr1tip").trigger("click");
     });
 
     /* *********************************************************

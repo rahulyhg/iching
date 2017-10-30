@@ -85,10 +85,20 @@ $a = null;
                 <input type="hidden" name="mode" value="astro">
                 <input type="hidden" name="trans" value="baynes">
 
+                <span class="qbox qboxClear" style="flex-direction:row;background-color:transparent !important;height:80px;width:60px;">
+                <img id="nowbutton"  src="/images/nowbutton80.png">
+                <img id="buttonSpacer" src="/images/thinline350.png">
+                <img id="shortbutton"  src="/images/shortbutton_grey.png">
+                </span>
+
+<?php 
+/*(
                 <span class="qbox"  id="nowbutton"  style="min-height:80px; background-image: url(/images/newnow_up.png) !important;background-size: cover !important; border:2px solid darkslategray">
                     <!-- input id="nowbutton" type="image" name="submit" src="/images/taoofnow_clear.png" alt="Click for the Tao of Now" value="" -->
                     <!-- input id="nowbutton" class = "btn btn-info" style="color:black;font-weight:bold" type="submit" value="Click for 'Tao of Now'"-->
                 </span>
+*/
+?>
                 <?php 
                 /* *****************************************
                  * The help for Tao of Now

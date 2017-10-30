@@ -108,12 +108,28 @@
 
 <!-- body > div:nth-child(17)
     <!-- ----------------------------------------------------------------------->
-    <div id="qtr1tipmsg" style="width:80% !important" title="Tao of Now">
+    <div id="qtr1tipmsg" style="width:80% !important" title="NOW and SHORT">
         <p>
-        The "Tao of Now" casts the hexagrams not for any particular query, but for the current moment.  It does this by looking at the oldest measure of time known to man, the stars.  I calculate the position of the Moon, Mercury, Venus, Mars, Jupiter and Saturn down to 10e-14 of an arc second (which, for Saturn, is about 1 micrometer, or one-millionth of a millimeter).  So these numbers are always changing.  
+        The "NOW" casts the hexagrams not for any particular query, but for the current moment.  
+        It does this by looking at the oldest measure of time known to man, the stars.  I 
+        calculate the position of the Moon, Mercury, Venus, Mars, Jupiter and Saturn down 
+        to 10e-14 of an arc second (which, for Saturn, is about 1 micrometer, or one-millionth 
+        of a millimeter).  So these numbers are always changing.  
         </p>
         <p>
-        Typically random numbers are used for querying the oracle, but for the "Tao of Now" I use unpredictable numbers (in that is is impossible to predict the number due to the fact they are changing many thousands of time per second) but numbers that are based in an external reality that is still beyond our influence.  Hence, it preserves the essence of "from beyond the limits of man", which is the intention behind using real random numbers, and, and yet is inextricably integrated into this world of linear time.  For more on the significance and relationship between the six lines and the six planets, see <a href="">Astrology and the Planets</a> <p>
+         The "SHORT" button is not yet working, but it will show a very short "answer", 
+         like a few sentences, rather that a few pages.   
+        </p>
+        <p>
+        Typically random numbers are used for querying the oracle, but for the 
+        "Now" an "Short" I use unpredictable numbers (in that is is impossible to predict 
+        the number due to the fact they are changing many thousands of time per 
+        second) but numbers that are based in an external reality that is still 
+        beyond our influence.  Hence, it preserves the essence of "from beyond 
+        the limits of man", which is the intention behind using real random 
+        numbers, and, and yet is inextricably integrated into this world of 
+        linear time.  For more on the significance and relationship between the 
+        six lines and the six planets, see <a href="">Astrology and the Planets</a> <p>
     </p>
     </div>
     <!-- ----------------------------------------------------------------------->
