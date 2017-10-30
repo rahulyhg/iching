@@ -40,18 +40,18 @@ $(document).ready(function () {
         /* below is anotehr way to do the same, but what is the diff? */
         
         
-        $("#accordian1").css({
-            "min-width": "50% !important"
-        });
-        $("#accordian2").css({
-            "min-width": "50% !important"
-        });
-        $("#accordian1").css({
-            "max-width": "50% !important"
-        });
-        $("#accordian2").css({
-            "max-width": "50% !important"
-        });
+//        $("#accordian1").css({
+//            "min-width": "50% !important"
+//        });
+//        $("#accordian2").css({
+//            "min-width": "50% !important"
+//        });
+//        $("#accordian1").css({
+//            "max-width": "50% !important"
+//        });
+//        $("#accordian2").css({
+//            "max-width": "50% !important"
+//        });
  
         
 //        $(".container").css({
