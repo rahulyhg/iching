@@ -281,11 +281,11 @@ border:1px solid red;
     font-weight:bold;
     background-color:white;
     border:3px solid red;
-    width: 40%;
-    top: 70px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    width: 700px;
+/*    top: 70px;*/
+    position: relative
+/*    top: 0px;*/
+/*    left: 0px;*/
 }
 .content {
     border:0px solid grey;

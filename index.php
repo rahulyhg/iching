@@ -667,7 +667,7 @@ $a = null;
                 <div  style="padding-bottom:20px;left: 50%;right: 50%; position:absolute; z-index:100;top:10;" class='textWrapper'>
                     <div class='subtextWrapper'>
                         <div id="download" style="font-variant-caps: all-small-caps ; font-weight: bold;color:black">
-                            <a id="download_file" target="_blank" href="<?= $_SESSION['dlfile'] ?>">Download<br>
+                            <a id="download_file" target="_blank" href="<?= $_SESSION['dlfile'] ?>">Download this cast as PDF<br>
                         </div>
                     </div>
                 </div>

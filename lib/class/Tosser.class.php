@@ -120,7 +120,7 @@ class Tosser {
 
     public function getHotBits() {
         $lines = array();
-        $uid = "hb_" . session_id(); //uniqid("hb_"); /* used to save and inspect values */
+        $uid = "hotbits_" . session_id(); //uniqid("hb_"); /* used to save and inspect values */
         for ($i = 0; $i < 6; $i++) {
             $hotbits = $this->getCleanHotBits($uid);
             $line = null;
@@ -137,19 +137,28 @@ class Tosser {
     private function getCleanHotBits($id) {
         $intAry = array();
         $hotbitsURL = "http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=3&fmt=c&apikey=HB1P93mBRUA23F7HUF5MCpyZ2PS";
-        $start = microtime();
-        $str = file_get_contents($hotbitsURL);
-        /* $str = "/* Random data from the HotBits radioactive random number generator * /\nunsigned char hotBits[3] = {\n    10, 240, 151\n};"; */
+ //       $hotbitsURL = "http://www.fourmilab.ch/cgi-bin/uncgi/Hotbits?nbytes=3&fmt=c&pseudo=pseudo";
 
-        preg_match('/[\d].*[\d]/', $str, $matches, PREG_OFFSET_CAPTURE);
-        $str = ($matches[0][0]);
+        $start = microtime(true);
+
+        $str = file_get_contents($hotbitsURL);
+        $str = str_replace("\n", "", $str);
+        $str = str_replace("\r", "", $str);
+
+        $re = '/^.*{\s*([\d]*),\s*([\d]*),\s*([\d]*)}.*$/sU';
+        $subst = '$1,$2,$3';
+        $result = preg_replace($re, $subst, $str);
+        
+        $str = $result;
         $hotbits = explode(",", $str);
-        $end = microtime();
+
+        $end = microtime(true);
+
         $tdelta = $end - $start;
         $f = fopen("id/${id}", "w");
-        $fb = var_export($f, TRUE);
+        $fb = var_export($hotbits, TRUE);
         fwrite($f, $fb);
-        fwrite($f, $$tdelta . "\n");
+        fwrite($f, $tdelta . "\n");
         fclose($f);
 
         foreach ($hotbits as $h) {

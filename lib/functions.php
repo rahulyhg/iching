@@ -588,7 +588,6 @@ function makeMDfromTemplate($alldata) {
         $tosstype = "Modern Plum Method";
     }
     if ($_REQUEST['mode'] == "r-decay") {
-        $r = $tosser->getHotBits();
         $tosstype = "Fermi Lab's 'HotBits' radioactive decay random number generator";
     }
     if ($_REQUEST['mode'] == "random.org") {
