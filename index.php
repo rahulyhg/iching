@@ -28,15 +28,16 @@ $a = null;
     /* *****************************************
      * the "here2" div is the dim for a device
      * *****************************************/
-    ?>   
-    <div id = "dlapp"class="container container-top">
-        <div style="font-size: 14pt; font-weight:bold">Download the BabelBrowser Android App.</div>
-        <a href="http://babelbrowser.com/android_beta_0.1.apk"><img style="border:1px solid grey;width:250px" src="/images/qr-code.png"/></a>
-        <div style="font-size: 10pt">This is from our servers, <b>not</b> from Google Play. This app is very, very beta, and is  
-            nothing more than the website wrapped in an application.  It is mainly for those who want to explore and give feedback.
+    if (!isset($_REQUEST['flipped'])) { 
+        ?>   
+        <div id = "dlapp"class="container container-top">
+            <div style="font-size: 14pt; font-weight:bold">Download the BabelBrowser Android App.</div>
+            <a href="http://babelbrowser.com/android_beta_0.1.apk"><img style="border:1px solid grey;width:250px" src="/images/qr-code.png"/></a>
+            <div style="font-size: 10pt">This is from our servers, <b>not</b> from Google Play. This app is very, very beta, and is  
+                nothing more than the website wrapped in an application.  It is mainly for those who want to explore and give feedback.
+            </div>
         </div>
-    </div>
-
+    <?php } ?>
     <div id = 'here2' class="container container-top">
         <!-- ------------------------------------------------------------>
         <?php 
