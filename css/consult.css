@@ -218,7 +218,11 @@ address {
 }
 
 #tosstype, #manualinput {
-    min-width:330px;
+/*
+this was only used to create the right column fro help icons, which have been remobved
+
+min-width:330px;
+*/
 }
 .qbox {
     border: 1px solid whitesmoke;

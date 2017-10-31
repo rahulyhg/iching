@@ -118,6 +118,7 @@ $(document).ready(function () {
             this.parent().css("overflow", "scroll");
             this.css("min-height", (vh ) + "px");
             this.parent().css("max-width", "568px");
+            this.css("min-width", "568px");
         } else {
         }
 
