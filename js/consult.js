@@ -71,6 +71,7 @@ $(document).ready(function () {
     /* *********************************************************
      * functions to format and show popup help boxes 
      * *********************************************************/
+    
     $.fn.center = function () {
         this.css("position", "absolute");
         this.css("top", ($(window).height() - this.height()) / 2 + "px");
@@ -79,24 +80,49 @@ $(document).ready(function () {
     };
 
     $.fn.recss = function (e) {
-        /* ignore function if one of the top buttons were pressed */
         if (e.target.className == "rdbbtns") {
             return(true);
         }
         e.preventDefault();
-        var w = $(window).innerWidth();
-        var h = $(window).innerHeight();
-        console.log(w);
+        console.log(this);
+        var top =  $(document).scrollTop();
+        var h=  $(document).height();
+        var vh =  $(document).innerHeight();
+        var wtop =  $(window).scrollTop();
+        var wo =  $(window).outerHeight();
+        var idName = "";
+        if (typeof this !== 'undefined') {
+            if (typeof this[0] !== 'undefined') {
+                if (typeof this[0]['id'] !== 'undefined') {
+                    idName = this[0]['id'];
+                }
+            }
+        }
+        
 
+        console.log("top: " + top);
+        console.log("h: " + h);
+        console.log("vh: " + vh);
+        console.log("wtop: " + wtop);
+        console.log("wo: " + wo);
 
-        var top = $(document).scrollTop();
+        this.parent().css("width","80%");
+        this.parent().css("top",top + "px");
+        this.parent().css("left","10%");
+        this.parent().css("border","3px solid red");
+        //this.parent().css("position","fixed");
+        this.css("overflow", "hidden");
 
-        this.parent().css("width", w*.8);
-        this.parent().css("top", top + "px");
-        this.parent().css("left", "10%");
-        this.parent().css("border", "3px solid red");
-        this.parent().css("position", "fixed");
+        if (idName == 'helptipmsg' ) {
+            this.parent().css("height", (vh * .9) + "px");
+            this.parent().css("overflow-y", "scroll");
+            this.css("min-height", (vh ) + "px");
+            this.parent().css("max-width", "568px");
+        } else {
+        }
 
+        //return($this);
+    
     };
 
     
@@ -380,37 +406,55 @@ $(document).ready(function () {
         });
     });
 
+
     $(function () {
-        $("#qtr1tipmsg").dialog({
+        $("#helptipmsg").dialog({
             autoOpen: false
         });
-        $("#qtr1tip").on("click", function ($e) {
-            var o = $("#qtr1tipmsg");
-            o.dialog("open");
-            o.recss($e);
-        });
-    });
-    $(function () {
-        $("#qtr2tipmsg").dialog({
-            autoOpen: false
-        });
-        $("#qtr2tip").on("click", function ($e) {
-            var o = $("#qtr2tipmsg");
-            o.dialog("open");
-            o.recss($e);
-        });
-    });
-    $(function () {
-        $("#qtr3tipmsg").dialog({
-            autoOpen: false
-        });
-        $("#qtr3tip").on("click", function ($e) {
-            var o = $("#qtr3tipmsg");
+        $("#helptip").on("click", function ($e) {
+            var o = $("#helptipmsg");
             o.dialog("open");
             o.recss($e);
         });
     });
     
+    //    $(window).on('resize', function(){
+    //        $("#helptip").trigger("click");
+    //    });
+
+//    $(function () {
+//        $("#qtr1tipmsg").dialog({
+//            autoOpen: false
+//        });
+//        $("#qtr1tip").on("click", function ($e) {
+//            var o = $("#qtr1tipmsg");
+//            o.dialog("open");
+//            o.recss($e);
+//        });
+//    });
+//    
+//
+//    $(function () {
+//        $("#qtr2tipmsg").dialog({
+//            autoOpen: false
+//        });
+//        $("#qtr2tip").on("click", function ($e) {
+//            var o = $("#qtr2tipmsg");
+//            o.dialog("open");
+//            o.recss($e);
+//        });
+//    });
+//    $(function () {
+//        $("#qtr3tipmsg").dialog({
+//            autoOpen: false
+//        });
+//        $("#qtr3tip").on("click", function ($e) {
+//            var o = $("#qtr3tipmsg");
+//            o.dialog("open");
+//            o.recss($e);
+//        });
+//    });
+//    
     /* *********************************************************
      * Special case for popup over hover for donate tip
      * *********************************************************/

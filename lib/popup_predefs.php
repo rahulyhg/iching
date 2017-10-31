@@ -102,10 +102,27 @@
     </p>
     </div>
     
+    <div id="helptipmsg" title="Help">
+        <div id="outer" style="position:absolute;">
+            <div id="inner">
+                <h3>    
+                See the <a href="/book/ichingbook/_book/instructions.html">documentation</a> for more details</br>
+                </h3>
+                <img style="width:116%" src="/images/help.png">
+            </div>
+        </div>
 
 
+<!--        <div>
+            <img style="width:100%" src="/images/help.png">
+        </div>-->
+    </div>
 
 
+  
+  
+  
+  
 <!-- body > div:nth-child(17)
     <!-- ----------------------------------------------------------------------->
     <div id="qtr1tipmsg" style="width:80% !important" title="NOW and SHORT">

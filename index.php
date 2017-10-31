@@ -38,15 +38,13 @@ $a = null;
             </div>
         </div>
         <div id = "donateHP"class="container container-top">
-            <div style="font-size: 14pt; font-weight:bold">If you like this site, please consider supporting it.</div>
-
-      
+            <div style="font-size: 14pt; font-weight:bold">If you like this site, please consider supporting it.</div>      
             <p>
-            <img style="border:1px solid grey;width:250px" src="/images/bitcoin_addr.png">
+                <img style="border:1px solid grey;width:250px" src="/images/bitcoin_addr.png">
             </p>
                 
             <p>
-            <span style="font-size:10pt">1JSPBvhepQMVV9znim5eo9bE7BGkK5N2te</span>  
+                <span style="font-size:10pt">1JSPBvhepQMVV9znim5eo9bE7BGkK5N2te</span>  
             </p>
         </div>
     <?php } ?>
@@ -99,7 +97,7 @@ $a = null;
 
                 <span class="qbox qboxClear" style="flex-direction:row;background-color:transparent !important;height:80px;width:60px;">
                 <img id="nowbutton"  src="/images/nowbutton80.png">
-                <img id="buttonSpacer" src="/images/thinline350.png">
+                <img id="helptip" class="buttopnSpacer" src="/images/qmark.png"/>
                 <img id="shortbutton"  src="/images/shortbutton_grey.png">
                 </span>
 
@@ -114,9 +112,11 @@ $a = null;
                 <?php 
                 /* *****************************************
                  * The help for Tao of Now
-                 * *****************************************/
-                ?>
+                 * *****************************************
                 <img class="qtrtip" id="qtr1tip" src="/images/_info.png"/>
+                 */
+                ?>
+
             </form>
 
             <?php 
@@ -186,9 +186,11 @@ $a = null;
                 <?php 
                 /* *****************************************
                  * The help for main question box
-                 * *****************************************/
-                ?>
+                 * *****************************************
                 <img class="qtrtip" id="qtr2tip" src="/images/_info.png"/>
+                */
+                ?>
+                 
             </form>
 
             <?php 
@@ -214,9 +216,11 @@ $a = null;
                 <?php 
                 /* *****************************************
                  * The help for The Compare 2 hex box
-                 * *****************************************/
-                ?>
+                 * *****************************************
                 <img class="qtrtip" id="qtr3tip" src="/images/_info.png"/>
+                */        
+                ?>
+
             </form>
             <div class="qboxSug">
                 <form method="POST" action="">

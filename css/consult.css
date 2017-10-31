@@ -428,10 +428,18 @@ html,body {
 }
 
 #buttonSpacer {
-    min-width:70px;
-    max-width:70px;
+    width:35px;
+    
+    margin-left:20px;
+    margin-right:20px;
 }
-
+#helptip {
+    cursor: pointer;
+        width:35px;
+    
+    margin-left:20px;
+    margin-right:20px;
+}
 /* is says trigger at 1030, but it actually triggers at 772 ? FIXME */
 
 @media only screen and (max-width: 1030px) {
@@ -447,8 +455,8 @@ html,body {
     .rdbbtns {
         width:50px;
         height:50px;
-        margin-left:0px;
-        margin-right:0px;
+        margin-left:8px;
+        margin-right:8px;
         margin-top:3px;
         margin-bottom:3px;
     }
@@ -484,6 +492,15 @@ html,body {
         min-width:35px;
         max-width:35px;
     }
+    .qbox {
+        border: 2px solid #666666;
+    }
+    #buttonSpacer {
+    width:35px;
+    
+    margin-left:10px;
+    margin-right:10px;
+}
 
 }
 
