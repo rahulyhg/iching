@@ -134,6 +134,7 @@ $(document).ready(function () {
 
         if (idName == 'helptipmsg' ) {
             //this.parent().css("height", (vh * .9) + "px");
+            this.parent().css("width","80%");
             this.parent().css("overflow", "hidden");
             this.css("overflow", "hidden");
 //            var parentHeight = $('parent').height();
