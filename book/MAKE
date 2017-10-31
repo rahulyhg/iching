@@ -1,6 +1,8 @@
 # make the files
 #------------------------
-rm ichingbook/_book/hexagrams/*.html
+cd ichingbook
+find -name "*html" -exec rm {} \;
+cd -
 php ./makemds.php
 
 # get and remote updaes
@@ -8,7 +10,7 @@ php ./makemds.php
 cd ichingbook
 git pull
 #rm -rf The\ Hexagrams
-#m -rf _book
+rm -rf _book
 
 #add the subdir we just made
 #------------------------
