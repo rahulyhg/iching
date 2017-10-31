@@ -146,7 +146,7 @@ $(document).ready(function () {
             /* when commented, the y-scrollbar is on the browser
              * uncommented, and it's on the div
              */
-            $('#parent').height(nh + "px");
+            //$('#parent').height(nh + "px");
             //$('#parent').css("max-height",  nh + "px !important");
             //$('#parent').css("min-height",  nh + "px !important");
         } 
