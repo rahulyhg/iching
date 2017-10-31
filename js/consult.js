@@ -84,12 +84,17 @@ $(document).ready(function () {
             return(true);
         }
         e.preventDefault();
-        console.log(this);
+//        console.log(this);
         var top =  $(document).scrollTop();
         var h=  $(document).height();
         var vh =  $(document).innerHeight();
         var wtop =  $(window).scrollTop();
         var wo =  $(window).outerHeight();
+        /* get height of topmost container and use 80% */
+        var nh = wo * .8;
+        /* 65 to compensate fro header height and scrollbar and a few otehr paddings, etc */
+        nh = nh-65;
+        
         var idName = "";
         if (typeof this !== 'undefined') {
             if (typeof this[0] !== 'undefined') {
@@ -99,28 +104,54 @@ $(document).ready(function () {
             }
         }
         
-
-        console.log("top: " + top);
-        console.log("h: " + h);
-        console.log("vh: " + vh);
-        console.log("wtop: " + wtop);
-        console.log("wo: " + wo);
-
+            
+//        console.log("top: " + top);
+//        console.log("h: " + h);
+//        console.log("vh: " + vh);
+//        console.log("wtop: " + wtop);
+//        console.log("wo: " + wo);
+//
+//
         this.parent().css("width","80%");
+//        this.parent().css("height","95%");
+        //this.parent().css("height",nh+"px");
         this.parent().css("top",top + "px");
         this.parent().css("left","10%");
         this.parent().css("border","3px solid red");
         //this.parent().css("position","fixed");
         this.css("overflow", "hidden");
 
+//
+//            var helptipHeight = $('#helptipmsg').parent().parent().height();
+//            var parentHeight = $('#parent').height();
+//            var parentparentHeight = $('#parentparent').height();
+//
+//        console.log("helptipHeight: " + helptipHeight);
+//        console.log("parentHeight: " + parentHeight);
+//        console.log("parentparentHeight: " + parentparentHeight);
+//        console.log("--------------------------------------------");
+
+
         if (idName == 'helptipmsg' ) {
-            this.parent().css("height", (vh * .9) + "px");
-            this.parent().css("overflow", "scroll");
-            this.css("min-height", (vh ) + "px");
-            this.parent().css("max-width", "568px");
-            this.css("min-width", "568px");
-        } else {
-        }
+            //this.parent().css("height", (vh * .9) + "px");
+            this.parent().css("overflow", "hidden");
+            this.css("overflow", "hidden");
+//            var parentHeight = $('parent').height();
+//            var parentparentHeight = $('parentparent').height();
+            
+            //this.css("max-height",  (wo*.9) + "px");
+            
+            $('helpmsgtip').css("height",nh + "px");
+            
+            /* when commented, the y-scrollbar is on the browser
+             * uncommented, and it's on the div
+             */
+            $('#parent').height(nh + "px");
+            //$('#parent').css("max-height",  nh + "px !important");
+            //$('#parent').css("min-height",  nh + "px !important");
+        } 
+//        else {
+//        }
 
         //return($this);
     

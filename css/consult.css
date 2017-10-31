@@ -1,3 +1,23 @@
+
+            #parentparent {
+            overflow: hidden !important;
+            }
+            #parent {
+                
+                top:0px;
+                height:100%;
+               overflow-x:scroll;
+                overflow-y:scroll;
+            }
+            #image {
+                min-height:568px;
+                min-width:586px;
+
+            }
+
+
+
+
 #accordion1
 #accordion1 {
    width:80% !important; 

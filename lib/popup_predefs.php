@@ -102,21 +102,35 @@
     </p>
     </div>
     
-    <div id="helptipmsg" title="Help">
-        <div id="outer" style="position:absolute;">
-            <div id="inner">
-                <h3>    
-                See the <a href="/book/ichingbook/_book/instructions.html">documentation</a> for more details</br>
-                </h3>
-                <img style="width:116%" src="/images/help.png">
+    <div id="helptipmsg" style="padding:0px;margin:0px" title="Help">
+        
+            <div id="parentparent" style="overflow:scroll">
+                <div id="parent" style="position:relative;">
+                    <div id="image">
+                        <h3>    
+                            See the <a href="/book/ichingbook/_book/instructions.html">documentation</a> for more details</br>
+                        </h3>
+                        <img style="width:100%" src="/images/help.png">
+                    </div>
+                </div>
+            </div>        
+        
+        
+        <!-- div id="hWrapper" style="overflow:scroll">
+            <div id="hOuter" style="position:absolute;">
+                <div id="hInner">
+                    <h3>    
+                    See the <a href="/book/ichingbook/_book/instructions.html">documentation</a> for more details</br>
+                    </h3>
+                    <img style="width:116%" src="/images/help.png">
+                </div>
             </div>
-        </div>
-
-
+        </div -->
+    </div>
 <!--        <div>
             <img style="width:100%" src="/images/help.png">
         </div>-->
-    </div>
+
 
 
   
