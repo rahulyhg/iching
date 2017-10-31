@@ -115,7 +115,7 @@ $(document).ready(function () {
 
         if (idName == 'helptipmsg' ) {
             this.parent().css("height", (vh * .9) + "px");
-            this.parent().css("overflow", "auto");
+            this.parent().css("overflow", "scroll");
             this.css("min-height", (vh ) + "px");
             this.parent().css("max-width", "568px");
         } else {
