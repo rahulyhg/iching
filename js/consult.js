@@ -88,12 +88,16 @@ $(document).ready(function () {
         var top =  $(document).scrollTop();
         var h=  $(document).height();
         var vh =  $(document).innerHeight();
+        var vw =  $(document).innerWidth();
         var wtop =  $(window).scrollTop();
         var wo =  $(window).outerHeight();
         /* get height of topmost container and use 80% */
         var nh = wo * .8;
         /* 65 to compensate fro header height and scrollbar and a few otehr paddings, etc */
         nh = nh-65;
+
+        var nw = vw-35;
+        
         
         var idName = "";
         if (typeof this !== 'undefined') {
@@ -110,6 +114,7 @@ $(document).ready(function () {
 //        console.log("vh: " + vh);
 //        console.log("wtop: " + wtop);
 //        console.log("wo: " + wo);
+        console.log("vw: " + vw);
 //
 //
         this.parent().css("width","80%");
@@ -134,7 +139,8 @@ $(document).ready(function () {
 
         if (idName == 'helptipmsg' ) {
             //this.parent().css("height", (vh * .9) + "px");
-            this.parent().css("width","80%");
+                    this.parent().css("left","0%");
+            this.parent().css("width","100%");
             this.parent().css("overflow", "hidden");
             this.css("overflow", "hidden");
 //            var parentHeight = $('parent').height();
@@ -142,12 +148,17 @@ $(document).ready(function () {
             
             //this.css("max-height",  (wo*.9) + "px");
             
+//            $('helpmsgtip').parent().css("width",vw + "px");
             $('helpmsgtip').css("height",nh + "px");
             
             /* when commented, the y-scrollbar is on the browser
              * uncommented, and it's on the div
              */
             //$('#parent').height(nh + "px");
+            $('#helptipmsg').parent().width(nw + "px");
+            
+            
+            
             //$('#parent').css("max-height",  nh + "px !important");
             //$('#parent').css("min-height",  nh + "px !important");
         } 
