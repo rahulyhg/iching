@@ -1,22 +1,27 @@
 
-            #parentparent {
-            overflow: hidden !important;
-            }
-            #parent {
-                
-                top:0px;
-                height:100%;
-               overflow-x:scroll;
-                overflow-y:scroll;
-            }
-            #image {
-                min-height:568px;
-                min-width:586px;
+#parentparent {
+    overflow: hidden !important;
+}
+#parent {
 
-            }
+    top:0px;
+    height:100%;
+    overflow-x:scroll;
+    overflow-y:scroll;
+}
+#image {
+    min-height:568px;
+    min-width:586px;
+
+}
 
 
-
+#help2tip {
+        position: relative;
+        /* bottom: 0px !important; */
+        top: 440px;
+        left: 175px;
+}
 
 #accordion1
 #accordion1 {
@@ -298,6 +303,11 @@ border:1px solid red;
     margin-top:3px;
     margin-bottom:3px;
 }
+.help2button {
+    width:50px;
+    height:50px;
+}
+
 
 /* for some reason the buttons are 66px too far to the right JWFIX */
 #reset {

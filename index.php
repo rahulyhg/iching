@@ -49,14 +49,20 @@ $a = null;
         </div>
     <?php } ?>
     <div id = 'here2' class="container container-top">
-        <!-- ------------------------------------------------------------>
-        <?php 
+        <?php
+        if (isset($_REQUEST['flipped'])) { 
+            ?>
+            <div id="help2tip">
+                <img class="help2button" src="/images/qmark.png"/>
+            </div> 
+        <?php }
         /*
          *   <div id="msg" >
          *       This site is <a href="https://github.com/baardev/iching">super beta</a>.  It currently needs writers, editors, programmers, philosophers, designers and more.  If you would like to contribute to <a href="/book/ichingbook/_book/">this project</a>, <a href="mailto:duncan.stroud@gmail.com">let me know</a>.
          *   </div>
          */
         ?>        
+        <!-- ------------------------------------------------------------>
         <?php
         dbug($_REQUEST,false);
         if (!isset($_REQUEST['flipped'])) { 

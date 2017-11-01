@@ -80,19 +80,21 @@ $(document).ready(function () {
     };
 
     $.fn.recss = function (e) {
-        if (e.target.className == "rdbbtns") {
+        console.log("inrecss");
+        if (e.target.className === "rdbbtns") {
+            console.log("is rdbbtns");
             return(true);
         }
+        console.log(this);
         e.preventDefault();
-//        console.log(this);
         var top =  $(document).scrollTop();
         var h=  $(document).height();
         var vh =  $(document).innerHeight();
         var vw =  $(document).innerWidth();
         var wtop =  $(window).scrollTop();
         var wo =  $(window).outerHeight();
-        /* get height of topmost container and use 80% */
-        var nh = wo * .8;
+        /* get height of topmost container */
+        var nh = wo;
         /* 65 to compensate fro header height and scrollbar and a few otehr paddings, etc */
         nh = nh-65;
 
@@ -107,66 +109,32 @@ $(document).ready(function () {
                 }
             }
         }
-        
-            
-//        console.log("top: " + top);
-//        console.log("h: " + h);
-//        console.log("vh: " + vh);
-//        console.log("wtop: " + wtop);
-//        console.log("wo: " + wo);
+        console.log("id: " + idName);
         console.log("vw: " + vw);
-//
-//
+
         this.parent().css("width","80%");
-//        this.parent().css("height","95%");
-        //this.parent().css("height",nh+"px");
         this.parent().css("top",top + "px");
         this.parent().css("left","10%");
         this.parent().css("border","3px solid red");
-        //this.parent().css("position","fixed");
         this.css("overflow", "hidden");
-
-//
-//            var helptipHeight = $('#helptipmsg').parent().parent().height();
-//            var parentHeight = $('#parent').height();
-//            var parentparentHeight = $('#parentparent').height();
-//
-//        console.log("helptipHeight: " + helptipHeight);
-//        console.log("parentHeight: " + parentHeight);
-//        console.log("parentparentHeight: " + parentparentHeight);
-//        console.log("--------------------------------------------");
 
 
         if (idName == 'helptipmsg' ) {
-            //this.parent().css("height", (vh * .9) + "px");
-                    this.parent().css("left","0%");
+            this.parent().css("left","0%");
             this.parent().css("width","100%");
             this.parent().css("overflow", "hidden");
             this.css("overflow", "hidden");
-//            var parentHeight = $('parent').height();
-//            var parentparentHeight = $('parentparent').height();
-            
-            //this.css("max-height",  (wo*.9) + "px");
-            
-//            $('helpmsgtip').parent().css("width",vw + "px");
-            $('helpmsgtip').css("height",nh + "px");
-            
-            /* when commented, the y-scrollbar is on the browser
-             * uncommented, and it's on the div
-             */
-            //$('#parent').height(nh + "px");
+            $('#helptipmsg').css("height",nh + "px");
             $('#helptipmsg').parent().width(nw + "px");
-            
-            
-            
-            //$('#parent').css("max-height",  nh + "px !important");
-            //$('#parent').css("min-height",  nh + "px !important");
         } 
-//        else {
-//        }
-
-        //return($this);
-    
+        if (idName == 'help2tipmsg' ) {
+            this.parent().css("left","0%");
+            this.parent().css("width","100%");
+            this.parent().css("overflow", "hidden");
+            this.css("overflow", "hidden");
+            $('#help2tipmsg').css("height",nh + "px");
+            $('#help2tipmsg').parent().width(nw + "px");
+        } 
     };
 
     
@@ -463,6 +431,16 @@ $(document).ready(function () {
         });
         $("#helptip").on("click", function ($e) {
             var o = $("#helptipmsg");
+            o.dialog("open");
+            o.recss($e);
+        });
+    });
+    $(function () {
+        $("#help2tipmsg").dialog({
+            autoOpen: false
+        });
+        $("#help2tip").on("click", function ($e) {
+            var o = $("#help2tipmsg");
             o.dialog("open");
             o.recss($e);
         });
