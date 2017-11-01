@@ -53,7 +53,7 @@ $a = null;
         if (isset($_REQUEST['flipped'])) { 
             ?>
             <div id="help2tip">
-                <img class="help2button" src="/images/qmark.png"/>
+                <img class="help2button" src="/images/infobutton50.png"/>
             </div> 
         <?php }
         /*
@@ -103,7 +103,7 @@ $a = null;
 
                 <span class="qbox qboxClear" style="flex-direction:row;background-color:transparent !important;height:80px;width:60px;">
                 <img id="nowbutton"  src="/images/nowbutton80.png">
-                <img id="helptip" class="buttopnSpacer" src="/images/qmark.png"/>
+                <img id="helptip" class="buttonSpacer" src="/images/infobutton50.png"/>
                 <img id="shortbutton"  src="/images/shortbutton_grey.png">
                 </span>
 
