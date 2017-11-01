@@ -1415,8 +1415,10 @@ function c($s) {
 function htmlize($s) {
 //  https://www.functions-online.com/preg_replace.html
     //$r = preg_replace('/\n\n/s', '\n<p></p>\n', $s);
+
     $r = preg_replace("/\r/", "", $s);
     $r = preg_replace("/(\n)/", '<br/>$1', $r);
     $r = preg_replace("/(\n\n)/", '$1<p></p>$1', $r);
+
     return($r);
 }

@@ -406,7 +406,7 @@ $a = null;
                     </p>
 
                     <p>
-                        <i><?= $t['judge_old'] ?></i>
+                        <i><?= htmlize($t['judge_old']) ?></i>
                     </p>
                         <p>
                             <b>The Expanded Text</b>
@@ -428,7 +428,7 @@ $a = null;
                         <b>The Upper Trigram</b>
                     </p>
                     <p>
-                        <?= $t['tri_upper'] ?>
+                        <?= htmlize($t['tri_upper']) ?>
                     </p>
                     <p>
                         <b>The Lower Trigram</b>
@@ -456,7 +456,7 @@ $a = null;
                         <b>The Ancient Assocated Image</b>
                     </p>
                     <p>
-                        <i><?= $t['image_old'] ?></i>
+                        <i><?= htmlize($t['image_old']) ?></i>
                     </p>
                     <p>
                         <?php
@@ -486,7 +486,7 @@ $a = null;
                 <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                     <p>
                     <?php
-                        echo getNotes($t['pseq']) ;
+                        echo htmlize(getNotes($t['pseq'])) ;
                     ?>
                     </p>
                 </div>
@@ -503,12 +503,12 @@ $a = null;
                             $j = 6-$i ;
                             ?>
                             <h3 style="font-size:1.2em !important" class="eLines lColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                            <?= $t['line_' . $j] ?>
+                            <?= htmlize($t['line_' . $j]) ?>
                             </h3>
                             <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                                 <div class="content line_org" id="line_<?= $j ?>_org">
                                     <p>
-                                        <?= $t['line_' . $j . '_org'] ?>
+                                        <?= htmlize($t['line_' . $j . '_org']) ?>
                                     </p>
                                 </div>
                                 <div class="content line_exp" id="line_<?= $j ?>_exp">
@@ -616,13 +616,13 @@ $a = null;
                                         <b>The Upper Trigram</b>
                                     </p>
                                     <p>
-                                        <?= $f['tri_upper'] ?>
+                                        <?= htmlize($f['tri_upper']) ?>
                                     </p>
                                     <p>
                                         <b>The Lower Trigram</b>
                                     </p>
                                     <p>
-                                        <?= $f['tri_lower'] ?><br>
+                                        <?= htmlize($f['tri_lower']) ?><br>
                                     </p>
                                     <p>
                                     <b>Explanation of the Trigrams</b>
@@ -644,7 +644,7 @@ $a = null;
                                         <b>The Ancient Assocated Image</b>
                                     </p>
                                     <p>
-                                        <i><?= $f['image_old'] ?></i>
+                                        <i><?= htmlize($f['image_old']) ?></i>
                                     </p>
                                     <p>
                                     <?php
@@ -674,7 +674,7 @@ $a = null;
                                 <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                                     <p>
                                     <?php 
-                                        echo getNotes($f['pseq']);
+                                        echo htmlize(getNotes($f['pseq']));
                                         ?>
                                     </p>
                                 </div>
