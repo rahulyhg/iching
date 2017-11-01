@@ -194,6 +194,12 @@ $(document).ready(function () {
      * manually creating a SUBMIT button fro the "Tao of Now" 
      * *********************************************************/
     /* JWFIX how to read REQUEST to add debuigging? */
+    $("#castbutton").click(function () {
+        $("#nowbutton").attr("style","width:80px;");
+        $("#nowbutton").attr("src","/images/gears-anim.gif");
+        return(true);
+    });
+    
     $("#nowbutton").click(function () {
         $("#qfield").val("Your Tao of Now");
         $("#nowbutton").attr("style","width:80px;");
@@ -587,6 +593,8 @@ $(document).ready(function () {
     $("#larger3").hover(function () {
         $('#larger3').css("cursor", "hand");
     });
+    
+    $("#hpgears").remove();
 
 });
 

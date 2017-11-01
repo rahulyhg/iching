@@ -238,7 +238,13 @@ $a = null;
             ?>
             <?php 
         } else { 
+            
+            
             /* there has been a coin toss */
+            ?>
+            <div id="hpgears" style="z-index:1000;position:absolute;top:0"><img src="/images/gears-anim.gif"></div>
+            <?php
+            
             /* get date formats for rpesenation and data */
             $dates = getDates();
 
