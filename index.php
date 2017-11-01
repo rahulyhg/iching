@@ -508,10 +508,17 @@ $a = null;
                             <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                                 <div class="content line_org" id="line_<?= $j ?>_org">
                                     <p>
+                                        <b>Original text</b>
+                                    </p>                                    
+                                    <p>
                                         <?= htmlize($t['line_' . $j . '_org']) ?>
                                     </p>
                                 </div>
                                 <div class="content line_exp" id="line_<?= $j ?>_exp">
+                                    <p>
+                                        <b>Commentary</b>
+                                    </p>                                    
+                                    <p>
                                     <p>
                                         <?= htmlize($t['line_' . $j . '_exp']) ?>
                                     </p>
