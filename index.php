@@ -100,6 +100,7 @@ $a = null;
                 <input type="hidden" name="flipped" value="1">
                 <input type="hidden" name="mode" value="astro">
                 <input type="hidden" name="trans" value="baynes">
+                <input type="hidden" name="question" value="Your Tao of Now">
 
                 <span class="qbox qboxClear" style="flex-direction:row;background-color:transparent !important;height:80px;width:60px;">
                 <img id="nowbutton"  src="/images/nowbutton80.png">

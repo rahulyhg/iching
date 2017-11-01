@@ -177,6 +177,7 @@ $(document).ready(function () {
             flipped: "1"
             , mode: "astro"
             , trans: "baynes"
+            , question: "Your Tao of Now"
 //            ,debugon:"1"    
         });
         return(true);
