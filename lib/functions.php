@@ -603,8 +603,8 @@ function makeMDfromTemplate($alldata) {
     /*
      * set the vars for the transitional hexgram template
      */
-    $page_trx->set("trx_judge_old", $txhex[0]['judge_old']);
-    $page_trx->set("trx_judge_exp", $txhex[0]['judge_exp']);
+    $page_trx->set("trx_judge_old", htmlize($txhex[0]['judge_old']));
+    $page_trx->set("trx_judge_exp", htmlize($txhex[0]['judge_exp']));
     $trx_image = getServerPrefix() . "/images/hex/small/hexagram" . f($txhex[0]['pseq']) . ".png";
     $page_trx->set("trx_image", $trx_image);
     $page_trx->set("trx_transtitle", c($txhex[0]['pseq']) . " (" . c($txhex[0]['binary']) . " = " . c($txhex[0]['bseq']) . ") " . c($txhex[0]['trans']) . " / " . c($txhex[0]['title']));
@@ -640,7 +640,7 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     /*
      * then we set the data values 
      */
-    $page_hex1->set("t_image", $t_image);
+    $page_hex1->set("t_image", htmlize($t_image));
     $page_hex1->set("t_id", f($thex[0]['pseq']));
     $page_hex1->set("t_trans", $thex[0]['trans']);
     $page_hex1->set("t_title", $thex[0]['title']);
@@ -649,13 +649,13 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     $page_hex1->set("t_bseq", f($thex[0]['bseq']));
     $page_hex1->set("t_binary", $thex[0]['binary']);
     $page_hex1->set("t_dir", $thex[0]['iq32_dir']);
-    $page_hex1->set("t_explanation", $thex[0]['explanation']);
-    $page_hex1->set("t_tri_upper", $thex[0]['tri_upper']);
-    $page_hex1->set("t_tri_lower", $thex[0]['tri_lower']);
-    $page_hex1->set("t_judge_old", $thex[0]['judge_old']);
-    $page_hex1->set("t_judge_exp", $thex[0]['judge_exp']);
-    $page_hex1->set("t_image_old", $thex[0]['image_old']);
-    $page_hex1->set("t_image_exp", $thex[0]['image_exp']);
+    $page_hex1->set("t_explanation", htmlize($thex[0]['explanation']));
+    $page_hex1->set("t_tri_upper", htmlize($thex[0]['tri_upper']));
+    $page_hex1->set("t_tri_lower", htmlize($thex[0]['tri_lower']));
+    $page_hex1->set("t_judge_old", htmlize($thex[0]['judge_old']));
+    $page_hex1->set("t_judge_exp", htmlize($thex[0]['judge_exp']));
+    $page_hex1->set("t_image_old", htmlize($thex[0]['image_old']));
+    $page_hex1->set("t_image_exp", htmlize($thex[0]['image_exp']));
 
     /*
      * set isMovingLines flag
@@ -679,12 +679,12 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
             $i = 6 - $j;
             if ($d[$j]) {
                 $page_lines->set("t_line_${i}", $thex[0]['line_' . $i]);
-                $page_lines->set("t_line_${i}_org", $thex[0]['line_' . $i . '_org']);
-                $page_lines->set("t_line_${i}_exp", $thex[0]['line_' . $i . '_exp']);
+                $page_lines->set("t_line_${i}_org", htmlize($thex[0]['line_' . $i . '_org']));
+                $page_lines->set("t_line_${i}_exp", htmlize($thex[0]['line_' . $i . '_exp']));
             } else {
                 $page_lines->set("t_line_${i}", "<span style='color:darkgray'>" . $thex[0]['line_' . $i] . "</span>");
-                $page_lines->set("t_line_${i}_org", "<span style='color:darkgray'>" . $thex[0]['line_' . $i . '_org'] . "</span>");
-                $page_lines->set("t_line_${i}_exp", "<span style='color:darkgray'>" . $thex[0]['line_' . $i . '_exp'] . "</span>");
+                $page_lines->set("t_line_${i}_org", "<span style='color:darkgray'>" . htmlize($thex[0]['line_' . $i . '_org']) . "</span>");
+                $page_lines->set("t_line_${i}_exp", "<span style='color:darkgray'>" . htmlize($thex[0]['line_' . $i . '_exp']) . "</span>");
             }
         }
 
@@ -713,13 +713,13 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
         $page_hex2->set("f_bseq", f($fhex[0]['bseq']));
         $page_hex2->set("f_binary", "(" . $fhex[0]['binary'] . ")");
         $page_hex2->set("f_dir", $fhex[0]['iq32_dir']);
-        $page_hex2->set("f_explanation", $fhex[0]['explanation']);
-        $page_hex2->set("f_tri_upper", $fhex[0]['tri_upper']);
-        $page_hex2->set("f_tri_lower", $fhex[0]['tri_lower']);
-        $page_hex2->set("f_judge_old", $fhex[0]['judge_old']);
-        $page_hex2->set("f_judge_exp", $fhex[0]['judge_exp']);
-        $page_hex2->set("f_image_old", $fhex[0]['image_old']);
-        $page_hex2->set("f_image_exp", $fhex[0]['image_exp']);
+        $page_hex2->set("f_explanation", htmlize($fhex[0]['explanation']));
+        $page_hex2->set("f_tri_upper", htmlize($fhex[0]['tri_upper']));
+        $page_hex2->set("f_tri_lower", htmlize($fhex[0]['tri_lower']));
+        $page_hex2->set("f_judge_old", htmlize($fhex[0]['judge_old']));
+        $page_hex2->set("f_judge_exp", htmlize($fhex[0]['judge_exp']));
+        $page_hex2->set("f_image_old", htmlize($fhex[0]['image_old']));
+        $page_hex2->set("f_image_exp", htmlize($fhex[0]['image_exp']));
 
         /**
          * Loads our layout template, settings its title and content.
