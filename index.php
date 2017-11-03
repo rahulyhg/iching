@@ -64,7 +64,7 @@ $a = null;
         ?>        
         <!-- ------------------------------------------------------------>
         <?php
-        dbug($_REQUEST,false);
+dbug($_REQUEST,false);
         if (!isset($_REQUEST['flipped'])) { 
             /* we have yet to flip the coins.  Regardless of what techniqu used, 'flipped' must be 1 to show there has been a flip */
             ?>
@@ -99,7 +99,7 @@ $a = null;
             <form id = "tosstype" method="POST" action="?c=<?= microtime_float() ?><?= (isset($_REQUEST['debugon']) ? "&debugon=1" : "") ?>">
                 <input type="hidden" name="flipped" value="1">
                 <input type="hidden" name="mode" value="astro">
-                <input type="hidden" name="trans" value="baynes">
+                <input type="hidden" name="trans[]" value="Wilhelm/Baynes">
                 <input type="hidden" name="question" value="Your Tao of Now">
 
                 <span class="qbox qboxClear" style="flex-direction:row;background-color:transparent !important;height:80px;width:60px;">
@@ -185,9 +185,24 @@ $a = null;
                             <input type="radio" name="mode" id="entropy" value="entropy"> 
                             <span class="text_mdcaps" id="entropymsg">entropy</span>
                         </p -->
-
-                        <span class="text_mdcaps" id="baynesmsg">Wilhelm/Baynes</span> <input type="radio" name="trans" id="baynes" value="baynes" checked > <a id="baynestip" href="#"><img src="images/g-qmark.png"></a></p> 
-                        <span class="text_mdcaps" id="aculturalmsg">Acultural</span> <input type="radio" name="trans" id="acultural" value="acultural"  > <a id="aculturaltip" href="#"><img src="images/g-qmark.png"></a></p>
+                        <p style='line-height:0%'>
+                        <span class="text_mdcaps" id="baynes">Wilhelm/Baynes 
+                            <input type="checkbox" name="trans[]" id="baynesVal" value="Wilhelm/Baynes" checked="checked" > 
+                                <a id="baynestip" href="#"><img src="images/g-qmark.png"></a>
+                        </span>
+                        </p>
+                        <p style='line-height:0%'>
+                        <span class="text_mdcaps" id="acultural">Incl. Alt <span style='font-size:8pt'>(if exists) 
+                            <input type="checkbox" name="trans[]" id="aculturalVal" value="Duncan Stroud" > 
+                                <a id="aculturaltip" href="#"><img src="images/g-qmark.png"></a>
+                        </span>
+                        </p>
+                        <p style='line-height:0%'>
+                        <span class="text_mdcaps" id="qabalah">Incl. Qab. <span style='font-size:8pt'>(if exists)
+                            <input type="checkbox" name="trans[]" id="qabalahVal" value="Qabalah" > 
+                                <a id="qabalahtip" href="#"><img src="images/g-qmark.png"></a>
+                        </span>
+                        </p>
                     </div>
                 </span>        
                 <?php 
@@ -215,6 +230,12 @@ $a = null;
                         $fromNum = rand(1,64);
                         $toNum = $GLOBALS['dbh']->getHexnumOppositeByPseq($fromNum);
                         ?>
+                        <?php
+                        /* get the values, in consult.js, from the above form and set them here */
+                        ?>
+                        <input type="hidden" name="trans[]" id="man_baynesVal" value="" > 
+                        <input type="hidden" name="trans[]" id="man_aculturalVal" value=""  >
+
                         <input class = "doublenum"       id="f_tossed"     type="text"   name="f_tossed" placeholder="<?= $fromNum ?>" value="">
                         <input class = "doublenum"       id="f_final"      type="text"   name="f_final" placeholder="<?= $toNum ?>" value="">
                         <input class = "btn btn-primary" id="manualTossed" type="submit" value="Show">
@@ -247,7 +268,13 @@ $a = null;
         } else { 
             
             
-            /* there has been a coin toss */
+            /***********************************************************************************
+            /***********************************************************************************
+            /***********************************************************************************
+             *  there has been a coin toss 
+            /***********************************************************************************
+            /***********************************************************************************
+             ***********************************************************************************/
             ?>
             <div id="hpgears" style="z-index:1000;position:absolute;top:0"><img src="/images/gears-anim.gif"></div>
             <?php
@@ -284,9 +311,15 @@ $a = null;
             $t = array(); /* array for original tossed hexagram */
             $f = array(); /* array for the final hexagram */
             $d = array(); /* array for deltas, six 0's and 1 */
-
-            $ary = getToss(); /* throw the coins */
-
+            /*****************************************************************
+             *****************************************************************
+             *****************************************************************
+             * this is the point where all the data get accessed     
+             ******************************************************************
+             ******************************************************************
+             ******************************************************************/
+            $ary = getToss($_REQUEST['trans']);/* throw the coins */
+   
             $a = $GLOBALS['dbh']->getAllHexes(); /* set global for ALL hexes, used for reference, rather than  teh dataabase */
 
             /* fill in the arrays with tossed data */
@@ -296,434 +329,458 @@ $a = null;
             $t['ddate'] = $dates['data']; /* throw in a date fro file retreival later */
             $t['hdate'] = $dates['human']; /* throw in a date fro file retreival later */
             $t['question'] = $_REQUEST['question']; /* throw in a date fro file retreival later */
-
-            /* 'fix' is special column for editing notes.  Show any 'fix' comments if they exist */
-            print showFixes($t);
-
-            /* presents the hexagrams 
-             * -----------------------
-             * we send the binary '0100101' of the hex and the delta, a uid so the 
-             * js can identify unique elements         
-             * 'fade_final' tell teh function both which hex to fade, but of set to 'fade_final'
-             * we also know this is the first call to function, which we want to know
-             */
-            $ret = makeHex(str_split($t['binary']), $d, uniqid(), "fade_final");
-
-            print $ret['hexes'];
-            /* make the Hu Kua's for the T an F hexes */
-            $t_hukua = makeHuKua($t['binary']);
-            $f_hukua = makeHuKua($f['binary']);
-            ?>
-            <script>
-                $(".container-top").css("background-image","url(/images/qboxbg2.png");
-                $(".container-top").css("background-size","cover");
-            </script>
             
-            <?php 
-            /* the 't' query param is only set when you are viewing the Hu Kua.  't' and 'f' are set
-             * as params to the 'view Hu Kua' link so the user can navigate back to the original vua the 'view Pen Kua'
-             */
-            if (!isset($_REQUEST['t'])) { 
-                /* Show Hu Kua links */
-                ?>
-                <div id='here3' class='textWrapper'>
-                    <div class='subtextWrapper'>
-                        <a style="font-size:16pt" href='/index.php?t=<?=$t['pseq']?>&f=<?=$f['pseq']?>&flipped=1&kua=Hu-Kua&f_tossed=<?= $t_hukua ?>&f_final=<?= $f_hukua ?>'>View the Hu Kua</a>
-                        <?php /* this is the jquery-ui popup link for the HuKua */ ?>
-                        <a id="hukuatip" class="hukuatip"  href="#">
-                            <img style="width:20px" src="/images/qmark-small-bw.png">
-                            <span id="hukuatipmsg"></span>
-                        </a> 
-                    </div>
-                </div>
-                <?php
-            } else { 
-                /* Show Pen Kua links */
-                ?>
-                <div id='here3' class='textWrapper'>
-                    <div class='subtextWrapper'>
-                        <a style="font-size:16pt" href='/index.php?flipped=1&f_tossed=<?= $_REQUEST['t'] ?>&f_final=<?= $_REQUEST['f'] ?>'>View the Pen Kua</a>
-                        <?php /* this is the jquery-ui popup link for the HuKua */ ?>
-                        <a id="penkuatip" class="penkuatip"  href="#">
-                            <img style="width:20px" src="/images/qmark-small-bw.png">
-                            <span id="penkuatipmsg"></span>
-                        </a> 
-                    </div>
-                </div>
-                <?php
-            }
-
-            /* save all data as a json file... later this will be retreivable 
-             * this had to go here so it coudl read a $_SERVER had that needs to get set first 
-             * 
-             * This also maked the *.md files, which are turned into *.html files, 
-             * which are turned into *.pdf files
-             */
-
-            saveToFile($t, $d, $f);             
-             
-            /*
-             * This showed the images of the hex, before the css version replaced
-             * Keeping it in case the CSS versions goes wonky
-             * 
-                <div>
-                    <img class="heximg select" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
-                    <img class="heximg" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
-                </div>
-             * 
-             */    
-
-            /* *************************************************************************** */
-            ?>
-            <div class="awrapper">
-                <?php /* this is the tool bar */ ?>
-                <div style="border:0px solid red;background-color: transparent;padding:4px;">
-                    <span>        
-                        <?php print putBtnExpand(); ?>
-                        <?php print putBtnEdit($t['bseq']); ?>
-                        <?php print putBtnUpdate($t['bseq']); ?>
-                        <?php print putBtnSmTxt(); ?>
-                        <?php print putBtnMedTxt(); ?>
-                        <?php print putBtnLgTxt(); ?>
-                    </span>
-                </div>
             
-                <div style = "min-width:100%;max-width:100%" id="accordion1">
-                <?php 
-                /*
-                 *  First Title
+
+                /* 'fix' is special column for editing notes.  Show any 'fix' comments if they exist */
+                //print showFixes($t);
+
+                /* presents the hexagrams 
+                 * -----------------------
+                 * we send the binary '0100101' of the hex and the delta, a uid so the 
+                 * js can identify unique elements         
+                 * 'fade_final' tell teh function both which hex to fade, but of set to 'fade_final'
+                 * we also know this is the first call to function, which we want to know
                  */
-                ?>
-                <h3 id="firstheader" style="font-size:1.2em !important" class="eTitle t_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                    <?= c($t['pseq']) ?> (<?= c($t['title']) ?>) <?= c($t['trans']) ?>
+                $ret = makeHex(str_split($t['binary']), $d, uniqid(), "fade_final");
 
-                    <a id="donatetip" class="donatetip"  href="#">
-                        <div id="donate" class="btn btn-warning" title="Plea">
-                            <b>Donate to this project</b>
+                print $ret['hexes'];
+               /* make the Hu Kua's for the T an F hexes */
+                $t_hukua = makeHuKua($t['binary']);
+                $f_hukua = makeHuKua($f['binary']);
+                ?>
+                <script>
+                    $(".container-top").css("background-image","url(/images/qboxbg2.png");
+                    $(".container-top").css("background-size","cover");
+                </script>
+
+                <?php 
+            /* if "short" is selected we skip all the otehr stuff and just print the short reply */
+            if ($_REQUEST['trans'][0] == "short") {
+                print makeShortText($t,$f,$d);
+                ?>
+                <script>
+                    $(".container-top").css("background-image","url(/images/qboxbg2.png");
+                    $(".container-top").css("background-size","cover");
+                </script>
+
+                <?php
+                
+            } else {
+                /* the 't' query param is only set when you are viewing the Hu Kua.  't' and 'f' are set
+                 * as params to the 'view Hu Kua' link so the user can navigate back to the original vua the 'view Pen Kua'
+                 */
+                if (!isset($_REQUEST['t'])) { 
+                    /* Show Hu Kua links */
+                    ?>
+                    <div id='here3' class='textWrapper'>
+                        <div class='subtextWrapper'>
+                            <a style="font-size:16pt" href='/index.php?t=<?=$t['pseq']?>&f=<?=$f['pseq']?>&flipped=1&kua=Hu-Kua&f_tossed=<?= $t_hukua ?>&f_final=<?= $f_hukua ?>'>View the Hu Kua</a>
+                            <?php /* this is the jquery-ui popup link for the HuKua */ ?>
+                            <a id="hukuatip" class="hukuatip"  href="#">
+                                <img style="width:20px" src="/images/qmark-small-bw.png">
+                                <span id="hukuatipmsg"></span>
+                            </a> 
                         </div>
-                        <span id="donatetipmsg"></span>
-                    </a> 
+                    </div>
+                    <?php
+                } else { 
+                    /* Show Pen Kua links */
+                    ?>
+                    <div id='here3' class='textWrapper'>
+                        <div class='subtextWrapper'>
+                            <a style="font-size:16pt" href='/index.php?flipped=1&f_tossed=<?= $_REQUEST['t'] ?>&f_final=<?= $_REQUEST['f'] ?>'>View the Pen Kua</a>
+                            <?php /* this is the jquery-ui popup link for the HuKua */ ?>
+                            <a id="penkuatip" class="penkuatip"  href="#">
+                                <img style="width:20px" src="/images/qmark-small-bw.png">
+                                <span id="penkuatipmsg"></span>
+                            </a> 
+                        </div>
+                    </div>
+                    <?php
+                }
 
-                    <?php /* this invisible one pixel line control the collapse with of the accordian */?>
-                    <br><img style="min-width:300px" src="/images/thinline350.png">
-                </h3>
-                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                    <p>
-                        <b>The Original Text</b>
-                    </p>
+                /* save all data as a json file... later this will be retreivable 
+                 * this had to go here so it coudl read a $_SERVER had that needs to get set first 
+                 * 
+                 * This also maked the *.md files, which are turned into *.html files, 
+                 * which are turned into *.pdf files
+                 */
 
-                    <p>
-                        <i><?= htmlize($t['judge_old']) ?></i>
-                    </p>
+                saveToFile($t, $d, $f);             
+
+                /*
+                 * This showed the images of the hex, before the css version replaced
+                 * Keeping it in case the CSS versions goes wonky
+                 * 
+                    <div>
+                        <img class="heximg select" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
+                        <img class="heximg" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
+                    </div>
+                 * 
+                 */    
+
+                /* *************************************************************************** */
+                ?>
+                <div class="awrapper">
+                    <?php /* this is the tool bar */ ?>
+                    <div style="border:0px solid red;background-color: transparent;padding:4px;">
+                        <span>        
+                            <?php print putBtnExpand(); ?>
+                            <?php print putBtnEdit($t['bseq']); ?>
+                            <?php print putBtnUpdate($t['bseq']); ?>
+                            <?php print putBtnSmTxt(); ?>
+                            <?php print putBtnMedTxt(); ?>
+                            <?php print putBtnLgTxt(); ?>
+                        </span>
+                    </div>
+
+                    <div style = "min-width:100%;max-width:100%" id="accordion1">
+                    <?php 
+                    /*
+                     *  First Title
+                     */
+                    ?>
+                    <h3 id="firstheader" style="font-size:1.2em !important" class="eTitle t_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                        <?= c($t['pseq']) ?> (<?= c($t['title']) ?>) <?= c($t['trans']) ?>
+
+                        <a id="donatetip" class="donatetip"  href="#">
+                            <div id="donate" class="btn btn-warning" title="Plea">
+                                <b>Donate to this project</b>
+                            </div>
+                            <span id="donatetipmsg"></span>
+                        </a> 
+
+                        <?php /* this invisible one pixel line control the collapse with of the accordian */?>
+                        <br><img style="min-width:300px" src="/images/thinline350.png">
+                    </h3>
+                    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                         <p>
-                            <b>The Expanded Text</b>
+                            <b>The Original Text</b>
                         </p>
-                    <p>
-                            <?= htmlize($t['judge_exp']) ?>
-                    </p>
-                </div>
-                <?php 
-                /*
-                 *  First Trigrams
-                 */
-                ?>
-                <h3 style="font-size:1.2em !important" class="eTrigrams tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                    The Trigrams
-                </h3>
-                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                    <p>
-                        <b>The Upper Trigram</b>
-                    </p>
-                    <p>
-                        <?= htmlize($t['tri_upper']) ?>
-                    </p>
-                    <p>
-                        <b>The Lower Trigram</b>
-                    </p>
-                    <p>
-                        <?= $t['tri_lower'] ?><br>
-                    </p>
-                    <p>
-                        <b>Explanation of the Trigrams</b>
-                    </p>
-                    <p>
-                        <?= htmlize($t['explanation']) ?>
-                    </p>
-                </div>
-                <?php 
-                /*
-                 *  First image
-                 */
-                ?>
-                <h3 style="font-size:1.2em !important" class="eImage  tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                    Image
-                </h3>
-                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                    <p>
-                        <b>The Ancient Assocated Image</b>
-                    </p>
-                    <p>
-                        <i><?= htmlize($t['image_old']) ?></i>
-                    </p>
-                    <p>
+
+                        <p>
+                            <i><?= htmlize($t['judge_old']) ?></i>
+                        </p>
+                            <p>
+                                <b>The Expanded Text</b>
+                            </p>
+                        <p>
+                                <?= htmlize($t['judge_exp']) ?>
+                        </p>
+                    </div>
+                    <?php 
+                    /*
+                     *  First Trigrams
+                     */
+                    ?>
+                    <h3 style="font-size:1.2em !important" class="eTrigrams tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                        The Trigrams
+                    </h3>
+                    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                        <p>
+                            <b>The Upper Trigram</b>
+                        </p>
+                        <p>
+                            <?= htmlize($t['tri_upper']) ?>
+                        </p>
+                        <p>
+                            <b>The Lower Trigram</b>
+                        </p>
+                        <p>
+                            <?= $t['tri_lower'] ?><br>
+                        </p>
+                        <p>
+                            <b>Explanation of the Trigrams</b>
+                        </p>
+                        <p>
+                            <?= htmlize($t['explanation']) ?>
+                        </p>
+                    </div>
+                    <?php 
+                    /*
+                     *  First image
+                     */
+                    ?>
+                    <h3 style="font-size:1.2em !important" class="eImage  tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                        Image
+                    </h3>
+                    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                        <p>
+                            <b>The Ancient Assocated Image</b>
+                        </p>
+                        <p>
+                            <i><?= htmlize($t['image_old']) ?></i>
+                        </p>
+                        <p>
+                            <?php
+                            if (file_exists(getRootDir(). "/images/symbol/image" . $t['pseq'] . ".jpg")) {
+                                $fn = "/images/symbol/image" . $t['pseq'] . ".jpg";
+                                print "<img style='width:70%' src='${fn}'>";
+                            } else {
+                                print "[no image yet]";
+                            }
+                            ?>
+                        <p>
+                            <b>Commentary and Explanation of the Image</b>
+                        </p>
+                        <p>
+                            <?= htmlize($t['image_exp']) ?>
+                        </p>
+                    </div>
+                    <?php 
+                    /*
+                     *  First Notes
+                     */  
+                    ?>
+                    <?php
+                    /*
+                    <h3 style="font-size:1.2em !important" class="eImage  tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                        Notes
+                    </h3>
+
+                    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                        <p>
                         <?php
-                        if (file_exists(getRootDir(). "/images/symbol/image" . $t['pseq'] . ".jpg")) {
-                            $fn = "/images/symbol/image" . $t['pseq'] . ".jpg";
-                            print "<img style='width:70%' src='${fn}'>";
-                        } else {
-                            print "[no image yet]";
+                            echo htmlize(getNotes($t['pseq'])) ;
+                        ?>
+                        </p>
+                    </div>
+
+                    <?php
+                    */
+                    ?>
+                    <?php 
+                    /*
+                     *  The Lines
+                     */  
+
+                    /* if T == F then there are no moving lines, so skip */
+                    if ($t['bseq'] != $f['bseq'] ) {  
+                        for ($i = 5; $i >= 0; $i-- ) {
+                            if ($d[$i] == 1) {
+                                $j = 6-$i ;
+                                ?>
+                                <h3 style="font-size:1.2em !important" class="eLines lColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                                <?= htmlize($t['line_' . $j]) ?>
+                                </h3>
+                                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                                    <div class="content line_org" id="line_<?= $j ?>_org">
+                                        <p>
+                                            <b>Original text</b>
+                                        </p>                                    
+                                        <p>
+                                            <?= htmlize($t['line_' . $j . '_org']) ?>
+                                        </p>
+                                    </div>
+                                    <div class="content line_exp" id="line_<?= $j ?>_exp">
+                                        <p>
+                                            <b>Commentary</b>
+                                        </p>                                    
+                                        <p>
+                                        <p>
+                                            <?= htmlize($t['line_' . $j . '_exp']) ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <?php
+                            }
                         }
                         ?>
-                    <p>
-                        <b>Commentary and Explanation of the Image</b>
-                    </p>
-                    <p>
-                        <?= htmlize($t['image_exp']) ?>
-                    </p>
-                </div>
-                <?php 
-                /*
-                 *  First Notes
-                 */  
-                ?>
-                <h3 style="font-size:1.2em !important" class="eImage  tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                    Notes
-                </h3>
-
-                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                    <p>
-                    <?php
-                        echo htmlize(getNotes($t['pseq'])) ;
+                        <h3 style="font-size:1.2em !important" class="eImage  xColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                            Transitional Hexagram
+                        </h3>
+                        <div>
+                            <p>
+                                <b>
+                                <a href="/show.php?hex=<?= $ret['tpseq'] ?>"><?= $ret['tpseq'] ?>
+                                    <?= $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "trans", $ret['tpseq']); ?>
+                                </a>
+                                </b>
+                            </p>
+                            <p>
+                                <?= htmlize($GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "judge_exp", $ret['tpseq'])); ?>
+                            </p>
+                        </div>
+                        <?php        
+                    }
                     ?>
-                    </p>
+                </div>
                 </div>
 
                 <?php
-                /*
-                 *  The Lines
-                 */  
-                
-                /* if T == F then there are no moving lines, so skip */
-                if ($t['bseq'] != $f['bseq'] ) {  
-                    for ($i = 5; $i >= 0; $i-- ) {
-                        if ($d[$i] == 1) {
-                            $j = 6-$i ;
-                            ?>
-                            <h3 style="font-size:1.2em !important" class="eLines lColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                            <?= htmlize($t['line_' . $j]) ?>
-                            </h3>
-                            <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                                <div class="content line_org" id="line_<?= $j ?>_org">
-                                    <p>
-                                        <b>Original text</b>
-                                    </p>                                    
-                                    <p>
-                                        <?= htmlize($t['line_' . $j . '_org']) ?>
-                                    </p>
-                                </div>
-                                <div class="content line_exp" id="line_<?= $j ?>_exp">
-                                    <p>
-                                        <b>Commentary</b>
-                                    </p>                                    
-                                    <p>
-                                    <p>
-                                        <?= htmlize($t['line_' . $j . '_exp']) ?>
-                                    </p>
-                                </div>
-                            </div>
+                /* *************************************************************************** */
+                ?>
+
+                <div id = 'here2' class="container container-top">
+                    <?php
+                    if ($t['bseq'] != $f['bseq'] ) {  
+                        /* if T == F then there are no moving lines, so skip */
+                        /* make and shwo hexs - same as above */
+                        $ret = makeHex(str_split($t['binary']), $d, uniqid(), "fade_tossed");
+                        print "<div id='here1' class='container'>\n${ret['hexes']}</div>\n";
+
+                        /* same as abive - save old image links
+                         * 
+                         *             
+                         * <div>
+                           <img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
+                           <img class="heximg select" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
+                           </div>    
+                         */
+
+                        //require getRootDir()."/lib/accordian2.php";
+                        ?>
+                        <script>
+                            $(".container-top").css("background-image","url(/images/qboxbg2.png");
+                            $(".container-top").css("background-size","cover");
+                        </script>
+
+                        <?php
+                        /* *************************************************************************** */
+                        if ($t['bseq'] != $f['bseq'] ) {  
+                                /* if T == F then there are no moving lines, so skip */
+                                ?>
+                                <div class="awrapper">
+                                    <div style="border:0px solid red;background-color: transparent;padding:4px;">
+                                        <span>        
+                                            <?php print putBtnEdit($f['bseq']); ?>
+                                            <?php print putBtnUpdate($f['bseq']); ?>
+                                        </span>
+                                    </div>
+                                    <div style = "min-width:100%;max-width:100%" id="accordion2">
+                                        <?php 
+                                        /*  Second Hex Title
+                                         */  
+                                        ?>
+                                        <h3 style="font-size:1.2em !important" class="eTitle f_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                                            <?= c($f['pseq']) ?> (<?= c($f['title']) ?>) <?= c($f['trans']) ?>
+                                            <?php /* this invisible one pixel line control the collapse with of the accordian */?>
+                                            <br><img style="min-width:300px" src="/images/thinline350.png">
+                                        </h3>
+                                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                                            <p>
+                                                <i><?= $f['judge_old'] ?></i>
+                                            </p>
+                                                <p>
+                                                    <b>The Expanded Text</b>
+                                                </p>
+                                            <p>
+                                                    <?= htmlize($f['judge_exp']) ?>
+                                            </p>
+                                        </div>
+                                        <?php 
+                                        /*
+                                         *  Second Trigrams
+                                         */  
+                                        ?>
+                                        <h3 style="font-size:1.2em !important" class="eTrigrams fColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                                            The Trigrams
+                                        </h3>
+                                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                                            <p>
+                                                <b>The Upper Trigram</b>
+                                            </p>
+                                            <p>
+                                                <?= htmlize($f['tri_upper']) ?>
+                                            </p>
+                                            <p>
+                                                <b>The Lower Trigram</b>
+                                            </p>
+                                            <p>
+                                                <?= htmlize($f['tri_lower']) ?><br>
+                                            </p>
+                                            <p>
+                                            <b>Explanation of the Trigrams</b>
+                                            </p>
+                                            <p>
+                                            <?= htmlize($f['explanation']) ?>
+                                            </p>
+                                        </div>
+                                        <?php 
+                                        /*
+                                         *  Second Image
+                                         */  
+                                        ?>
+                                        <h3 style="font-size:1.2em !important" class="eImage  fColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                                            Image
+                                        </h3>
+                                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                                            <p>
+                                                <b>The Ancient Assocated Image</b>
+                                            </p>
+                                            <p>
+                                                <i><?= htmlize($f['image_old']) ?></i>
+                                            </p>
+                                            <p>
+                                            <?php
+                                            if ( file_exists(getRootDir()."/images/symbol/image".$f['pseq'].".jpg")) {
+                                                $fn = "/images/symbol/image".$f['pseq'].".jpg";
+                                                print "<img style='width:70%' src='${fn}'>";
+
+                                            } else {
+                                                print "[no image yet]";
+                                            }
+                                            ?>
+                                            <p>
+                                                <b>Commentary and Explanation of the Image</b>
+                                            </p>
+                                            <p>
+                                                <?= htmlize($f['image_exp']) ?>
+                                            </p>
+                                        </div>
+                                        <?php 
+                                        /*
+                                         *  Second Notes
+                                         */  
+                                        ?>
+                                        <?php 
+                                        /*
+                                        <h3 style="font-size:1.2em !important" class="eImage  tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+                                            Notes
+                                        </h3>
+                                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+                                            <p>
+                                            <?php 
+                                                echo htmlize(getNotes($f['pseq']));
+                                                ?>
+                                            </p>
+                                        </div>
+                                        */
+                                        ?>
+                                    </div>
+                                </div>    
                             <?php
                         }
-                    }
+                        /* *************************************************************************** */
+
+                        /* this is teh end of the cast */
+                    } else { 
+                    /* T == F, so nothign to show */
                     ?>
-                    <h3 style="font-size:1.2em !important" class="eImage  xColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                        Transitional Hexagram
-                    </h3>
-                    <div>
-                        <p>
-                            <b>
-                            <a href="/show.php?hex=<?= $ret['tpseq'] ?>"><?= $ret['tpseq'] ?>
-                                <?= $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "trans", $ret['tpseq']); ?>
-                            </a>
-                            </b>
-                        </p>
-                        <p>
-                            <?= htmlize($GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "judge_exp", $ret['tpseq'])); ?>
-                        </p>
-                    </div>
-                    <?php        
-                }
-                ?>
-            </div>
-            </div>
-    
-            <?php
-            /* *************************************************************************** */
-            ?>
-
-            <div id = 'here2' class="container container-top">
-                <?php
-                if ($t['bseq'] != $f['bseq'] ) {  
-                    /* if T == F then there are no moving lines, so skip */
-                    /* make and shwo hexs - same as above */
-                    $ret = makeHex(str_split($t['binary']), $d, uniqid(), "fade_tossed");
-                    print "<div id='here1' class='container'>\n${ret['hexes']}</div>\n";
-
-                    /* same as abive - save old image links
-                     * 
-                     *             
-                     * <div>
-                       <img class="heximg" alt="<?= $t['pseq'] ?> / <?= $t['title'] ?>/<?= $t['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $t['pseq']) ?>.png">    
-                       <img class="heximg select" alt="<?= $f['pseq'] ?> / <?= $f['title'] ?>/<?= $f['trans'] ?>" src="images/hex/hexagram<?= sprintf("%02d", $f['pseq']) ?>.png">
-                       </div>    
-                     */
-
-                    //require getRootDir()."/lib/accordian2.php";
-                    ?>
-                    <script>
-                        $(".container-top").css("background-image","url(/images/qboxbg2.png");
-                        $(".container-top").css("background-size","cover");
-                    </script>
-
+                    <div  class='textWrapper'>
+                        <div class='subtextWrapper'>
+                            <span style='padding:25px;font-size: 18pt'>No Moving Lines</span>
+                        </div>    
+                    </div>  
                     <?php
-                    /* *************************************************************************** */
-                    if ($t['bseq'] != $f['bseq'] ) {  
-                            /* if T == F then there are no moving lines, so skip */
-                            ?>
-                            <div class="awrapper">
-                                <div style="border:0px solid red;background-color: transparent;padding:4px;">
-                                    <span>        
-                                        <?php print putBtnEdit($f['bseq']); ?>
-                                        <?php print putBtnUpdate($f['bseq']); ?>
-                                    </span>
-                                </div>
-                                <div style = "min-width:100%;max-width:100%" id="accordion2">
-                                <?php 
-                                /*  Second Hex Title
-                                 */  
-                                ?>
-                                <h3 style="font-size:1.2em !important" class="eTitle f_titleColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                                    <?= c($f['pseq']) ?> (<?= c($f['title']) ?>) <?= c($f['trans']) ?>
-                                    <?php /* this invisible one pixel line control the collapse with of the accordian */?>
-                                    <br><img style="min-width:300px" src="/images/thinline350.png">
-                                </h3>
-                                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                                    <p>
-                                        <i><?= $f['judge_old'] ?></i>
-                                    </p>
-                                        <p>
-                                            <b>The Expanded Text</b>
-                                        </p>
-                                    <p>
-                                            <?= htmlize($f['judge_exp']) ?>
-                                    </p>
-                                </div>
-                                <?php 
-                                /*
-                                 *  Second Trigrams
-                                 */  
-                                ?>
-                                <h3 style="font-size:1.2em !important" class="eTrigrams fColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                                    The Trigrams
-                                </h3>
-                                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                                    <p>
-                                        <b>The Upper Trigram</b>
-                                    </p>
-                                    <p>
-                                        <?= htmlize($f['tri_upper']) ?>
-                                    </p>
-                                    <p>
-                                        <b>The Lower Trigram</b>
-                                    </p>
-                                    <p>
-                                        <?= htmlize($f['tri_lower']) ?><br>
-                                    </p>
-                                    <p>
-                                    <b>Explanation of the Trigrams</b>
-                                    </p>
-                                    <p>
-                                    <?= htmlize($f['explanation']) ?>
-                                    </p>
-                                </div>
-                                <?php 
-                                /*
-                                 *  Second Image
-                                 */  
-                                ?>
-                                <h3 style="font-size:1.2em !important" class="eImage  fColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                                    Image
-                                </h3>
-                                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                                    <p>
-                                        <b>The Ancient Assocated Image</b>
-                                    </p>
-                                    <p>
-                                        <i><?= htmlize($f['image_old']) ?></i>
-                                    </p>
-                                    <p>
-                                    <?php
-                                    if ( file_exists(getRootDir()."/images/symbol/image".$f['pseq'].".jpg")) {
-                                        $fn = "/images/symbol/image".$f['pseq'].".jpg";
-                                        print "<img style='width:70%' src='${fn}'>";
-
-                                    } else {
-                                        print "[no image yet]";
-                                    }
-                                    ?>
-                                    <p>
-                                        <b>Commentary and Explanation of the Image</b>
-                                    </p>
-                                    <p>
-                                        <?= htmlize($f['image_exp']) ?>
-                                    </p>
-                                </div>
-                                <?php 
-                                /*
-                                 *  Second Notes
-                                 */  
-                                ?>
-                                <h3 style="font-size:1.2em !important" class="eImage  tColors accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
-                                    Notes
-                                </h3>
-                                <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
-                                    <p>
-                                    <?php 
-                                        echo htmlize(getNotes($f['pseq']));
-                                        ?>
-                                    </p>
-                                </div>
+                }
+                    ?>
+                    <div  style="padding-bottom:20px;left: 50%;right: 50%; position:absolute; z-index:100;top:10px;" class='textWrapper'>
+                        <div class='subtextWrapper'>
+                            <div id="download" style="font-variant-caps: all-small-caps ; font-weight: bold;color:black">
+                                <a id="download_file" target="_blank" href="<?= $_SESSION['dlfile'] ?>">Download this cast as PDF<br>
                             </div>
-                            </div>    
-                        <?php
-                    }
-                    /* *************************************************************************** */
-
-                    /* this is teh end of the cast */
-                } else { 
-                /* T == F, so nothign to show */
-                ?>
-                <div  class='textWrapper'>
-                    <div class='subtextWrapper'>
-                        <span style='padding:25px;font-size: 18pt'>No Moving Lines</span>
-                    </div>    
+                        </div>
+                    </div>
+                    <?php
+                    /* convert to int ?  hmmm aren;t they ints alrady in database  FIXME */
+                    $ti = intval($t['bseq']); 
+                    $fi = intval($f['bseq']);
+                    ?>
                 </div>  
                 <?php
             }
-                ?>
-                <div  style="padding-bottom:20px;left: 50%;right: 50%; position:absolute; z-index:100;top:10;" class='textWrapper'>
-                    <div class='subtextWrapper'>
-                        <div id="download" style="font-variant-caps: all-small-caps ; font-weight: bold;color:black">
-                            <a id="download_file" target="_blank" href="<?= $_SESSION['dlfile'] ?>">Download this cast as PDF<br>
-                        </div>
-                    </div>
-                </div>
-                <?php
-                /* convert to int ?  hmmm aren;t they ints alrady in database  FIXME */
-                $ti = intval($t['bseq']); 
-                $fi = intval($f['bseq']);
-                ?>
-            </div>  
-            <?php
             /* everythign in 'extra' is the experimental 'math' examples */
             /*
             <div class="extra">

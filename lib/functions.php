@@ -14,7 +14,6 @@ $dbh = new DataMapper($ini);
 
 require getRootDir() . "/vendor/autoload.php";
 require getRootDir() . "/lib/md2pdf/vendor/autoload.php";
-//require getRootDir() . "/conf/config.php";
 
 function getRootDir() {
     $runtime = "dev";
@@ -48,7 +47,6 @@ function getNotes($pseq) {
     $hex[0]['tri_upper_bin'] = null;
     $hex[0]['tri_lower_bin'] = null;
 
-    //dbug($hex);
     /* JWFIX notes not appearing... see notes for 50 (cauldron) judge_exp */
     foreach ($hex[0] as $key => $val) {
         if ($val) {
@@ -73,7 +71,8 @@ function highlight($part, $whole) {
     } 
     /* remove quotes used in strings by mysql */
     $part = str_replace("\"", "", $part);
-    /* makie all loqwecase for array_diif */
+    
+    /* make all lowercase for array_diif */
     $partAry = array(strtolower($part));
     if ($isPhrase == 0) {
         $partAry = explode(" ", $part);
@@ -89,7 +88,6 @@ function highlight($part, $whole) {
 
 function getEdStatus($t) {
     if (!$t['proofed']) {
-        //print "<div class='notice'>This content has yet to be proofed.  Please disregard the typos and other errors.</div>";
         return "<div class='notice'>status: UNPROOFED</div>";
     }
 }
@@ -103,7 +101,6 @@ function showComment($t) {
 }
 
 function tryFopen($fileName, $mode) {
-//      var_dump($fileName);
     try {
         $fp = fopen($fileName, $mode);
         if (!$fp) {
@@ -134,8 +131,8 @@ function formatSearch($s, $searchStr) {
     }
 
     $out = "";
-    foreach ($s as $field => $topcat) {  //$fiels = 'judge_exp',   $topcat = array of search results
-        foreach ($topcat as $p) {  // $p = colname associative arrays ($field amd pseq)
+    foreach ($s as $field => $topcat) {  /* $field = 'judge_exp',$topcat = array of search results */
+        foreach ($topcat as $p) {  /* $p = colname associative arrays ($field amd pseq)*/
             $pseq = $p['pseq'];
 
             $content = $p[$field];
@@ -154,9 +151,6 @@ function formatSearch($s, $searchStr) {
         'trigrams' => 'Trigrams',
         'tri_upper' => 'Upper Trigram',
         'tri_lower' => 'Lower Trigram',
-        'iq32_dir' => 'IQ32 Direction',
-        'iq32_theme' => 'IQ32 Theme',
-        'iq32_desc' => 'IQ32 Description',
         'explanation' => 'Explanation of Trigrams',
         'judge_old' => 'Original Judgement',
         'judge_exp' => 'Explanation of the Judgment',
@@ -186,12 +180,10 @@ function formatSearch($s, $searchStr) {
         if (isset($psary[$i])) {
             $out .= "<div id='searchbox01'><img style='width:30px;margin:3px;' src='/images/hex/small/hexagram" . f($i) . ".png'><b><a target='_blank' href='/show.php?hex=" . $i . "'>" . $i . " / " . $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "trans", $i) . " </a></b>\n";
             foreach ($psary[$i] as $key => $ary) {
-                //        if (isset($ary)) {
                 $out .= "<div id='searchbox02'>" . $labels[key($ary)] . "\n";
                 foreach ($ary as $field => $content) {
                     $out .= "<div id='searchbox03'>" . highlight($searchStr, $content) . "</div>\n";
                 }
-                //      }
                 $out .= "</div>\n";
             }
             $out .= "</div>\n";
@@ -203,7 +195,7 @@ function formatSearch($s, $searchStr) {
 }
 
 function make_comparer() {
-    // Normalize criteria up front so that the comparer finds everything tidy
+    /* Normalize criteria up front so that the comparer finds everything tidy */
     $criteria = func_get_args();
     foreach ($criteria as $index => $criterion) {
         $criteria[$index] = is_array($criterion) ? array_pad($criterion, 3, null) : array($criterion, SORT_ASC, null);
@@ -211,11 +203,11 @@ function make_comparer() {
 
     return function($first, $second) use (&$criteria) {
         foreach ($criteria as $criterion) {
-            // How will we compare this round?
+            /* How will we compare this round? */
             list($column, $sortOrder, $projection) = $criterion;
             $sortOrder = $sortOrder === SORT_DESC ? -1 : 1;
 
-            // If a projection was defined project the values now
+            /* If a projection was defined project the values now */
             if ($projection) {
                 $lhs = call_user_func($projection, $first[$column]);
                 $rhs = call_user_func($projection, $second[$column]);
@@ -224,7 +216,7 @@ function make_comparer() {
                 $rhs = $second[$column];
             }
 
-            // Do the actual comparison; do not return if equal
+            /* Do the actual comparison; do not return if equal */
             if ($lhs < $rhs) {
                 return -1 * $sortOrder;
             } else if ($lhs > $rhs) {
@@ -232,49 +224,12 @@ function make_comparer() {
             }
         }
 
-        return 0; // tiebreakers exhausted, so $first == $second
+        return 0; /* tiebreakers exhausted, so $first == $second.. (what does thismean?) */
     };
 }
 
-/* DEPRICATED
- * 
-
-  function makeMDfile($alldata) {
-  $t = $alldata['t'];
-  $d = $alldata['d'];
-  $f = $alldata['f'];
-  $homeurl = $alldata['homeurl'];
-  $hdate = $t['human'];
-  $ddate = $t['data'];
-  $question = $t['question'];
-
-  $out = "";
-  $out .= "*** Original Hexagram ***:  ![Alt text](${homeurl}/images/hex/small/hexagram" . sprintf("%02d", $t['pseq']) . ".png)\n\n";
-  $out .= "*** Resulting Hexagram ***: ![Alt text](${homeurl}/images/hex/small/hexagram" . sprintf("%02d", $f['pseq']) . ".png)\n\n";
-  foreach ($alldata as $key => $val) {
-  if (is_array($val) or ( $val instanceof Traversable)) {
-  foreach ($val as $key1 => $val1) {
-  if (is_array($val1) or ( $val1 instanceof Traversable)) {
-
-  } else {
-  $out .= "\n";
-  $out .= "***$key1:*** $val1\n";
-  $out .= "\n";
-  }
-  }
-  } else {
-  $out .= "\n";
-  $out .= "*** $key: *** $val\n";
-  $out .= "\n";
-  }
-  }
-  return($out);
-  }
- */
-
 function mergeHex($t_image, $f_image) {
 
-    //$numberOfImages = 2;
     /*
      * JWFIX hardcoded numbers ? :(
      */
@@ -286,15 +241,9 @@ function mergeHex($t_image, $f_image) {
     /*
      * JWFIX can't get th etansparency to work when I create the image... always black, so I set to white
      */
-//    $trans_colour = imagecolorallocatealpha($png, 0, 0, 0, 127);
-//    imagefill($png, 0, 0, $trans_colour);
 
     $white = imagecolorallocate($png, 255, 255, 255);
     imagefill($png, 0, 0, $white);
-
-
-//    $firstUrl = "http://slider.com/id/${t_image}";
-//    $secondUrl = "http://slider.com/id/${f_image}";
 
     $firstUrl = $t_image;
     $secondUrl = $f_image;
@@ -308,15 +257,11 @@ function mergeHex($t_image, $f_image) {
     imagecopymerge($outputImage, $first, 0, 0, 0, 0, $x, $y, 100);
     imagecopymerge($outputImage, $second, $x * 2, 0, 0, 0, $x, $y, 100);
 
-//    imagejpeg($outputImage, APPLICATION_PATH . 'test.png');
-//    $uid = uniqid();
+
     $uid = session_id();
     $fn = "/id/merge_${uid}.png";
-//    $fn = getRootDir()."/id/merge_${uid}.png";
     imagepng($outputImage, getRootDir() . $fn);
-
     imagedestroy($outputImage);
-
     return($fn);
 }
 
@@ -339,7 +284,6 @@ function makeAlphaBox($x, $y) {
 }
 
 function makeHexPng($t, $d, $f) {
-    //$homeurl = getServerPrefix();
     $ta = str_split($t);
     $fa = str_split($f);
 
@@ -427,7 +371,7 @@ function makeHexPng($t, $d, $f) {
     /* make the filename for the temporary image */
     $hex2file = getRootDir() . "/id/hex2_tmp_" . session_id() . ".png";
     $hex2fileUrl = getServerPrefix() . "/id/hex2_tmp_" . session_id() . ".png";
-    //var_dump($_SESSION);
+
     /* save the image */
     imagepng($hex2, $hex2file);
 
@@ -442,15 +386,12 @@ function makeHexPng($t, $d, $f) {
         $finalFile = getServerPrefix() . mergeHex($hex1fileUrl, $hex2fileUrl); /* mergeHex() does not rewturn URL, so do that here */
     }
 
-//    enlargeImage($finalFile,1.3);
-
     return(enlargeImage($finalFile, 2));
 }
 
 function enlargeImage($originalFile, $pct) {
     list($width, $height) = getimagesize($originalFile);
-//    var_dump($width);
-//    var_dump(getimagesize($originalFile));
+
     $newWidth = $width * $pct;
     $uid = uniqid("tmp_") . "_" . session_id();
     /* assume png for now */
@@ -494,7 +435,6 @@ function enlargeImage($originalFile, $pct) {
         unlink($targetFile);
     }
     $image_save_func($tmp, "$targetFile.$new_image_ext");
-    //var_dump("$targetFile.$new_image_ext");
     return("$targetFile.$new_image_ext");
 }
 
@@ -506,7 +446,6 @@ function dbug($v,$force=null) {
     $bt = debug_backtrace();
     $caller = array_shift($bt);
     if (  (isset($_REQUEST['debugon'])) ||($force)) {
-//        $d = array('FROM'=>$caller,'INSPECTION'=>$v);
         $val = print_r($v, TRUE);
         print "<div id='dbug' >" . $caller['file'] . "=>" . $caller['line'] . "<pre style='font-weight:normal;font-size:8pt'>*$val*</pre></div>";
         return(TRUE);
@@ -517,14 +456,12 @@ function dbug($v,$force=null) {
 
 function makeMDfromTemplate($alldata) {
     /*
-     * Set all teh vars we need
+     * Set all the vars we need
      */
     $t = $alldata['t'];
     $d = $alldata['d'];
     $f = $alldata['f'];
 
-    //var_dump($t['trans']);
-    //getServerPrefix()$homeurl = $alldata['homeurl'];
     $hdate = $t['hdate'];
     $ddate = $t['ddate'];
     $question = $t['question'];
@@ -539,11 +476,10 @@ function makeMDfromTemplate($alldata) {
      * make image of tossed and final hex, with colored moving lines, for pdf heading
      */
     $t_image = getServerPrefix() . "/id/hex1_tmp_" . session_id() . ".png";
-//    $t_image = getServerPrefix()."/images/hex/small/hexagram" . f($t['pseq']) . ".png";
     $f_image = getServerPrefix() . "/images/hex/small/hexagram" . f($f['pseq']) . ".png";
+    
     /* makeHexPng() return the URL alrady */
     $m_image = makeHexPng($t['binary'], $d, $f['binary']); //makeHexPng();//mergeHex($t_image,$f_image);
-    //var_dump($m_image);
     /*
      * load the template processing class
      */
@@ -556,13 +492,13 @@ function makeMDfromTemplate($alldata) {
      */
     $ftpseq = f($t['pseq']);
     $ffpseq = f($f['pseq']);
-//    $ftpseq = sprintf("%02s", $t['pseq']);
-//    $ffpseq = sprintf("%02s", $f['pseq']);
-
-    $thex = mdgethex($ftpseq); /* this gets the first hex data from the database */
-    $fhex = mdgethex($ffpseq); /* this, the second */
-
-
+    
+    $b_ftpseq = $GLOBALS['dbh']->getHexFieldByPseq("hexagrams","binary",$ftpseq);
+    $b_ffpseq = $GLOBALS['dbh']->getHexFieldByPseq("hexagrams","binary",$ffpseq);
+    
+    $thex = getMergedData($_REQUEST['trans'],$b_ftpseq); /* this gets the first hex data from the database */
+    $fhex = getMergedData($_REQUEST['trans'],$b_ffpseq); /* this gets the first hex data from the database */
+    
     /*
      * create new template instances for each part of the final PDF
      */
@@ -648,7 +584,6 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
     $page_hex1->set("t_pseq", f($thex[0]['pseq']));
     $page_hex1->set("t_bseq", f($thex[0]['bseq']));
     $page_hex1->set("t_binary", $thex[0]['binary']);
-    $page_hex1->set("t_dir", $thex[0]['iq32_dir']);
     $page_hex1->set("t_explanation", htmlize($thex[0]['explanation']));
     $page_hex1->set("t_tri_upper", htmlize($thex[0]['tri_upper']));
     $page_hex1->set("t_tri_lower", htmlize($thex[0]['tri_lower']));
@@ -712,7 +647,6 @@ this hexagram 'transitional' as it a full hexagram that represent the moving lin
         $page_hex2->set("f_pseq", f($fhex[0]['pseq']));
         $page_hex2->set("f_bseq", f($fhex[0]['bseq']));
         $page_hex2->set("f_binary", "(" . $fhex[0]['binary'] . ")");
-        $page_hex2->set("f_dir", $fhex[0]['iq32_dir']);
         $page_hex2->set("f_explanation", htmlize($fhex[0]['explanation']));
         $page_hex2->set("f_tri_upper", htmlize($fhex[0]['tri_upper']));
         $page_hex2->set("f_tri_lower", htmlize($fhex[0]['tri_lower']));
@@ -757,11 +691,6 @@ function getids($ary) {
     $sth = $dbh->prepare($sql);
     $sth->execute();
     $ids = $sth->fetchAll();
-// $c = array();
-    foreach ($ids as $id) {
-//        var_dump($id);exit;
-//        array_push($c, $id[$type]);
-    }
     return($ids);
 }
 
@@ -788,11 +717,11 @@ function getcols() {
  * JWFIX move this to the DataMapper class
  */
 
-function mdgethex($pseq) {
-
-    $hex = $GLOBALS['dbh']->getDataAlt($pseq);
-    return($hex);
-}
+//function mdgethex($pseq) {
+//
+//    $hex = $GLOBALS['dbh']->getDataAlt($pseq);
+//    return($hex);
+//}
 
 /* * ******************************************************************** */
 
@@ -814,19 +743,10 @@ function saveToFile($t, $d, $f) {
         'f' => $f
     );
 
-    /* no need to save any of this right now */
-//    /*
-//     * first just save teh raw json data in /questions/<question>_<timestamp>.json
-//     */
-//    $fn = $fname . ".json";
-//    $json = json_encode($alldata, JSON_PRETTY_PRINT);
-//    file_put_contents($fn, $json);
-
     /*
      * Now make the MarkDown file 
      */
     $out = makeMDfromTemplate($alldata);
-
 
     /*     * ************************************************** */
     /* make out filenames, and write the markdown to a file */
@@ -864,6 +784,7 @@ function saveToFile($t, $d, $f) {
     /* load the HTML into a DOM parser and process any links */
     /*     * ************************************************** */
     $dom = \HTML5::loadHTML($html);
+    $domain_name = $_SERVER['SERVER_NAME'];
     $links = htmlqp($dom, 'a');
     foreach ($links as $link) {
         $href = $link->attr('href');
@@ -907,10 +828,8 @@ function saveToFile($t, $d, $f) {
     $call = "nohup sudo -u " . getUser() . " " . $call . "  >> " . getRootDir() . "/log/wkhtmltopdf.log 2>&1";
     $logcall = 'echo "'.$call.'" >> '. getRootDir() . '/log/wkhtmltopdf.log 2>&1';
    
-    //dbug($logcall);
     system($logcall);
     
-
     system($call);
 
     /*
@@ -1001,14 +920,10 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
     $trx_trans = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "trans", implode($Thex));
     $final_trans = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "trans", implode($newHex));
 
-    $tossed_iq32_theme = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "iq32_theme", implode($tossed));
-    $trx_iq32_theme = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "iq32_theme", implode($Thex));
-    $final_iq32_theme = $GLOBALS['dbh']->getHexFieldByBinary("hexagrams", "iq32_theme", implode($newHex));
 
-
-    $t_sub = "<a target='_blank' href='/show.php?hex=${tossed_pseq}'><span class='st1'>$tossed_pseq</span></a><span> ($tossed_bseq)    </span><br><span class='st2'>$tossed_trans  </span><br><span class='st3'>$tossed_iq32_theme </span><br>\n";
-    $x_sub = "<a target='_blank' href='/show.php?hex=${trx_pseq}'><span class='st1'>$trx_pseq   </span></a><span> ($trx_bseq)       </span><br><span class='st2'>$trx_trans     </span><br><span class='st3'>$trx_iq32_theme    </span><br>\n";
-    $f_sub = "<a target='_blank' href='/show.php?hex=${final_pseq}'><span class='st1'>$final_pseq </span></a><span> ($final_bseq)     </span><br><span class='st2'>$final_trans   </span><br><span class='st3'>$final_iq32_theme  </span><br>\n";
+    $t_sub = "<a target='_blank' href='/show.php?hex=${tossed_pseq}'><span class='st1'>$tossed_pseq</span></a><span> ($tossed_bseq)    </span><br><span class='st2'>$tossed_trans  <br>\n";
+    $x_sub = "<a target='_blank' href='/show.php?hex=${trx_pseq}'><span class='st1'>$trx_pseq   </span></a><span> ($trx_bseq)       </span><br><span class='st2'>$trx_trans     <br>\n";
+    $f_sub = "<a target='_blank' href='/show.php?hex=${final_pseq}'><span class='st1'>$final_pseq </span></a><span> ($final_bseq)     </span><br><span class='st2'>$final_trans  <br>\n";
 
     $out .= "</div>\n";
     $out .= "<div class='clear underHex' >"
@@ -1037,13 +952,13 @@ function makeHex($tossed, $delta, $uid, $whichToFade) {
     return(array('hexes' => $out, 'tpseq' => $trx_pseq));
 }
 
-function getToss() {
+function getToss($trans = array("Wilhelm/Baynes")) {
+    //dbug("in getToss",true);
     $tossed = tossit();
 
-//var_dump($tossed);
     $delta = array(0, 0, 0, 0, 0, 0);
 
-    // if we are using static number we have to do it diffenely
+    /* if we are using static number we have to do it diffenely */
     $newFinal = null;
     $newTossed = null;
 
@@ -1090,24 +1005,20 @@ function getToss() {
             }
         }
         $tossed = $newTossed;
-//        var_dump($delta);
+
         /* it gets recalced later, so clear it */
         $delta = array(0, 0, 0, 0, 0, 0); //reset it 
     }
 
     /* back to the normal  processing */
-    //var_dump($delta);
     for ($i = 0; $i < 6; $i++) {
         if (($tossed[$i] == 6) || ($tossed[$i] == 9)) {
             $delta[$i] = 1;
         }
     }
-    //  var_dump($delta);
-    // confused as to why this has to be reversed 
-//    $delta = array_reverse($delta);
-//        var_dump($delta);
 
     $final = getFinal($tossed);
+    
     /* override if static */
     if (isset($_REQUEST['f_final'])) {
         $final = $newFinal;
@@ -1117,17 +1028,56 @@ function getToss() {
     $final_bin = tobin($final);
 
     /* JWFIX move to db class */
+    
+    $tossedData = getMergedData($trans,$tossed_bin);
+    $finalData = getMergedData($trans,$final_bin);
 
-    $tossedData = $GLOBALS['dbh']->getData($tossed_bin);
-
-    $finalData = $GLOBALS['dbh']->getData($final_bin);
-
-
-    $res = array('tossed' => $tossedData, 'delta' => $delta, 'final' => $finalData);
+    //dbug($tossedData,true);
+    //dbug($finalData,true);
+    
+    $res = array(    
+                     'tossed'       => $tossedData
+                    ,'delta'        => $delta
+                    ,'final'        => $finalData
+                );
     return($res);
 }
 
-/* JWFIX move to DB class */
+function getMergedData($trans, $tf_bin) {
+    
+    $tfData = null;
+
+    /* first get the defauly trans which will always be the first in the array */
+    if ($trans[0] == "Wilhelm/Baynes") {
+        $tfData = $GLOBALS['dbh']->getData($tf_bin);
+    }
+    if ($trans[0] == "Duncan Stroud") {
+        $tfData = $GLOBALS['dbh']->getNotesData($tf_bin);
+    }
+    if ($trans[0] == "Qabalah") {
+        $tfData = $GLOBALS['dbh']->getQabalahData($tf_bin);
+    }
+    if ($trans[0] == "short") {
+        $tfData = $GLOBALS['dbh']->getShortData($tf_bin);
+    }
+    /* remove the first from the first element */
+    unset($trans[0]);
+
+    if (in_array("Wilhelm/Baynes", $trans)) {
+        $_tf = $GLOBALS['dbh']->getData($tf_bin);
+        $tfData = mergeResults($tfData, $_tf,"Wilhelm/Baynes");
+    }
+    if (in_array("Duncan Stroud", $trans)) {
+        $_tf = $GLOBALS['dbh']->getNotesData($tf_bin);
+        $tfData = mergeResults($tfData, $_tf,"Duncan Stroud");
+    }
+    if (in_array("Qabalah", $trans)) {
+        $_tf = $GLOBALS['dbh']->getQabalahData($tf_bin);
+        $tfData = mergeResults($tfData, $_tf,"Qabalah");
+    }
+    /* we ignore "short" because that is a handeled differently */
+    return($tfData);
+}
 
 function getTri() {
     $sql = "SELECT * FROM trigrams";
@@ -1172,7 +1122,6 @@ function tossit() {
         }
         if ($_REQUEST['mode'] == "r-decay") {
             $r = $tosser->getHotBits();
-//            $r = getHotBits();
             return($r);
         }
         if ($_REQUEST['mode'] == "random.org") {
@@ -1228,46 +1177,11 @@ EOX;
     echo $debugBlock;
 }
 
-/* JWFIX move to DB class */
-
-//function getTransByBin($bin) {
-//    global $dbh;
-//    $sql = "SELECT trans from hexagrams where bseq=${bin}";
-//    $sth = $dbh->o->prepare($sql);
-//    $sth->execute();
-//    $hex = $sth->fetch();
-//    return($hex['trans']);
-//}
 
 function f($n) {
     return(sprintf("%02d", $n));
 }
 
-//function fromtoprint($b, $h, $f) {
-////    var_dump($b);
-////    var_dump($h);
-//    $x = $b - $f['bseq'];
-////    echo "${b} - ${f['bseq']} = ${x}";
-//    if ($x < 0) {
-//        $x = $x + 63;
-////        echo " + 63 ";
-//    }
-////    echo " = ". $x."\n";
-//
-//
-//    $s = "To get from ";
-//    $s .= "<a href=\"show.php?bin=" . $f['bseq'] . " target=\"blank_\">";
-//    $s .= "<img class=\"smallerheximg\" src=\"images/hex/hexagram" . f($f['pseq']) . ".png\">";
-//    $s .= $f['pseq'] . "/ [b:" . $f['bseq'] . "]";
-//    $s .= $f['trans'];
-//    $s .= "</a> to";
-//    $s .= "<a href=\"show.php?bin=" . $b . " target=\"blank_\">";
-//    $s .= "<img class=\"smallerheximg\" src=\"images/hex/hexagram" . f($h) . ".png\">";
-//    $s .= $h . "/ [b:" . $b . "]" . getTransByBin($b);
-//    $s .= "</a> you need...<p>";
-//
-//    return($s);
-//}
 
 function microtime_float() {
     list($usec, $sec) = explode(" ", microtime());
@@ -1281,83 +1195,10 @@ function secondsToTime($ss) {
     $d = floor(($ss % (60 * 60 * 24 * 30)) / (60 * 60 * 24));
     $M = floor(($ss % (60 * 60 * 24 * 30 * 12)) / (60 * 60 * 24 * 30));
     $Y = floor($ss / (60 * 60 * 24 * 30 * 12));
-
-//    return "$Y years, $M months, $d days, $h hours, $m minutes, $s seconds";
     return sprintf("%010d", $ss) . " = $Y years, $M months, $d days, $h hours, $m minutes, $s seconds\n";
 }
 
-//$x = <<<XXX
-//microseconds since Jan 1 1970 is a 10 int, 4 dec number
-//
-//1000000000 = 32 years, 1 months, 24 days, 1 hours, 46 minutes, 40 seconds
-//0100000000 = 3 years, 2 months, 17 days, 9 hours, 46 minutes, 40 seconds
-//0010000000 = 0 years, 3 months, 25 days, 17 hours, 46 minutes, 40 seconds
-//0001000000 = 0 years, 0 months, 11 days, 13 hours, 46 minutes, 40 seconds
-//0000100000 = 0 years, 0 months, 1 days, 3 hours, 46 minutes, 40 seconds
-//0000010000 = 0 years, 0 months, 0 days, 2 hours, 46 minutes, 40 seconds
-//0000001000 = 0 years, 0 months, 0 days, 0 hours, 16 minutes, 40 seconds
-//0000000100 = 0 years, 0 months, 0 days, 0 hours, 1 minutes, 40 seconds
-//0000000010 = 0 years, 0 months, 0 days, 0 hours, 0 minutes, 10 seconds
-//0000000001 = 0 years, 0 months, 0 days, 0 hours, 0 minutes, 1 seconds
-//        
-//1000000000 = 32 years
-//
-//0100000000 = 3 years
-//0010000000 = 4 months
-//0001000000 = 11 days 
-//
-//0000100000 = 1 day   
-//0000010000 = 3 hours    
-//0000001000 = 16 minutes 
-//
-//0000000100 = 2 minutes  
-//0000000010 = 10 seconds 
-//0000000001 = 1 second   
-//   
-//0000000000.1000        
-//0000000000.0100        
-//0000000000.0010       
-//0000000000.0001        
-//
-//
-////1000000000 = 32 years
-//
-//1                               0100000000 = 3 years
-//2                           0010000000 = 4 months  
-//3                       0001000000 = 11 days 
-//4                   0000100000 = 1 day  
-//5               0000010000 = 3 hours    
-//6           0000001000 = 16 minutes         
-//7           0000000100 = 2 minutes  
-//8               0000000010 = 10 seconds 
-//9                   0000000001 = 1 second    
-//10                      0000000000.1000        
-//11                          0000000000.0100        
-//12                              0000000000.0010       
-//        
-////13  0000000000.0001        
-//
-//Now we hve 6 numbers
-//    
-//                    1
-//                2
-//            3
-//            4
-//                5
-//                    6
-//        
-//        
-//Now we ave three
-//    
-//        
-//        
-//11110010000111110001101011010       
-//        
-//101100111011110101011001011000
-//    
-//
-//XXX;
-
+/* see gitbook doc for an explanation of how this workls */
 
 function putBtnExpand() {
     echo ""
@@ -1406,19 +1247,178 @@ function putBtnLgTxt() {
 }
 
 function c($s) {
-//  https://www.functions-online.com/preg_replace.html
+    /* see ->   https://www.functions-online.com/preg_replace.html */
     $r = preg_replace('/<p>\s*(.*)\s*<\/p>\s*$/s', '$1', $s);
-//    dbug($r);
     return($r);
 }
 
 function htmlize($s) {
-//  https://www.functions-online.com/preg_replace.html
-    //$r = preg_replace('/\n\n/s', '\n<p></p>\n', $s);
-
+    /*  see ->   https://www.functions-online.com/preg_replace.html */
     $r = preg_replace("/\r/", "", $s);
     $r = preg_replace("/(\n)/", '<br/>$1', $r);
     $r = preg_replace("/(\n\n)/", '$1<p></p>$1', $r);
 
     return($r);
+}
+
+function mergeResults($prev, $new, $map) {
+//    dbug($map,true);
+//    dbug($prev,true);
+    $r = $prev;
+    $pd = $prev[0];
+
+    $f=array();
+    if ( ($map == "Wilhelm/Baynes") || ($map == "Duncan Stroud")) {
+        /* there are the fields we can ,merge */
+        $f = array(
+            "comment",
+            //"title",
+            //"trans",
+            "trigrams",
+            "tri_upper",
+            "tri_lower",
+            "explanation",
+            "judge_old",
+            "judge_exp",
+            "image_old",
+            "image_exp",
+            "line_1_org",
+            "line_1_exp",
+            "line_2_org",
+            "line_2_exp",
+            "line_3_org",
+            "line_3_exp",
+            "line_4_org",
+            "line_4_exp",
+            "line_5_org",
+            "line_5_exp",
+            "line_6_org",
+            "line_6_exp"
+        );
+
+        $styles_open = array("<p style='color:brown'>");
+        $styles_close = array("</p>\n");
+//dbug($new,true);
+        foreach ($pd as $key => $val) {
+            if (in_array($key,$f)) {
+                $r[0][$key] .= $styles_open[0] . $new[0][$key] . $styles_close[0];
+                
+                /* 
+                 * addition translations would be add as...
+                 * $r[0][$key] .= $styles_open[1] . $new[1][$key] . $styles_close[1];
+                 * 
+                 */
+            }
+        }
+    }
+    if ($map == "Qabalah") {
+        //dbug($new,true);
+        /* there are the fields we can ,merge */
+        $f = array(
+            "judge_exp" => array('des_meaning')
+        );
+        $styles_open = array("<p style='color:green' class='qabalah'>");
+        $styles_close = array("</p>\n");
+
+        $theme = $new[0]['theme'];
+        $tarot = $new[0]['tarot'];
+        $assiah = $new[0]['assiah'];
+        $type = $new[0]['type'];
+        $des_balance_desc = $new[0]['des_balance_desc'];
+        $asc_balance_desc = $new[0]['asc_balance_desc'];
+        $des_balance = $new[0]['des_balance'];
+        $asc_balance = $new[0]['asc_balance'];
+        $des_meaning = $new[0]['des_meaning'];
+        $asc_meaning = $new[0]['asc_meaning'];
+        $des_pseq = $new[0]['des_pseq'];
+        $des_name = $new[0]['des_name'];
+        $asc_pseq = $new[0]['asc_pseq'];
+        $asc_name = $new[0]['asc_name'];
+        
+        $des_movement = ($des_balance > $asc_balance ? $des_balance_desc : $asc_balance_desc);
+        $asc_movement = ($des_balance < $asc_balance ? $des_balance_desc : $asc_balance_desc);
+        
+        $str = "";
+        if ($prev[0]['pseq'] == $des_pseq) {
+            $str .= $styles_open[0];
+            $str .= "This hexagram, <b><a target='_blank' href='/show.php?hex=${des_pseq}'>${des_name}</a></b>, ";
+            $str .= "is the <b>descending</b> quality of the theme <b>'${theme}'</b>, and is expressed in the Tarot as the '<b>${tarot}</b>' card, which is associated with the <b>${type}</b> via <b>${assiah}</b>. ";
+            $str .= "It is <b>${des_movement}</b> (with <b>${des_balance}</b> passive lines and <b>${asc_balance}</b> strong lines), and carries the message '<b>${des_meaning}</b>'. ";
+            $str .= $styles_close[0];
+            $str .= $styles_open[0];
+           $str .= "It is the opposite of <b><a target='_blank' href='/show.php?hex=${asc_pseq}'>${asc_name}</a></b>, which carries the message '<b>${asc_meaning}</b>'. ";
+            $str .= $styles_close[0];
+        } else {
+            $str .= $styles_open[0];
+            $str .= "This hexagram, <b><a target='_blank' href='/show.php?hex=${asc_pseq}'>${asc_name}</a></b>, ";
+            $str .= "is the <b>ascending</b> quality of the theme <b>'${theme}'</b>, and is expressed in the Tarot as the '<b>${tarot}</b>' card, which is associated with the <b>${type}</b> via <b>${assiah}</b>. ";
+            $str .= "It is <b>${asc_movement}</b> (with <b>${asc_balance}</b> passive lines and <b>${des_balance}</b> strong lines),  and carries the message '<b>${asc_meaning}</b>'. ";
+            $str .= $styles_close[0];
+            $str .= $styles_open[0];
+           $str .= "It is the opposite of <b><a target='_blank' href='/show.php?hex=${des_pseq}'>${des_name}</a></b>, which carries the message '<b>${asc_meaning}</b>'. ";
+            $str .= $styles_close[0];
+        }
+
+
+        $r[0]['judge_exp'] .= $styles_open[0] . $str . $styles_close[0];
+        
+        foreach ($f as $hkey => $qvals) {
+            foreach ($qvals as $qkey) {
+                
+                //dbug("r[0][$hkey] = new[0][$qkey]",true);
+                //$r[0][$hkey] .= $styles_open[0] . $new[0][$qkey] . $styles_close[0];
+                /* addition translations would be add as...
+                 * $r[0][$key] .= $styles_open[1] . $new[1][$key] . $styles_close[1];
+                 */
+            }
+        }        
+    }
+    return($r);
+}
+
+//function mergeField($field, $datas) {
+//    $v = "";
+//    for ($i = 0; $i < count($datas); $i++) {
+//
+//        if ($i == 0) {
+//            $d = $datas[$i];
+//            $v1 = $d[$field];
+//            $v .= $v1;
+//        }
+//        if ($i == 1) {
+//            $d = $datas[$i];
+//            $v1 = $d[$field];
+//            $v1 .= "<br><b style='color:red'>" . $v1 . "</b><br>";
+//            $v .= $v1;
+//        }
+//    }
+//    return(htmlize($v));
+//}
+
+
+function makeSHortText($t,$f,$d) {
+    $short = "<div id='here2' class='container container-top'><b>";
+    $short .= "<span style='color:red'>The Current Situation</span><br/>";
+    $short .= $t['explanation']." ";
+    $short .= $t['judge_old']." ";
+    $short .= $t['judge_exp']." ";
+
+
+    if ($t['bseq'] != $f['bseq'] ) {  
+    $short .= "<br/><br/><span style='color:red'>What Changes...</span><br/>";
+        $short .= "<ul>\n";
+        for ($i = 5; $i >= 0; $i-- ) {
+            if ($d[$i] == 1) {
+                $j = 6-$i ;
+                $short .= "<li>".$t['line_'.$j.'_org']." ".$t['line_'.$j.'_exp']."</li>\n";
+            }
+        }
+        $short .= "</ul>\n";
+        $short .= "<span style='color:red'>The Resulting Situation</span><br/>";
+        $short .= $f['explanation']." ";
+        $short .= $f['judge_old']." ";
+        $short .= $f['judge_exp']." ";
+   }
+    $short .= "</b></div>";
+    return($short);
 }

@@ -16,7 +16,6 @@
 
 **[@label_hexagram]** [@f_pseq]<br>
 **[@label_binary]** [@f_bseq] [@f_binary]<br>
-**[@label_dir]** [@f_dir]<br>
 
 **[@label_upper_tri]** 
 > [@f_tri_upper]

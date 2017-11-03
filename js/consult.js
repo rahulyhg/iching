@@ -1,5 +1,25 @@
 $(document).ready(function () {
 
+    /* 
+     * if the Baynes box is check in the main form, the autimatically set
+     * the baynes val in thh manual entry
+     */
+    var baynes = $('#baynes');
+    if ($('#baynesVal').is(':checked')) {
+        $('#man_baynesVal').val('Wilhelm/Baynes');
+    } 
+    
+    /* 
+     * if the Acultural box is check in the main form, the autimatically set
+     * both the Baynes and the Acultural val in the manual entry
+     */
+    $("#aculturalVal").click(function () {
+        $('#man_baynesVal').val('Wilhelm/Baynes'); 
+        $('#man_aculturalVal').val('Duncan Stroud'); 
+
+        return(true);
+    });
+    
     /* *********************************************************
      * timer to make a div visible after some time
      * *********************************************************/
@@ -126,7 +146,10 @@ $(document).ready(function () {
             this.css("overflow", "hidden");
             $('#helptipmsg').css("height",nh + "px");
             $('#helptipmsg').parent().width(nw + "px");
-        } 
+            $('#helptipmsg').css("overflow-y","scroll");
+            var j = $('#helptipmsg');
+            j.parent().width($(window).width()-11);
+} 
         if (idName == 'help2tipmsg' ) {
             this.parent().css("left","0%");
             this.parent().css("width","100%");
@@ -134,6 +157,10 @@ $(document).ready(function () {
             this.css("overflow", "hidden");
             $('#help2tipmsg').css("height",nh + "px");
             $('#help2tipmsg').parent().width(nw + "px");
+            $('#help2tipmsg').css("overflow-y","scroll");
+            $('#help2tipmsg').parent().css("max-width:",$(window).width() +"px !important");
+            var j = $('#help2tipmsg');
+            j.parent().width($(window).width()-11);
         } 
     };
 
@@ -172,22 +199,90 @@ $(document).ready(function () {
         $("#qfield").val("Your Tao of Now");
         $("#nowbutton").attr("style","width:80px;");
         $("#nowbutton").attr("src","/images/gears-anim.gif");
-
+       
+        /* 
+         * get the stats of the checkboxed form the main form and set the vars
+         * here for the POST args
+         * 
+         */
+        var t = Array();
+        if ($('#baynesVal').is(':checked')) {
+            t.push('Wilhelm/Baynes');
+        }
+        if ($("#aculturalVal").is(':checked') ) {        
+            t.push('Duncan Stroud');
+        }
+        if ($("#qabalahVal").is(':checked') ) {        
+            t.push('Qabalah');
+        }
+        
         $.redirect('/index.php', {
-            flipped: "1"
+              flipped: "1"
             , mode: "astro"
-            , trans: "baynes"
+            , trans: t
             , question: "Your Tao of Now"
 //            ,debugon:"1"    
         });
         return(true);
     });
-    /* *********************************************************
-     *
+    
+     /* *********************************************************
+     * redirect the "short" button click to trigger a popup saying 
+     * it is not ready yet
      * *********************************************************/
     $("#shortbutton").click(function (e) {
-        $("#qtr1tip").trigger("click");
+        $(function () {
+            $("#shortbuttonmsg").dialog({
+                autoOpen: false
+            });
+            $("#shortbutton").on("click", function ($e) {
+                var o = $("#shortbuttonmsg");
+                o.dialog("open");
+                o.recss($e);
+            });
+        });
     });
+    
+    
+    $("#TURNED_OFF_shortbutton").click(function () {
+        console.log("shortbutton clicked");
+        $("#qfield").val("Stright to the Point");
+        $("#shortbutton").attr("style","width:80px;");
+        $("#shortbutton").attr("src","/images/gears-anim.gif");
+       
+        /* 
+         * we only want the "short" trans here
+         * 
+         */
+        var t = Array("short");
+        /* 
+         * for short to work with manual entry we need to check and get 
+         * the field vals there and pass them to the POST here
+         * 
+         */
+        var f_tossed = "";
+        var f_final = "";
+        
+        if ($('#f_tossed').val()) {
+            f_tossed = $('#f_tossed').val();
+        } 
+
+        if ($('#f_final').val()) {
+            f_final =  $('#f_final').val();
+        }
+        
+        $.redirect('/index.php', {
+              flipped: "1"
+            , mode: "astro"
+            , trans: t
+            , f_tossed
+            , f_final
+            , question: "Straight to the Point"
+//            ,debugon:"1"    
+        });
+        return(true);
+    });
+
 
     /* *********************************************************
      * grey the "submit question" until enough chars have been entered
@@ -288,8 +383,8 @@ $(document).ready(function () {
      * disables the abiluty to select a radio button 
      * *********************************************************/
     function turnOffRadio() {
-        $("#tosstype  input[id^=entropy]:radio").attr('disabled', true);
-        $("#tosstype  input[id^=acultural]:radio").attr('disabled', true);
+//        $("#tosstype  input[id^=entropy]:radio").attr('disabled', true);
+//        $("#tosstype  input[id^=acultural]:radio").attr('disabled', true);
     }
     
     /* *********************************************************
@@ -387,6 +482,16 @@ $(document).ready(function () {
         });
         $("#astrotip").on("click", function ($e) {
             var o = $("#astrotipmsg");
+            o.dialog("open");
+            o.recss($e);
+        });
+    });
+    $(function () {
+        $("#qabalahtipmsg").dialog({
+            autoOpen: false
+        });
+        $("#qabalahtip").on("click", function ($e) {
+            var o = $("#qabalahtipmsg");
             o.dialog("open");
             o.recss($e);
         });

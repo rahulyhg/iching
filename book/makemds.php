@@ -27,7 +27,6 @@ foreach ($ids as $id) {
     $page->set("pseq", f($hex[0]['pseq']));    
     $page->set("bseq", f($hex[0]['bseq']));
     $page->set("binary", $hex[0]['binary']);
-    $page->set("dir", $hex[0]['iq32_dir']);
     $page->set("tri_upper", $hex[0]['tri_upper']);
     $page->set("tri_lower", $hex[0]['tri_lower']);
     $page->set("judge_old", $hex[0]['judge_old']);
@@ -140,7 +139,6 @@ function xmdgethex($pseq,$bseq, $id) {
             Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
             WHERE hexagrams.pseq = '${pseq}' limit 1
          ) as tri_lower
-        ,iq32_dir
         ,explanation
         ,judge_old
         ,judge_exp

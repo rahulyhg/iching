@@ -62,10 +62,24 @@
     <!-- ----------------------------------------------------------------------->
     <div id="aculturaltipmsg" title="Acultural Interpretation">
         <p>
-            CURRENTLY UNAVAILABLE - This is for the upcoming new translation that redefines 
-            the structure and the relationship of the hexagrams outside of the highly moral 
-            Confucian version, which is the only one that survived to this day.  The Lao Tzu 
-            version, undoubtedly less moralistic and judgmental, did not
+            LIMITED DATA - This is an alternative interpretation, more modern and culturally
+            relevant, that the highly moral 
+            Confucian version, which is the only one traditional interpretation that has survived to this day.            
+        </p>
+        <p>
+            This is a work-in-progress, so there are a some (many) fields that are not yet available
+                        
+        </p>
+    </div>    <!-- ----------------------------------------------------------------------->
+    <div id="qabalahtipmsg" title="Qabalistic Cross Ref">
+        <p>
+            Because of the uncannily perfect relationship between the I Ching's 22 pairs of imbalanced hexagrams and 
+            10 pairs of balanced hexagrams with the Qabalah's 22 dynamic paths and 10 static states, I have 
+            included some qabalistic cross references.            
+        </p>
+        <p>
+            This is a work-in-progress, so more will be added with time.
+                        
         </p>
     </div>    <!-- ----------------------------------------------------------------------->
     <div id="astrotipmsg" title="Planetary Positions">
@@ -135,7 +149,7 @@
   
 <!-- body > div:nth-child(17)
     <!-- ----------------------------------------------------------------------->
-    <div id="qtr1tipmsg" style="width:80% !important" title="NOW and SHORT">
+    <div id="shortbuttonmsg" style="width:80% !important" title="NOW and SHORT">
         <p>
         The "NOW" casts the hexagrams not for any particular query, but for the current moment.  
         It does this by looking at the oldest measure of time known to man, the stars.  I 

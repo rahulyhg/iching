@@ -14,7 +14,6 @@ The Cast Hexagram:
 
 **[@label_hexagram]** [@t_pseq]<br>
 **[@label_binary]** [@t_bseq] [@t_binary]<br>
-**[@label_dir]** [@t_dir]<br>
 
 **[@label_upper_tri]** 
 > [@t_tri_upper]
