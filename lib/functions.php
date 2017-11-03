@@ -1265,7 +1265,7 @@ function mergeResults($prev, $new, $map) {
 //    dbug($map,true);
 //    dbug($prev,true);
     $r = $prev;
-    $pd = $prev[0];
+    $pd = $prev[0];  // BREAKPOINT -> Notice : Undefined offset: 0 in 
 
     $f=array();
     if ( ($map == "Wilhelm/Baynes") || ($map == "Duncan Stroud")) {
@@ -1355,7 +1355,7 @@ function mergeResults($prev, $new, $map) {
             $str .= "It is <b>${asc_movement}</b> (with <b>${asc_balance}</b> passive lines and <b>${des_balance}</b> strong lines),  and carries the message '<b>${asc_meaning}</b>'. ";
             $str .= $styles_close[0];
             $str .= $styles_open[0];
-           $str .= "It is the opposite of <b><a target='_blank' href='/show.php?hex=${des_pseq}'>${des_name}</a></b>, which carries the message '<b>${asc_meaning}</b>'. ";
+           $str .= "It is the opposite of <b><a target='_blank' href='/show.php?hex=${des_pseq}'>${des_name}</a></b>, which carries the message '<b>${des_meaning}</b>'. ";
             $str .= $styles_close[0];
         }
 
