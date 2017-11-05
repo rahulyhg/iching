@@ -318,6 +318,9 @@ dbug($_REQUEST,false);
              ******************************************************************
              ******************************************************************
              ******************************************************************/
+            
+            /* if we are here we know a toss has been requested OR the hu/pen kua */
+            
             $ary = getToss($_REQUEST['trans']);/* throw the coins */
    
             $a = $GLOBALS['dbh']->getAllHexes(); /* set global for ALL hexes, used for reference, rather than  teh dataabase */
@@ -370,12 +373,25 @@ dbug($_REQUEST,false);
                 /* the 't' query param is only set when you are viewing the Hu Kua.  't' and 'f' are set
                  * as params to the 'view Hu Kua' link so the user can navigate back to the original vua the 'view Pen Kua'
                  */
-                if (!isset($_REQUEST['t'])) { 
-                    /* Show Hu Kua links */
+                if (!isset($_REQUEST['t'])) {
+
                     ?>
                     <div id='here3' class='textWrapper'>
                         <div class='subtextWrapper'>
-                            <a style="font-size:16pt" href='/index.php?t=<?=$t['pseq']?>&f=<?=$f['pseq']?>&flipped=1&kua=Hu-Kua&f_tossed=<?= $t_hukua ?>&f_final=<?= $f_hukua ?>'>View the Hu Kua</a>
+                            <?php
+                            $queryParams = array(
+                                'trans' => $_REQUEST['trans']
+                                , 't' => $t['pseq']
+                                , 'f' => $f['pseq']
+                                , 'flipped' => 1
+                                , 'kua' => 'Hu-Kua'
+                                , 'f_tossed' => $t_hukua
+                                , 'f_final' => $f_hukua
+                            );
+                            $http_queryParams = http_build_query($queryParams);
+                            ?>
+                            
+                            <a style="font-size:16pt" href='/index.php?<?= $http_queryParams ?>'>View the Hu-Kua</a>
                             <?php /* this is the jquery-ui popup link for the HuKua */ ?>
                             <a id="hukuatip" class="hukuatip"  href="#">
                                 <img style="width:20px" src="/images/qmark-small-bw.png">
@@ -385,11 +401,22 @@ dbug($_REQUEST,false);
                     </div>
                     <?php
                 } else { 
-                    /* Show Pen Kua links */
+                    /* Show Hu Kua links */
                     ?>
                     <div id='here3' class='textWrapper'>
                         <div class='subtextWrapper'>
-                            <a style="font-size:16pt" href='/index.php?flipped=1&f_tossed=<?= $_REQUEST['t'] ?>&f_final=<?= $_REQUEST['f'] ?>'>View the Pen Kua</a>
+                            <?php
+                            $queryParamsHK = array(
+                                'trans' => $_REQUEST['trans']
+                                ,'f_tossed' => $_REQUEST['t']
+                                ,'f_final' => $_REQUEST['f']
+                                ,'t' => null                                    
+                                , 'flipped' => 1
+                                , 'kua' => 'Pen-Kua'
+                            );
+                            $http_queryParamsHK = http_build_query($queryParamsHK);
+                            ?>                            
+                            <a style="font-size:16pt" href='/index.php?<?= $http_queryParamsHK ?>'>View the Pen-Kua</a>
                             <?php /* this is the jquery-ui popup link for the HuKua */ ?>
                             <a id="penkuatip" class="penkuatip"  href="#">
                                 <img style="width:20px" src="/images/qmark-small-bw.png">

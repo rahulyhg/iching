@@ -14,7 +14,7 @@ foreach ($ids as $id) {
     $fbseq = sprintf("%02s",$id['bseq']);
     $hex = xmdgethex($fpseq,$fbseq, $id);
     
-    //var_dump($hex);
+ 
     /**
      * Creates a new template for the user's page.
      * Fills it with mockup data just for testing.
@@ -120,23 +120,17 @@ function xmdgethex($pseq,$bseq, $id) {
         ,trans
         ,trigrams
                ,(SELECT distinct concat(
-                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans,' - ',
-                trigrams.t_element,', ',
-                trigrams.polarity,', ',
-                trigrams.planet,', '
+                xref_trigrams.pseq,' (',xref_trigrams.bseq,') ',xref_trigrams.title,' / ',xref_trigrams.trans
             )   FROM
             hexagrams
-            Inner Join trigrams ON hexagrams.tri_upper_bin = trigrams.bseq 
+            Inner Join xref_trigrams ON hexagrams.tri_upper_bin = xref_trigrams.bseq 
             WHERE hexagrams.pseq = '${pseq}' limit 1
             ) as tri_upper
         ,(SELECT distinct concat(
-                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans,' - ',
-                trigrams.t_element,', ',
-                trigrams.polarity,', ',
-                trigrams.planet,', '
+                xref_trigrams.pseq,' (',xref_trigrams.bseq,') ',xref_trigrams.title,' / ',xref_trigrams.trans
             )   FROM
             hexagrams
-            Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
+            Inner Join xref_trigrams ON hexagrams.tri_lower_bin = xref_trigrams.bseq 
             WHERE hexagrams.pseq = '${pseq}' limit 1
          ) as tri_lower
         ,explanation
@@ -167,11 +161,18 @@ FROM hexagrams
     WHERE hexagrams.pseq =       
 EOX;
 //    $sql = "SELECT * from hexagrams where ${bseq}=${id}";
-    $sql = $sql."'${pseq}'";
-    $sth = $dbh->prepare($sql);
-    $sth->execute();
-    $hex = $sth->fetchAll(PDO::FETCH_ASSOC);
-    return($hex);
-    
-
+            
+    try {
+        $sql = $sql . "'${pseq}'";
+    //print_r($sql);        
+        $sth = $dbh->prepare($sql);
+        $sth->execute();
+        $hex = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return($hex);
+        //var_dump($hex);
+    } catch (Exception $e) {
+        echo 'Exception -> ';
+        var_dump($e->xdebug_message);
+        die();
+    }
 }
