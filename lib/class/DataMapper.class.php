@@ -58,17 +58,17 @@ class DataMapper {
             ,trans
             ,trigrams
                    ,(SELECT distinct concat(
-                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans
+                xref_trigrams.pseq,' (',xref_trigrams.bseq,') ',xref_trigrams.title,' / ',xref_trigrams.trans
                 )   FROM
                 hexagrams
-                Inner Join trigrams ON hexagrams.tri_upper_bin = trigrams.bseq 
+                Inner Join xref_trigrams ON hexagrams.tri_upper_bin = xref_trigrams.bseq 
                 WHERE hexagrams.binary = ? limit 1
                 ) as tri_upper
             ,(SELECT distinct concat(
-                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans
+                xref_trigrams.pseq,' (',xref_trigrams.bseq,') ',xref_trigrams.title,' / ',xref_trigrams.trans
                 )   FROM
                 hexagrams
-                Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
+                Inner Join xref_trigrams ON hexagrams.tri_lower_bin = xref_trigrams.bseq 
                 WHERE hexagrams.binary = ? limit 1
              ) as tri_lower
             ,explanation
@@ -158,8 +158,8 @@ EOX;
             ,line_6_org
             ,line_6_exp
 
-    FROM notes
-        WHERE notes.`binary` = ?
+    FROM xref_notes
+        WHERE xref_notes.`binary` = ?
 EOX;
 
         try {
@@ -187,68 +187,68 @@ EOX;
             $query = <<<EOX
 
             SELECT
-                32pairs.pathnum
-                ,32pairs.num
-                ,32pairs.title
-                ,32pairs.path
-                ,32pairs.assiah
-                ,32pairs.type
-                ,32pairs.tarot_num
-                ,32pairs.tarot
-                ,32pairs.des_name
-                ,32pairs.des_pseq
-                ,32pairs.des_bseq
-                ,32pairs.des_binary
-                ,32pairs.des_balance
-                ,32pairs.des_balance_desc
-                ,32pairs.des_meaning
-                ,32pairs.asc_name
-                ,32pairs.asc_pseq
-                ,32pairs.asc_bseq
-                ,32pairs.asc_binary
-                ,32pairs.asc_balance
-                ,32pairs.asc_balance_desc
-                ,32pairs.asc_meaning
-                ,32pairs.theme
-                ,32pairs.desc
+                xref_32pairs.pathnum
+                ,xref_32pairs.num
+                ,xref_32pairs.title
+                ,xref_32pairs.path
+                ,xref_32pairs.assiah
+                ,xref_32pairs.type
+                ,xref_32pairs.tarot_num
+                ,xref_32pairs.tarot
+                ,xref_32pairs.des_name
+                ,xref_32pairs.des_pseq
+                ,xref_32pairs.des_bseq
+                ,xref_32pairs.des_binary
+                ,xref_32pairs.des_balance
+                ,xref_32pairs.des_balance_desc
+                ,xref_32pairs.des_meaning
+                ,xref_32pairs.asc_name
+                ,xref_32pairs.asc_pseq
+                ,xref_32pairs.asc_bseq
+                ,xref_32pairs.asc_binary
+                ,xref_32pairs.asc_balance
+                ,xref_32pairs.asc_balance_desc
+                ,xref_32pairs.asc_meaning
+                ,xref_32pairs.theme
+                ,xref_32pairs.desc
                 ,hexagrams.title AS `HEX`
             FROM
                 hexagrams
-            Inner Join 32pairs ON hexagrams.bseq = 32pairs.des_bseq
+            Inner Join xref_32pairs ON hexagrams.bseq = xref_32pairs.des_bseq
             WHERE hexagrams.`bseq` = ?
 EOX;
         } else {
             $query = <<<EOX
 
             SELECT
-                32pairs.pathnum
-                ,32pairs.num
-                ,32pairs.title
-                ,32pairs.path
-                ,32pairs.assiah
-                ,32pairs.type
-                ,32pairs.tarot_num
-                ,32pairs.tarot
-                ,32pairs.des_name
-                ,32pairs.des_pseq
-                ,32pairs.des_bseq
-                ,32pairs.des_binary
-                ,32pairs.des_balance
-                ,32pairs.des_balance_desc
-                ,32pairs.des_meaning
-                ,32pairs.asc_name
-                ,32pairs.asc_pseq
-                ,32pairs.asc_bseq
-                ,32pairs.asc_binary
-                ,32pairs.asc_balance
-                ,32pairs.asc_balance_desc
-                ,32pairs.asc_meaning
-                ,32pairs.theme
-                ,32pairs.desc
+                xref_32pairs.pathnum
+                ,xref_32pairs.num
+                ,xref_32pairs.title
+                ,xref_32pairs.path
+                ,xref_32pairs.assiah
+                ,xref_32pairs.type
+                ,xref_32pairs.tarot_num
+                ,xref_32pairs.tarot
+                ,xref_32pairs.des_name
+                ,xref_32pairs.des_pseq
+                ,xref_32pairs.des_bseq
+                ,xref_32pairs.des_binary
+                ,xref_32pairs.des_balance
+                ,xref_32pairs.des_balance_desc
+                ,xref_32pairs.des_meaning
+                ,xref_32pairs.asc_name
+                ,xref_32pairs.asc_pseq
+                ,xref_32pairs.asc_bseq
+                ,xref_32pairs.asc_binary
+                ,xref_32pairs.asc_balance
+                ,xref_32pairs.asc_balance_desc
+                ,xref_32pairs.asc_meaning
+                ,xref_32pairs.theme
+                ,xref_32pairs.desc
                 ,hexagrams.title AS `HEX`
             FROM
                 hexagrams
-            Inner Join 32pairs ON hexagrams.bseq = 32pairs.asc_bseq
+            Inner Join xref_32pairs ON hexagrams.bseq = xref_32pairs.asc_bseq
             WHERE hexagrams.`bseq` = ?
 EOX;
         }
@@ -285,18 +285,18 @@ EOX;
             ,trans
             ,trigrams
             ,(SELECT distinct concat(
-                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans
+                xref_trigrams.pseq,' (',xref_trigrams.bseq,') ',xref_trigrams.title,' / ',xref_trigrams.trans
                 )   FROM
-                short
-                Inner Join trigrams ON short.tri_upper_bin = trigrams.bseq 
-                WHERE short.binary = ? limit 1
+                xref_short
+                Inner Join xref_trigrams ON xref_short.tri_upper_bin = xref_trigrams.bseq 
+                WHERE xref_short.binary = ? limit 1
                 ) as tri_upper
             ,(SELECT distinct concat(
-                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans
+                xref_trigrams.pseq,' (',xref_trigrams.bseq,') ',xref_trigrams.title,' / ',xref_trigrams.trans
                 )   FROM
-                short
-                Inner Join trigrams ON short.tri_lower_bin = trigrams.bseq 
-                WHERE short.binary = ? limit 1
+                xref_short
+                Inner Join xref_trigrams ON xref_short.tri_lower_bin = xref_trigrams.bseq 
+                WHERE xref_short.binary = ? limit 1
              ) as tri_lower
             ,explanation
             ,judge_old
@@ -322,8 +322,8 @@ EOX;
             ,line_6_org
             ,line_6_exp
 
-    FROM short
-        WHERE short.`binary` = ?
+    FROM xref_short
+        WHERE xref_short.`binary` = ?
 EOX;
 
         try {
@@ -356,17 +356,17 @@ EOX;
         ,trans
         ,trigrams
         ,(SELECT distinct concat(
-                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans
+                xref_trigrams.pseq,' (',xref_trigrams.bseq,') ',xref_trigrams.title,' / ',xref_trigrams.trans
             )   FROM
             hexagrams
-            Inner Join trigrams ON hexagrams.tri_upper_bin = trigrams.bseq 
+            Inner Join xref_trigrams ON hexagrams.tri_upper_bin = xref_trigrams.bseq 
             WHERE hexagrams.pseq = ? limit 1
             ) as tri_upper
         ,(SELECT distinct concat(
-                trigrams.pseq,' (',trigrams.bseq,') ',trigrams.title,' / ',trigrams.trans
+                xref_trigrams.pseq,' (',xref_trigrams.bseq,') ',xref_trigrams.title,' / ',xref_trigrams.trans
             )   FROM
             hexagrams
-            Inner Join trigrams ON hexagrams.tri_lower_bin = trigrams.bseq 
+            Inner Join xref_trigrams ON hexagrams.tri_lower_bin = xref_trigrams.bseq 
             WHERE hexagrams.pseq = ? limit 1
          ) as tri_lower
         ,explanation
@@ -440,7 +440,7 @@ EOX;
     }
 
     public function getNotes($h) {
-        $query = "SELECT * from notes where pseq=${h}";
+        $query = "SELECT * from xref_notes where pseq=${h}";
         $sth = $this->o->prepare($query);
         $sth->execute();
         return($sth->fetchAll(PDO::FETCH_ASSOC));

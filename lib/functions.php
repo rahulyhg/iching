@@ -1265,6 +1265,11 @@ function mergeResults($prev, $new, $map) {
 //    dbug($map,true);
 //    dbug($prev,true);
     $r = $prev;
+    
+    if (!isset($prev[0])) {
+        /* OOPS!  there is a problem.  bouce! */
+        dbug("OOPS!  There was a major error :(  Start again from the  <a href='/'>homepage</a>",true);  
+    }    
     $pd = $prev[0];  // BREAKPOINT -> Notice : Undefined offset: 0 in 
 
     $f=array();
@@ -1320,6 +1325,10 @@ function mergeResults($prev, $new, $map) {
         $styles_open = array("<p style='color:green' class='qabalah'>");
         $styles_close = array("</p>\n");
 
+        if (!isset($new[0]['theme'])) {
+        /* OOPS!  there is a problem.  bouce! */
+            dbug("OOPS!  There was a major error :(  Start again from the  <a href='/'>homepage</a>",true);  
+        }
         $theme = $new[0]['theme'];
         $tarot = $new[0]['tarot'];
         $assiah = $new[0]['assiah'];

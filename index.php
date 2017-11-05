@@ -660,7 +660,7 @@ dbug($_REQUEST,false);
                                         </h3>
                                         <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
                                             <p>
-                                                <i><?= $f['judge_old'] ?></i>
+                                                <i><?= htmlize($f['judge_old']) ?></i>
                                             </p>
                                                 <p>
                                                     <b>The Expanded Text</b>

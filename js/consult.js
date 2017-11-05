@@ -230,7 +230,8 @@ $(document).ready(function () {
      * redirect the "short" button click to trigger a popup saying 
      * it is not ready yet
      * *********************************************************/
-    $("#shortbutton").click(function (e) {
+//    $("#shortbutton").click(function (e) {
+    $("#TURNED_OFF_shortbutton").click(function (e) {
         $(function () {
             $("#shortbuttonmsg").dialog({
                 autoOpen: false
@@ -244,7 +245,8 @@ $(document).ready(function () {
     });
     
     
-    $("#TURNED_OFF_shortbutton").click(function () {
+//    $("#TURNED_OFF_shortbutton").click(function () {
+    $("#shortbutton").click(function () {
         console.log("shortbutton clicked");
         $("#qfield").val("Stright to the Point");
         $("#shortbutton").attr("style","width:80px;");

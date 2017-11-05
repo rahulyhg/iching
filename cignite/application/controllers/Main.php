@@ -62,7 +62,7 @@ class Main extends CI_Controller {
     
     public function notes() {
         $crud = new grocery_CRUD();
-        $crud->set_table('notes');
+        $crud->set_table('xref_notes');
         
         $bseq = $this->uri->segments[4];        
         $obseq = $GLOBALS['dbh']->getHexnumOppositeByBseq($bseq) ;
