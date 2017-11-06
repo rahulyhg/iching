@@ -1,6 +1,8 @@
 # make the files
 #------------------------
 cd ichingbook
+rm hexagrams/*
+
 find -name "*html" -exec rm {} \;
 cd -
 php ./makemds.php
