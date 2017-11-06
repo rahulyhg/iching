@@ -563,7 +563,7 @@ EOX;
             $sth->execute();
             return(1);
         } catch (PDOException $e) {
-            dbug($e->xdebug_message,TRUE);
+            dbug($e,TRUE);
             die("FATAL ERROR");                   
         }
     }
