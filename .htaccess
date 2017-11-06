@@ -1,11 +1,17 @@
 # override conf    SetEnv runtime dev
+
+AddType application/x-httpd-php .php
+
 <IfModule mod_headers.c>
     Header set Access-Control-Allow-Origin: *
 </IfModule>
 
-#hoide php extension
+
+#hide php extension
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule (.*) $1.php [L]
+
+

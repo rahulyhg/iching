@@ -5,24 +5,17 @@
 # <span style="color:gray">[@trans] / [@title]</span>
 Hexagram: [@pseq]
 Binary Sequence: [@bseq] ([@binary])
-Direction: [@dir]
 
 * Upper trigram: [@tri_upper]
 
 * Lower trigram: [@tri_lower]
 
-# [@fix]
 *** The Judgment: ***
 [@judge_old]
 
 
 *** <span style="color:gray">An Explanation of the Judgment</span> ***
 [@judge_exp]
-
-<!-- 
-*** My Additional Annotations and Comments ***
-[@comment]
--->
 
 *** <span style="color:gray">The 'IMAGE' of the hexagram</span> ***
 [@image_old]

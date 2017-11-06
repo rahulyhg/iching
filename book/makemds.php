@@ -21,39 +21,39 @@ foreach ($ids as $id) {
      */
     $page = new Template("templates/page.tpl");
 
-    $page->set("id", f($hex[0]['pseq']));
-    $page->set("trans", $hex[0]['trans']);
-    $page->set("title", $hex[0]['title']);
-    $page->set("pseq", f($hex[0]['pseq']));    
-    $page->set("bseq", f($hex[0]['bseq']));
-    $page->set("binary", $hex[0]['binary']);
-    $page->set("tri_upper", $hex[0]['tri_upper']);
-    $page->set("tri_lower", $hex[0]['tri_lower']);
-    $page->set("judge_old", $hex[0]['judge_old']);
-    $page->set("judge_exp", $hex[0]['judge_exp']);    
-    $page->set("image_old",  $hex[0]['image_old']);
-    $page->set("image_exp",  $hex[0]['image_exp']);
-    $page->set("line_1",    $hex[0]['line_1']);
-    $page->set("line_1_org", $hex[0]['line_1_org']);
-    $page->set("line_1_exp", $hex[0]['line_1_exp']);
-    $page->set("line_2",     $hex[0]['line_2']);
-    $page->set("line_2_org", $hex[0]['line_2_org']);
-    $page->set("line_2_exp", $hex[0]['line_2_exp']);
-    $page->set("line_3",     $hex[0]['line_3']);
-    $page->set("line_3_org", $hex[0]['line_3_org']);
-    $page->set("line_3_exp", $hex[0]['line_3_exp']);
-    $page->set("line_4",     $hex[0]['line_4']);
-    $page->set("line_4_org", $hex[0]['line_4_org']);
-    $page->set("line_4_exp", $hex[0]['line_4_exp']);
-    $page->set("line_5",     $hex[0]['line_5']);
-    $page->set("line_5_org", $hex[0]['line_5_org']);
-    $page->set("line_5_exp", $hex[0]['line_5_exp']);
-    $page->set("line_6",     $hex[0]['line_6']);
-    $page->set("line_6_org", $hex[0]['line_6_org']);
-    $page->set("line_6_exp", $hex[0]['line_6_exp']);
+    $page->set("id", htmlize(f($hex[0]['pseq'])));
+    $page->set("trans", htmlize($hex[0]['trans']));
+    $page->set("title", htmlize($hex[0]['title']));
+    $page->set("pseq", htmlize(f($hex[0]['pseq'])));    
+    $page->set("bseq", htmlize(f($hex[0]['bseq'])));
+    $page->set("binary", htmlize($hex[0]['binary']));
+    $page->set("tri_upper", htmlize($hex[0]['tri_upper']));
+    $page->set("tri_lower", htmlize($hex[0]['tri_lower']));
+    $page->set("judge_old", htmlize($hex[0]['judge_old']));
+    $page->set("judge_exp", htmlize($hex[0]['judge_exp']));    
+    $page->set("image_old",  htmlize($hex[0]['image_old']));
+    $page->set("image_exp",  htmlize($hex[0]['image_exp']));
+    $page->set("line_1",    htmlize($hex[0]['line_1']));
+    $page->set("line_1_org", htmlize($hex[0]['line_1_org']));
+    $page->set("line_1_exp", htmlize($hex[0]['line_1_exp']));
+    $page->set("line_2",     htmlize($hex[0]['line_2']));
+    $page->set("line_2_org", htmlize($hex[0]['line_2_org']));
+    $page->set("line_2_exp", htmlize($hex[0]['line_2_exp']));
+    $page->set("line_3",     htmlize($hex[0]['line_3']));
+    $page->set("line_3_org", htmlize($hex[0]['line_3_org']));
+    $page->set("line_3_exp", htmlize($hex[0]['line_3_exp']));
+    $page->set("line_4",     htmlize($hex[0]['line_4']));
+    $page->set("line_4_org", htmlize($hex[0]['line_4_org']));
+    $page->set("line_4_exp", htmlize($hex[0]['line_4_exp']));
+    $page->set("line_5",     htmlize($hex[0]['line_5']));
+    $page->set("line_5_org", htmlize($hex[0]['line_5_org']));
+    $page->set("line_5_exp", htmlize($hex[0]['line_5_exp']));
+    $page->set("line_6",     htmlize($hex[0]['line_6']));
+    $page->set("line_6_org", htmlize($hex[0]['line_6_org']));
+    $page->set("line_6_exp", htmlize($hex[0]['line_6_exp']));
     
-    $page->set("fix", $hex[0]['fix']);
-    $page->set("comment", $hex[0]['comment']);
+//    $page->set("fix", $hex[0]['fix']);
+//    $page->set("comment", $hex[0]['comment']);
     
     // was loading this
 //    {% include "git+https://github.com/baardev/iching_book.git/[@id].md" %}
