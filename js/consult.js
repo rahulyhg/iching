@@ -7,28 +7,28 @@ $(document).ready(function () {
     var baynes = $('#baynes');
     if ($('#baynesVal').is(':checked')) {
         $('#man_baynesVal').val('Wilhelm/Baynes');
-    } 
-    
+    }
+
     /* 
      * if the Acultural box is check in the main form, the autimatically set
      * both the Baynes and the Acultural val in the manual entry
      */
     $("#aculturalVal").click(function () {
-        $('#man_baynesVal').val('Wilhelm/Baynes'); 
-        $('#man_aculturalVal').val('Duncan Stroud'); 
+        $('#man_baynesVal').val('Wilhelm/Baynes');
+        $('#man_aculturalVal').val('Duncan Stroud');
 
         return(true);
     });
-    
+
     /* *********************************************************
      * timer to make a div visible after some time
      * *********************************************************/
     /*
-    setTimeout( function(){ 
-        $('#presentationlayer').css("visiblity","visible");
-        }  , 3000 
-    );
-     */        
+     setTimeout( function(){ 
+     $('#presentationlayer').css("visiblity","visible");
+     }  , 3000 
+     );
+     */
     var w = $(window).width();
     var h = $(window).height();
 //    w = w * .8;
@@ -40,7 +40,7 @@ $(document).ready(function () {
     $(".container").css({"max-width": w + "px !important"});
     $(".container").css({"margin-top": "2px !important"});
 
-    
+
 //    $(window).resize(function(){
 //        var w = $(window).width();
 //        var h = $(window).height();
@@ -58,8 +58,8 @@ $(document).ready(function () {
         console.log("screen x/y: " + $(window).width() + "/" + $(window).height());
 
         /* below is anotehr way to do the same, but what is the diff? */
-        
-        
+
+
 //        $("#accordian1").css({
 //            "min-width": "50% !important"
 //        });
@@ -72,8 +72,8 @@ $(document).ready(function () {
 //        $("#accordian2").css({
 //            "max-width": "50% !important"
 //        });
- 
-        
+
+
 //        $(".container").css({
 //            "max-width": "344px"
 //        });
@@ -82,16 +82,16 @@ $(document).ready(function () {
 //        });
 //        
         /*
-        $(".carousel-control").css({
-            "display": "none"
-        })
-        */
+         $(".carousel-control").css({
+         "display": "none"
+         })
+         */
     }
 
     /* *********************************************************
      * functions to format and show popup help boxes 
      * *********************************************************/
-    
+
     $.fn.center = function () {
         this.css("position", "absolute");
         this.css("top", ($(window).height() - this.height()) / 2 + "px");
@@ -101,26 +101,31 @@ $(document).ready(function () {
 
     $.fn.recss = function (e) {
         console.log("inrecss");
-        if (e.target.className === "rdbbtns") {
-            console.log("is rdbbtns");
+        console.log("className:" + e.target.className);
+        console.log("id:" + e.target.id);
+        if (
+                (e.target.className === "rdbbtns") 
+//             || (e.target.id === "shortbutton")
+                ) {
+            console.log("returning TRUE in recss");
             return(true);
         }
         console.log(this);
         e.preventDefault();
-        var top =  $(document).scrollTop();
-        var h=  $(document).height();
-        var vh =  $(document).innerHeight();
-        var vw =  $(document).innerWidth();
-        var wtop =  $(window).scrollTop();
-        var wo =  $(window).outerHeight();
+        var top = $(document).scrollTop();
+        var h = $(document).height();
+        var vh = $(document).innerHeight();
+        var vw = $(document).innerWidth();
+        var wtop = $(window).scrollTop();
+        var wo = $(window).outerHeight();
         /* get height of topmost container */
         var nh = wo;
         /* 65 to compensate fro header height and scrollbar and a few otehr paddings, etc */
-        nh = nh-65;
+        nh = nh - 65;
 
-        var nw = vw-35;
-        
-        
+        var nw = vw - 35;
+
+
         var idName = "";
         if (typeof this !== 'undefined') {
             if (typeof this[0] !== 'undefined') {
@@ -132,39 +137,39 @@ $(document).ready(function () {
         console.log("id: " + idName);
         console.log("vw: " + vw);
 
-        this.parent().css("width","80%");
-        this.parent().css("top",top + "px");
-        this.parent().css("left","10%");
-        this.parent().css("border","3px solid red");
+        this.parent().css("width", "80%");
+        this.parent().css("top", top + "px");
+        this.parent().css("left", "10%");
+        this.parent().css("border", "3px solid red");
         this.css("overflow", "hidden");
 
 
-        if (idName == 'helptipmsg' ) {
-            this.parent().css("left","0%");
-            this.parent().css("width","100%");
+        if (idName == 'helptipmsg') {
+            this.parent().css("left", "0%");
+            this.parent().css("width", "100%");
             this.parent().css("overflow", "hidden");
             this.css("overflow", "hidden");
-            $('#helptipmsg').css("height",nh + "px");
+            $('#helptipmsg').css("height", nh + "px");
             $('#helptipmsg').parent().width(nw + "px");
-            $('#helptipmsg').css("overflow-y","scroll");
+            $('#helptipmsg').css("overflow-y", "scroll");
             var j = $('#helptipmsg');
-            j.parent().width($(window).width()-11);
-} 
-        if (idName == 'help2tipmsg' ) {
-            this.parent().css("left","0%");
-            this.parent().css("width","100%");
+            j.parent().width($(window).width() - 11);
+        }
+        if (idName == 'help2tipmsg') {
+            this.parent().css("left", "0%");
+            this.parent().css("width", "100%");
             this.parent().css("overflow", "hidden");
             this.css("overflow", "hidden");
-            $('#help2tipmsg').css("height",nh + "px");
+            $('#help2tipmsg').css("height", nh + "px");
             $('#help2tipmsg').parent().width(nw + "px");
-            $('#help2tipmsg').css("overflow-y","scroll");
-            $('#help2tipmsg').parent().css("max-width:",$(window).width() +"px !important");
+            $('#help2tipmsg').css("overflow-y", "scroll");
+            $('#help2tipmsg').parent().css("max-width:", $(window).width() + "px !important");
             var j = $('#help2tipmsg');
-            j.parent().width($(window).width()-11);
-        } 
+            j.parent().width($(window).width() - 11);
+        }
     };
 
-    
+
     /* *********************************************************
      * How does this work?
      * *********************************************************/
@@ -190,16 +195,16 @@ $(document).ready(function () {
      * *********************************************************/
     /* JWFIX how to read REQUEST to add debuigging? */
     $("#castbutton").click(function () {
-        $("#nowbutton").attr("style","width:80px;");
-        $("#nowbutton").attr("src","/images/gears-anim.gif");
+        $("#nowbutton").attr("style", "width:80px;");
+        $("#nowbutton").attr("src", "/images/gears-anim.gif");
         return(true);
     });
-    
+
     $("#nowbutton").click(function () {
         $("#qfield").val("Your Tao of Now");
-        $("#nowbutton").attr("style","width:80px;");
-        $("#nowbutton").attr("src","/images/gears-anim.gif");
-       
+        $("#nowbutton").attr("style", "width:80px;");
+        $("#nowbutton").attr("src", "/images/gears-anim.gif");
+
         /* 
          * get the stats of the checkboxed form the main form and set the vars
          * here for the POST args
@@ -209,15 +214,15 @@ $(document).ready(function () {
         if ($('#baynesVal').is(':checked')) {
             t.push('Wilhelm/Baynes');
         }
-        if ($("#aculturalVal").is(':checked') ) {        
+        if ($("#aculturalVal").is(':checked')) {
             t.push('Duncan Stroud');
         }
-        if ($("#qabalahVal").is(':checked') ) {        
+        if ($("#qabalahVal").is(':checked')) {
             t.push('Qabalah');
         }
-        
+
         $.redirect('/index.php', {
-              flipped: "1"
+            flipped: "1"
             , mode: "astro"
             , trans: t
             , question: "Your Tao of Now"
@@ -225,8 +230,8 @@ $(document).ready(function () {
         });
         return(true);
     });
-    
-     /* *********************************************************
+
+    /* *********************************************************
      * redirect the "short" button click to trigger a popup saying 
      * it is not ready yet
      * *********************************************************/
@@ -243,46 +248,61 @@ $(document).ready(function () {
             });
         });
     });
-    
-    
-//    $("#TURNED_OFF_shortbutton").click(function () {
-    $("#shortbutton").click(function () {
-        console.log("shortbutton clicked");
-        $("#qfield").val("Stright to the Point");
-        $("#shortbutton").attr("style","width:80px;");
-        $("#shortbutton").attr("src","/images/gears-anim.gif");
-       
-        /* 
-         * we only want the "short" trans here
-         * 
-         */
-        var t = Array("short");
-        /* 
-         * for short to work with manual entry we need to check and get 
-         * the field vals there and pass them to the POST here
-         * 
-         */
-        var f_tossed = "";
-        var f_final = "";
-        
-        if ($('#f_tossed').val()) {
-            f_tossed = $('#f_tossed').val();
-        } 
 
-        if ($('#f_final').val()) {
-            f_final =  $('#f_final').val();
-        }
-        
-        $.redirect('/index.php', {
-              flipped: "1"
-            , mode: "astro"
-            , trans: t
-            , f_tossed
-            , f_final
-            , question: "Straight to the Point"
+
+//    $("#TURNED_OFF_shortbutton").click(function () {
+    $("#shortbutton").click(function (e) {
+        var hostname = $(location).attr('hostname');
+        var n = hostname.search("babel");
+
+        if (n == 0) {
+            //alert("The SHORT results are still *very* incomplete");
+
+            $("#shortbuttonmsg").dialog({
+                autoOpen: false
+            });
+            var o = $("#shortbuttonmsg");
+            o.dialog("open");
+            o.recss(e);
+            return(true);
+        } else {
+            console.log("shortbutton clicked");
+            $("#qfield").val("Stright to the Point");
+            $("#shortbutton").attr("style", "width:80px;");
+            $("#shortbutton").attr("src", "/images/gears-anim.gif");
+
+            /* 
+             * we only want the "short" trans here
+             * 
+             */
+            var t = Array("short");
+            /* 
+             * for short to work with manual entry we need to check and get 
+             * the field vals there and pass them to the POST here
+             * 
+             */
+            var f_tossed = "";
+            var f_final = "";
+
+            if ($('#f_tossed').val()) {
+                f_tossed = $('#f_tossed').val();
+            }
+
+            if ($('#f_final').val()) {
+                f_final = $('#f_final').val();
+            }
+
+            $.redirect('/index.php', {
+                flipped: "1"
+                , mode: "astro"
+                , trans: t
+                , f_tossed
+                , f_final
+                , question: "Straight to the Point"
 //            ,debugon:"1"    
-        });
-        return(true);
+            });
+            return(true);
+        }
     });
 
 
@@ -357,7 +377,7 @@ $(document).ready(function () {
             });
         }
     });
-    
+
     /* *********************************************************
      * turn debugging on/off
      * *********************************************************/
@@ -388,7 +408,7 @@ $(document).ready(function () {
 //        $("#tosstype  input[id^=entropy]:radio").attr('disabled', true);
 //        $("#tosstype  input[id^=acultural]:radio").attr('disabled', true);
     }
-    
+
     /* *********************************************************
      * These are all the popup tip/help message functions
      * *********************************************************/
@@ -465,7 +485,7 @@ $(document).ready(function () {
             o.recss($e);
         });
     });
-    
+
 //    currently disableld
 //    $(function () {
 //        $("#entropytipmsg").dialog({
@@ -520,7 +540,7 @@ $(document).ready(function () {
             o.recss($e);
         });
     });
-    
+
     $(function () {
         $("#aculturaltipmsg").dialog({
             autoOpen: false
@@ -553,7 +573,7 @@ $(document).ready(function () {
             o.recss($e);
         });
     });
-    
+
     //    $(window).on('resize', function(){
     //        $("#helptip").trigger("click");
     //    });
@@ -618,7 +638,7 @@ $(document).ready(function () {
                     // $("#donatemsg").dialog("close");
                 });
     });
-    
+
     /* *********************************************************
      * add the accordion functionality
      * *********************************************************/
@@ -679,7 +699,7 @@ $(document).ready(function () {
     $("#larger3").hover(function () {
         $('#larger3').css("cursor", "hand");
     });
-    
+
     $("#hpgears").remove();
 
 });
