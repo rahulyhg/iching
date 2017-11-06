@@ -530,9 +530,9 @@ html,body {
     html { 
         background: whitesmoke; 
     }
-    .qboxSug {
+/*    .qboxSug {
         display: none;
-    }
+    }*/
     .qtrtip {
         display: none;        
     }
