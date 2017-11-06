@@ -75,9 +75,9 @@ dbug($_REQUEST,false);
             ?>   
             <form id="tosstype">
                 <span style="flex-direction: row;" class="qbox qboxClear">
-                    <span><a alt="RESET"                  style="font-weight: bold;"             id='reset' href='/index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'><img class="rdbbtns" src="/images/_reset.png"/></a></span>
+                    <span><a alt="RESET"                  style="font-weight: bold;"             id='reset' href='/consult<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'><img class="rdbbtns" src="/images/_reset.png"/></a></span>
                     <span><a alt="DOCS" target="_blank"   style="color:white;font-weight: bold;"            href="/book/ichingbook/_book/">                                                             <img class="rdbbtns" src="/images/_docs.png"/></a></span>
-                    <span><a alt="BROWSE" target="_blank" style="color:white;font-weight: bold;"            href="/show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >         <img class="rdbbtns" src="/images/_browse.png"/></a></span> 
+                    <span><a alt="BROWSE" target="_blank" style="color:white;font-weight: bold;"            href="/show<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >         <img class="rdbbtns" src="/images/_browse.png"/></a></span> 
                 </span>
                 <?php 
                 /* *****************************************
@@ -287,9 +287,9 @@ dbug($_REQUEST,false);
              * *****************************************/
             ?>   
                 <span style="flex-direction: row;" class="qbox qboxClear">
-                    <span><a alt="RESET"                  style="font-weight: bold;"             id='reset' href='/index.php<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'><img class="rdbbtns" src="/images/_reset.png"/></a></span>
+                    <span><a alt="RESET"                  style="font-weight: bold;"             id='reset' href='/consult<?=(isset($_REQUEST['debugon']) ? "?debugon=1&qfield=debugging" : null) ?>'><img class="rdbbtns" src="/images/_reset.png"/></a></span>
                     <span><a alt="DOCS" target="_blank"   style="color:white;font-weight: bold;"            href="/book/ichingbook/_book/">                                                             <img class="rdbbtns" src="/images/_docs.png"/></a></span>
-                    <span><a alt="BROWSE" target="_blank" style="color:white;font-weight: bold;"            href="/show.php<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >         <img class="rdbbtns" src="/images/_browse.png"/></a></span> 
+                    <span><a alt="BROWSE" target="_blank" style="color:white;font-weight: bold;"            href="/show<?= (isset($_REQUEST['hex']) ? "?hex=" . $_REQUEST["hex"] : '') ?>" >         <img class="rdbbtns" src="/images/_browse.png"/></a></span> 
                 </span>
             <?php
             
@@ -391,7 +391,7 @@ dbug($_REQUEST,false);
                             $http_queryParams = http_build_query($queryParams);
                             ?>
                             
-                            <a style="font-size:16pt" href='/index.php?<?= $http_queryParams ?>'>View the Hu-Kua</a>
+                            <a style="font-size:16pt" href='/consult?<?= $http_queryParams ?>'>View the Hu-Kua</a>
                             <?php /* this is the jquery-ui popup link for the HuKua */ ?>
                             <a id="hukuatip" class="hukuatip"  href="#">
                                 <img style="width:20px" src="/images/qmark-small-bw.png">
@@ -416,7 +416,7 @@ dbug($_REQUEST,false);
                             );
                             $http_queryParamsHK = http_build_query($queryParamsHK);
                             ?>                            
-                            <a style="font-size:16pt" href='/index.php?<?= $http_queryParamsHK ?>'>View the Pen-Kua</a>
+                            <a style="font-size:16pt" href='/consult?<?= $http_queryParamsHK ?>'>View the Pen-Kua</a>
                             <?php /* this is the jquery-ui popup link for the HuKua */ ?>
                             <a id="penkuatip" class="penkuatip"  href="#">
                                 <img style="width:20px" src="/images/qmark-small-bw.png">
@@ -620,7 +620,7 @@ dbug($_REQUEST,false);
                         <div>
                             <p>
                                 <b>
-                                <a href="/show.php?hex=<?= $ret['tpseq'] ?>"><?= $ret['tpseq'] ?>
+                                <a href="/show?hex=<?= $ret['tpseq'] ?>"><?= $ret['tpseq'] ?>
                                     <?= $GLOBALS['dbh']->getHexFieldByPseq("hexagrams", "trans", $ret['tpseq']); ?>
                                 </a>
                                 </b>

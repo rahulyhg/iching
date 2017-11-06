@@ -92,7 +92,7 @@ use PHPHtmlParser\Dom;
                 ?>
                 <form method="POST" action="">
                     <span class="question text_mdcaps"></span>
-                    <span class="text_md-caps btn btn-danger" ><a style="color:white" target="blank_" href="/index.php">CONSULT</a></span>
+                    <span class="text_md-caps btn btn-danger" ><a style="color:white" target="blank_" href="/consult">CONSULT</a></span>
                     <input class="text_md-caps btn btn-primary" type="submit" name="submit" value="< Hex">
                     <input class="text_md-caps btn btn-success" type="submit" name="submit" value="Hex >">
                     <input class="text_md-caps btn btn-primary" type="submit" name="submit" value="< Bin">
