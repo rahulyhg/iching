@@ -1,16 +1,7 @@
 $(document).ready(function () {
 
-    $(".open-popup").fullScreenPopup({
-
-        inlineStyles: true,
-        lockDocumentScroll: true,
-        mainWrapperClass: "fsp-wrapper",
-        contentWrapperClass: "fsp-content",
-        closePopupClass: "fsp-close",
-        animationSpeed: 200 //ms
-
-    });
-
+    
+    
     $("#astroIcon").on("click", function (e) {
         e.preventDefault();
         $(function () {
@@ -38,13 +29,7 @@ $(document).ready(function () {
                     }
                 });
             });
-//            $('.open-popup').trigger('click');
         });
-
-
-
-
-
     });
 
 

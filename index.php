@@ -3,7 +3,7 @@ if (isset($_REQUEST['f_final'])) {
     $_REQUEST['mode']="manual";
 }
 
-require "lib/functions.php";
+require $_SERVER['DOCUMENT_ROOT']."/lib/functions.php";
 
 /* 'iching_root' is defined in the php.ini file, this way is it always correct 
  * for whatever maching is being used 
