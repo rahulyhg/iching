@@ -149,17 +149,20 @@ dbug($_REQUEST,false);
                          */?>
                         <a id="plumtip" class="plumtip" href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="plum" value="plum"  > 
-                            <span class="text_mdcaps" id="plummsg">Modern Plum</span>    
+                            <span class="text_mdcaps" id="plummsg">Mod. Plum</span>    
                         </p>
                         <a id="astrotip" class="astrotip" href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="astro" value="astro" checked > 
-                            <span class="text_mdcaps" id="astromsg">Planetary</span>    
+                            <span class="text_mdcaps" id="astromsg">Planets</span>    
+                                <a class="open-popup" href="#astropopup">Open popup</a>
+                                <img id="astroIcon" src="/images/astroIcon75.png" /></a>
+                            
                         </p>
 
                         <p>
                         <a id="randomtip" class="randomtip" href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="random.org" value="random.org"> 
-                            <span class="text_mdcaps" id="random.orgmsg">random.org</span>
+                            <span class="text_mdcaps" id="random.orgmsg">random</span>
                         </p>
 
                             <?php
@@ -170,7 +173,7 @@ dbug($_REQUEST,false);
                         <p>
                         <a id="r-decaytip" class="r-decaytip"  href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="r-decay" value="r-decay"> 
-                            <span class="text_mdcaps" id="r-decaymsg">r-decay</span>
+                            <span class="text_mdcaps" id="r-decaymsg">Quant</span>
                         </p>
                             <?php } else {?>
                         <p>

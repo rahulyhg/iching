@@ -1,5 +1,49 @@
 $(document).ready(function () {
 
+    $(".open-popup").fullScreenPopup({
+
+        inlineStyles: true,
+        lockDocumentScroll: true,
+        mainWrapperClass: "fsp-wrapper",
+        contentWrapperClass: "fsp-content",
+        closePopupClass: "fsp-close",
+        animationSpeed: 200 //ms
+
+    });
+
+    $("#astroIcon").on("click", function ($e) {
+        $(function () {
+            var astroPosAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_JSON.php";
+
+            $.getJSON(astroPosAPI, function (json) {
+                console.log("JSON Data: " + json.filename);
+                var getImage = "http://slider.com/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?" + json.wargs1;
+
+                $.ajax({
+                    url: getImage,
+                    type: "POST",
+                    data: {
+                        'right_now_p1': json.right_now_p1,
+                        'filename': json.filename
+                    },
+                    success: function (data) {
+                        var newimage = "http://slider.com/charting/home/tmp/" + data;
+                        $('#chartImage').attr("src", newimage);
+                        console.log("image: " + data);
+                        console.log("urlimage: " + newimage);
+                    }
+                });
+            });
+            $('.open-popup').trigger('click');
+        });
+
+
+
+
+
+    });
+
+
     /* 
      * if the Baynes box is check in the main form, the autimatically set
      * the baynes val in thh manual entry
@@ -104,7 +148,7 @@ $(document).ready(function () {
         console.log("className:" + e.target.className);
         console.log("id:" + e.target.id);
         if (
-                (e.target.className === "rdbbtns") 
+                (e.target.className === "rdbbtns")
 //             || (e.target.id === "shortbutton")
                 ) {
             console.log("returning TRUE in recss");

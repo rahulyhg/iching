@@ -1,4 +1,14 @@
 
+#astroIcon {
+    position: RELATIVE;
+    top: -14px;
+    width: 50px;
+    float: right;
+    cursor:pointer;
+    background-image: url('/images/qmark.png');
+    background-size:  cover;
+}
+
 ul {
   padding-left: 40px;
 }

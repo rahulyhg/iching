@@ -194,3 +194,6 @@ This is mainly used as a research tool, but it can also be used in other ways.  
     
 
 </div>
+
+
+<div id="astropopup" style="display: none; width: 640px"><img id="chartImage" style="height:90%" src="http://slider.com/charting/home/tmp/now_5a014f8f8242e.png"/></div>

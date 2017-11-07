@@ -19,13 +19,15 @@ session_start();
 
         <!-- vendor includes -->
         
-        <script src="/vendor/components/jquery/jquery.min.js"></script>
-        <script src="/vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>    
+        <script type="text/javascript" src="/vendor/components/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="/vendor/twitter/bootstrap/dist/js/bootstrap.min.js"></script>    
         <script type="text/javascript" src="/vendor/qtip/jquery.qtip.js"></script>
+        <script type="text/javascript" src="/js/jQpopup/dist/jquery.fullscreen-popup.js"></script>
+
         
         <!-- jquery -->
         
-	<script src="/vendor/jquery-ui/jquery-ui.min.js"></script>        
+	<script type="text/javascript" src="/vendor/jquery-ui/jquery-ui.min.js"></script>        
 	<link href="/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>       
         
         <script type="text/javascript" src="/js/jquery.center/jquery.center.js"></script>    
@@ -38,11 +40,11 @@ session_start();
         
         <!-- jquery accordian -->
 	
-        <script src="/js/accordian.js"></script>        
+        <script type="text/javascript" src="/js/accordian.js"></script>        
         
         <!-- the astrological calc stuff -->
         
-        <script src="/astro/js/as.js"></script>
+        <script type="text/javascript" src="/astro/js/as.js"></script>
         
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">//-->
  
