@@ -22,7 +22,7 @@
 
 
   // get name corresponding to this ID number
-  $sql = "SELECT name FROM birth_info WHERE entered_by='$username' And ID='$ID'";
+  $sql = "SELECT name FROM astro_birth_info WHERE entered_by='$username' And ID='$ID'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $num_records = @MYSQLI_NUM_rows($result);
   
@@ -32,15 +32,15 @@
     $name_to_delete = $row['name'];
 
     //delete this name from the 'scores' table
-    $sql = "DELETE FROM scores WHERE entered_by='$username' And name_f='$name_to_delete'";
+    $sql = "DELETE FROM astro_scores WHERE entered_by='$username' And name_f='$name_to_delete'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
     //delete this name from the 'scores' table
-    $sql = "DELETE FROM scores WHERE entered_by='$username' And name_m='$name_to_delete'";
+    $sql = "DELETE FROM astro_scores WHERE entered_by='$username' And name_m='$name_to_delete'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
     //delete this name from the 'birth_info' table
-    $sql = "DELETE FROM birth_info WHERE entered_by='$username' And name='$name_to_delete' And ID='$ID'";
+    $sql = "DELETE FROM astro_birth_info WHERE entered_by='$username' And name='$name_to_delete' And ID='$ID'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
     echo "<center>";

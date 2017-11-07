@@ -10,15 +10,15 @@ if(!isset($_SESSION)){
 
   include 'header.html';
 
-//JWX   $username = safeEscapeString($conn, $_POST['username']);
-//  $password = safeEscapeString($conn, $_POST['password']);
+  $username = safeEscapeString($conn, $_POST['username']);//JWX
+  $password = safeEscapeString($conn, $_POST['password']);
 
-  $username = "jw";
-  $password = "1q2w3e";
+//  $username = "jw";
+//  $password = "1q2w3e";
 
   $crypt_pwd = md5($password);
 
-  $sql = "SELECT username FROM member_info WHERE username='$username' And password='$crypt_pwd'";
+  $sql = "SELECT username FROM astro_member_info WHERE username='$username' And password='$crypt_pwd'";
   $result = @mysqli_query($conn, $sql);
   $num_rows1 = @MYSQLI_NUM_rows($result);
 
@@ -38,7 +38,7 @@ if(!isset($_SESSION)){
 
     //update member_info table in database for this record
     $date_now = date ("Y-m-d");
-    $sql = "UPDATE member_info SET last_login='$date_now' WHERE username='$username'";
+    $sql = "UPDATE astro_member_info SET last_login='$date_now' WHERE username='$username'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
     //example from PHP 4 - $string = 'Porcupine Pie; Vanilla Soup';

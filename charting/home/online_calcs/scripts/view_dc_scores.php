@@ -36,7 +36,7 @@
     }
         
     //fetch all the ID numbers, names, and sex of all the people in this users database
-    $sql = "SELECT ID,entered_by,name,sex FROM birth_info WHERE entered_by='$username'";
+    $sql = "SELECT ID,entered_by,name,sex FROM astro_birth_info WHERE entered_by='$username'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
     $num_records_females = 0;
@@ -91,13 +91,13 @@
         {
           if ($sex == "f")
           {
-            $sql = "SELECT * FROM scores WHERE id_f='$user_id' AND id_m='$id_m[$j]'";
+            $sql = "SELECT * FROM astro_scores WHERE id_f='$user_id' AND id_m='$id_m[$j]'";
             $id[1] = $user_id;
             $id[2] = $id_m[$j];
           }
           elseif ($sex == "m")
           {
-            $sql = "SELECT * FROM scores WHERE id_f='$id_f[$i]' AND id_m='$user_id'";
+            $sql = "SELECT * FROM astro_scores WHERE id_f='$id_f[$i]' AND id_m='$user_id'";
             $id[1] = $id_f[$i];
             $id[2] = $user_id;
           }
@@ -121,7 +121,7 @@
             //enter this data into the database
             $tot_harmony = $dynes[1] + ($num_MRs * 5);
 
-            $sql = "INSERT INTO scores (ID,entered_by,id_f,name_f,id_m,name_m,power,harmony,mrs) VALUES (0,'$username','$id[1]','$name_f[$i]','$id[2]','$name_m[$j]','$dynes[0]','$tot_harmony','$num_MRs')";
+            $sql = "INSERT INTO astro_scores (ID,entered_by,id_f,name_f,id_m,name_m,power,harmony,mrs) VALUES (0,'$username','$id[1]','$name_f[$i]','$id[2]','$name_m[$j]','$dynes[0]','$tot_harmony','$num_MRs')";
             $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
           }
         }
@@ -131,7 +131,7 @@
 
 
   //check current users data
-  $sql = "SELECT * FROM scores WHERE entered_by='$username' ORDER BY harmony DESC";
+  $sql = "SELECT * FROM astro_scores WHERE entered_by='$username' ORDER BY harmony DESC";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $num_records = MYSQLI_NUM_rows($result);
 
@@ -189,12 +189,12 @@
 
 
   // update count
-  $sql = "SELECT view_all_dc_scores FROM reports";
+  $sql = "SELECT view_all_dc_scores FROM astro_reports";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result);
   $count = $row[view_all_dc_scores] + 1;
 
-  $sql = "UPDATE reports SET view_all_dc_scores = '$count'";
+  $sql = "UPDATE astro_reports SET view_all_dc_scores = '$count'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 

@@ -284,12 +284,12 @@
 
 
       // update count
-      $sql = "SELECT planetary_hours FROM reports";
+      $sql = "SELECT planetary_hours FROM astro_reports";
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
       $row = mysqli_fetch_array($result);
       $count = $row[planetary_hours] + 1;
 
-      $sql = "UPDATE reports SET planetary_hours = '$count'";
+      $sql = "UPDATE astro_reports SET planetary_hours = '$count'";
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 

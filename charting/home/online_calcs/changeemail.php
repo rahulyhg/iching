@@ -56,7 +56,7 @@ if ($_POST['submitted'] == "new_em")
 
   $username = $_SESSION['username'];
 
-  $sql = "SELECT ID FROM member_info WHERE username='$username' AND password='$crypt_pwd'";
+  $sql = "SELECT ID FROM astro_member_info WHERE username='$username' AND password='$crypt_pwd'";
   $result = mysqli_query($conn, $sql);
   $row = @mysqli_fetch_array($result);
 
@@ -81,7 +81,7 @@ if ($_POST['submitted'] == "new_em")
 
   $id = $row['ID'];
 
-  $sql = "UPDATE member_info SET email='$email' WHERE ID='$id'";
+  $sql = "UPDATE astro_member_info SET email='$email' WHERE ID='$id'";
   $result = @mysqli_query($conn, $sql) or die('Sorry, but I cannot complete your update - your e-mail address was NOT changed. If you like, please try again.');
 
 

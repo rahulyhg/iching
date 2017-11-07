@@ -25,7 +25,7 @@
     $username = $_SESSION['username'];
 
     //get data for person #1
-    $sql = "SELECT * FROM birth_info WHERE ID='$id1' And entered_by='$username'";
+    $sql = "SELECT * FROM astro_birth_info WHERE ID='$id1' And entered_by='$username'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
     $num_records = MYSQLI_NUM_rows($result);
@@ -59,7 +59,7 @@
     $ns1 = $row['ns'];
 
     //get data for person #2
-    $sql = "SELECT * FROM birth_info WHERE ID='$id2' And entered_by='$username'";
+    $sql = "SELECT * FROM astro_birth_info WHERE ID='$id2' And entered_by='$username'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
     $num_records = MYSQLI_NUM_rows($result);
@@ -996,12 +996,12 @@
 
 
     // update count
-    $sql = "SELECT composites FROM reports";
+    $sql = "SELECT composites FROM astro_reports";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result);
     $count = $row[composites] + 1;
 
-    $sql = "UPDATE reports SET composites = '$count'";
+    $sql = "UPDATE astro_reports SET composites = '$count'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 

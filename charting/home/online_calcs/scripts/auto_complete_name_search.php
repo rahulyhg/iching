@@ -16,7 +16,7 @@
     {
       //mysqli_query($conn, "set names utf8");    //this MUST be here in order to see accented characters in the drop-down auto-complete area
 
-      $sql = "SELECT ID, name FROM birth_info WHERE entered_by='$username' AND name LIKE '$queryString%' LIMIT 15";
+      $sql = "SELECT ID, name FROM astro_birth_info WHERE entered_by='$username' AND name LIKE '$queryString%' LIMIT 15";
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
       if ($result)

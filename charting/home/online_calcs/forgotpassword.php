@@ -33,7 +33,7 @@ if ($_POST['submitted'] == "new_pwd")
     exit();
   }
 
-  $sql = "SELECT ID, username, email FROM member_info WHERE username='$username' And email='$email'";
+  $sql = "SELECT ID, username, email FROM astro_member_info WHERE username='$username' And email='$email'";
   $result = mysqli_query($conn, $sql);
   $row = @mysqli_fetch_array($result);
 
@@ -73,7 +73,7 @@ if ($_POST['submitted'] == "new_pwd")
 
   $crypt_pwd = md5($password);
 
-  $sql = "UPDATE member_info SET password='$crypt_pwd' WHERE ID='$id'";
+  $sql = "UPDATE astro_member_info SET password='$crypt_pwd' WHERE ID='$id'";
   $result = @mysqli_query($conn, $sql) or die('Sorry, but I cannot complete your update - your password was NOT changed. If you like, please try again.');
 
 

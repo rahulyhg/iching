@@ -24,7 +24,7 @@
 
     $username = $_SESSION['username'];
 
-    $sql = "SELECT * FROM birth_info WHERE ID='$id1' And entered_by='$username'";
+    $sql = "SELECT * FROM astro_birth_info WHERE ID='$id1' And entered_by='$username'";
 
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -892,12 +892,12 @@
 
 
     // update count
-    $sql = "SELECT solar_returns FROM reports";
+    $sql = "SELECT solar_returns FROM astro_reports";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result);
     $count = $row[solar_returns] + 1;
 
-    $sql = "UPDATE reports SET solar_returns = '$count'";
+    $sql = "UPDATE astro_reports SET solar_returns = '$count'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 

@@ -10,7 +10,7 @@ Function CalculatePlanets($id, &$longitude1, &$declination1, &$house_pos1, &$lon
   for ($xx = 1; $xx <= 2; $xx++)
   {
     //fetch all data for this record
-    $sql = "SELECT * FROM birth_info WHERE ID='$id[$xx]'";
+    $sql = "SELECT * FROM astro_birth_info WHERE ID='$id[$xx]'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result);
 
@@ -76,7 +76,7 @@ Function CalculatePlanetHousePositions($last_id, &$longitude, &$declination, &$h
   unset($PATH,$out,$pl_name);
 
   //fetch all data for this record
-  $sql = "SELECT * FROM birth_info WHERE ID='$last_id'";
+  $sql = "SELECT * FROM astro_birth_info WHERE ID='$last_id'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result);
 

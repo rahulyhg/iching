@@ -74,15 +74,15 @@
     if ($err == "")
     {
       //delete this name from the 'scores' table
-      $sql = "DELETE FROM scores WHERE entered_by='$username' And name_f='$original_name'";
+      $sql = "DELETE FROM astro_scores WHERE entered_by='$username' And name_f='$original_name'";
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
       //delete this name from the 'scores' table
-      $sql = "DELETE FROM scores WHERE entered_by='$username' And name_m='$original_name'";
+      $sql = "DELETE FROM astro_scores WHERE entered_by='$username' And name_m='$original_name'";
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
       //update birth_info table in database for this record
-      $sql = "UPDATE birth_info SET
+      $sql = "UPDATE astro_birth_info SET
         name='$name',
         sex='$sex',
         month='$month',
@@ -123,7 +123,7 @@
   if (isset($_POST['submit_update']) == False) { $id = safeEscapeString($conn, $_GET["ID"]); }
 
   //fetch current data for this ID # from the 'birth_info' database
-  $sql = "SELECT * FROM birth_info WHERE ID='$id' And entered_by='$username'";
+  $sql = "SELECT * FROM astro_birth_info WHERE ID='$id' And entered_by='$username'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result);
 

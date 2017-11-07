@@ -26,7 +26,7 @@
   for ($xx = 1; $xx <= 2; $xx++)
   {
     //fetch all data for this record
-    $sql = "SELECT * FROM birth_info WHERE ID='$id[$xx]' And entered_by='$username'";
+    $sql = "SELECT * FROM astro_birth_info WHERE ID='$id[$xx]' And entered_by='$username'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result);
     $num_rows = MYSQLI_NUM_rows($result);
@@ -177,22 +177,22 @@
 
 
   // update count
-  $sql = "SELECT dual_cosmodynes FROM reports";
+  $sql = "SELECT dual_cosmodynes FROM astro_reports";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result);
   $count = $row[dual_cosmodynes] + 1;
 
-  $sql = "UPDATE reports SET dual_cosmodynes = '$count'";
+  $sql = "UPDATE astro_reports SET dual_cosmodynes = '$count'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 
   // update count
-  $sql = "SELECT dc_with_report FROM reports";
+  $sql = "SELECT dc_with_report FROM astro_reports";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result);
   $count = $row[dc_with_report] + 1;
 
-  $sql = "UPDATE reports SET dc_with_report = '$count'";
+  $sql = "UPDATE astro_reports SET dc_with_report = '$count'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 
@@ -223,7 +223,7 @@ Function CalculatePositions($last_id, &$longitude, &$declination, &$house_pos)
   unset($PATH,$out,$pl_name);
 
   //fetch all data for this record
-  $sql = "SELECT * FROM birth_info WHERE ID='$last_id'";
+  $sql = "SELECT * FROM astro_birth_info WHERE ID='$last_id'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result);
   $num_rows = MYSQLI_NUM_rows($result);

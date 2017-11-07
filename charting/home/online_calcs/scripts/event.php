@@ -36,7 +36,7 @@
 
     $username = $_SESSION['username'];
 
-    $sql = "SELECT * FROM birth_info WHERE ID='$id1' And entered_by='$username'";
+    $sql = "SELECT * FROM astro_birth_info WHERE ID='$id1' And entered_by='$username'";
 
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);

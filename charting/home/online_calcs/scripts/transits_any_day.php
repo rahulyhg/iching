@@ -866,12 +866,12 @@
 
 
       // update count
-      $sql = "SELECT transits_any_date FROM reports";
+      $sql = "SELECT transits_any_date FROM astro_reports";
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
       $row = mysqli_fetch_array($result);
       $count = $row[transits_any_date] + 1;
 
-      $sql = "UPDATE reports SET transits_any_date = '$count'";
+      $sql = "UPDATE astro_reports SET transits_any_date = '$count'";
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 

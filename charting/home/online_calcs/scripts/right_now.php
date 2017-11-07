@@ -192,12 +192,12 @@ echo "<br /><br />";
 
 
 // update count
-$sql = "SELECT transits_right_now FROM reports";
+$sql = "SELECT transits_right_now FROM astro_reports";
 $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 $row = mysqli_fetch_array($result);
 $count = $row['transits_right_now'] + 1;
 
-$sql = "UPDATE reports SET transits_right_now = '$count'";
+$sql = "UPDATE astro_reports SET transits_right_now = '$count'";
 $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 

@@ -28,7 +28,7 @@ if (isset($_POST['submitted']))
 
   $username = $_SESSION['username'];
 
-  $sql = "SELECT * FROM birth_info WHERE ID='$last_id' And entered_by='$username'";
+  $sql = "SELECT * FROM astro_birth_info WHERE ID='$last_id' And entered_by='$username'";
 
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -49,7 +49,7 @@ if (isset($_POST['submitted']))
   unset($PATH,$out,$pl_name,$longitude,$declination,$house_pos);
 
   //fetch all data for this record
-  $sql = "SELECT * FROM birth_info WHERE ID='$last_id'";
+  $sql = "SELECT * FROM astro_birth_info WHERE ID='$last_id'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result);
   $num_rows = MYSQLI_NUM_rows($result);
@@ -407,12 +407,12 @@ if (isset($_POST['submitted']))
 
 
   // update count
-  $sql = "SELECT natal_cosmodynes FROM reports";
+  $sql = "SELECT natal_cosmodynes FROM astro_reports";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result);
   $count = $row[natal_cosmodynes] + 1;
 
-  $sql = "UPDATE reports SET natal_cosmodynes = '$count'";
+  $sql = "UPDATE astro_reports SET natal_cosmodynes = '$count'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 

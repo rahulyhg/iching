@@ -260,7 +260,7 @@
       $email = $_SESSION['email'];
 
       //check to see if this data is already in the database
-      $sql = "SELECT name, sex, entered_by FROM birth_info WHERE name='$name1' And sex='$sex1' And entered_by='$username'";
+      $sql = "SELECT name, sex, entered_by FROM astro_birth_info WHERE name='$name1' And sex='$sex1' And entered_by='$username'";
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
       $num_records = MYSQLI_NUM_rows($result);
 
@@ -276,7 +276,7 @@
       }
 
       //now it is safe to enter this data into the database
-      $sql = "INSERT INTO birth_info (ID,entered_by,name,sex,month,day,year,hour,minute,timezone,long_deg,long_min,ew,lat_deg,lat_min,ns,entry_date) VALUES (0,'$username','$name1','$sex1','$month1','$day1','$year1','$hour1','$minute1','$timezone1','$long_deg1','$long_min1','$east_west','$lat_deg1','$lat_min1','$north_south','$date_now')";
+      $sql = "INSERT INTO astro_birth_info (ID,entered_by,name,sex,month,day,year,hour,minute,timezone,long_deg,long_min,ew,lat_deg,lat_min,ns,entry_date) VALUES (0,'$username','$name1','$sex1','$month1','$day1','$year1','$hour1','$minute1','$timezone1','$long_deg1','$long_min1','$east_west','$lat_deg1','$lat_min1','$north_south','$date_now')";
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
       if (mysqli_affected_rows($conn) != 1)
@@ -323,7 +323,7 @@
 //        @mail($emailTo, $emailSubject, $emailText, "From: $email");
 
         //update member_info table in database for this record
-        $sql = "UPDATE member_info SET last_transaction='$date_now' WHERE username='$username'";
+        $sql = "UPDATE astro_member_info SET last_transaction='$date_now' WHERE username='$username'";
         $result_1 = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
         echo "<meta HTTP-EQUIV='REFRESH' content='0; url=../thanksdata.php'>";

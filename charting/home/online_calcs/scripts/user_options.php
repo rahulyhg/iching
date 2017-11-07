@@ -30,7 +30,7 @@
     $username = $_SESSION['username'];
 
     //enter this data into the database
-    $sql = "UPDATE member_info SET num_recs_to_display='$num_recs_to_display', my_sort_by='$my_sort_by' WHERE username='$username'";
+    $sql = "UPDATE astro_member_info SET num_recs_to_display='$num_recs_to_display', my_sort_by='$my_sort_by' WHERE username='$username'";
     $result_1 = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
     echo "<br><br><center>I have updated your options. Thank you.<br><br>I will return you to the view_records page in 3 seconds.</center>";

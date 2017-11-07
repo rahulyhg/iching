@@ -110,7 +110,7 @@ $months = array(0 => 'Choose month', 'January', 'February', 'March', 'April', 'M
 $username = $_SESSION['username'];
 
 // get user options
-$sql = "SELECT num_recs_to_display, my_sort_by FROM member_info WHERE username='$username'";
+$sql = "SELECT num_recs_to_display, my_sort_by FROM astro_member_info WHERE username='$username'";
 $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 $num_records = MYSQLI_NUM_rows($result);
@@ -132,7 +132,7 @@ if ($num_records == 1) {
 
 // count the number of records that this user has entered
 //do NOT use Count(*) below as it gives a 1 when there are no matches - I do not know why
-$sql = "SELECT ID FROM birth_info WHERE entered_by='$username'";
+$sql = "SELECT ID FROM astro_birth_info WHERE entered_by='$username'";
 $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 $num_records = MYSQLI_NUM_rows($result);
 
@@ -170,7 +170,7 @@ if ($num_records == 0) {
     }
 
     // make the query
-    $sql = "SELECT * FROM birth_info WHERE entered_by='$username' ORDER BY $sort_by LIMIT $start, $display";
+    $sql = "SELECT * FROM astro_birth_info WHERE entered_by='$username' ORDER BY $sort_by LIMIT $start, $display";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
     echo "<div id='content'>";

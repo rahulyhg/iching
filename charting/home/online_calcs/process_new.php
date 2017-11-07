@@ -54,7 +54,7 @@
     exit();
   }
 
-  $sql = "SELECT * FROM member_info WHERE username='$username'";
+  $sql = "SELECT * FROM astro_member_info WHERE username='$username'";
   $result = mysqli_query($conn, $sql);
 
   if ($result)
@@ -79,7 +79,7 @@
 
   $crypt_pwd = md5($password1);
 
-  $sql = "INSERT INTO member_info (ID,username,password,email,orig_email,account_opened,last_login,last_transaction) VALUES (0,'$username','$crypt_pwd','$email','$email','$date_now','$date_now','$date_now')";
+  $sql = "INSERT INTO astro_member_info (ID,username,password,email,orig_email,account_opened,last_login,last_transaction) VALUES (0,'$username','$crypt_pwd','$email','$email','$date_now','$date_now','$date_now')";
   $result = mysqli_query($conn, $sql);
 
 //the below is what needs changing according to individual situation - e-mail settings

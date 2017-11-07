@@ -23,7 +23,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
 
     $username = $_SESSION['username'];
 
-    $sql = "SELECT * FROM birth_info WHERE ID='$id1' And entered_by='$username'";
+    $sql = "SELECT * FROM astro_birth_info WHERE ID='$id1' And entered_by='$username'";
 
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -548,12 +548,12 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
 
 
         // update count - added and posted about 11:00 am PDT on 13 April 2009
-        $sql = "SELECT natal_reports FROM reports";
+        $sql = "SELECT natal_reports FROM astro_reports";
         $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
         $row = mysqli_fetch_array($result);
         $count = $row['natal_reports'] + 1;
 
-        $sql = "UPDATE reports SET natal_reports = '$count'";
+        $sql = "UPDATE astro_reports SET natal_reports = '$count'";
         $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 

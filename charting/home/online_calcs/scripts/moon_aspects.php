@@ -30,12 +30,12 @@
 
 
   // update count
-  $sql = "SELECT moon_aspects_and_voc FROM reports";
+  $sql = "SELECT moon_aspects_and_voc FROM astro_reports";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
   $row = mysqli_fetch_array($result);
   $count = $row[moon_aspects_and_voc] + 1;
 
-  $sql = "UPDATE reports SET moon_aspects_and_voc = '$count'";
+  $sql = "UPDATE astro_reports SET moon_aspects_and_voc = '$count'";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 

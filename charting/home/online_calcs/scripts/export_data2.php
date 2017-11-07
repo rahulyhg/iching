@@ -19,7 +19,7 @@
   
   $username = $_SESSION['username'];
 
-  $sql = "SELECT * FROM birth_info WHERE entered_by='$username' ORDER BY ID ASC";
+  $sql = "SELECT * FROM astro_birth_info WHERE entered_by='$username' ORDER BY ID ASC";
   $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
   echo "<br>";
