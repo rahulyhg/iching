@@ -4,14 +4,16 @@ if (!isset($_SESSION)) {
     session_start();
 }
 /* Edited top work with PHP7 :JWX */
-include("constants_eng.php");
-include("../constants.php");
+//include("constants_eng.php");
+//include("../constants.php");
 
-require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
+require_once $_SERVER['DOCUMENT_ROOT']."/charting/functions.php";
+
+//require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
 //require_once ('../../../my_functions_MYSQLI.php');
 
-$copyright1 = "This chart wheel is copyrighted";
-$copyright2 = "and generated at " . YOUR_URL;
+$copyright1 = "Showing only 7 planets";//"This chart wheel is copyrighted";
+$copyright2 = getCopyright();//"and generated at " . YOUR_URL;
 
 $line1 = safeEscapeString($conn, $_GET["l1"]);
 $retrograde = safeEscapeString($conn, $_GET["rx1"]);
@@ -85,7 +87,14 @@ $center_pt_x = $size_of_rect / 2;       // center of circle
 $center_pt_y = $y_top_margin + ($size_of_rect / 2);   // center of circle
 
 $last_planet_num = 14;        //add a planet
+
 $num_planets = $last_planet_num + 1;
+if (isset($_REQUEST['num_planets'])) {
+    $num_planets = $_REQUEST['num_planets'];
+    $last_planet_num=$num_planets-1;
+}
+
+
 $spacing = 4;     // spacing between planet glyphs around wheel - this number is really one more than shown here
 // glyphs used for planets - ./HamburgSymbols.ttf - Sun, Moon - Pluto
 $pl_glyph[0] = 81;

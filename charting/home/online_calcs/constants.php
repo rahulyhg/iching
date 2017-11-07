@@ -1,15 +1,6 @@
 <?php
 
-function getRootDir() {
-    $runtime = "dev";
-    if (isset($_SERVER['runtime'])) {
-        $runtime = $_SERVER['runtime'];
-    }
-    $dir = get_cfg_var("iching.${runtime}.root");
-    return($dir);
-}
-
-define('ROOT_PATH', getRootDir()."/charting/home");   //define the path to the "root" where the sub-directories may be found
+define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']."/charting/home");   //define the path to the "root" where the sub-directories may be found
 
 define('MAIN_SUBDIR', "/charting/home/online_calcs/scripts");                  //set sub-directory where main files are located
 
@@ -19,7 +10,7 @@ define('VIEW_RECORDS_PAGE', MAIN_SUBDIR . "/view_records.php");   //set view_rec
 
 define('BACKGROUND_COLOR', "#c0d0ff");             //set background color - change this value in styles.css as well as here
 
-define('YOUR_URL', "astro.slider.com");             //set website domain
+define('YOUR_URL', "BabelBrowser.com");             //set website domain
 
 define('EMAIL_ADDRESS', "duncan.stroud@gmail.com");    //set e-mail address
 

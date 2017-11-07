@@ -7,7 +7,8 @@ header("Content-type: text/plain");
 /* Edited top work with PHP7 :JWX */
 //include ('header_right_now.html');
 
-require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
+
+require_once $_SERVER['DOCUMENT_ROOT']."/charting/functions.php";
 
 // calculate astronomic data
 $swephsrc = './sweph';    //sweph MUST be in a folder no less than at this level
@@ -50,7 +51,8 @@ foreach ($out as $key => $line) {
 };
 
 
-include("constants_eng.php");     // this is here because we must rename the planet names
+//JWQ:shouydl thi be here instead of up top? 
+//include("constants_eng.php");     // this is here because we must rename the planet names
 //add a planet - maybe some code needs to be put here
 //display right now data
 
@@ -88,6 +90,10 @@ $_SESSION['wargs1'] = $wargs1;
 $filename = uniqid("now_").".png";
 
 $_SESSION['filename'] = $filename;
+
+/* only uise the i-ching relevant planets */
+$_SESSION['num_planets'] = 7;
+
 
 
 //echo "<img border='0' src='right_now_wheel.php?rx1=$rx1&l1=$line1' width='$wheel_width' height='$wheel_height'>";

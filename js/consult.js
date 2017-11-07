@@ -11,7 +11,8 @@ $(document).ready(function () {
 
     });
 
-    $("#astroIcon").on("click", function ($e) {
+    $("#astroIcon").on("click", function (e) {
+        e.preventDefault();
         $(function () {
             var astroPosAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_JSON.php";
 
@@ -24,17 +25,20 @@ $(document).ready(function () {
                     type: "POST",
                     data: {
                         'right_now_p1': json.right_now_p1,
-                        'filename': json.filename
+                        'filename': json.filename,
+                        'num_planets': json.num_planets
                     },
                     success: function (data) {
                         var newimage = "http://slider.com/charting/home/tmp/" + data;
                         $('#chartImage').attr("src", newimage);
                         console.log("image: " + data);
                         console.log("urlimage: " + newimage);
+                        window.open(newimage,"newwin");
+
                     }
                 });
             });
-            $('.open-popup').trigger('click');
+//            $('.open-popup').trigger('click');
         });
 
 

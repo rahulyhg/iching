@@ -154,8 +154,7 @@ dbug($_REQUEST,false);
                         <a id="astrotip" class="astrotip" href="#"><img src="images/qmark.png"></a> 
                             <input type="radio" name="mode" id="astro" value="astro" checked > 
                             <span class="text_mdcaps" id="astromsg">Planets</span>    
-                                <a class="open-popup" href="#astropopup">Open popup</a>
-                                <img id="astroIcon" src="/images/astroIcon75.png" /></a>
+                                <img id="astroIcon" src="/images/astroIcon75.png" />
                             
                         </p>
 
