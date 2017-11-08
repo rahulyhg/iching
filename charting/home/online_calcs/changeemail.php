@@ -1,13 +1,12 @@
 <?php
 
 include 'accesscontrol.php';
-include 'header.html';
-include 'constants.php';
-
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/header.php");
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/constants.php");
 $background_color = BACKGROUND_COLOR;
 
-require_once('../../mysqli_connect_online_calcs_db_MYSQLI.php');
-require_once ('../../my_functions_MYSQLI.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/charting/my_functions_MYSQLI.php");
 
 if ($_POST['submitted'] == "new_em")
 {
@@ -21,15 +20,15 @@ if ($_POST['submitted'] == "new_em")
     echo "</tr>";
   echo "</table>";
 
-  $password = safeEscapeString($conn, $_POST["password"]);
-  $email = safeEscapeString($conn, $_POST["email"]);
+  $password = mysqlSafeEscapeString($conn, $_POST["password"]);
+  $email = mysqlSafeEscapeString($conn, $_POST["email"]);
 
   if (!$password Or !$email)
   {
     echo "<center><br><b>Please tell us your password and e-mail address<br><br>";
     echo post_back_message('Change e-mail');
     echo "</b></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -39,7 +38,7 @@ if ($_POST['submitted'] == "new_em")
     echo "<center><br><b>Your e-mail address is not valid.<br><br>";
     echo post_back_message('Change e-mail');
     echo "</b></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -48,7 +47,7 @@ if ($_POST['submitted'] == "new_em")
     echo "<center><br><b>Your e-mail address is not valid.<br><br>";
     echo post_back_message('Change e-mail');
     echo "</b></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -75,7 +74,7 @@ if ($_POST['submitted'] == "new_em")
     echo "<font size=3>";
     echo post_back_message('Change e-mail');
     echo "</b></font></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -91,7 +90,7 @@ if ($_POST['submitted'] == "new_em")
   echo "<div id='content'>";
   include 'logged_in_menu.php';
   echo "</div>";
-  include 'footer.html';
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
   exit();
 }
 else
@@ -156,6 +155,6 @@ else
   <?php
 }
 
-include 'footer.html';
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 
 ?>

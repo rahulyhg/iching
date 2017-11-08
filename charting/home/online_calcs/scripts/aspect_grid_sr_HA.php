@@ -1,28 +1,28 @@
 <?php
   session_start();
   
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  //require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
   
-  $rx1 = safeEscapeString($conn, $_GET["rx1"]);
+  $rx1 = mysqlSafeEscapeString($conn, $_GET["rx1"]);
 
-  $longitude[0] = safeEscapeString($conn, $_GET["p0"]);
-  $longitude[1] = safeEscapeString($conn, $_GET["p1"]);
-  $longitude[2] = safeEscapeString($conn, $_GET["p2"]);
-  $longitude[3] = safeEscapeString($conn, $_GET["p3"]);
-  $longitude[4] = safeEscapeString($conn, $_GET["p4"]);
-  $longitude[5] = safeEscapeString($conn, $_GET["p5"]);
-  $longitude[6] = safeEscapeString($conn, $_GET["p6"]);
-  $longitude[7] = safeEscapeString($conn, $_GET["p7"]);
-  $longitude[8] = safeEscapeString($conn, $_GET["p8"]);
-  $longitude[9] = safeEscapeString($conn, $_GET["p9"]);
-  $longitude[10] = safeEscapeString($conn, $_GET["p10"]);
-  $longitude[11] = safeEscapeString($conn, $_GET["p11"]);
-  $longitude[12] = safeEscapeString($conn, $_GET["p12"]);
-  $longitude[13] = safeEscapeString($conn, $_GET["p13"]);
-  $longitude[14] = safeEscapeString($conn, $_GET["p14"]);    //add a planet
-  $longitude[15] = safeEscapeString($conn, $_GET["c1"]);
-  $longitude[16] = safeEscapeString($conn, $_GET["c10"]);
+  $longitude[0] = mysqlSafeEscapeString($conn, $_GET["p0"]);
+  $longitude[1] = mysqlSafeEscapeString($conn, $_GET["p1"]);
+  $longitude[2] = mysqlSafeEscapeString($conn, $_GET["p2"]);
+  $longitude[3] = mysqlSafeEscapeString($conn, $_GET["p3"]);
+  $longitude[4] = mysqlSafeEscapeString($conn, $_GET["p4"]);
+  $longitude[5] = mysqlSafeEscapeString($conn, $_GET["p5"]);
+  $longitude[6] = mysqlSafeEscapeString($conn, $_GET["p6"]);
+  $longitude[7] = mysqlSafeEscapeString($conn, $_GET["p7"]);
+  $longitude[8] = mysqlSafeEscapeString($conn, $_GET["p8"]);
+  $longitude[9] = mysqlSafeEscapeString($conn, $_GET["p9"]);
+  $longitude[10] = mysqlSafeEscapeString($conn, $_GET["p10"]);
+  $longitude[11] = mysqlSafeEscapeString($conn, $_GET["p11"]);
+  $longitude[12] = mysqlSafeEscapeString($conn, $_GET["p12"]);
+  $longitude[13] = mysqlSafeEscapeString($conn, $_GET["p13"]);
+  $longitude[14] = mysqlSafeEscapeString($conn, $_GET["p14"]);    //add a planet
+  $longitude[15] = mysqlSafeEscapeString($conn, $_GET["c1"]);
+  $longitude[16] = mysqlSafeEscapeString($conn, $_GET["c10"]);
 
   display_aspect_grid($longitude, $rx1);
   
@@ -133,7 +133,7 @@ Function display_aspect_grid($longitude, $rx1)
   imagefilledrectangle($im, 0, 0, $overall_size + $extra_width, $overall_size, $background_color);   //705 x 450 - add a planet
 
 // MUST BE HERE - I DO NOT KNOW WHY - MAYBE TO PRIME THE PUMP
-  imagettftext($im, 10, 0, 0, 0, $black, 'arial.ttf', " ");
+  imagettftext($im, 10, 0, 0, 0, $black, './arial.ttf', " ");
 
 // ------------------------------------------
 
@@ -158,14 +158,14 @@ Function display_aspect_grid($longitude, $rx1)
 // draw in the planet glyphs
   for ($i = 0; $i <= $last_planet_num; $i++)
   {
-    drawboldtext($im, 18, 0, $margins + $i * $cell_width, $cell_height * ($i + 1), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
+    drawboldtext($im, 18, 0, $margins + $i * $cell_width, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
 
     // display planet data in the right-hand table
-    drawboldtext($im, 16, 0, $margins + $left_margin_planet_table, $cell_height * ($i + 1), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
-    imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 2, $cell_height * ($i + 1) - 3, $blue, 'arial.ttf', $pl_name[$i]);
+    drawboldtext($im, 16, 0, $margins + $left_margin_planet_table, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
+    imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 2, $cell_height * ($i + 1) - 3, $blue, './arial.ttf', $pl_name[$i]);
     $sign_num = floor($longitude[$i] / 30) + 1;
-    drawboldtext($im, 14, 0, $margins + $left_margin_planet_table + $cell_width * 5, $cell_height * ($i + 1), $black, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_num]), 0);
-    imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 6, $cell_height * ($i + 1) - 3, $blue, 'arial.ttf', Convert_Longitude($longitude[$i]) . " " . $rx1[$i]);
+    drawboldtext($im, 14, 0, $margins + $left_margin_planet_table + $cell_width * 5, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($sign_glyph[$sign_num]), 0);
+    imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 6, $cell_height * ($i + 1) - 3, $blue, './arial.ttf', Convert_Longitude($longitude[$i]) . " " . $rx1[$i]);
   }
 
 // ------------------------------------------
@@ -221,7 +221,7 @@ Function display_aspect_grid($longitude, $rx1)
 
       if ($q > 0)
       {
-        drawboldtext($im, 14, 0, $margins + $cell_width * ($i + 0.20), $cell_height * ($j + 1 - 0.20), $asp_color[$q], 'HamburgSymbols.ttf', chr($asp_glyph[$q]), 0);
+        drawboldtext($im, 14, 0, $margins + $cell_width * ($i + 0.20), $cell_height * ($j + 1 - 0.20), $asp_color[$q], './HamburgSymbols.ttf', chr($asp_glyph[$q]), 0);
       }
     }
   }
@@ -233,7 +233,7 @@ Function display_aspect_grid($longitude, $rx1)
 }
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

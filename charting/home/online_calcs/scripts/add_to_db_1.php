@@ -13,8 +13,8 @@
   echo "</center>";
 
   // connect to the database and point to the proper database
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   $my_error = "";
 
@@ -22,31 +22,31 @@
   if (isset($_POST['submitted']))
   {
     // get all variables from form - Person
-    $name1 = safeEscapeString($conn, $_POST["name"]);
+    $name1 = mysqlSafeEscapeString($conn, $_POST["name"]);
 
     $name1 = str_replace(" ", "_", $name1);
     $name1 = str_replace(chr(39), "~", $name1);
     
     
-    $sex1 = strtolower(safeEscapeString($conn, $_POST["sex"]));
+    $sex1 = strtolower(mysqlSafeEscapeString($conn, $_POST["sex"]));
 
-    $month1 = safeEscapeString($conn, $_POST["month"]);
-    $day1 = safeEscapeString($conn, $_POST["day"]);
-    $year1 = safeEscapeString($conn, $_POST["year"]);
+    $month1 = mysqlSafeEscapeString($conn, $_POST["month"]);
+    $day1 = mysqlSafeEscapeString($conn, $_POST["day"]);
+    $year1 = mysqlSafeEscapeString($conn, $_POST["year"]);
 
-    $hour1 = safeEscapeString($conn, $_POST["hour"]);
-    $minute1 = safeEscapeString($conn, $_POST["minute"]);
-    $amorpm1 = safeEscapeString($conn, $_POST["amorpm"]);
+    $hour1 = mysqlSafeEscapeString($conn, $_POST["hour"]);
+    $minute1 = mysqlSafeEscapeString($conn, $_POST["minute"]);
+    $amorpm1 = mysqlSafeEscapeString($conn, $_POST["amorpm"]);
 
-    $timezone1 = safeEscapeString($conn, $_POST["timezone"]);
+    $timezone1 = mysqlSafeEscapeString($conn, $_POST["timezone"]);
 
-    $long_deg1 = safeEscapeString($conn, $_POST["long_deg"]);
-    $long_min1 = safeEscapeString($conn, $_POST["long_min"]);
-    $ew1 = strtoupper(safeEscapeString($conn, $_POST["ew"]));
+    $long_deg1 = mysqlSafeEscapeString($conn, $_POST["long_deg"]);
+    $long_min1 = mysqlSafeEscapeString($conn, $_POST["long_min"]);
+    $ew1 = strtoupper(mysqlSafeEscapeString($conn, $_POST["ew"]));
 
-    $lat_deg1 = safeEscapeString($conn, $_POST["lat_deg"]);
-    $lat_min1 = safeEscapeString($conn, $_POST["lat_min"]);
-    $ns1 = strtoupper(safeEscapeString($conn, $_POST["ns"]));
+    $lat_deg1 = mysqlSafeEscapeString($conn, $_POST["lat_deg"]);
+    $lat_min1 = mysqlSafeEscapeString($conn, $_POST["lat_min"]);
+    $ns1 = strtoupper(mysqlSafeEscapeString($conn, $_POST["ns"]));
 
     include("validation_class.php");
 

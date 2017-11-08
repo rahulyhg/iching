@@ -3,13 +3,13 @@
 
   if ($is_logged_in == False) { exit(); }
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
 // check if the form has been submitted
   if (isset($_POST['submitted']))
   {
-    $id1 = safeEscapeString($conn, $_POST["id1"]);
+    $id1 = mysqlSafeEscapeString($conn, $_POST["id1"]);
 
     $houses_to_check = array();
 
@@ -30,7 +30,7 @@
 
     if (!is_numeric($id1))
     {
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -45,7 +45,7 @@
     if ($num_records != 1)
     {
       echo "<center><br><br>I cannot find this person in the database. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -94,7 +94,7 @@
       $ns_txt = "s";
     }
 
-        if ($my_error != "")
+        if (( isset($my_error) ?: "" ) != "") 
     {
 
     }
@@ -153,7 +153,7 @@
       $utdatenow = strftime("%d.%m.%Y", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
       $utnow = strftime("%H:%M:%S", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
       // get LAST_PLANET planets and all house cusps
       $h_sys = "p";
@@ -170,7 +170,7 @@
         $row = explode(',',$line);
         $lng1[$key] = $row[0];
         $speed1[$key] = $row[1];
-        $house_pos1[$key] = $row[2];
+        $house_pos1[$key] = (isset($row[2]) ? $row[2] : null);
       };
 
 
@@ -1278,7 +1278,7 @@
       $text_h = "";         //header text
       $text_c = "";         //content text
 
-      $text_h .= "<a href='house_position_help_event.php' onClick=" . chr(34) . "return popup(this, 'help4')" . chr(34) . "><img src='balloon help.png' alt=''></a>&nbsp";
+      $text_h .= "<a href='house_position_help_event.php' onClick=" . chr(34) . "return popup(this, 'help4')" . chr(34) . "><img src='balloon_help.png' alt=''></a>&nbsp";
       $text_h .= "<b><b>HOUSE PLACEMENTS</b><br><br>";
 
 
@@ -1420,7 +1420,7 @@
       $text_c = "";         //content text
 
       $text_h .= "<br>";
-      $text_h .= "<a href='combust_event_help.php' onClick=" . chr(34) . "return popup(this, 'help2')" . chr(34) . "><img src='balloon help.png' alt=''></a>&nbsp";
+      $text_h .= "<a href='combust_event_help.php' onClick=" . chr(34) . "return popup(this, 'help2')" . chr(34) . "><img src='balloon_help.png' alt=''></a>&nbsp";
       $text_h .= "<b>Combust Planets (combustion is destructive) = </b>";
 
       for ($i = SE_MOON; $i <= SE_POF; $i++)
@@ -1462,7 +1462,7 @@
       $text_c = "";         //content text
 
       $text_h .= "<br>";
-      $text_h .= "<a href='significator_aspects_help_EVENT.php' onClick=" . chr(34) . "return popup(this, 'help1')" . chr(34) . "><img src='balloon help.png' alt=''></a>&nbsp";
+      $text_h .= "<a href='significator_aspects_help_EVENT.php' onClick=" . chr(34) . "return popup(this, 'help1')" . chr(34) . "><img src='balloon_help.png' alt=''></a>&nbsp";
       $text_h .= "<b>Moon's Aspects</b> (see top left for applying/separating):<br>";
 
       for ($i = 1; $i <= 1; $i++)
@@ -1599,7 +1599,7 @@
       $text_c = "";         //content text
 
       $text_h .= "<br>";
-      $text_h .= "<a href='significator_aspects_help_EVENT.php' onClick=" . chr(34) . "return popup(this, 'help3')" . chr(34) . "><img src='balloon help.png' alt=''></a>&nbsp";
+      $text_h .= "<a href='significator_aspects_help_EVENT.php' onClick=" . chr(34) . "return popup(this, 'help3')" . chr(34) . "><img src='balloon_help.png' alt=''></a>&nbsp";
       $text_h .= "<b>Aspects to Part of Fortune and its antiscion (which are final, <font color='#ff0000'>IF there is no frustration or prohibition</font>):</b><br><br>";
 
       for ($i = SE_SUN; $i <= SE_PLUTO; $i++)
@@ -1908,7 +1908,7 @@
       $text_c = "";         //content text
 
       $text_h .= "<br>";
-      $text_h .= "<a href='outer_planets_help_EVENT.php' onClick=" . chr(34) . "return popup(this, 'help5')" . chr(34) . "><img src='balloon help.png' alt=''></a>&nbsp";
+      $text_h .= "<a href='outer_planets_help_EVENT.php' onClick=" . chr(34) . "return popup(this, 'help5')" . chr(34) . "><img src='balloon_help.png' alt=''></a>&nbsp";
       $text_h .= "<b>Aspects involving outer planets (check planet Rx motion):</b><br><br>";
 
       $orb = 2.00;
@@ -1988,7 +1988,7 @@
 
       //display the aspects here - do each significator's aspects
       echo "<hr style='height:3px; background-color:#ff0000; border:0;'><br>";
-      ?><a href="significator_aspects_help_EVENT.php" onClick="return popup(this, 'help6')"><img src='balloon help.png' alt=''></a>&nbsp;<?php
+      ?><a href="significator_aspects_help_EVENT.php" onClick="return popup(this, 'help6')"><img src='balloon_help.png' alt=''></a>&nbsp;<?php
       echo "<b>Significator's Aspects</b> (see top left for applying/separating):<br><br>";
 
       for ($i = 1; $i <= 5; $i++)
@@ -2095,7 +2095,7 @@
     }
   }
 
-  include ('footer.html');
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
   exit();
 
 

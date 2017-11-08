@@ -3,12 +3,12 @@
   
   include("constants_eng.php");
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  //require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
-  $rx1 = safeEscapeString($conn, $_GET["rx1"]);
+  $rx1 = mysqlSafeEscapeString($conn, $_GET["rx1"]);
 
-  $ubt1 = intval(safeEscapeString($conn, $_GET["ubt1"]));
+  $ubt1 = intval(mysqlSafeEscapeString($conn, $_GET["ubt1"]));
 
   $longitude = $_SESSION['tad_longitude1'];
   $hc1 = $_SESSION['tad_hc1'];
@@ -133,7 +133,7 @@
   imagefilledrectangle($im, 0, 0, $overall_size + $extra_width, $overall_size - $height_cut_down, $background_color);    //was $white
 
 // MUST BE HERE - I DO NOT KNOW WHY - MAYBE TO PRIME THE PUMP
-  imagettftext($im, 10, 0, 0, 0, $black, 'arial.ttf', " ");
+  imagettftext($im, 10, 0, 0, 0, $black, './arial.ttf', " ");
 
 // ------------------------------------------
 
@@ -187,15 +187,15 @@
   {
     if ($ubt1 == 0 Or ($ubt1 != 0 And $i <= SE_TNODE))
     {
-      drawboldtext($im, 18, 0, $margins + $i * $cell_width, $cell_height * ($i + 1), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
+      drawboldtext($im, 18, 0, $margins + $i * $cell_width, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
 
       // display planet data in the right-hand table
-      drawboldtext($im, 16, 0, $margins + $left_margin_planet_table, $cell_height * ($i + 1), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
-      imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 2, $cell_height * ($i + 1) - 3, $blue, 'arial.ttf', $pl_name[$i]);
+      drawboldtext($im, 16, 0, $margins + $left_margin_planet_table, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
+      imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 2, $cell_height * ($i + 1) - 3, $blue, './arial.ttf', $pl_name[$i]);
       $sign_num = floor($longitude[$i] / 30) + 1;
-      drawboldtext($im, 14, 0, $margins + $left_margin_planet_table + $cell_width * 5, $cell_height * ($i + 1), $black, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_num]), 0);
+      drawboldtext($im, 14, 0, $margins + $left_margin_planet_table + $cell_width * 5, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($sign_glyph[$sign_num]), 0);
 
-      imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 6, $cell_height * ($i + 1) - 3, $blue, 'arial.ttf', Convert_Longitude($longitude[$i]) . " " . $rx1[$i]);
+      imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 6, $cell_height * ($i + 1) - 3, $blue, './arial.ttf', Convert_Longitude($longitude[$i]) . " " . $rx1[$i]);
     }
   }
 
@@ -245,7 +245,7 @@
       {
         if ($ubt1 == 0 Or ($ubt1 != 0 And $i <= SE_TNODE And $j <= SE_TNODE))
         {
-          drawboldtext($im, 14, 0, $margins + $cell_width * ($i + 0.20), $cell_height * ($j + 1 - 0.20), $asp_color[$q], 'HamburgSymbols.ttf', chr($asp_glyph[$q]), 0);
+          drawboldtext($im, 14, 0, $margins + $cell_width * ($i + 0.20), $cell_height * ($j + 1 - 0.20), $asp_color[$q], './HamburgSymbols.ttf', chr($asp_glyph[$q]), 0);
         }
       }
     }
@@ -258,7 +258,7 @@
   exit();
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

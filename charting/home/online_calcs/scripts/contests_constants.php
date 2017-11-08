@@ -1,17 +1,17 @@
 <?php
 
 // set assignments of important variables
-define(SE_SUN, 0);
-define(SE_MOON, 1);
-define(SE_MERCURY, 2);
-define(SE_VENUS, 3);
-define(SE_MARS, 4);
-define(SE_JUPITER, 5);
-define(SE_SATURN, 6);
-define(SE_TNNODE, 7);
-define(SE_TSNODE, 8);		//this must be last thing before angle stuff
+define('SE_SUN', 0);
+define('SE_MOON', 1);
+define('SE_MERCURY', 2);
+define('SE_VENUS', 3);
+define('SE_MARS', 4);
+define('SE_JUPITER', 5);
+define('SE_SATURN', 6);
+define('SE_TNNODE', 7);
+define('SE_TSNODE', 8);		//this must be last thing before angle stuff
 
-define(LAST_PLANET, 8);
+define('LAST_PLANET', 8);
 
 $moiety[0] = 8.5;			//planet moiety (1/2 the orb)
 $moiety[1] = 6.25;
@@ -109,34 +109,34 @@ $sign_glyph[11] = 120;
 $sign_glyph[12] = 99;
 
 
-define(CLR_BLACK, "#000000");
-define(CLR_WHITE, "#ffffff");
+define('CLR_BLACK', "#000000");
+define('CLR_WHITE', "#ffffff");
 
-define(CLR_RED, "#ff0000");
-define(CLR_ANOTHER_RED, "#ff3c3c");
+define('CLR_RED', "#ff0000");
+define('CLR_ANOTHER_RED', "#ff3c3c");
 
-define(CLR_GREEN, "#2dac00");
-define(CLR_LIME, "#9cce04");
+define('CLR_GREEN', "#2dac00");
+define('CLR_LIME', "#9cce04");
 
-define(CLR_BLUE, "#0000ff");
-define(CLR_LIGHT_BLUE, "#c0c0ff");
-define(CLR_ANOTHER_BLUE, "#c0c0ff");
+define('CLR_BLUE', "#0000ff");
+define('CLR_LIGHT_BLUE', "#c0c0ff");
+define('CLR_ANOTHER_BLUE', "#c0c0ff");
 
-define(CLR_PURPLE, "#ff00ff");
-define(CLR_CYAN, "#00ffff");
+define('CLR_PURPLE', "#ff00ff");
+define('CLR_CYAN', "#00ffff");
 
-define(CLR_YELLOW, "#ffff00");
+define('CLR_YELLOW', "#ffff00");
 
-define(CLR_GRAY, "#c0c0c0");
-define(CLR_ANOTHER_GRAY, "#e0e0e0");
+define('CLR_GRAY', "#c0c0c0");
+define('CLR_ANOTHER_GRAY', "#e0e0e0");
 
-define(CLR_ORANGE, "#db9b40");
+define('CLR_ORANGE', "#db9b40");
 
-define(CLR_10TH_H, "#0000ff");
-define(CLR_11TH_H, "#ff0000");
-define(CLR_12TH_H, "#2dac00");
-define(CLR_1ST_H, "#840da9");
-define(CLR_2ND_H, "#c0004d");
-define(CLR_3RD_H, "#808080");
+define('CLR_10TH_H', "#0000ff");
+define('CLR_11TH_H', "#ff0000");
+define('CLR_12TH_H', "#2dac00");
+define('CLR_1ST_H', "#840da9");
+define('CLR_2ND_H', "#c0004d");
+define('CLR_3RD_H', "#808080");
 
 ?>

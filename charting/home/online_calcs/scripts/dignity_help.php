@@ -18,5 +18,5 @@
   </font>
 
 <?php
-  include ('footer.html');
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 ?>

@@ -3,8 +3,8 @@
 
   if ($is_logged_in == False) { exit(); }
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   include("constants_eng.php");
 
@@ -13,12 +13,12 @@
   // check if the form has been submitted
   if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted']))
   {
-    $id1 = safeEscapeString($conn, $_POST["id1"]);
+    $id1 = mysqlSafeEscapeString($conn, $_POST["id1"]);
 
     if (!is_numeric($id1))
     {
       echo "<center><br /><br />You have forgotten to make an entry. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -33,12 +33,12 @@
     if ($num_records != 1)
     {
       echo "<center><br /><br />I cannot find this person in the database. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
     // get all variables from database
-    $h_sys = safeEscapeString($conn, $_POST["h_sys"]);
+    $h_sys = mysqlSafeEscapeString($conn, $_POST["h_sys"]);
     $name1 = $row['name'];
 
     $month1 = $row['month'];
@@ -82,24 +82,24 @@
 
 
     // get all variables from form - lunar return location
-    $start_month = safeEscapeString($conn, $_POST["start_month"]);
-    $start_day = safeEscapeString($conn, $_POST["start_day"]);
-    $start_year = safeEscapeString($conn, $_POST["start_year"]);
+    $start_month = mysqlSafeEscapeString($conn, $_POST["start_month"]);
+    $start_day = mysqlSafeEscapeString($conn, $_POST["start_day"]);
+    $start_year = mysqlSafeEscapeString($conn, $_POST["start_year"]);
 
     if ($start_day < 1 Or $start_day > 31)
     {
       $start_day = strftime("%d", time());
     }
 
-    $timezone2 = safeEscapeString($conn, $_POST["timezone2"]);
+    $timezone2 = mysqlSafeEscapeString($conn, $_POST["timezone2"]);
 
-    $long_deg2 = safeEscapeString($conn, $_POST["long_deg2"]);
-    $long_min2 = safeEscapeString($conn, $_POST["long_min2"]);
-    $ew2 = safeEscapeString($conn, $_POST["ew2"]);
+    $long_deg2 = mysqlSafeEscapeString($conn, $_POST["long_deg2"]);
+    $long_min2 = mysqlSafeEscapeString($conn, $_POST["long_min2"]);
+    $ew2 = mysqlSafeEscapeString($conn, $_POST["ew2"]);
 
-    $lat_deg2 = safeEscapeString($conn, $_POST["lat_deg2"]);
-    $lat_min2 = safeEscapeString($conn, $_POST["lat_min2"]);
-    $ns2 = safeEscapeString($conn, $_POST["ns2"]);
+    $lat_deg2 = mysqlSafeEscapeString($conn, $_POST["lat_deg2"]);
+    $lat_min2 = mysqlSafeEscapeString($conn, $_POST["lat_min2"]);
+    $ns2 = mysqlSafeEscapeString($conn, $_POST["ns2"]);
 
     if ($ew2 < 0)
     {
@@ -182,7 +182,7 @@
     }
 
 
-    if ($my_error != "")
+    if (( isset($my_error) ?: "" ) != "") 
     {
       echo "<TABLE align='center' WIDTH='98%' BORDER='0' CELLSPACING='15' CELLPADDING='0'><tr><td><center><b>";
       echo "<font color='#ff0000' size=+2>Error! - The following error(s) occurred:</font><br />";
@@ -192,7 +192,7 @@
       echo "</font>";
       echo "</b></center></td></tr></table>";
 
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
     else
@@ -201,7 +201,7 @@
       $swephsrc = './sweph';    //sweph MUST be in a folder no less than at this level
       $sweph = './sweph';
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
       $last_planet_num = 14;        //add a planet
 
@@ -929,7 +929,7 @@
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 
-    include ('footer.html');
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 }

@@ -1,5 +1,5 @@
 <?php
-  include ('header.html');
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/header.php");
 ?>
 
 <div id='content'>
@@ -14,6 +14,6 @@
 </div>
 
 <?php
-  include ('footer.html');
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 ?>
 

@@ -5,13 +5,15 @@ if(!isset($_SESSION)){
     session_start();
 }
     
-  require_once('../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT']."/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT']."/charting/my_functions_MYSQLI.php");
 
-  include 'header.html';
+  require_once($_SERVER['DOCUMENT_ROOT']."/elements/header.php");
 
-  $username = safeEscapeString($conn, $_POST['username']);//JWX
-  $password = safeEscapeString($conn, $_POST['password']);
+//  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/header.php");
+
+  $username = mysqlSafeEscapeString($conn, $_POST['username']);//JWX
+  $password = mysqlSafeEscapeString($conn, $_POST['password']);
 
 //  $username = "jw";
 //  $password = "1q2w3e";
@@ -56,5 +58,5 @@ if(!isset($_SESSION)){
     echo "</div>";
   }
 
-  include 'footer.html';
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 ?>

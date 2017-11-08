@@ -715,10 +715,44 @@ INSERT INTO `site_suggestions` VALUES (26,'','2017-10-29 13:32:03');
 -- Dumping data for table `site_user`
 --
 
+
+--
+-- Dumping data for table `astro_birth_info`
+--
+
+INSERT INTO `astro_birth_info` VALUES (1,'jw','Jeff_Milton','m','6','17','1956','2','17','-4','74','36','-1','40','34','1',NULL,'2017-11-06',NULL,NULL);
+INSERT INTO `astro_birth_info` VALUES (2,'a_edwall','Allen','m','9','22','1949','10','43','-6','95','23','-1','29','45','1',NULL,'2017-11-06',NULL,NULL);
+
+--
+-- Dumping data for table `astro_cities`
+--
+
+
+--
+-- Dumping data for table `astro_member_info`
+--
+
+INSERT INTO `astro_member_info` VALUES (1,'jw','3fde6bb0541387e4ebdadf7c2ff31123','jeff.milton@gmail.com',NULL,15,'name','jeff.milton@gmail.com','2017-11-06','2017-11-07','2017-11-06',NULL,NULL);
+INSERT INTO `astro_member_info` VALUES (2,'a_edwall','5a05a7e4e29711946023c90e9b01bdea','pch@astrowin.org',NULL,15,'name','pch@astrowin.org','2017-11-06','2017-11-06','2017-11-06',NULL,NULL);
+
+--
+-- Dumping data for table `astro_reports`
+--
+
+
+--
+-- Dumping data for table `astro_scores`
+--
+
+
+--
+-- Dumping data for table `astro_timezones`
+--
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-05 19:47:02
+-- Dump completed on 2017-11-07 16:29:28

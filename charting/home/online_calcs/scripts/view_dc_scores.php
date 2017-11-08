@@ -12,26 +12,26 @@
 
   $username = $_SESSION['username'];
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   if (isset($_POST['submit_dc']))
   {
-    $user_id = safeEscapeString($conn, $_POST["id1"]);
+    $user_id = mysqlSafeEscapeString($conn, $_POST["id1"]);
 
     if (!is_numeric($user_id))
     {
       echo "<center><br><br>You have forgotten to specify a valid ID number. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
-    $sex = strtolower(safeEscapeString($conn, $_POST["sex"]));
+    $sex = strtolower(mysqlSafeEscapeString($conn, $_POST["sex"]));
     
     if ($sex != "m" And $sex != "f")
     {
       echo "<center><br><br>Please specify your sex - m for male or f for female.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
         

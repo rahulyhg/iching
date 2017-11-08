@@ -1,14 +1,14 @@
 <?php
 
 include 'accesscontrol.php';
-include 'header.html';
-include 'constants.php';
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/header.php");
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/constants.php");
 
 $background_color = BACKGROUND_COLOR;
 
 
-require_once('../../mysqli_connect_online_calcs_db_MYSQLI.php');
-require_once ('../../my_functions_MYSQLI.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/charting/my_functions_MYSQLI.php");
 
 if ($_POST['submitted'] == "change_pwd")
 {
@@ -22,17 +22,17 @@ if ($_POST['submitted'] == "change_pwd")
     echo "</tr>";
   echo "</table>";
 
-  $username = safeEscapeString($conn, $_POST["username"]);
-  $password = safeEscapeString($conn, $_POST["password"]);
-  $password1 = safeEscapeString($conn, $_POST["password1"]);
-  $password2 = safeEscapeString($conn, $_POST["password2"]);
+  $username = mysqlSafeEscapeString($conn, $_POST["username"]);
+  $password = mysqlSafeEscapeString($conn, $_POST["password"]);
+  $password1 = mysqlSafeEscapeString($conn, $_POST["password1"]);
+  $password2 = mysqlSafeEscapeString($conn, $_POST["password2"]);
 
   if (!$username Or !$password Or !$password1 Or !$password2)
   {
     echo "<center><br><b>Please supply all requested data.<br><br>";
     echo post_back_message('Change password');
     echo "</b></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -41,7 +41,7 @@ if ($_POST['submitted'] == "change_pwd")
     echo "<center><br><b>The two instances of your new password do not agree.<br><br>";
     echo post_back_message('Change password');
     echo "</b></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -66,7 +66,7 @@ if ($_POST['submitted'] == "change_pwd")
     echo "<font size=3>";
     echo post_back_message('Change password');
     echo "</b></font></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -80,7 +80,7 @@ if ($_POST['submitted'] == "change_pwd")
   echo "<center><font FACE='Verdana' size='6' color='#a30101'>Your password has been changed.<br>Please remember it.</font></center><br><br><br>";
 
   echo "<center><a href='signup_login.php'>Return to login page</a></center><br>";
-  include 'footer.html';
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
   exit();
 }
 else
@@ -163,6 +163,6 @@ else
   <?php
 }
 
-include 'footer.html';
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 
 ?>

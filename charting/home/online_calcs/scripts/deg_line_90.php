@@ -4,10 +4,10 @@
   include("constants_eng.php");
   require_once("sr.php");
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  //require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
   
-  $rx1 = safeEscapeString($conn, $_GET["rx1"]);
+  $rx1 = mysqlSafeEscapeString($conn, $_GET["rx1"]);
 
   $longitude1 = $_SESSION['nmpL1'];
 
@@ -63,7 +63,7 @@
   imagefilledrectangle($im, 0, 0, $graphic_width + $total_margin, $overall_size_v, $background_color); //add margins so that '0' and '30' shows up in degree line
 
 // MUST BE HERE - I DO NOT KNOW WHY - MAYBE TO PRIME THE PUMP
-  imagettftext($im, 10, 0, 0, 0, $black, 'arial.ttf', " ");
+  imagettftext($im, 10, 0, 0, 0, $black, './arial.ttf', " ");
 
 
 // ------------------------------------------
@@ -108,11 +108,11 @@
   {
     $deg_filled_idx[$i] = 0;      //initialize
     
-    $array = imagettfbbox(10, 0, 'arial.ttf', sprintf("%'02d", $cnt));
+    $array = imagettfbbox(10, 0, './arial.ttf', sprintf("%'02d", $cnt));
   $width_of_text = $array[4] - $array[6];
 
     $x1 = $i * $x_dist_per_deg;
-    imagettftext($im, 10, 0, $left_margin + $x1 - ($width_of_text / 2), $start_of_y_axis + $y_dist_to_deg_text, $black, 'arial.ttf', sprintf("%'02d", $cnt));
+    imagettftext($im, 10, 0, $left_margin + $x1 - ($width_of_text / 2), $start_of_y_axis + $y_dist_to_deg_text, $black, './arial.ttf', sprintf("%'02d", $cnt));
     $cnt = $cnt + 5;
   }
 
@@ -128,19 +128,28 @@
   for ($i = LAST_PLANET + 2; $i >= 0; $i--)
   {
     $pl_pos = floor($sort[$i]);
-
-    $v_dist = $y_offset * $deg_filled_idx[$pl_pos];
+//JWX
+    if (!isset($deg_filled_idx[$pl_pos])) {
+        $dd = array_fill(0,90,0);
+        for ($j=0; $j < LAST_PLANET+2 ; $j++ ) {
+            $dd[$j] =  isset($deg_filled_idx[$pl_pos])?$deg_filled_idx[$pl_pos]:0;
+        }
+        $deg_filled_idx = $dd;
+    }
+    
+    $v_dist = $y_offset * $deg_filled_idx[$pl_pos]; //JWX
+    
     $deg_filled_idx[$pl_pos]++;
     
     $x1 = ($pl_pos * $x_dist_per_deg) - ($glyph_size / 2);
 
     if (substr($rx1, $sort_pos[$i], 1) == "R")
     {
-      imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $y_dist_to_planet_glyph + $v_dist, $red, 'HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
+      imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $y_dist_to_planet_glyph + $v_dist, $red, './HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
     }
     else
     {
-      imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $y_dist_to_planet_glyph + $v_dist, $planet_color, 'HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
+      imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $y_dist_to_planet_glyph + $v_dist, $planet_color, './HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
     }
 
     $pl_sign = floor($longitude1[$sort_pos[$i]] / 30) + 1;
@@ -162,8 +171,8 @@
     }
 
     // put the signs across the top and bottom of the horizontal lines
-//    imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $y_dist_to_sign_glyph + $v_dist, $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$pl_sign]));
-    //imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $y_dist_to_sign_glyph + $v_dist, $gray, 'HamburgSymbols.ttf', chr($sign_glyph[$pl_sign]));
+//    imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $y_dist_to_sign_glyph + $v_dist, $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$pl_sign]));
+    //imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $y_dist_to_sign_glyph + $v_dist, $gray, './HamburgSymbols.ttf', chr($sign_glyph[$pl_sign]));
   }
 
 
@@ -176,7 +185,7 @@
   exit();
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

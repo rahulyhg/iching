@@ -1,6 +1,7 @@
 <?php
-session_start();
-//var_dump(session_id());
+if(!isset($_SESSION)){ 
+    session_start();
+}
 #mb_internal_encoding("UTF-8");
 #mb_regex_encoding("UTF-8");
 ?>
@@ -56,6 +57,22 @@ session_start();
         
         <link rel="stylesheet" media="screen" type="text/css" href="/css<?= ($_SERVER['PHP_SELF'] == "/show.php" ? "/show" : "/consult") ?>.css" />
 
+        <?php 
+        /* override for the charting pages */
+        if ( strpos($_SERVER['PHP_SELF'], "charting")) {
+        ?>    
+            <style>
+                html { 
+                    padding:5%;
+                    background-color:  #e9e9e9; 
+                    background-image:  none;
+                }
+            </style>
+        <?php    
+        }
+        ?>
+
+        
         <!-- Latest compiled and minified CSS -->
 
         <link rel="stylesheet" href="/vendor/twitter/bootstrap/dist/css/bootstrap.min.css">

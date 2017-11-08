@@ -2,26 +2,26 @@
   session_start();
 
   include("contests_constants.php");
-  include("../constants.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/functions.php");
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  //require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
   
   $copyright1 = "This chartwheel is copyrighted";
   $copyright2 = "& generated at " . YOUR_URL;
 
-  $line1 = safeEscapeString($conn, $_GET["l1"]);
-  $line2 = safeEscapeString($conn, $_GET["l2"]);
-  $line3 = safeEscapeString($conn, $_GET["l3"]);
-  $line4 = safeEscapeString($conn, $_GET["l4"]);
+  $line1 = mysqlSafeEscapeString($conn, $_GET["l1"]);
+  $line2 = mysqlSafeEscapeString($conn, $_GET["l2"]);
+  $line3 = mysqlSafeEscapeString($conn, $_GET["l3"]);
+  $line4 = mysqlSafeEscapeString($conn, $_GET["l4"]);
 
-  $retrograde = safeEscapeString($conn, $_GET["rx1"]);
+  $retrograde = mysqlSafeEscapeString($conn, $_GET["rx1"]);
 
-  $extra_height_for_graphic_data_table = safeEscapeString($conn, $_GET["eh"]);
+  $extra_height_for_graphic_data_table = mysqlSafeEscapeString($conn, $_GET["eh"]);
 
-  $y_top_margin = safeEscapeString($conn, $_GET["ytm"]);
+  $y_top_margin = mysqlSafeEscapeString($conn, $_GET["ytm"]);
 
-  $extra_width_for_graphic_data_table = safeEscapeString($conn, $_GET["ew"]);    //graphic is 792 pixels wide, total
+  $extra_width_for_graphic_data_table = mysqlSafeEscapeString($conn, $_GET["ew"]);    //graphic is 792 pixels wide, total
 
   $longitude = $_SESSION['longitude1'];
   $speed = $_SESSION['speed1'];
@@ -101,7 +101,7 @@
   imagefilledrectangle($im, 0, 0, $size_of_rect + $extra_width_for_graphic_data_table, $size_of_rect + $y_top_margin + $extra_height_for_graphic_data_table, $background_color);
 
 // MUST BE HERE - I DO NOT KNOW WHY - MAYBE TO PRIME THE PUMP
-  imagettftext($im, 11, 0, 0, 0, $black, 'arial.ttf', " ");
+  imagettftext($im, 11, 0, 0, 0, $black, './arial.ttf', " ");
 
 
 // ------------------------------------------
@@ -147,13 +147,13 @@
 // ------------------------------------------
 
 //data for chart
-  drawboldtext($im, 10, 0, 2, 10, $black, 'arial.ttf', $line1, 0);
-  drawboldtext($im, 10, 0, 2, 26, $black, 'arial.ttf', $line2, 0);
-  drawboldtext($im, 10, 0, 2, 42, $black, 'arial.ttf', $line3, 0);
-  drawboldtext($im, 10, 0, 2, 58, $black, 'arial.ttf', $line4, 0);
+  drawboldtext($im, 10, 0, 2, 10, $black, './arial.ttf', $line1, 0);
+  drawboldtext($im, 10, 0, 2, 26, $black, './arial.ttf', $line2, 0);
+  drawboldtext($im, 10, 0, 2, 42, $black, './arial.ttf', $line3, 0);
+  drawboldtext($im, 10, 0, 2, 58, $black, './arial.ttf', $line4, 0);
 
-  drawboldtext($im, 11, 0, 555, 42, $black, 'arial.ttf', $copyright1, 0);
-  drawboldtext($im, 11, 0, 555, 58, $black, 'arial.ttf', $copyright2, 0);
+  drawboldtext($im, 11, 0, 555, 42, $black, './arial.ttf', $copyright1, 0);
+  drawboldtext($im, 11, 0, 555, 58, $black, './arial.ttf', $copyright2, 0);
 
   imageline($im, 0, 64, $overall_size + $extra_width_for_graphic_data_table, 64, $olive);   //border
 
@@ -207,7 +207,7 @@
 
     // sign glyph
     display_house_cusp($i, $angle, $middle_radius, $xy);
-    imagettftext($im, 16, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_pos])); //was 14
+    imagettftext($im, 16, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$sign_pos])); //was 14
 
     if ($i >= 1 And $i <= 6)
     {
@@ -230,7 +230,7 @@
       $t = $int_reduced_pos;
     }
 
-    imagettftext($im, 10, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $black, 'arial.ttf', $t . chr(176)); //was 8
+    imagettftext($im, 10, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $black, './arial.ttf', $t . chr(176)); //was 8
 
     // house cusp minute
     if ($i >= 1 And $i <= 4)
@@ -262,7 +262,7 @@
       $t = $int_reduced_pos;
     }
 
-    imagettftext($im, 9, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $black, 'arial.ttf', $t . " " . chr(39)); //was 8
+    imagettftext($im, 9, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $black, './arial.ttf', $t . " " . chr(39)); //was 8
   }
 
 // ------------------------------------------
@@ -294,7 +294,7 @@
     display_house_number_new($i, $angle_to_use, $radius, $xy);
 
     // display the house numbers themselves
-    imagettftext($im, 10, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $another_green, 'arial.ttf', $i); //was 8
+    imagettftext($im, 10, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $another_green, './arial.ttf', $i); //was 8
 
     $angle_sum = $angle_sum + $angle_diff;    //26 March 2010
   }
@@ -414,7 +414,7 @@
       $clr_to_use = $blue;
     }
 
-    drawboldtext($im, 10, 0, $x1 + $center_pt_x, $y1 + $center_pt_y, $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$i]), 0); //used to be boldness of 1 - last number
+    drawboldtext($im, 10, 0, $x1 + $center_pt_x, $y1 + $center_pt_y, $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$i]), 0); //used to be boldness of 1 - last number
   }
 
 // ------------------------------------------
@@ -483,7 +483,7 @@
     $planets_done++;
 
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter1, $xy, 0);
-    imagettftext($im, 16, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $planet_color, 'HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]])); //was 14
+    imagettftext($im, 16, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $planet_color, './HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]])); //was 14
 
     // display degrees of longitude for each planet
     $reduced_pos = Reduce_below_30($sort[$i]);
@@ -498,7 +498,7 @@
     }
 
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter1 - 18, $xy, 1);
-    imagettftext($im, 9, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $planet_color, 'arial.ttf', $t . chr(176));
+    imagettftext($im, 9, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $planet_color, './arial.ttf', $t . chr(176));
 
     // display planet sign
     $sign_pos = floor($sort[$i] / 30) + 1;
@@ -519,7 +519,7 @@
     {
       $clr_to_use = $blue;
     }
-    imagettftext($im, 9, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
+    imagettftext($im, 9, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
 
     // display minutes of longitude for each planet
     $int_reduced_pos = floor(60 * ($reduced_pos - floor($reduced_pos)));
@@ -532,14 +532,14 @@
       $t = $int_reduced_pos;
     }
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter1 - 52, $xy, 1);
-    //imagettftext($im, 8, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $planet_color, 'arial.ttf', $t . " " . chr(39));
-    imagettftext($im, 9, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $planet_color, 'arial.ttf', $t);
+    //imagettftext($im, 8, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $planet_color, './arial.ttf', $t . " " . chr(39));
+    imagettftext($im, 9, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $planet_color, './arial.ttf', $t);
 
     // display Rx symbol
     if ($retrograde[$sort_pos[$i]] == "R")
     {
       display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter1 - 65, $xy, 3);
-      imagettftext($im, 8, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $red, 'HamburgSymbols.ttf', chr(62));
+      imagettftext($im, 8, 0, $xy[0] + $center_pt_x, $xy[1] + $center_pt_y, $red, './HamburgSymbols.ttf', chr(62));
     }
   }
 
@@ -585,7 +585,7 @@
           imageline($im, $x1 + $center_pt_x, $y1 + $center_pt_y, $x2 + $center_pt_x, $y2 + $center_pt_y, IMG_COLOR_STYLED);
 
           //draw in aspect glyph
-          drawboldtext($im, 15, 0, (($x1 + $x2) / 2) - 7 + $center_pt_x, (($y1 + $y2) / 2) + 7 + $center_pt_y, $asp_color_special[$q], 'HamburgSymbols.ttf', chr($asp_glyph_special[$q]), 0); //thicker
+          drawboldtext($im, 15, 0, (($x1 + $x2) / 2) - 7 + $center_pt_x, (($y1 + $y2) / 2) + 7 + $center_pt_y, $asp_color_special[$q], './HamburgSymbols.ttf', chr($asp_glyph_special[$q]), 0); //thicker
         }
       }
     }
@@ -612,7 +612,7 @@
 
 //display header line
   $top_of_planet_listing = $y_top_margin + 20 + 650;
-  imagettftext($im, 9, 0, $left_margin + 22, $top_of_planet_listing + ($cnt * $y_spacing) - 3, $blue, 'arial.ttf', "Longitude    Ruler     Exlt      Trip                                  Detr     Fall                                Antiscia       Contra                               Velocity       Spd    Peregr.");
+  imagettftext($im, 9, 0, $left_margin + 22, $top_of_planet_listing + ($cnt * $y_spacing) - 3, $blue, './arial.ttf', "Longitude    Ruler     Exlt      Trip                                  Detr     Fall                                Antiscia       Contra                               Velocity       Spd    Peregr.");
 
 
   $top_of_planet_listing = $y_top_margin + 40 + 650;
@@ -645,13 +645,13 @@
     }
 
 //display table of planet positions, etc.
-    drawboldtext($im, 14, 0, $left_margin + 3, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);              //draw planet glyph
+    drawboldtext($im, 14, 0, $left_margin + 3, $top_of_planet_listing + ($cnt * $y_spacing), $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);              //draw planet glyph
 
 
     // display planet data in the right-hand table
-    imagettftext($im, 10, 0, $left_margin + 25, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', Convert_Longitude1($longitude[$i]));           //display longitude degrees
-    imagettftext($im, 12, 0, $left_margin + 42, $top_of_planet_listing + ($cnt * $y_spacing), $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));        //display sign
-    imagettftext($im, 10, 0, $left_margin + 58, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', Convert_Longitude2($longitude[$i]) . $retrograde[$i]); //display longitude minutes and Rx
+    imagettftext($im, 10, 0, $left_margin + 25, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', Convert_Longitude1($longitude[$i]));           //display longitude degrees
+    imagettftext($im, 12, 0, $left_margin + 42, $top_of_planet_listing + ($cnt * $y_spacing), $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));        //display sign
+    imagettftext($im, 10, 0, $left_margin + 58, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', Convert_Longitude2($longitude[$i]) . $retrograde[$i]); //display longitude minutes and Rx
 
 
 //find ruler of this planet's sign
@@ -684,10 +684,10 @@
     $ruler = SE_SATURN;
   }
 
-    drawboldtext($im, 14, 0, $left_margin + 95, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$ruler]), 0);                 //draw planet glyph
+    drawboldtext($im, 14, 0, $left_margin + 95, $top_of_planet_listing + ($cnt * $y_spacing), $black, './HamburgSymbols.ttf', chr($pl_glyph[$ruler]), 0);                 //draw planet glyph
     if ($i == $ruler)
     {
-      imagettftext($im, 10, 0, $left_margin + 110, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', "+");                             //mark a "+"
+      imagettftext($im, 10, 0, $left_margin + 110, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', "+");                             //mark a "+"
       $peregrine[$i] = 0;
     }
 
@@ -724,11 +724,11 @@
     $exalt = SE_VENUS;
   }
 
-    if ($exalt >= 0) { drawboldtext($im, 14, 0, $left_margin + 135, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$exalt]), 0); }     //draw planet glyph
+    if ($exalt >= 0) { drawboldtext($im, 14, 0, $left_margin + 135, $top_of_planet_listing + ($cnt * $y_spacing), $black, './HamburgSymbols.ttf', chr($pl_glyph[$exalt]), 0); }     //draw planet glyph
 
     if ($i == $exalt)
     {
-      imagettftext($im, 10, 0, $left_margin + 150, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', "+");                             //mark a "+"
+      imagettftext($im, 10, 0, $left_margin + 150, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', "+");                             //mark a "+"
       $peregrine[$i] = 0;
     }
 
@@ -775,10 +775,10 @@
     }
     }
 
-    drawboldtext($im, 12, 0, $left_margin + 175, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$triplicity]), 0);               //draw planet glyph
+    drawboldtext($im, 12, 0, $left_margin + 175, $top_of_planet_listing + ($cnt * $y_spacing), $black, './HamburgSymbols.ttf', chr($pl_glyph[$triplicity]), 0);               //draw planet glyph
     if ($i == $triplicity)
     {
-      imagettftext($im, 8, 0, $left_margin + 190, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', "+");                              //mark a "+"
+      imagettftext($im, 8, 0, $left_margin + 190, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', "+");                              //mark a "+"
       $peregrine[$i] = 0;
     }
 
@@ -921,7 +921,7 @@
     $detriment = SE_SATURN;
   }
 
-    drawboldtext($im, 14, 0, $left_margin + 295, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$detriment]), 0);                  //draw planet glyph
+    drawboldtext($im, 14, 0, $left_margin + 295, $top_of_planet_listing + ($cnt * $y_spacing), $black, './HamburgSymbols.ttf', chr($pl_glyph[$detriment]), 0);                  //draw planet glyph
 
 
 //find fall of this planet's sign
@@ -956,7 +956,7 @@
     $fall = SE_VENUS;
   }
 
-    drawboldtext($im, 12, 0, $left_margin + 335, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$fall]), 0);                 //draw planet glyph
+    drawboldtext($im, 12, 0, $left_margin + 335, $top_of_planet_listing + ($cnt * $y_spacing), $black, './HamburgSymbols.ttf', chr($pl_glyph[$fall]), 0);                 //draw planet glyph
 
 
 //antiscia
@@ -982,9 +982,9 @@
       $clr_to_use = $blue;
     }
 
-    imagettftext($im, 10, 0, $left_margin + 446, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', Convert_Longitude1($antiscia));               //display longitude degrees
-    imagettftext($im, 12, 0, $left_margin + 463, $top_of_planet_listing + ($cnt * $y_spacing), $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));         //display sign
-    imagettftext($im, 10, 0, $left_margin + 479, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', Convert_Longitude2($antiscia));               //display longitude minutes and Rx
+    imagettftext($im, 10, 0, $left_margin + 446, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', Convert_Longitude1($antiscia));               //display longitude degrees
+    imagettftext($im, 12, 0, $left_margin + 463, $top_of_planet_listing + ($cnt * $y_spacing), $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));         //display sign
+    imagettftext($im, 10, 0, $left_margin + 479, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', Convert_Longitude2($antiscia));               //display longitude minutes and Rx
 
 
 //contra-antiscia
@@ -1010,9 +1010,9 @@
       $clr_to_use = $blue;
     }
 
-    imagettftext($im, 10, 0, $left_margin + 512, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', Convert_Longitude1($antiscia));               //display longitude degrees
-    imagettftext($im, 12, 0, $left_margin + 529, $top_of_planet_listing + ($cnt * $y_spacing), $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));         //display sign
-    imagettftext($im, 10, 0, $left_margin + 545, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', Convert_Longitude2($antiscia));               //display longitude minutes and Rx
+    imagettftext($im, 10, 0, $left_margin + 512, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', Convert_Longitude1($antiscia));               //display longitude degrees
+    imagettftext($im, 12, 0, $left_margin + 529, $top_of_planet_listing + ($cnt * $y_spacing), $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));         //display sign
+    imagettftext($im, 10, 0, $left_margin + 545, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', Convert_Longitude2($antiscia));               //display longitude minutes and Rx
 
 
 //speed value
@@ -1030,7 +1030,7 @@
   }
 
   $t = $t . sprintf("%02d", $spd_deg) . " " . sprintf("%02d", $spd_min);
-    imagettftext($im, 10, 0, $left_margin + 642, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', $t);
+    imagettftext($im, 10, 0, $left_margin + 642, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', $t);
 
 
 //speed literal
@@ -1056,7 +1056,7 @@
 
     if ($i == SE_TNNODE Or $i == SE_TSNODE) { $speed_literal = ""; }
 
-    imagettftext($im, 10, 0, $left_margin + 706, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', $speed_literal);
+    imagettftext($im, 10, 0, $left_margin + 706, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', $speed_literal);
 
 
 //peregrine
@@ -1064,7 +1064,7 @@
 
     if ($peregrine[$i] == 1 And $i <= SE_SATURN) { $peregrineX = "X"; }
 
-    imagettftext($im, 8, 0, $left_margin + 760, $top_of_planet_listing + ($cnt * $y_spacing), $black, 'arial.ttf', $peregrineX);
+    imagettftext($im, 8, 0, $left_margin + 760, $top_of_planet_listing + ($cnt * $y_spacing), $black, './arial.ttf', $peregrineX);
 
 
     $cnt++;
@@ -1075,7 +1075,7 @@
 //display planet aspects
   $left_col_print_idx = 2;
   $line_cntr = 0;
-  drawboldtext($im, 12, 0, $left_col_print_idx, $y_top_margin + 20 + (15 * $line_cntr), $red, 'arial.ttf', "W. Lilly Aspects", 0);
+  drawboldtext($im, 12, 0, $left_col_print_idx, $y_top_margin + 20 + (15 * $line_cntr), $red, './arial.ttf', "W. Lilly Aspects", 0);
 
   $line_cntr++;
 
@@ -1203,8 +1203,8 @@
 
         // aspect exists
         $t = chr($pl_glyph[$i]) . "   " . chr($asp_glyph[$q]) . "   " . chr($pl_glyph[$j]) . "   " . sprintf("%.2f", $da);
-        imagettftext($im, 10, 0, $left_col_print_idx, $y_top_margin + 20 + (15 * $line_cntr), $black, 'HamburgSymbols.ttf', $t);
-        imagettftext($im, 10, 0, 110, $y_top_margin + 20 + (15 * $line_cntr), $black, 'arial.ttf', $xbuf);
+        imagettftext($im, 10, 0, $left_col_print_idx, $y_top_margin + 20 + (15 * $line_cntr), $black, './HamburgSymbols.ttf', $t);
+        imagettftext($im, 10, 0, 110, $y_top_margin + 20 + (15 * $line_cntr), $black, './arial.ttf', $xbuf);
 
         $line_cntr++;
       }
@@ -1220,7 +1220,7 @@
   $end_of_aspect_listing_height = $end_of_aspect_listing_height;
 
 //mutual receptions - by sign
-  imagettftext($im, 12, 0, $left_col_print_idx, $end_of_aspect_listing_height, $red, 'arial.ttf', "Mutual Receptions");
+  imagettftext($im, 12, 0, $left_col_print_idx, $end_of_aspect_listing_height, $red, './arial.ttf', "Mutual Receptions");
   $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
 
   for ($i = SE_SUN; $i <= SE_SATURN; $i++)
@@ -1239,43 +1239,43 @@
 
     if ($i == SE_SUN And $x > $i And $t == 5)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_MOON And $x > $i And $t == 4)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_MERCURY And $x > $i And ($t == 3 Or $t == 6))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_VENUS And $x > $i And ($t == 2 Or $t == 7))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_MARS And $x > $i And ($t == 1 Or $t == 8))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_JUPITER And $x > $i And ($t == 9 Or $t == 12))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_SATURN And $x > $i And ($t == 10 Or $t == 11))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
   }
@@ -1300,43 +1300,43 @@
 
     if ($i == SE_SUN And $x > $i And $t == 1)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_MOON And $x > $i And $t == 2)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_MERCURY And $x > $i And $t == 6)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_VENUS And $x > $i And $t == 12)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_MARS And $x > $i And $t == 10)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_JUPITER And $x > $i And $t == 4)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_SATURN And $x > $i And $t == 7)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
   }
@@ -1361,43 +1361,43 @@
 
     if ($i == SE_SUN And $t == 5)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_MOON And $t == 4)
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_MERCURY And ($t == 3 Or $t == 6))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_VENUS And ($t == 2 Or $t == 7))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_MARS And ($t == 1 Or $t == 8))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_JUPITER And ($t == 9 Or $t == 12))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
 
     if ($i == SE_SATURN And ($t == 10 Or $t == 11))
     {
-      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, 'arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
+      imagettftext($im, 9, 0, $left_col_print_idx, $end_of_aspect_listing_height, $black, './arial.ttf', $pl_name[$i] . "-" . $pl_name[$x] . " by sign/exaltation");
       $end_of_aspect_listing_height = $end_of_aspect_listing_height + 15;
     }
   }
@@ -1436,7 +1436,7 @@ Function Reduce_below_30($longitude)
 }
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

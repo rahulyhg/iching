@@ -7,12 +7,12 @@
 
   $declination2 = $_SESSION['declination2'];
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');      //for the below safeEscapeString() function
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");      //for the below safeEscapeString() function
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
-  $start_year = intval(safeEscapeString($conn, $_GET["sy"]));
-  $years_to_run = intval(safeEscapeString($conn, $_GET["ny"]));
-  $line1 = safeEscapeString($conn, $_GET["l1"]);
+  $start_year = intval(mysqlSafeEscapeString($conn, $_GET["sy"]));
+  $years_to_run = intval(mysqlSafeEscapeString($conn, $_GET["ny"]));
+  $line1 = mysqlSafeEscapeString($conn, $_GET["l1"]);
 
 //FOR DEBUG
   //$start_year = 1949;
@@ -68,7 +68,7 @@ Function display_graph($start_year, $years_to_run, $declination2, $line1)
   imagefilledrectangle($im, 0, 0, GRAPH_WIDTH, GRAPH_HEIGHT, $bg_color);
 
   //MUST BE HERE - I DO NOT KNOW WHY - MAYBE TO PRIME THE PUMP
-  imagettftext($im, 10, 0, 0, 0, $bg_color, 'arial.ttf', " ");
+  imagettftext($im, 10, 0, 0, 0, $bg_color, './arial.ttf', " ");
 
 
   //the first 8 cover the main cases, generally from younger person to older person
@@ -78,7 +78,7 @@ Function display_graph($start_year, $years_to_run, $declination2, $line1)
 
   //$start_date = strftime("%d %B %Y", mktime(12, 0, 0, $start_date_month, $start_date_day, $start_date_year));
   //$text = "Degrees from exact for " . $names_to_use . " - starting on " . $start_date . " - (" . $collision_aspect_names[$q] . ")";
-  //imagettftext($im, 12, 0, LEFTMARGIN, 25, $white, 'arial.ttf', $text);
+  //imagettftext($im, 12, 0, LEFTMARGIN, 25, $white, './arial.ttf', $text);
 
 
 // START OF CODE
@@ -136,7 +136,7 @@ Function display_graph($start_year, $years_to_run, $declination2, $line1)
       $a = "  " . $a;
     }
 
-    imagettftext($im, 12, 0, Y_AXIS_VALUES_XPOS - $offset, (TOPLINE + (100 * $j)) + Y_AXIS_VALUES_HALF_CHAR_HEIGHT, $white, 'arial.ttf', $a);
+    imagettftext($im, 12, 0, Y_AXIS_VALUES_XPOS - $offset, (TOPLINE + (100 * $j)) + Y_AXIS_VALUES_HALF_CHAR_HEIGHT, $white, './arial.ttf', $a);
 
     imageline($im, LEFTMARGIN - 4, BOTTOMLINE - (100 * $j), RIGHTMARGIN, BOTTOMLINE - (100 * $j), $gray);           //major y-axis horizontal lines
   }
@@ -167,7 +167,7 @@ Function display_graph($start_year, $years_to_run, $declination2, $line1)
         $a = "  " . $a;
       }
 
-      imagettftext($im, 12, 0, Y_AXIS_VALUES_XPOS, $z + Y_AXIS_VALUES_HALF_CHAR_HEIGHT, $gray, 'arial.ttf', $a);
+      imagettftext($im, 12, 0, Y_AXIS_VALUES_XPOS, $z + Y_AXIS_VALUES_HALF_CHAR_HEIGHT, $gray, './arial.ttf', $a);
     }
   }
 
@@ -187,7 +187,7 @@ Function display_graph($start_year, $years_to_run, $declination2, $line1)
 
     imageline($im, $x2, TOPLINE, $x2, BOTTOMLINE, $light_gray);        //vertical lines every 4 years along the x-axis
 
-    imagettftext($im, 10, 0, $x2 - X_AXIS_VALUES_CHAR_WIDTH * 2, BOTTOMLINE + 20, $white, 'arial.ttf', sprintf("%'04d", $current_year));
+    imagettftext($im, 10, 0, $x2 - X_AXIS_VALUES_CHAR_WIDTH * 2, BOTTOMLINE + 20, $white, './arial.ttf', sprintf("%'04d", $current_year));
 
     $current_year = $current_year + 4;
   }
@@ -220,7 +220,7 @@ Function display_graph($start_year, $years_to_run, $declination2, $line1)
   }
 
   // display color legend on graph, for this color
-  imagettftext($im, 12, 0, 22, 24, $white, 'arial.ttf', "Progressed Moon Declinations for " . $line1);
+  imagettftext($im, 12, 0, 22, 24, $white, './arial.ttf', "Progressed Moon Declinations for " . $line1);
 
 
   // draw the image in png format - using imagepng() results in clearer text compared with imagejpeg()

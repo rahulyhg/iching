@@ -11,14 +11,14 @@
   include ('../constants.php');           //nedded because of "../footer.html" statements
 
   // connect to the database
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   // get username
   $username = $_SESSION['username'];
 
   // get name to delete
-  $ID = safeEscapeString($conn, $_POST["ID"]);
+  $ID = mysqlSafeEscapeString($conn, $_POST["ID"]);
 
 
   // get name corresponding to this ID number

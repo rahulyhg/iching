@@ -1,13 +1,14 @@
 <?php
 
-include 'header.html';
-include ('constants.php');
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/header.php");
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/constants.php");
+
   
 $background_color = BACKGROUND_COLOR;
 
 
-require_once('../../mysqli_connect_online_calcs_db_MYSQLI.php');
-require_once ('../../my_functions_MYSQLI.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/charting/my_functions_MYSQLI.php");
 
 if ($_POST['submitted'] == "new_pwd")
 {
@@ -21,15 +22,15 @@ if ($_POST['submitted'] == "new_pwd")
     echo "</tr>";
   echo "</table>";
 
-  $username = safeEscapeString($conn, $_POST["username"]);
-  $email = safeEscapeString($conn, $_POST["email"]);
+  $username = mysqlSafeEscapeString($conn, $_POST["username"]);
+  $email = mysqlSafeEscapeString($conn, $_POST["email"]);
 
   if (!$username Or !$email)
   {
     echo "<center><br><b>Please tell us your username and e-mail address<br><br>";
     echo post_back_message('Forgot password');
     echo "</b></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -52,7 +53,7 @@ if ($_POST['submitted'] == "new_pwd")
     echo "<font size=3>";
     echo post_back_message('Forgot password');
     echo "</b></font></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -92,7 +93,7 @@ if ($_POST['submitted'] == "new_pwd")
   echo "<center><font FACE='Verdana' size='6' color='#8800FF'>A new password has been e-mailed to you.</font></center><br><br><br>";
   echo "<center><a href='signup_login.php'>Return to registration page</a></center><br>";
 
-  include 'footer.html';
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
   exit();
 }
 else
@@ -159,6 +160,6 @@ else
   <?php
 }
 
-include 'footer.html';
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 
 ?>

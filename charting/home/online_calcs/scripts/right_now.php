@@ -6,7 +6,7 @@ if (!isset($_SESSION)) {
 /* Edited top work with PHP7 :JWX */
 include ('header_right_now.html');
 
-require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
 
 // calculate astronomic data
 $swephsrc = './sweph';    //sweph MUST be in a folder no less than at this level
@@ -204,7 +204,7 @@ $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 echo "<br /><br />";
 var_dump($_SESSION);
 
-include ('footer.html');
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 exit();
 
 Function left($leftstring, $leftlength) {

@@ -3,20 +3,20 @@
 
   if ($is_logged_in == False) { exit(); }
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   $months = array (0 => 'Choose month', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
   // check if the form has been submitted
   if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted']))
   {
-    $id1 = safeEscapeString($conn, $_POST["id1"]);
+    $id1 = mysqlSafeEscapeString($conn, $_POST["id1"]);
 
     if (!is_numeric($id1))
     {
       echo "<center><br /><br />You have forgotten to make an entry. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -32,12 +32,13 @@
     if ($num_records != 1)
     {
       echo "<center><br /><br />I cannot find this person in the database. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
     // get all variables from database
-    $h_sys = safeEscapeString($conn, $_POST["h_sys"]);
+    //$h_sys = mysqlSafeEscapeString($conn, $_POST["h_sys"]);
+    $h_sys = mysqlSafeEscapeString($conn, isset($_POST["h_sys"])?$_POST["h_sys"]:null);
     $name1 = $row['name'];
 
     $month1 = $row['month'];
@@ -89,7 +90,7 @@
 
 
 
-    if ($my_error != "")
+    if (( isset($my_error) ?: "" ) != "") 
 
     {
 
@@ -109,7 +110,7 @@
 
 
 
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 
       exit();
 
@@ -123,7 +124,7 @@
       $swephsrc = './sweph';    //sweph MUST be in a folder no less than at this level
       $sweph = './sweph';
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
 
 
@@ -228,7 +229,7 @@
         $row = explode(',',$line);
         $longitude1[$key] = $row[0];
         $speed1[$key] = $row[1];
-        $house_pos1[$key] = $row[2];
+        $house_pos1[$key] = (isset($row[2]) ? $row[2] : null);
       };
 
       include("constants_eng.php");     // this is here because we must rename the planet names
@@ -423,6 +424,7 @@
 
 
 
+      if ( isset($timezone2)?$timezone2:0 < 0)
       if ($timezone2 < 0)
 
       {
@@ -540,8 +542,29 @@
           ?>
 
         </select>
+          
+        <?php
+        $_POST['id1'] = isset($_POST['id1'])?$_POST['id1']:'';
+        $_POST['name1'] = isset($_POST['name1'])?$_POST['name1']:'';
+        $_POST['month1'] = isset($_POST['month1'])?$_POST['month1']:'';
+        $_POST['day1'] = isset($_POST['day1'])?$_POST['day1']:'';
+        $_POST['year1'] = isset($_POST['year1'])?$_POST['year1']:'';
+        $_POST['hour1'] = isset($_POST['hour1'])?$_POST['hours1']:'';
+        $_POST['minute1'] = isset($_POST['minute1'])?$_POST['minute1']:'';
+        $_POST['timezone1'] = isset($_POST['timezone1'])?$_POST['timezone1']:'';
+        $_POST['long_deg1'] = isset($_POST['long_deg1'])?$_POST['long_deg1']:'';
+        $_POST['long_min1'] = isset($_POST['long_min1'])?$_POST['long_min1']:'';
+        $_POST['ew1'] = isset($_POST['ew1'])?$_POST['ew1']:'';
+        $_POST['lat_deg1'] = isset($_POST['lat_deg1'])?$_POST['lat_deg1']:'';
+        $_POST['lat_min1'] = isset($_POST['lat_min1'])?$_POST['lat_min1']:'';
+        $_POST['ns1'] = isset($_POST['ns1'])?$_POST['ns1']:'';
+        $_POST['start_month'] = isset($_POST['start_month'])?$_POST['start_month']:'';
+        $_POST['start_day'] = isset($_POST['start_day'])?$_POST['start_day']:'';
+        $_POST['start_year'] = isset($_POST['start_year'])?$_POST['start_year']:'';
+        ?>
 
         <input type="hidden" name="id1" value="<?php echo $_POST['id1']; ?>">
+        <input type="hidden" name="id1" value="<?php echo isset($_POST['id1'])?$_POST['id1']:''; ?>">
         <input type="hidden" name="name1" value="<?php echo stripslashes($_POST['name1']); ?>">
         <input type="hidden" name="month1" value="<?php echo $_POST['month1']; ?>">
         <input type="hidden" name="day1" value="<?php echo $_POST['day1']; ?>">
@@ -993,7 +1016,7 @@
           if ($q > 0)
           {
             // aspect exists
-            if ($nmp_already_processed[$i][$j] == 0)
+            if ( isset($nmp_already_processed[$i][$j])?$nmp_already_processed[$i][$j]:0 == 0)
             {
               $nmp[0][$num_midpoint_aspects] = $i;
               $nmp[1][$num_midpoint_aspects] = $j;
@@ -1031,7 +1054,7 @@
     {
       for ($y = 0; $y <= $num_midpoint_aspects; $y++)
       {
-        $pl = $nmp[2][$y] + (1 / 36000);
+        $pl = isset($nmp[2][$y])?$nmp[2][$y]:0 + (1 / 36000);
 
         if ($x < 12 And $longitude2[$x + LAST_PLANET] > $longitude2[$x + LAST_PLANET + 1])
         {
@@ -1190,13 +1213,13 @@
     $sql = "SELECT natal_midpoints FROM astro_reports";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
     $row = mysqli_fetch_array($result);
-    $count = $row[natal_midpoints] + 1;
+    $count = $row['natal_midpoints'] + 1;
 
     $sql = "UPDATE astro_reports SET natal_midpoints = '$count'";
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 
-    include ('footer.html');
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 
     exit();
   }

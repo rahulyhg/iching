@@ -3,18 +3,18 @@
 
   if ($is_logged_in == False) { exit(); }
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   // check if the form has been submitted
   if (isset($_POST['submitted']))
   {
-    $id1 = safeEscapeString($conn, $_POST["id1"]);
+    $id1 = mysqlSafeEscapeString($conn, $_POST["id1"]);
 
     if (!is_numeric($id1))
     {
       echo "<center><br /><br />You have forgotten to make an entry. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -29,7 +29,7 @@
     if ($num_records != 1)
     {
       echo "<center><br /><br />I cannot find this person in the database. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -65,14 +65,14 @@
 
 
     // get all variables from form - transit date
-    $num_years = intval(safeEscapeString($conn, $_POST["num_years"]));
+    $num_years = intval(mysqlSafeEscapeString($conn, $_POST["num_years"]));
 
     $start_age = 0;
 
     if ($num_years < 1 Or $num_years > 99) { $num_years = 80; }
 
 
-    if ($my_error != "")
+    if (( isset($my_error) ?: "" ) != "") 
     {
       echo "<TABLE align='center' WIDTH='98%' BORDER='0' CELLSPACING='15' CELLPADDING='0'><tr><td><center><b>";
       echo "<font color='#ff0000' size=+2>Error! - The following error(s) occurred:</font><br>";
@@ -82,7 +82,7 @@
       echo "</font>";
       echo "</b></center></td></tr></table>";
 
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
     else
@@ -91,7 +91,7 @@
       $swephsrc = './sweph';    //sweph MUST be in a folder no less than at this level
       $sweph = './sweph';
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
 //Person 1 calculations
       // Unset any variables not initialized elsewhere in the program
@@ -211,7 +211,7 @@
       echo "<br>";
 
 
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     }
   }
 

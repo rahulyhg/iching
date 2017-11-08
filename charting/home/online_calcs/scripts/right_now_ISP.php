@@ -6,7 +6,7 @@
   $use_browser_IP = True;
   $use_MaxMind_db = True;
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
 
   $h_sys = "p";
 
@@ -104,7 +104,7 @@
 
 
 
-  putenv("PATH=$PATH:$swephsrc");
+  putenv("PATH=".getenv('PATH').":$swephsrc");
 
   // get LAST_PLANET planets and all house cusps
   exec ("swetest -edir$sweph -b$utdatenow -ut$utnow -p0123456789DAttt -eswe -house$my_longitude,$my_latitude,$h_sys -flsj -g, -head", $out);
@@ -118,7 +118,7 @@
     $row = explode(',',$line);
     $longitude1[$key] = $row[0];
     $speed1[$key] = $row[1];
-    $house_pos1[$key] = $row[2];
+    $house_pos1[$key] = (isset($row[2]) ? $row[2] : null);
   };
 
 
@@ -650,7 +650,7 @@
 
   echo "<br /><br />";
 
-  include ('footer.html');
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
   exit();
 
 

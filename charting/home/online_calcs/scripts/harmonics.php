@@ -5,8 +5,8 @@
 
 //  session_start();
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   include("constants_eng.php");
 
@@ -15,12 +15,12 @@
   // check if the form has been submitted
   if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted']))
   {
-    $id1 = safeEscapeString($conn, $_POST["id1"]);
+    $id1 = mysqlSafeEscapeString($conn, $_POST["id1"]);
 
     if (!is_numeric($id1))
     {
       echo "<center><br /><br />You have forgotten to make an entry. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -35,12 +35,12 @@
     if ($num_records != 1)
     {
       echo "<center><br /><br />I cannot find this person in the database. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
     // get all variables from database
-    $h_sys = safeEscapeString($conn, $_POST["h_sys"]);
+    $h_sys = mysqlSafeEscapeString($conn, $_POST["h_sys"]);
     $name1 = $row['name'];
 
     $month1 = $row['month'];
@@ -72,8 +72,8 @@
 
 
     // get all variables from form - harmonic location
-    $harmonic_val = safeEscapeString($conn, $_POST["harmonic_val"]);
-    $harmonic_age = intval(safeEscapeString($conn, $_POST["harmonic_age"]));
+    $harmonic_val = mysqlSafeEscapeString($conn, $_POST["harmonic_val"]);
+    $harmonic_age = intval(mysqlSafeEscapeString($conn, $_POST["harmonic_age"]));
 
     if ($harmonic_val < 1 Or $harmonic_val > 31) { $harmonic_val = 9; }    //the default is 9
 
@@ -81,9 +81,9 @@
 
     if ($harmonic_age == 1)
     {
-      $start_month = safeEscapeString($conn, $_POST["start_month"]);
-      $start_day = safeEscapeString($conn, $_POST["start_day"]);
-      $start_year = safeEscapeString($conn, $_POST["start_year"]);
+      $start_month = mysqlSafeEscapeString($conn, $_POST["start_month"]);
+      $start_day = mysqlSafeEscapeString($conn, $_POST["start_day"]);
+      $start_year = mysqlSafeEscapeString($conn, $_POST["start_year"]);
 
       if ($start_day < 1 Or $start_day > 31) { $start_day = strftime("%d", time()); }
 
@@ -106,7 +106,7 @@
     }
 
 
-    if ($my_error != "")
+    if (( isset($my_error) ?: "" ) != "") 
     {
       echo "<table align='center' width='98%' border='0' cellspacing='15' cellpadding='0'><tr><td><center><b>";
       echo "<font color='#ff0000' size=+2>Error! - The following error(s) occurred:</font><br />";
@@ -116,7 +116,7 @@
       echo "</font>";
       echo "</b></center></td></tr></table>";
 
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
     else
@@ -125,7 +125,7 @@
       $swephsrc = './sweph';    //sweph MUST be in a folder no less than at this level
       $sweph = './sweph';
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
       $last_planet_num = 14;        //add a planet
 
@@ -849,7 +849,7 @@
     echo "<br /><br />";
 
 
-    include ('footer.html');
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 
     exit();
   }

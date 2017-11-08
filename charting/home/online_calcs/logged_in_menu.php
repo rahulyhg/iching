@@ -1,7 +1,7 @@
 <?php
   include 'accesscontrol.php';
   
-  include 'constants.php';
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/constants.php");
 
   $main_page = MAIN_PAGE;
   $view_records_page = VIEW_RECORDS_PAGE;

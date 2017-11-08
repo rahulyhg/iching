@@ -18,7 +18,7 @@
   $swephsrc = './sweph';      //sweph MUST be in a folder no less than at this level
   $sweph = './sweph';
 
-  putenv("PATH=$PATH:$swephsrc");
+  putenv("PATH=".getenv('PATH').":$swephsrc");
 
 
   include("constants_eng.php");         // this is here because we must name the planet names, 0 - 12, Sun - True Node

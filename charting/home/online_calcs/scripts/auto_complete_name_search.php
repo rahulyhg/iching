@@ -1,13 +1,13 @@
 <?php
   session_start();
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  //require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   // Is there a posted query string?
   if (isset($_POST['queryString']))
   {
-    $queryString = trim(safeEscapeString($conn, $_POST["queryString"]));
+    $queryString = trim(mysqlSafeEscapeString($conn, $_POST["queryString"]));
 
     $username = $_SESSION['username'];
 
@@ -38,7 +38,7 @@
   }
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

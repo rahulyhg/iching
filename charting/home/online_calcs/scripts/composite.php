@@ -6,19 +6,19 @@
     exit();
   }
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   // check if the form has been submitted
   if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted']))
   {
-    $id1 = safeEscapeString($conn, $_POST["id1"]);
-    $id2 = safeEscapeString($conn, $_POST["id2"]);
+    $id1 = mysqlSafeEscapeString($conn, $_POST["id1"]);
+    $id2 = mysqlSafeEscapeString($conn, $_POST["id2"]);
 
     if (!is_numeric($id1) Or !is_numeric($id2))
     {
       echo "<center><br /><br />You have forgotten to make an entry. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -33,12 +33,12 @@
     if ($num_records != 1)
     {
       echo "<center><br /><br />I cannot find person #1 in the database. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
     // get all variables from database
-    $h_sys = safeEscapeString($conn, $_POST["h_sys"]);
+    $h_sys = mysqlSafeEscapeString($conn, $_POST["h_sys"]);
     $name1 = $row['name'];
 
     $month1 = $row['month'];
@@ -67,7 +67,7 @@
     if ($num_records != 1)
     {
       echo "<center><br /><br />I cannot find person #2 in the database. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -94,7 +94,7 @@
 
     include ('header_composite.html');        //here because of setting cookies above
 
-    $h_sys = safeEscapeString($conn, $_POST["h_sys"]);
+    $h_sys = mysqlSafeEscapeString($conn, $_POST["h_sys"]);
 
     if ($ew1 < 0)
     {
@@ -134,7 +134,7 @@
     }
 
 
-    if ($my_error != "")
+    if (( isset($my_error) ?: "" ) != "") 
     {
 
     }
@@ -144,7 +144,7 @@
       $swephsrc = './sweph';    //sweph MUST be in a folder no less than at this level
       $sweph = './sweph';
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
       if (strlen($h_sys) != 1)
       {
@@ -222,7 +222,7 @@
         $row = explode(',',$line);
         $longitude1[$key] = $row[0];
         $speed1[$key] = $row[1];
-        $house_pos1[$key] = $row[2];
+        $house_pos1[$key] = (isset($row[2]) ? $row[2] : null);
       };
 
       include("constants_eng.php");     // this is here because we must rename the planet names
@@ -1005,7 +1005,7 @@
     $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 
-    include ('footer.html');
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 }

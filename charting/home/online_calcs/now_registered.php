@@ -1,6 +1,7 @@
 <?php
-  include ('header.html');
-  include ('constants.php');
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/header.php");
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/constants.php");
+
 
   echo "<div id='content'>";
   echo "<h1>" . YOUR_URL . " Database Registration</h1>";
@@ -9,5 +10,5 @@
   echo "<p>&nbsp;</p>";
   echo "</div>";
 
-  include ('footer.html');
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 ?>

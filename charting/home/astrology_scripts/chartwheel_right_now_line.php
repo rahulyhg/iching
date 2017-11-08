@@ -1,5 +1,7 @@
 <?php
-  include("constants.php");
+  require_once($_SERVER['DOCUMENT_ROOT']."/charting/home/astrology_scripts/constants.php");
+  require_once($_SERVER['DOCUMENT_ROOT']."/charting/home/functions.php");
+  
   $last_planet_num = LAST_PLANET + 2;
 
   $rx1 = safeEscapeString($_GET["rx1"]);
@@ -372,28 +374,28 @@
   imagedestroy($im);
   exit();
 
-
-Function safeEscapeString($string)
-{
-// replace HTML tags '<>' with '[]'
-  $temp1 = str_replace("<", "[", $string);
-  $temp2 = str_replace(">", "]", $temp1);
-
-// but keep <br> or <br />
-// turn <br> into <br /> so later it will be turned into ""
-// using just <br> will add extra blank lines
-  $temp1 = str_replace("[br]", "<br />", $temp2);
-  $temp2 = str_replace("[br /]", "<br />", $temp1);
-
-  if (get_magic_quotes_gpc())
-  {
-    return $temp2;
-  }
-  else
-  {
-    return mysql_escape_string($temp2);
-  }
-}
+//
+//Function safeEscapeString($string)
+//{
+//// replace HTML tags '<>' with '[]'
+//  $temp1 = str_replace("<", "[", $string);
+//  $temp2 = str_replace(">", "]", $temp1);
+//
+//// but keep <br> or <br />
+//// turn <br> into <br /> so later it will be turned into ""
+//// using just <br> will add extra blank lines
+//  $temp1 = str_replace("[br]", "<br />", $temp2);
+//  $temp2 = str_replace("[br /]", "<br />", $temp1);
+//
+//  if (get_magic_quotes_gpc())
+//  {
+//    return $temp2;
+//  }
+//  else
+//  {
+//    return mysql_escape_string($temp2);
+//  }
+//}
 
 
 Function Sort_planets_by_descending_longitude($num_planets, $longitude1, &$sort, &$sort_pos)

@@ -1,10 +1,10 @@
 <?php
   include("constants_eng.php");
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  //require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
   
-  $solar_arc = safeEscapeString($conn, $_GET["sa"]);
+  $solar_arc = mysqlSafeEscapeString($conn, $_GET["sa"]);
 
   if ($solar_arc < 0 Or $solar_arc >= 360)
   {
@@ -138,7 +138,7 @@
   imagefilledrectangle($im, 0, 0, $size_of_rect, $size_of_rect, $background_color);
 
 // MUST BE HERE - I DO NOT KNOW WHY - MAYBE TO PRIME THE PUMP
-  imagettftext($im, 10, 0, 0, 0, $black, 'arial.ttf', " ");
+  imagettftext($im, 10, 0, 0, 0, $black, './arial.ttf', " ");
 
 // draw the outer-outer border of the chartwheel
   imagefilledellipse($im, $center_pt, $center_pt, $outer_outer_diameter + 80, $outer_outer_diameter + 80, $light_blue);
@@ -213,7 +213,7 @@
 
     // display the house cusp numbers themselves
     display_house_cusp_number($i, -$angle, $radius - $inner_diameter_offset, $xy);
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $black, 'arial.ttf', $i);
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $black, './arial.ttf', $i);
   }
 
 // ------------------------------------------
@@ -313,7 +313,7 @@
       $clr_to_use = $blue;
     }
 
-    drawboldtext($im, 16, 0, $x1 + $center_pt, $y1 + $center_pt, $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$i]), 1);
+    drawboldtext($im, 16, 0, $x1 + $center_pt, $y1 + $center_pt, $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$i]), 1);
   }
 
 // ------------------------------------------
@@ -338,7 +338,7 @@
       display_planet_glyph($angle_to_use, $radius - ($dist_from_diameter1b), $xy);
     }
 
-    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color1, 'HamburgSymbols.ttf', chr($pl_glyph[$sort_pos1[$i]]));
+    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color1, './HamburgSymbols.ttf', chr($pl_glyph[$sort_pos1[$i]]));
 
     //draw line from planet to circumference
     if ($flag == False)
@@ -383,7 +383,7 @@
       display_planet_glyph($angle_to_use, $radius - ($dist_from_diameter2b), $xy);
     }
 
-    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color2, 'HamburgSymbols.ttf', chr($pl_glyph[$sort_pos2[$i]]));
+    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color2, './HamburgSymbols.ttf', chr($pl_glyph[$sort_pos2[$i]]));
 
     //draw line from planet to circumference
     if ($flag == False)
@@ -433,7 +433,7 @@
       display_planet_glyph($angle_to_use, $radius - ($dist_from_diameter3b), $xy);
     }
 
-    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color3, 'HamburgSymbols.ttf', chr($pl_glyph[$sort_pos3[$i]]));
+    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color3, './HamburgSymbols.ttf', chr($pl_glyph[$sort_pos3[$i]]));
 
     //draw line from planet to circumference
     if ($flag == False)
@@ -543,7 +543,7 @@
   exit();
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

@@ -2,26 +2,26 @@
   $months = array (0 => 'Choose month', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
   $my_error = "";
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   // check if the form has been submitted
   if (isset($_POST['submitted']))
   {
     // get all variables from form
-    $month = safeEscapeString($conn, $_POST["month"]);
-    $day = safeEscapeString($conn, $_POST["day"]);
-    $year = safeEscapeString($conn, $_POST["year"]);
+    $month = mysqlSafeEscapeString($conn, $_POST["month"]);
+    $day = mysqlSafeEscapeString($conn, $_POST["day"]);
+    $year = mysqlSafeEscapeString($conn, $_POST["year"]);
 
-    $timezone = safeEscapeString($conn, $_POST["timezone"]);
+    $timezone = mysqlSafeEscapeString($conn, $_POST["timezone"]);
 
-    $long_deg = safeEscapeString($conn, $_POST["long_deg"]);
-    $long_min = safeEscapeString($conn, $_POST["long_min"]);
-    $ew = safeEscapeString($conn, $_POST["ew"]);
+    $long_deg = mysqlSafeEscapeString($conn, $_POST["long_deg"]);
+    $long_min = mysqlSafeEscapeString($conn, $_POST["long_min"]);
+    $ew = mysqlSafeEscapeString($conn, $_POST["ew"]);
 
-    $lat_deg = safeEscapeString($conn, $_POST["lat_deg"]);
-    $lat_min = safeEscapeString($conn, $_POST["lat_min"]);
-    $ns = safeEscapeString($conn, $_POST["ns"]);
+    $lat_deg = mysqlSafeEscapeString($conn, $_POST["lat_deg"]);
+    $lat_min = mysqlSafeEscapeString($conn, $_POST["lat_min"]);
+    $ns = mysqlSafeEscapeString($conn, $_POST["ns"]);
 
     // set cookie containing current location data here
     setcookie ('current_timezone', $timezone, time() + 60 * 60 * 24 * 30, '/', '', 0);
@@ -156,7 +156,7 @@
 
       unset($PATH, $ruling_pl, $pl_hour);
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
 
       $my_longitude = $ew * ($long_deg + ($long_min / 60));
@@ -293,7 +293,7 @@
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
   }
@@ -629,7 +629,7 @@
 </form>
 
 <?php
-include ('footer.html');
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 
 
 Function mid($midstring, $midstart, $midlength)
@@ -638,7 +638,7 @@ Function mid($midstring, $midstart, $midlength)
 }
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

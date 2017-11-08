@@ -4,10 +4,10 @@
   include("constants_eng.php");
   require_once("sr.php");
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  //require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
   
-  $ubt1 = safeEscapeString($conn, $_GET["ubt1"]);
+  $ubt1 = mysqlSafeEscapeString($conn, $_GET["ubt1"]);
   
   $longitude1 = $_SESSION['nmp_p2'];
 
@@ -55,7 +55,7 @@
   imagefilledrectangle($im, 0, 0, $graphic_width + $total_margin, $overall_size_v, $background_color); //add margins so that '0' and '30' shows up in degree line
 
 // MUST BE HERE - I DO NOT KNOW WHY - MAYBE TO PRIME THE PUMP
-  imagettftext($im, 10, 0, 0, 0, $black, 'arial.ttf', " ");
+  imagettftext($im, 10, 0, 0, 0, $black, './arial.ttf', " ");
 
 
 // ------------------------------------------
@@ -88,10 +88,10 @@
 
       $v_dist = $y_offset;
       $x1 = 30 + ($k * $x_dist_per_deg) - ($glyph_size / 2);
-      imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, 'HamburgSymbols.ttf', chr($pl_glyph[$k]));
+      imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, './HamburgSymbols.ttf', chr($pl_glyph[$k]));
       
       $x1 = 27 + ($k * $x_dist_per_deg) - ($glyph_size / 2);
-      imagettftext($im, 10, 0, $left_margin + $x1 + 50, $start_of_y_axis + $y_offset, $planet_color, 'arial.ttf', "Orb");
+      imagettftext($im, 10, 0, $left_margin + $x1 + 50, $start_of_y_axis + $y_offset, $planet_color, './arial.ttf', "Orb");
       
       for ($i = 0; $i <= LAST_PLANET + 1; $i++)                   // natal midpoint
       {
@@ -139,19 +139,19 @@
             
             $v_dist = $y_offset + ($row_cntr * 18);
             $x1 = 9 + ($k * $x_dist_per_deg) - ($glyph_size / 2);
-            imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, 'HamburgSymbols.ttf', chr($pl_glyph[$i]));
+            imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, './HamburgSymbols.ttf', chr($pl_glyph[$i]));
 
             $x1 = 46 + ($k * $x_dist_per_deg) - ($glyph_size / 2);
             imageline($im, $x1 - 5, $start_of_y_axis + $v_dist - 6, $x1 + 5, $start_of_y_axis + $v_dist - 6, $black);   //draw horizontal line between planets  
             
             $x1 = 51 + ($k * $x_dist_per_deg) - ($glyph_size / 2);
-            imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, 'HamburgSymbols.ttf', chr($pl_glyph[$j]));
+            imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, './HamburgSymbols.ttf', chr($pl_glyph[$j]));
 
             $x1 = 75 + ($k * $x_dist_per_deg) - ($glyph_size / 2);
-            imagettftext($im, 10, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, 'arial.ttf', sprintf("%.2f", abs($dax)));
+            imagettftext($im, 10, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, './arial.ttf', sprintf("%.2f", abs($dax)));
 
             $x1 = 108 + ($k * $x_dist_per_deg) - ($glyph_size / 2);
-            imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, 'HamburgSymbols.ttf', chr($aspect_glyph));
+            imagettftext($im, $glyph_size, 0, $left_margin + $x1, $start_of_y_axis + $v_dist, $planet_color, './HamburgSymbols.ttf', chr($aspect_glyph));
           }
         }
       }
@@ -175,7 +175,7 @@
   exit();
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

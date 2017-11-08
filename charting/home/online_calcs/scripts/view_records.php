@@ -11,7 +11,7 @@ if ($is_logged_in == False) {
 include ('../header.html');
 include ('../constants.php');           //nedded because of "../footer.html" statements
 // connect to the database and point to the proper database
-require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
 ?>
 <script type="text/javascript" src="jquery-1.2.1.pack.js"></script>
 

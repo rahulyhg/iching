@@ -7,12 +7,12 @@ if (!isset($_SESSION)) {
 
 include("constants_eng.php");
 
-require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-//require_once ('../../../my_functions_MYSQLI.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+//require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
-$rx1 = safeEscapeString($conn, $_GET["rx1"]);
+$rx1 = mysqlSafeEscapeString($conn, $_GET["rx1"]);
 
-$ubt1 = intval(safeEscapeString($conn, $_GET["ubt1"]));
+$ubt1 = intval(mysqlSafeEscapeString($conn, $_GET["ubt1"]));
 
 $longitude = $_SESSION['nL1'];
 $hc1 = $_SESSION['nhc1'];
@@ -229,7 +229,7 @@ imagepng($im);
 imagedestroy($im);
 exit();
 
-Function safeEscapeString($conn, $string) {
+Function mysqlSafeEscapeString($conn, $string) {
 // replace HTML tags '<>' with '[]'
     $temp1 = str_replace("<", "[", $string);
     $temp2 = str_replace(">", "]", $temp1);

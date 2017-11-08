@@ -10,8 +10,8 @@
   include ('../header.html');
 
   // connect to the database and point to the proper database
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   $PHP_SELF = "entry_update.php";
 
@@ -21,31 +21,31 @@
   {
     // process form
     // get ID and other information
-    $id = safeEscapeString($conn, $_POST["idx"]);
-    $name = safeEscapeString($conn, $_POST["name"]);
+    $id = mysqlSafeEscapeString($conn, $_POST["idx"]);
+    $name = mysqlSafeEscapeString($conn, $_POST["name"]);
     
     $name = str_replace(" ", "_", $name);
     $name = str_replace(chr(39), "~", $name);
     
-    $original_name = safeEscapeString($conn, $_POST["original_name"]);
-    $sex = safeEscapeString($conn, $_POST["sex"]);
+    $original_name = mysqlSafeEscapeString($conn, $_POST["original_name"]);
+    $sex = mysqlSafeEscapeString($conn, $_POST["sex"]);
 
-    $month = intval(safeEscapeString($conn, $_POST["month"]));
-    $day = intval(safeEscapeString($conn, $_POST["day"]));
-    $year = intval(safeEscapeString($conn, $_POST["year"]));
+    $month = intval(mysqlSafeEscapeString($conn, $_POST["month"]));
+    $day = intval(mysqlSafeEscapeString($conn, $_POST["day"]));
+    $year = intval(mysqlSafeEscapeString($conn, $_POST["year"]));
 
-    $hour = intval(safeEscapeString($conn, $_POST["hour"]));
-    $minute = intval(safeEscapeString($conn, $_POST["minute"]));
+    $hour = intval(mysqlSafeEscapeString($conn, $_POST["hour"]));
+    $minute = intval(mysqlSafeEscapeString($conn, $_POST["minute"]));
 
-    $timezone = safeEscapeString($conn, $_POST["timezone"]);
+    $timezone = mysqlSafeEscapeString($conn, $_POST["timezone"]);
 
-    $long_deg = intval(safeEscapeString($conn, $_POST["long_deg"]));
-    $long_min = intval(safeEscapeString($conn, $_POST["long_min"]));
-    $ew = safeEscapeString($conn, $_POST["ew"]);
+    $long_deg = intval(mysqlSafeEscapeString($conn, $_POST["long_deg"]));
+    $long_min = intval(mysqlSafeEscapeString($conn, $_POST["long_min"]));
+    $ew = mysqlSafeEscapeString($conn, $_POST["ew"]);
 
-    $lat_deg = intval(safeEscapeString($conn, $_POST["lat_deg"]));
-    $lat_min = intval(safeEscapeString($conn, $_POST["lat_min"]));
-    $ns = safeEscapeString($conn, $_POST["ns"]);
+    $lat_deg = intval(mysqlSafeEscapeString($conn, $_POST["lat_deg"]));
+    $lat_min = intval(mysqlSafeEscapeString($conn, $_POST["lat_min"]));
+    $ns = mysqlSafeEscapeString($conn, $_POST["ns"]);
 
 
     if (strtolower($ew) == "w") { $ew = -1; }
@@ -120,7 +120,7 @@
   }
 
     // not a submitted form - get ID if this is not an error in input
-  if (isset($_POST['submit_update']) == False) { $id = safeEscapeString($conn, $_GET["ID"]); }
+  if (isset($_POST['submit_update']) == False) { $id = mysqlSafeEscapeString($conn, $_GET["ID"]); }
 
   //fetch current data for this ID # from the 'birth_info' database
   $sql = "SELECT * FROM astro_birth_info WHERE ID='$id' And entered_by='$username'";

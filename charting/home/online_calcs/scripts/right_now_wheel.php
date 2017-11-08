@@ -5,16 +5,16 @@ if (!isset($_SESSION)) {
 }
 /* Edited top work with PHP7 :JWX */
 include("constants_eng.php");
-include("../constants.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/functions.php");
 
-require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-//require_once ('../../../my_functions_MYSQLI.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+//require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
 $copyright1 = "This chart wheel is copyrighted";
 $copyright2 = "and generated at " . YOUR_URL;
 
-$line1 = safeEscapeString($conn, $_GET["l1"]);
-$retrograde = safeEscapeString($conn, $_GET["rx1"]);
+$line1 = mysqlSafeEscapeString($conn, $_GET["l1"]);
+$retrograde = mysqlSafeEscapeString($conn, $_GET["rx1"]);
 
 $longitude = $_SESSION['right_now_p1'];
 
@@ -556,7 +556,7 @@ Function Reduce_below_30($longitude) {
     return $lng;
 }
 
-Function safeEscapeString($conn, $string) {
+Function mysqlSafeEscapeString($conn, $string) {
 // replace HTML tags '<>' with '[]'
     $temp1 = str_replace("<", "[", $string);
     $temp2 = str_replace(">", "]", $temp1);

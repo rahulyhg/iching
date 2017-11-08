@@ -1,6 +1,6 @@
 <?php
 
-Function safeEscapeString($conn, $string)           //note that this function expects the connection string as an argument
+Function mysqlSafeEscapeString($conn, $string)           //note that this function expects the connection string as an argument
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

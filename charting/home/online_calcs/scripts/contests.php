@@ -3,15 +3,15 @@
 
   if ($is_logged_in == False) { exit(); }
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
 // check if the form has been submitted
   if (isset($_POST['submitted']))
   {
-    $id1 = safeEscapeString($conn, $_POST["id1"]);
-    $r1h = intval(safeEscapeString($conn, $_POST["r1h"]));
-    $r2h = intval(safeEscapeString($conn, $_POST["r2h"]));
+    $id1 = mysqlSafeEscapeString($conn, $_POST["id1"]);
+    $r1h = intval(mysqlSafeEscapeString($conn, $_POST["r1h"]));
+    $r2h = intval(mysqlSafeEscapeString($conn, $_POST["r2h"]));
     
     if ($r1h < 1 Or $r1h > 12) { $r1h = 1; }
     if ($r2h < 1 Or $r2h > 12) { $r2h = 7; }
@@ -21,7 +21,7 @@
 
     if (!is_numeric($id1))
     {
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -36,7 +36,7 @@
     if ($num_records != 1)
     {
       echo "<center><br><br>I cannot find this person in the database. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -50,7 +50,8 @@
 
     $hour = $row['hour'];
     $minute = $row['minute'];
-    $second = $row['second'];     //added 19 Mar 2010
+//    $second = $row['second'];
+    $second = (isset($row['second'])?$row['second']:0);
 
     $timezone = $row['timezone'];
 
@@ -62,9 +63,11 @@
     $lat_min = $row['lat_min'];
     $ns = $row['ns'];
 
-    $cityName = $row['city'];       //added 13 Oct 2009
-    $countryName = $row['country'];       //added 06 May 2010
-
+//    $cityName = $row['city']; 
+    $cityName = isset($row['city'])?$row['city']:""; 
+//    $countryName = $row['country'];
+    $countryName = isset($row['country'])?$row['country']:"";
+    
     include ('header_contest.html');        //here because of setting cookies above
 
     if ($ew < 0)
@@ -85,7 +88,8 @@
       $ns_txt = "s";
     }
 
-        if ($my_error != "")
+//  if (( isset($my_error) ?: "" ) != "") 
+    if (( isset($my_error) ?: "" ) != "") 
     {
 
     }
@@ -144,7 +148,7 @@
       $utdatenow = strftime("%d.%m.%Y", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
       $utnow = strftime("%H:%M:%S", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
       // get LAST_PLANET planets and all house cusps
       $h_sys = "r";
@@ -161,7 +165,8 @@
         $row = explode(',',$line);
         $lng1[$key] = $row[0];
         $speed1[$key] = $row[1];
-        $house_pos1[$key] = $row[2];
+//        $house_pos1[$key] = (isset($row[2]) ? $row[2] : null);
+        $house_pos1[$key] = (isset($row[2]) ? $row[2] : null);
       };
 
 
@@ -342,7 +347,7 @@
       echo "<img border='0' src='contest_wheel.php?rx1=$rx1&l1=$line1&l2=$line2&l3=$line3&l4=$line4&eh=$extra_height_for_graphic_data_table&ew=$extra_width_for_graphic_data_table&ytm=$y_top_margin'>";
       echo "<br>";
       echo "<img border='0' src='contest_wheel - small longitude.php?rx1=$rx1'>";
-      echo "<img border='0' src='contest_wheel - small antiscia.php?rx1=$rx1'>";
+      echo "<img border='0' src='contest_wheel_-_small_antiscia.php?rx1=$rx1'>";
 
       echo "<br>";
 
@@ -821,7 +826,7 @@
       
 
       //display a note here about house positions
-      ?><a href="house_position_help.php" onClick="return popup(this, 'help4')"><img src='balloon help.png' alt=''></a>&nbsp;<?php
+      ?><a href="house_position_help.php" onClick="return popup(this, 'help4')"><img src='balloon_help.png' alt=''></a>&nbsp;<?php
       echo "<b>HOUSE PLACEMENT DECIDES MORE CONTEST HORARIES THAN ANY OTHER TESTIMONY</b><br><br>";
       
 
@@ -1182,7 +1187,7 @@
       //now check each significator and their accidental dignity/debility
       //combust
       echo "<br><br>";
-      ?><a href="dignity_help.php" onClick="return popup(this, 'help2')"><img src='balloon help.png' alt=''></a>&nbsp;<?php
+      ?><a href="dignity_help.php" onClick="return popup(this, 'help2')"><img src='balloon_help.png' alt=''></a>&nbsp;<?php
       echo "<b>Combust Planets = </b>";
 
       for ($i = SE_MOON; $i <= SE_SATURN; $i++)
@@ -1206,7 +1211,7 @@
 
 
 //LOOK INTO THIS LATER - IT HAS TO BE ADDRESSED, BUT I'M NOT SURE WHAT THE BEST WAY IS.
-//Reception with the Sun can also be important when judging combustion. A planet combust in its own sign or exaltation is not debilitated at all. That works much like a mutual reception between the planet and the Sun. A planet combust in its own detriment or fall is — if this is possible — debilitated even more seriously than is usual with combustion. It is afflicted by a Sun which, as this negative reception shows, hates it. Bad news indeed!'
+//Reception with the Sun can also be important when judging combustion. A planet combust in its own sign or exaltation is not debilitated at all. That works much like a mutual reception between the planet and the Sun. A planet combust in its own detriment or fall is ï¿½ if this is possible ï¿½ debilitated even more seriously than is usual with combustion. It is afflicted by a Sun which, as this negative reception shows, hates it. Bad news indeed!'
 
 
       //cazimi
@@ -1288,13 +1293,13 @@
 
       //display a note here about receptions
       echo "<br><br><br>";
-      ?><a href="reception_help.php" onClick="return popup(this, 'help3')"><img src='balloon help.png' alt=''></a>&nbsp;<?php
+      ?><a href="reception_help.php" onClick="return popup(this, 'help3')"><img src='balloon_help.png' alt=''></a>&nbsp;<?php
       echo "<b>Use the table above to check receptions between significators. Click on the icon for more info.</b>";
       
 
       //display the aspects here - do each significator's aspects
       echo "<br><br><br>";
-      ?><a href="significator_aspects_help.php" onClick="return popup(this, 'help1')"><img src='balloon help.png' alt=''></a>&nbsp;<?php
+      ?><a href="significator_aspects_help.php" onClick="return popup(this, 'help1')"><img src='balloon_help.png' alt=''></a>&nbsp;<?php
       echo "<b>Significator's Aspects</b> (see top left for applying/separating and various planetary dignities/debilities):<br><br>";
       
       for ($i = 1; $i <= 2; $i++)
@@ -1439,7 +1444,7 @@
         }
       }
 
-      //imagettftext($im, 9, 0, $x_text_start, $start_of_y_axis + (15 * $line_cntr), $black, 'arial.ttf', $txt);
+      //imagettftext($im, 9, 0, $x_text_start, $start_of_y_axis + (15 * $line_cntr), $black, './arial.ttf', $txt);
   
 
 
@@ -1465,7 +1470,7 @@
         }
       }
 
-      //imagettftext($im, 9, 0, $x_text_start, $start_of_y_axis + (15 * $line_cntr), $black, 'arial.ttf', $txt);
+      //imagettftext($im, 9, 0, $x_text_start, $start_of_y_axis + (15 * $line_cntr), $black, './arial.ttf', $txt);
 
 
       echo "<br><br><br>Having read and studied John Frawley's book 'Sports Astrology' (ISBN 978 0953977420), I find that it is nice to have all the pertinent data all in one place so I don't miss something important - I can then concentrate on analysis. The above data is the result of this desire. It is all the necessary information for any chart - now get to work figuring out who's gonna win.<br><br><br>";
@@ -1477,7 +1482,7 @@
 //FIXED STARS PLAY ONLY A SMALL PART IN HORARY, AND THERE ARE ONLY THREE WHOSE EFFECT UPON A PLANET IS WORTH NOTING IN THESE CHARTS. REGULUS IS BY FAR THE MOST IMPORTANT OF THESE. A SIGNIFICATOR AT 28 OR 29 LEO IS ON REGULUS, AND IS GREATLY STRENGTHENED. SPICA, AT 23 LIBRA, OFFERS SOME PROTECTION AGAINST DEFEAT, BUT CAN BE OVERRULED BY STRONG TESTIMONY. ALGOL, AT 26 TAURUS, IS A NEGATIVE OF MODERATE STRENGTH. ALLOW A DEGREE OR SO OF ORB EITHER WAY, BUT NO MORE THAN THAT.' 
 
 
-//IF THE MOON IS ONE OF OUR MAIN SIGNIFICATORS — LET ME STRESS THIS: I MEAN ONLY IF THE MOON IS ONE OF OUR MAIN SIGNIFICATORS - THERE ARE SOME OTHER POINTS WE MUST CONSIDER: THINGS THAT DON'T APPLY TO ANY OTHER PLANET, BUT ARE IMPORTANT WHEN ASSESSING THE MOON'S CONDITION. FIRST IS THE AMOUNT OF LIGHT IT HAS.' 'HOW DO I TELL THAT, MASTER?' 'THE NEARER THE MOON IS TO FULL, THE MORE LIGHT IT HAS; THE NEARER IT IS TO NEW, THE LESS IT HAS. FOR THESE CHARTS, WE CAN SAY THAT IF IT IS MORE THAN 120 DEGREES FROM _THE SUN IT HAS LOTS OF LIGHT, SO IT'S STRONG. IF IT IS LESS THAN 60 DEGREES FROM THE SUN, IT HAS LITTLE LIGHT, SO IT'S MODERATELY WEAK. LESS THAN 30 DEGREES AND IT'S VERY WEAK.' 'DOES IT MATTER IF IT'S GAINING OR LOSING LIGHT?' 'NOT IN THESE QUESTIONS. 
+//IF THE MOON IS ONE OF OUR MAIN SIGNIFICATORS ï¿½ LET ME STRESS THIS: I MEAN ONLY IF THE MOON IS ONE OF OUR MAIN SIGNIFICATORS - THERE ARE SOME OTHER POINTS WE MUST CONSIDER: THINGS THAT DON'T APPLY TO ANY OTHER PLANET, BUT ARE IMPORTANT WHEN ASSESSING THE MOON'S CONDITION. FIRST IS THE AMOUNT OF LIGHT IT HAS.' 'HOW DO I TELL THAT, MASTER?' 'THE NEARER THE MOON IS TO FULL, THE MORE LIGHT IT HAS; THE NEARER IT IS TO NEW, THE LESS IT HAS. FOR THESE CHARTS, WE CAN SAY THAT IF IT IS MORE THAN 120 DEGREES FROM _THE SUN IT HAS LOTS OF LIGHT, SO IT'S STRONG. IF IT IS LESS THAN 60 DEGREES FROM THE SUN, IT HAS LITTLE LIGHT, SO IT'S MODERATELY WEAK. LESS THAN 30 DEGREES AND IT'S VERY WEAK.' 'DOES IT MATTER IF IT'S GAINING OR LOSING LIGHT?' 'NOT IN THESE QUESTIONS. 
 
 //WHAT ABOUT IT DIRECTLY OPPOSING THE SUN? YOU SAID THAT WAS A MAJOR AFFLICTION.' 'GOOD! THAT IS AS TRUE OF THE MOON AS OF ANY OTHER PLANET. EVEN THOUGH IT HAS LOTS OF LIGHT THEN, WITHIN 8 DEGREES OF OPPOSITION TO THE SUN IT IS BADLY AFFLICTED. 'AND THE VIA COMBUSTA?' 'YES, IF THE MOON IS IN THE VIA COMBUSTA, WHICH IS BETWEEN 15 LIBRA AND 15 SCORPIO, IT IS SERIOUSLY AFFLICTED. IN MOST CASES WE WOULD READ THIS AS A GENERAL WEAKENING, BUT THE CONNECTION BETWEEN THE VIA COMBUSTA AND THE ANCIENT TABOOS AROUND THE ISSUE OF BLOOD CAN GIVE IT A SPECIAL SIGNIFICANCE IN CHARTS FOR BOXING MATCHES. 'SO IF WE KNOW THAT THE BOXER SIGNIFIED BY THE MOON IN THE VIA COMBUSTA HAS A TENDENCY TO CUT UP...' 'EXACTLY. NOW REMEMBER: THESE POINTS ABOUT THE MOON ARE RELEVANT ONLY IF THE MOON IS ONE OF OUR MAIN SIGNIFICATORS.
 
@@ -1493,7 +1498,7 @@
 
 //IF MY TEAM EXALTS YOUR TEAM WE THINK YOUR TEAM IS WONDERFUL.' 'THAT'S EXACTLY IT. YOU THINK YOU'RE DESTINED TO LOSE. THIS DOESN'T MEAN THAT YOU WILL LOSE, BUT IT DOES MAKE IT MORE LIKELY.' 'AND IF MY PLANET IS RULED BY YOUR PLANET...' 'IT WILL BE IN ITS OWN DETRIMENT. BE CAREFUL WITH THAT ONE. DON'T COUNT THIS AS TWO SEPARATE TESTIMONIES. IF LORD 1 IS IN A SIGN RULED BY LORD 7, IT WILL ALWAYS BE IN ITS DETRIMENT. OR VICE VERSA. WE CAN IGNORE THE RECEPTION AND JUST SAY IT'S DEBILITATED. SIMILARLY IF LORD 1 IS JUST INSIDE THE 7TH HOUSE (OR VICE VERSA): IT IS IN THE ENEMY'S HOUSE. IT WILL ALSO BE IN ITS DETRIMENT. THIS IS ONE TESTIMONY, NOT TWO.' 'WHAT ABOUT OTHER RECEPTIONS?' 'IF MY PLANET IS IN THE TRIPLICITY RULED BY YOUR PLANET, THAT IS A MINOR TESTIMONY IN YOUR FAVOUR. RECEPTION BY TERM, FACE, DETRIMENT AND FALL CAN BE IGNORED.
 
-//AND WHAT ABOUT MUTUAL RECEPTION WITH OTHER PLANETS? THAT MUST BE HELPFUL.' 'NO, IT ISN'T. YOU'RE THINKING IN ABSTRACTIONS, TAKING A LITTLE FORMULA: MUTUAL RECEPTION = HELPFUL. DON'T. YOU MUST THINK ABOUT WHAT THESE THINGS MEAN. MUTUAL RECEPTION IS LIKE FRIENDSHIP: THE TWO PLANETS WANT TO HELP EACH OTHER. IN A COURT-CASE HORARY, WHICH HAS SOME SIMILARITIES TO A CONTEST HORARY, THAT MAY MAKE SENSE. IF MY PLANET IS IN MUTUAL RECEPTION WITH ANOTHER PLANET, THAT OTHER PLANET COULD SIGNIFY MY WITNESSES — SOMEBODY ELSE WHO IS HELPING ME. IN A CONTEST, THERE ISN'T ANYBODY ELSE: IT'S JUST ME AND THE ENEMY. M Y FRIEND MAY WISH ME WELL, BUT HE ISN'T GOING TO RUN ONTO THE FIELD AND SCORE A HOME RUN FOR ME.'
+//AND WHAT ABOUT MUTUAL RECEPTION WITH OTHER PLANETS? THAT MUST BE HELPFUL.' 'NO, IT ISN'T. YOU'RE THINKING IN ABSTRACTIONS, TAKING A LITTLE FORMULA: MUTUAL RECEPTION = HELPFUL. DON'T. YOU MUST THINK ABOUT WHAT THESE THINGS MEAN. MUTUAL RECEPTION IS LIKE FRIENDSHIP: THE TWO PLANETS WANT TO HELP EACH OTHER. IN A COURT-CASE HORARY, WHICH HAS SOME SIMILARITIES TO A CONTEST HORARY, THAT MAY MAKE SENSE. IF MY PLANET IS IN MUTUAL RECEPTION WITH ANOTHER PLANET, THAT OTHER PLANET COULD SIGNIFY MY WITNESSES ï¿½ SOMEBODY ELSE WHO IS HELPING ME. IN A CONTEST, THERE ISN'T ANYBODY ELSE: IT'S JUST ME AND THE ENEMY. M Y FRIEND MAY WISH ME WELL, BUT HE ISN'T GOING TO RUN ONTO THE FIELD AND SCORE A HOME RUN FOR ME.'
 
 //SO IT IS IMPOSSIBLE TO FIX A NUMERICAL VALUE FOR ANY DIGNITY OR DEBILITY.
 
@@ -1534,7 +1539,7 @@
     }
   }
 
-  include ('footer.html');
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
   exit();
 
 
@@ -1575,7 +1580,7 @@ Function Convert_Longitude($longitude)
   if ($full_sec < 10) { $full_sec = "0" . $full_sec; }
 
   //return $deg . " " . $signs[$sign_num] . " " . $min . "' " . $full_sec . chr(34);
-  return $signs[$sign_num] . " " . $deg . "° " . $min . "' " . $full_sec . chr(34);
+  return $signs[$sign_num] . " " . $deg . "ï¿½ " . $min . "' " . $full_sec . chr(34);
 }
 
 

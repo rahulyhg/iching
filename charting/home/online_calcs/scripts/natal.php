@@ -7,17 +7,17 @@ if ($is_logged_in == False) {
     exit();
 }
 
-require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-require_once ('../../../my_functions_MYSQLI.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
 $no_interps = False;        //set this to False when you want interpretations
 // check if the form has been submitted
 if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
-    $id1 = safeEscapeString($conn, $_POST["id1"]);
+    $id1 = mysqlSafeEscapeString($conn, $_POST["id1"]);
 
     if (!is_numeric($id1)) {
         echo "<center><br><br>You have forgotten to make an entry. Please try again.</center>";
-        include ('footer.html');
+        include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
         exit();
     }
 
@@ -32,14 +32,14 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
 
     if ($num_records != 1) {
         echo "<center><br><br>I cannot find this person in the database. Please try again.</center>";
-        include ('footer.html');
+        include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
         exit();
     }
 //var_dump($_POST);//JWX
     // get all variables from database
     //$_POST["h_sys"] = "p";
 
-    $h_sys = safeEscapeString($conn, ( isset($_POST["h_sys"]) ? $_POST["h_sys"] : ''));
+    $h_sys = mysqlSafeEscapeString($conn, ( isset($_POST["h_sys"]) ? $_POST["h_sys"] : ''));
     $name = $row['name'];
 
     $month = $row['month'];
@@ -559,7 +559,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
 
 //display the natal chart report
         if ($no_interps == True) {
-            include ('footer.html');
+            include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
             exit();
         } else {
             echo '<center><table width="61.8%" cellpadding="0" cellspacing="0" border="0">';
@@ -819,13 +819,13 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
             echo '</table></center>';
             echo "<br><br>";
 
-            include ('footer.html');
+            include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
             exit();
         }
     }
 }
 
-include ('footer.html');
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 exit();
 
 Function left($leftstring, $leftlength) {

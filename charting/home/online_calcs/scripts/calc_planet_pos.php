@@ -1,6 +1,6 @@
 <?php
   // connect to and point to the proper database
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
 
 
 Function CalculatePlanets($id, &$longitude1, &$declination1, &$house_pos1, &$longitude2, &$declination2, &$house_pos2, &$hob, &$mob)
@@ -135,7 +135,7 @@ Function CalculatePlanetHousePositions($last_id, &$longitude, &$declination, &$h
   $utdatenow = strftime("%d.%m.%Y", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
   $utnow = strftime("%H:%M:%S", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
 
-  putenv("PATH=$PATH:$swephsrc");
+  putenv("PATH=".getenv('PATH').":$swephsrc");
 
   // get 10 planets and all house cusps
   exec ("swetest -edir$sweph -b$utdatenow -ut$utnow -p0123456789 -eswe -house$my_longitude,$my_latitude, -fPldj -g, -head", $out);

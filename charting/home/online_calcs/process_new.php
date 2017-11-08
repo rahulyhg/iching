@@ -1,14 +1,15 @@
 <?php
-  include 'header.html';
-  include 'constants.php';
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/header.php");
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/constants.php");
 
-  require_once('../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../my_functions_MYSQLI.php');
 
-  $username = safeEscapeString($conn, $_POST["username"]);
-  $password1 = safeEscapeString($conn, $_POST["password1"]);
-  $password2 = safeEscapeString($conn, $_POST["password2"]);
-  $email = safeEscapeString($conn, $_POST["email"]);
+  require_once($_SERVER['DOCUMENT_ROOT']."/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT']."/charting/my_functions_MYSQLI.php");
+
+  $username = mysqlSafeEscapeString($conn, $_POST["username"]);
+  $password1 = mysqlSafeEscapeString($conn, $_POST["password1"]);
+  $password2 = mysqlSafeEscapeString($conn, $_POST["password2"]);
+  $email = mysqlSafeEscapeString($conn, $_POST["email"]);
 
   $pattern = '/.*@.*\..*/';
   if (preg_match($pattern, $email) == 0)
@@ -17,7 +18,7 @@
     echo "<center><br><b>The e-mail address you entered is not valid.<br><br>";
     echo post_back_message('Registration');
     echo "</b></center>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -27,7 +28,7 @@
     echo "<center><br><b>Your passwords do not match.<br><br>";
     echo post_back_message('Registration');
     echo "</b></center>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -50,7 +51,7 @@
     echo $missing_text . "<br><br>";
     echo post_back_message('Registration');
     echo "</b></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -71,7 +72,7 @@
     echo "<center><br><b>That username is already taken.<br /><br />Please select another and try again.<br><br>";
     echo post_back_message('Sign up');
     echo "</b></center><br><br>";
-    include 'footer.html';
+    include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
     exit();
   }
 
@@ -113,5 +114,5 @@ Function error_message_header()
 
 ?>
 
-<?php include 'footer.html'; ?>
+<?php include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php"); ?>
 

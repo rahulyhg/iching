@@ -10,16 +10,16 @@
   echo "<center>";
 
   // connect to and point to the proper database
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
   require ('dual_c_calcs.php');
   require ('dual_c_mrs.php');
   require ('dual_c_display_natal_data.php');
   require ('dual_c_display_results.php');
 
   // get ID1 and ID2
-  $id[1] = safeEscapeString($conn, $_POST["id1"]);
-  $id[2] = safeEscapeString($conn, $_POST["id2"]);
+  $id[1] = mysqlSafeEscapeString($conn, $_POST["id1"]);
+  $id[2] = mysqlSafeEscapeString($conn, $_POST["id2"]);
 
   $username = $_SESSION['username'];
 
@@ -45,7 +45,7 @@
       echo "<FONT color='#ff0000' SIZE='5' FACE='Arial'><b>I could not find the record(s) you specified. Thank you.</b></font><br><br><br>";
       mysqli_close($conn);
       echo "</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
     else
@@ -208,7 +208,7 @@
   }
 
 
-  include ('footer.html');
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
   exit();
 
 
@@ -283,7 +283,7 @@ Function CalculatePositions($last_id, &$longitude, &$declination, &$house_pos)
   $utdatenow = strftime("%d.%m.%Y", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
   $utnow = strftime("%H:%M:%S", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
 
-  putenv("PATH=$PATH:$swephsrc");
+  putenv("PATH=".getenv('PATH').":$swephsrc");
 
   // get 10 planets and all house cusps
   exec ("swetest -edir$sweph -b$utdatenow -ut$utnow -p0123456789 -eswe -house$my_longitude,$my_latitude, -fPldj -g, -head", $out);

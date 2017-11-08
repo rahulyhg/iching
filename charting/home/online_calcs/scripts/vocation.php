@@ -6,20 +6,20 @@
     exit();
   }
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT']."/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   $no_interps = False;        //set this to False when you want interpretations
 
   // check if the form has been submitted
   if (isset($_POST['submitted']))
   {
-    $id1 = safeEscapeString($conn, $_POST["id1"]);
+    $id1 = mysqlSafeEscapeString($conn, $_POST["id1"]);
 
     if (!is_numeric($id1))
     {
       echo "<center><br /><br />You have forgotten to make an entry. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -34,7 +34,7 @@
     if ($num_records != 1)
     {
       echo "<center><br /><br />I cannot find this person in the database. Please try again.</center>";
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
 
@@ -78,7 +78,7 @@
       $ns_txt = "s";
     }
 
-    if ($my_error != "")
+    if (( isset($my_error) ?: "" ) != "") 
     {
 
     }
@@ -148,7 +148,7 @@
       $utdatenow = strftime("%d.%m.%Y", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
       $utnow = strftime("%H:%M:%S", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
       // get LAST_PLANET planets and all house cusps
       $h_sys = "p";
@@ -165,7 +165,7 @@
         $row = explode(',',$line);
         $longitude1[$key] = $row[0];
         $speed1[$key] = $row[1];
-        $house_pos1[$key] = $row[2];
+        $house_pos1[$key] = (isset($row[2]) ? $row[2] : null);
       };
 
 
@@ -230,7 +230,7 @@
           $pl = $longitude1[$y] + (1 / 36000);
           if ($x < 12 And $longitude1[$x + LAST_PLANET] > $longitude1[$x + LAST_PLANET + 1])
           {
-            If (($pl >= $longitude1[$x + LAST_PLANET] And $pl < 360) Or ($pl < $longitude1[$x + LAST_PLANET + 1] And $pl >= 0))
+            if (($pl >= $longitude1[$x + LAST_PLANET] And $pl < 360) Or ($pl < $longitude1[$x + LAST_PLANET + 1] And $pl >= 0))
             {
               $house_pos1[$y] = $x;
               continue;
@@ -1374,7 +1374,7 @@
 //display the natal chart report
     if ($no_interps == True)
     {
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
     else
@@ -1671,13 +1671,13 @@
       echo '</table></center>';
       echo "<br /><br />";
 
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
       }
     }
   }
 
-  include ('footer.html');
+  include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
   exit();
 
 

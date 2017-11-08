@@ -1,55 +1,21 @@
 <?php
 /* Edited top work with PHP7 :JWX */
-include ('constants.php');
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/constants.php");
 
 $background_color = BACKGROUND_COLOR;
+
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/header.php");
 ?>
 
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-        <title><?php echo YOUR_URL; ?> login</title>
-        <meta name="description" content="<?php echo YOUR_URL; ?> Website">
-        <meta name="keywords" content="<?php echo YOUR_URL; ?> Website">
-
-        <link href="styles.css" rel="stylesheet" type="text/css" />
-
-        <style type='text/css'>
-            h5
-            {
-                FONT-WEIGHT: 400; FONT-SIZE: 10px; COLOR: #000000; FONT-FAMILY: Verdana, Arial, sans-serif
-            }
-            .pa_textbox
-            {
-                FONT-WEIGHT: 400; FONT-SIZE: 11px; COLOR: #000000; FONT-FAMILY: Verdana, Arial, sans-serif
-            }
-            .pa_LinksText
-            {
-                FONT-SIZE: 10px; COLOR: #000000; FONT-FAMILY: Verdana, Arial, sans-serif; TEXT-DECORATION: none
-            }
-            INPUT.pa_button1
-            {
-                width: 540px; BORDER-TOP-WIDTH: 1px; FONT-WEIGHT: bold; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 11px; BORDER-LEFT-COLOR: #ff9eb9; BACKGROUND: #b70000 no-repeat 5px 3px; BORDER-BOTTOM-WIDTH: 1px; BORDER-BOTTOM-COLOR: #990049; COLOR: #ffffff; BORDER-TOP-COLOR: #ff9eb9; FONT-FAMILY: Verdana, Arial, sans-serif; BORDER-RIGHT-WIDTH: 1px; BORDER-RIGHT-COLOR: #990049
-            }
-            INPUT.pa_button2
-            {
-                width: 190px; BORDER-TOP-WIDTH: 1px; FONT-WEIGHT: bold; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 11px; BORDER-LEFT-COLOR: #ff9eb9; BACKGROUND: #b70000 no-repeat 5px 3px; BORDER-BOTTOM-WIDTH: 1px; BORDER-BOTTOM-COLOR: #990049; COLOR: #ffffff; BORDER-TOP-COLOR: #ff9eb9; FONT-FAMILY: Verdana, Arial, sans-serif; BORDER-RIGHT-WIDTH: 1px; BORDER-RIGHT-COLOR: #990049
-            }
-        </style>
-    </head>
-
-    <body text="#000000" link="#0000FF" vlink="#ff0000" bgcolor="<?php echo $background_color; ?>">
-
-        <div id="header"><img src="images/dummy_logo.jpg" alt="<?php echo YOUR_URL; ?>" /></div>
-
+        
         <div id="content">
             In order to process your astrological information we need you to sign up as a free member. We will keep all your data safe for you. It will also be easy from now on to add other family members or friends in case you want to check them out. Signing up does not entail any obligations on your part other than entering the birth information. We will never sell or disclose any of your personal details to anybody else. Thank you for your interest in my work. I send you my best.
         </div>
 
         <div id="content">
-            <table width="99%" bgcolor="<?php echo $background_color; ?>" cellspacing='0' cellpadding='3' border="0">
+<!--            <table width="99%" bgcolor="<?php echo $background_color; ?>" cellspacing='0' cellpadding='3' border="0">-->
+            <table >
                 <tr>
                     <td>
                         <form name='form1' action="process_new.php" method="post" target="_blank">
@@ -100,7 +66,7 @@ $background_color = BACKGROUND_COLOR;
                         </form>
                     </td>
 
-                    <td width="25" bgcolor="<?php echo $background_color; ?>">&nbsp;</td>
+                    <td>&nbsp;</td>
 
                     <td>
                         <form name="form2" action="login.php" method="post" target="_blank">
@@ -159,9 +125,6 @@ $background_color = BACKGROUND_COLOR;
 
     <br><br>
 
-    <div id="footer">
-        &copy;<?php echo COPYRIGHT_DATE . "&nbsp;&nbsp;" . YOUR_URL; ?>&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;<a href="privacy.php">Privacy Policy</a></div>
-
-</body>
-</html>
+<?php 
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
+?>

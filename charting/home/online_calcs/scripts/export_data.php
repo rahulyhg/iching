@@ -11,7 +11,7 @@
   include ('../constants.php');           //nedded because of "../footer.html" statements
 
   // connect to the database and point to the proper database
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
 
   echo "<br><center><b>Here is the data in your personal database: (import this data into Astro123)</b></center><br>";
   

@@ -12,15 +12,15 @@
   echo "</center>";
 
   // connect to the database and point to the proper database
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   // check if the form has been submitted
   if (isset($_POST['submitted']))
   {
     // get all variables from form - Person
-    $num_recs_to_display = safeEscapeString($conn, $_POST["num_recs_to_display"]);
-    $my_sort_by = strtolower(safeEscapeString($conn, $_POST["my_sort_by"]));
+    $num_recs_to_display = mysqlSafeEscapeString($conn, $_POST["num_recs_to_display"]);
+    $my_sort_by = strtolower(mysqlSafeEscapeString($conn, $_POST["my_sort_by"]));
 
     if ($num_recs_to_display < 1 Or $num_recs_to_display > 500)
     {

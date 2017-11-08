@@ -190,7 +190,7 @@
   imagefilledrectangle($im, 0, 0, $size_of_rect, $size_of_rect, $background_color);
 
 // MUST BE HERE - I DO NOT KNOW WHY - MAYBE TO PRIME THE PUMP
-  imagettftext($im, 10, 0, 0, 0, $black, 'arial.ttf', " ");
+  imagettftext($im, 10, 0, 0, 0, $black, './arial.ttf', " ");
 
 // draw the outer-outer borders of the chartwheel
   imagefilledellipse($im, $center_pt, $center_pt, $outer_outer_diameter + 80, $outer_outer_diameter + 80, $white);
@@ -262,7 +262,7 @@
 
     // sign glyph
     display_house_cusp($i, $angle, $middle_radius, $xy);
-    imagettftext($im, 14, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
+    imagettftext($im, 14, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
 
     // house cusp degree
     if ($i >= 1 And $i <= 6)
@@ -285,7 +285,7 @@
       $t = $int_reduced_pos;
     }
 
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $black, 'arial.ttf', $t . chr(176));
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $black, './arial.ttf', $t . chr(176));
 
     // house cusp minute
     if ($i >= 1 And $i <= 4)
@@ -315,7 +315,7 @@
     {
       $t = $int_reduced_pos;
     }
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $black, 'arial.ttf', $t . chr(39));
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $black, './arial.ttf', $t . chr(39));
   }
 
 // ------------------------------------------
@@ -347,7 +347,7 @@
     
     // display the house numbers themselves
     //display_house_number($i, -$angle, $radius - $inner_diameter_offset, $xy);
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $black, 'arial.ttf', $i);
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $black, './arial.ttf', $i);
 
 
     $x1 = -($radius - ($dist_from_diameter2 / 2)) * cos(deg2rad($angle));
@@ -462,7 +462,7 @@
     $planets_done++;
 
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter1, $xy, 0);
-    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color, 'HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
+    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color, './HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
 
     // display degrees of longitude for each planet
     $reduced_pos = Reduce_below_30($sort[$i]);
@@ -477,7 +477,7 @@
     }
 
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter1 - 20, $xy, 1);
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color, 'arial.ttf', $t . chr(176));
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color, './arial.ttf', $t . chr(176));
 
 
     // display planet sign
@@ -499,7 +499,7 @@
     {
       $clr_to_use = $blue;
     }
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
 
     // display minutes of longitude for each planet
     $int_reduced_pos = floor(60 * ($reduced_pos - floor($reduced_pos)));
@@ -512,13 +512,13 @@
       $t = $int_reduced_pos;
     }
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter1 - 60, $xy, 1);
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color, 'arial.ttf', $t . chr(39));
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color, './arial.ttf', $t . chr(39));
 
     // display Rx symbol
     if (strtoupper(mid($retrograde1, $sort_pos[$i] + 1, 1)) == "R")
     {
       display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter1 - 77, $xy, 3);
-      imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $red, 'HamburgSymbols.ttf', chr(62));
+      imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $red, './HamburgSymbols.ttf', chr(62));
     }
   }
 
@@ -672,7 +672,7 @@
     $planets_done++;
 
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter2, $xy, 0);
-    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color2, 'HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
+    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color2, './HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
 
     // display degrees of longitude for each planet
     $reduced_pos = Reduce_below_30($sort[$i]);
@@ -687,7 +687,7 @@
     }
 
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter2 - 20, $xy, 1);
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $deg_min_color, 'arial.ttf', $t . chr(176));
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $deg_min_color, './arial.ttf', $t . chr(176));
 
 
     // display planet sign
@@ -709,7 +709,7 @@
     {
       $clr_to_use = $blue;
     }
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
 
     // display minutes of longitude for each planet
 //    $int_reduced_pos = floor(60 * ($reduced_pos - floor($reduced_pos)));
@@ -722,13 +722,13 @@
 //      $t = $int_reduced_pos;
 //    }
 //    display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter2 - 60, $xy, 1);
-//    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $deg_min_color, 'arial.ttf', $t . chr(39));
+//    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $deg_min_color, './arial.ttf', $t . chr(39));
 
     // display Rx symbol
 //    if (strtoupper(mid($retrograde2, $sort_pos[$i] + 1, 1)) == "R")
 //    {
 //      display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter2 - 77, $xy, 3);
-//      imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $red, 'HamburgSymbols.ttf', chr(62));
+//      imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $red, './HamburgSymbols.ttf', chr(62));
 //    }
   }
 
@@ -804,7 +804,7 @@
     $planets_done++;
 
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter3, $xy, 0);
-    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color3, 'HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
+    imagettftext($im, 16, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $planet_color3, './HamburgSymbols.ttf', chr($pl_glyph[$sort_pos[$i]]));
 
     // display degrees of longitude for each planet
     $reduced_pos = Reduce_below_30($sort[$i]);
@@ -819,7 +819,7 @@
     }
 
     display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter3 - 20, $xy, 1);
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $deg_min_color, 'arial.ttf', $t . chr(176));
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $deg_min_color, './arial.ttf', $t . chr(176));
 
 
     // display planet sign
@@ -841,7 +841,7 @@
     {
       $clr_to_use = $blue;
     }
-    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $clr_to_use, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
+    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $clr_to_use, './HamburgSymbols.ttf', chr($sign_glyph[$sign_pos]));
 
     // display minutes of longitude for each planet
 //    $int_reduced_pos = floor(60 * ($reduced_pos - floor($reduced_pos)));
@@ -854,13 +854,13 @@
 //      $t = $int_reduced_pos;
 //    }
 //    display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter3 - 60, $xy, 1);
-//    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $deg_min_color, 'arial.ttf', $t . chr(39));
+//    imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $deg_min_color, './arial.ttf', $t . chr(39));
 
     // display Rx symbol
 //    if (strtoupper(mid($retrograde3, $sort_pos[$i] + 1, 1)) == "R")
 //    {
 //      display_planet_glyph($our_angle, $angle_to_use, $radius - $dist_from_diameter3 - 77, $xy, 3);
-//      imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $red, 'HamburgSymbols.ttf', chr(62));
+//      imagettftext($im, 10, 0, $xy[0] + $center_pt, $xy[1] + $center_pt, $red, './HamburgSymbols.ttf', chr(62));
 //    }
   }
 

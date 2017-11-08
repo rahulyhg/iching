@@ -4,32 +4,32 @@
   $months = array (0 => 'Choose month', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
   $my_error = "";
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  //require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
 
   // check if the form has been submitted
   if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted']))
   {
     // get all variables from form
-    $h_sys = safeEscapeString($conn, $_POST["h_sys"]);
-    $name = safeEscapeString($conn, $_POST["name"]);
+    $h_sys = mysqlSafeEscapeString($conn, $_POST["h_sys"]);
+    $name = mysqlSafeEscapeString($conn, $_POST["name"]);
 
-    $month = safeEscapeString($conn, $_POST["month"]);
-    $day = safeEscapeString($conn, $_POST["day"]);
-    $year = safeEscapeString($conn, $_POST["year"]);
+    $month = mysqlSafeEscapeString($conn, $_POST["month"]);
+    $day = mysqlSafeEscapeString($conn, $_POST["day"]);
+    $year = mysqlSafeEscapeString($conn, $_POST["year"]);
 
-    $hour = safeEscapeString($conn, $_POST["hour"]);
-    $minute = safeEscapeString($conn, $_POST["minute"]);
+    $hour = mysqlSafeEscapeString($conn, $_POST["hour"]);
+    $minute = mysqlSafeEscapeString($conn, $_POST["minute"]);
 
-    $timezone = safeEscapeString($conn, $_POST["timezone"]);
+    $timezone = mysqlSafeEscapeString($conn, $_POST["timezone"]);
 
-    $long_deg = safeEscapeString($conn, $_POST["long_deg"]);
-    $long_min = safeEscapeString($conn, $_POST["long_min"]);
-    $ew = safeEscapeString($conn, $_POST["ew"]);
+    $long_deg = mysqlSafeEscapeString($conn, $_POST["long_deg"]);
+    $long_min = mysqlSafeEscapeString($conn, $_POST["long_min"]);
+    $ew = mysqlSafeEscapeString($conn, $_POST["ew"]);
 
-    $lat_deg = safeEscapeString($conn, $_POST["lat_deg"]);
-    $lat_min = safeEscapeString($conn, $_POST["lat_min"]);
-    $ns = safeEscapeString($conn, $_POST["ns"]);
+    $lat_deg = mysqlSafeEscapeString($conn, $_POST["lat_deg"]);
+    $lat_min = mysqlSafeEscapeString($conn, $_POST["lat_min"]);
+    $ns = mysqlSafeEscapeString($conn, $_POST["ns"]);
 
     // set cookie containing transit data here
     setcookie ('name', stripslashes($name), time() + 60 * 60 * 24 * 30, '/', '', 0);
@@ -245,7 +245,7 @@
       $utdatenow = strftime("%d.%m.%Y", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
       $utnow = strftime("%H:%M:%S", mktime($inhours, $inmins, $insecs, $inmonth, $inday, $inyear));
 
-      putenv("PATH=$PATH:$swephsrc");
+      putenv("PATH=".getenv('PATH').":$swephsrc");
 
       // get LAST_PLANET planets and all house cusps
       if (strlen($h_sys) != 1)
@@ -265,7 +265,7 @@
         $row = explode(',',$line);
         $longitude1[$key] = $row[0];
         $speed1[$key] = $row[1];
-        $house_pos1[$key] = $row[2];
+        $house_pos1[$key] = (isset($row[2]) ? $row[2] : null);
       };
 
       include("constants_eng.php");     // this is here because we must rename the planet names
@@ -875,7 +875,7 @@
       $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 
-      include ('footer.html');
+      include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
       exit();
     }
   }
@@ -1236,7 +1236,7 @@
 </form>
 
 <?php
-include ('footer.html');
+include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 
 
 Function left($leftstring, $leftlength)
@@ -1294,7 +1294,7 @@ Function mid($midstring, $midstart, $midlength)
 }
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);

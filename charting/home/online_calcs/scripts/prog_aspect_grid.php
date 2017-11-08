@@ -3,11 +3,11 @@
   
   include("constants_eng.php");
 
-  require_once ('../../../mysqli_connect_online_calcs_db_MYSQLI.php');
-  //require_once ('../../../my_functions_MYSQLI.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
   
-  $rx1 = safeEscapeString($conn, $_GET["rx1"]);
-  $rx2 = safeEscapeString($conn, $_GET["rx2"]);
+  $rx1 = mysqlSafeEscapeString($conn, $_GET["rx1"]);
+  $rx2 = mysqlSafeEscapeString($conn, $_GET["rx2"]);
 
   $longitude1 = $_SESSION['prog_longitude_p1'];
   $longitude2 = $_SESSION['prog_longitude_p2'];
@@ -123,7 +123,7 @@
   imagefilledrectangle($im, 0, 0, $overall_size + $extra_width, $overall_size, $background_color);   //705 x 475 - add a planet
 
 // MUST BE HERE - I DO NOT KNOW WHY - MAYBE TO PRIME THE PUMP
-  imagettftext($im, 10, 0, 0, 0, $black, 'arial.ttf', " ");
+  imagettftext($im, 10, 0, 0, 0, $black, './arial.ttf', " ");
 
 // ------------------------------------------
 
@@ -144,28 +144,28 @@
 // draw in the planet glyphs
   for ($i = 0; $i <= $last_planet_num; $i++)
   {
-    drawboldtext($im, 18, 0, $margins + $i * $cell_width, $cell_height, $black, 'HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);   //across the top
+    drawboldtext($im, 18, 0, $margins + $i * $cell_width, $cell_height, $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);   //across the top
 
     // display planet data in the right-hand table
     if ($i <= $last_planet_num)
     {
-      drawboldtext($im, 16, 0, $margins + $left_margin_planet_table, $cell_height + $cell_height * ($i + 1), $red, 'HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
+      drawboldtext($im, 16, 0, $margins + $left_margin_planet_table, $cell_height + $cell_height * ($i + 1), $red, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
     }
     else
     {
-      drawboldtext($im, 16, 0, $margins + $left_margin_planet_table, $cell_height + $cell_height * ($i + 1), $black, 'HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
+      drawboldtext($im, 16, 0, $margins + $left_margin_planet_table, $cell_height + $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
     }
-    imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 2, $cell_height + $cell_height * ($i + 1) - 3, $blue, 'arial.ttf', $pl_name[$i]);
+    imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 2, $cell_height + $cell_height * ($i + 1) - 3, $blue, './arial.ttf', $pl_name[$i]);
 
     $sign_num1 = floor($longitude1[$i] / 30) + 1;
-    drawboldtext($im, 14, 0, $margins + $left_margin_planet_table + $cell_width * 5, $cell_height + $cell_height * ($i + 1), $black, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_num1]), 0);
-    imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 6, $cell_height + $cell_height * ($i + 1) - 3, $blue, 'arial.ttf', Convert_Longitude($longitude1[$i]) . " " . $rx1[$i]);
+    drawboldtext($im, 14, 0, $margins + $left_margin_planet_table + $cell_width * 5, $cell_height + $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($sign_glyph[$sign_num1]), 0);
+    imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 6, $cell_height + $cell_height * ($i + 1) - 3, $blue, './arial.ttf', Convert_Longitude($longitude1[$i]) . " " . $rx1[$i]);
 
     $sign_num2 = floor($longitude2[$i] / 30) + 1;
     if ($i != $last_planet_num - 2)
     {
-      drawboldtext($im, 14, 0, $margins + $left_margin_planet_table + $cell_width * 10, $cell_height + $cell_height * ($i + 1), $red, 'HamburgSymbols.ttf', chr($sign_glyph[$sign_num2]), 0);
-      imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 11, $cell_height + $cell_height * ($i + 1) - 3, $blue, 'arial.ttf', Convert_Longitude($longitude2[$i]) . " " . $rx2[$i]);
+      drawboldtext($im, 14, 0, $margins + $left_margin_planet_table + $cell_width * 10, $cell_height + $cell_height * ($i + 1), $red, './HamburgSymbols.ttf', chr($sign_glyph[$sign_num2]), 0);
+      imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 11, $cell_height + $cell_height * ($i + 1) - 3, $blue, './arial.ttf', Convert_Longitude($longitude2[$i]) . " " . $rx2[$i]);
     }
   }
 
@@ -222,7 +222,7 @@
 
       if ($q > 0 And $j != $last_planet_num - 2)
       {
-        drawboldtext($im, 14, 0, $margins + $cell_width * ($i + 0.20), $cell_height + $cell_height * ($j + 1 - 0.20), $asp_color[$q], 'HamburgSymbols.ttf', chr($asp_glyph[$q]), 0);
+        drawboldtext($im, 14, 0, $margins + $cell_width * ($i + 0.20), $cell_height + $cell_height * ($j + 1 - 0.20), $asp_color[$q], './HamburgSymbols.ttf', chr($asp_glyph[$q]), 0);
       }
     }
   }
@@ -234,7 +234,7 @@
   exit();
 
 
-Function safeEscapeString($conn, $string)
+Function mysqlSafeEscapeString($conn, $string)
 {
 // replace HTML tags '<>' with '[]'
   $temp1 = str_replace("<", "[", $string);
