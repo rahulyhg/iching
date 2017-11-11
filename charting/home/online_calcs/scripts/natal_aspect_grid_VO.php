@@ -1,10 +1,43 @@
 <?php
-  session_start();
-  
-  include("constants_eng.php");
 
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
-  //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+$my_error = "";
+
+$nopih = array();
+for ($i = 1; $i <= 12; $i++) {
+    $nopih[$i] = 0;
+}
+
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/functions.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/my_functions_MYSQLI.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/constants.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/scripts/constants_eng.php");
+
+
+if (isset($_REQUEST['session_name'])) {
+    loadSession($_REQUEST['session_name']);
+} else {
+    loadSession("vocation");
+}
+
+$sessionName = "natal_aspect_grid_VO";
+$_SESSION['REQUEST']['session_name'] = $sessionName;
+$_SESSION['REQUEST'] = $_REQUEST;
+
+saveSession($sessionName);
+include ('../accesscontrol.php');
+
+if ($is_logged_in == False) {
+    exit();
+}
+
+/* ********************************************************************** */
+/* ********************************************************************** */
+/* ********************************************************************** */
 
   $rx1 = mysqlSafeEscapeString($conn, $_GET["rx1"]);
 
@@ -194,8 +227,9 @@
       imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 2, $cell_height * ($i + 1) - 3, $blue, './arial.ttf', $pl_name[$i]);
       $sign_num = floor($longitude[$i] / 30) + 1;
       drawboldtext($im, 14, 0, $margins + $left_margin_planet_table + $cell_width * 5, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($sign_glyph[$sign_num]), 0);
-
+if (isset($rx1[$i])) {
       imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 6, $cell_height * ($i + 1) - 3, $blue, './arial.ttf', Convert_Longitude($longitude[$i]) . " " . $rx1[$i]);
+}
     }
   }
 
@@ -255,30 +289,31 @@
   // draw the image in png format - using imagepng() results in clearer text compared with imagejpeg()
   imagepng($im);
   imagedestroy($im);
+  saveSession($sessionName);
   exit();
 
 
-Function mysqlSafeEscapeString($conn, $string)
-{
-// replace HTML tags '<>' with '[]'
-  $temp1 = str_replace("<", "[", $string);
-  $temp2 = str_replace(">", "]", $temp1);
-
-// but keep <br> or <br />
-// turn <br> into <br /> so later it will be turned into ""
-// using just <br> will add extra blank lines
-  $temp1 = str_replace("[br]", "<br />", $temp2);
-  $temp2 = str_replace("[br /]", "<br />", $temp1);
-
-  if (get_magic_quotes_gpc())
-  {
-    return $temp2;
-  }
-  else
-  {
-    return mysqli_real_escape_string($conn, $temp2);
-  }
-}
+//Function mysqlSafeEscapeString($conn, $string)
+//{
+//// replace HTML tags '<>' with '[]'
+//  $temp1 = str_replace("<", "[", $string);
+//  $temp2 = str_replace(">", "]", $temp1);
+//
+//// but keep <br> or <br />
+//// turn <br> into <br /> so later it will be turned into ""
+//// using just <br> will add extra blank lines
+//  $temp1 = str_replace("[br]", "<br />", $temp2);
+//  $temp2 = str_replace("[br /]", "<br />", $temp1);
+//
+//  if (get_magic_quotes_gpc())
+//  {
+//    return $temp2;
+//  }
+//  else
+//  {
+//    return mysqli_real_escape_string($conn, $temp2);
+//  }
+//}
 
 
 Function Convert_Longitude($longitude)

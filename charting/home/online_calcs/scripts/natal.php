@@ -1,4 +1,8 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 /* Edited top work with PHP7 :JWX */
 
 include ('../accesscontrol.php');
@@ -7,9 +11,29 @@ if ($is_logged_in == False) {
     exit();
 }
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/functions.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
-require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/my_functions_MYSQLI.php");
 
+include($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/constants.php");
+
+$nopih = array();
+  for ($i = 1; $i <= 12; $i++)
+  {
+    $nopih[$i] = 0;
+  }
+  
+if (isset($_REQUEST['session_name'])) {
+    loadSession($_REQUEST['session_name']);
+} else {
+    loadSession("view_records");
+}
+
+$sessionName = "natal";
+$_SESSION['REQUEST']['session_name'] = $sessionName;
+$_SESSION['REQUEST'] = $_REQUEST;
+
+$my_error = "";
 $no_interps = False;        //set this to False when you want interpretations
 // check if the form has been submitted
 if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
@@ -17,7 +41,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
 
     if (!is_numeric($id1)) {
         echo "<center><br><br>You have forgotten to make an entry. Please try again.</center>";
-        include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
+        include ($_SERVER['DOCUMENT_ROOT'] . "/charting/home/footer.php");
         exit();
     }
 
@@ -32,7 +56,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
 
     if ($num_records != 1) {
         echo "<center><br><br>I cannot find this person in the database. Please try again.</center>";
-        include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
+        include ($_SERVER['DOCUMENT_ROOT'] . "/charting/home/footer.php");
         exit();
     }
 //var_dump($_POST);//JWX
@@ -59,6 +83,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
     $lat_min = $row['lat_min'];
     $ns = $row['ns'];
 
+//   require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/home/header.php");   
     include ('header_natal.html');        //here because of setting cookies above
 
     if ($ew < 0) {
@@ -73,7 +98,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
         $ns_txt = "s";
     }
 
-    if (( isset($my_error) ?: "" ) != "") {
+    if ($my_error != "") {
         
     } else {
         // no errors in filling out form, so process form
@@ -83,6 +108,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
 
         // Unset any variables not initialized elsewhere in the program
         unset($PATH, $out, $pl_name, $longitude1, $house_pos);
+        include($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/scripts/constants_eng.php");
 
         //assign data from database to local variables
         $inmonth = $month;
@@ -143,7 +169,6 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
         };
 
 
-        include("constants_eng.php");     // this is here because we must rename the planet names
         //calculate the Part of Fortune
         //is this a day chart or a night chart?
         if ($longitude1[LAST_PLANET + 1] > $longitude1[LAST_PLANET + 7]) {
@@ -249,67 +274,67 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
         ?>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <select name="h_sys" size="1">
-        <?php
-        echo "<option value='p' ";
-        if ($h_sys == "p") {
-            echo " selected";
-        }
-        echo "> Placidus </option>";
+                <?php
+                echo "<option value='p' ";
+                if ($h_sys == "p") {
+                    echo " selected";
+                }
+                echo "> Placidus </option>";
 
-        echo "<option value='k' ";
-        if ($h_sys == "k") {
-            echo " selected";
-        }
-        echo "> Koch </option>";
+                echo "<option value='k' ";
+                if ($h_sys == "k") {
+                    echo " selected";
+                }
+                echo "> Koch </option>";
 
-        echo "<option value='r' ";
-        if ($h_sys == "r") {
-            echo " selected";
-        }
-        echo "> Regiomontanus </option>";
+                echo "<option value='r' ";
+                if ($h_sys == "r") {
+                    echo " selected";
+                }
+                echo "> Regiomontanus </option>";
 
-        echo "<option value='c' ";
-        if ($h_sys == "c") {
-            echo " selected";
-        }
-        echo "> Campanus </option>";
+                echo "<option value='c' ";
+                if ($h_sys == "c") {
+                    echo " selected";
+                }
+                echo "> Campanus </option>";
 
-        echo "<option value='b' ";
-        if ($h_sys == "b") {
-            echo " selected";
-        }
-        echo "> Alcabitus </option>";
+                echo "<option value='b' ";
+                if ($h_sys == "b") {
+                    echo " selected";
+                }
+                echo "> Alcabitus </option>";
 
-        echo "<option value='o' ";
-        if ($h_sys == "o") {
-            echo " selected";
-        }
-        echo "> Porphyrius </option>";
+                echo "<option value='o' ";
+                if ($h_sys == "o") {
+                    echo " selected";
+                }
+                echo "> Porphyrius </option>";
 
-        echo "<option value='m' ";
-        if ($h_sys == "m") {
-            echo " selected";
-        }
-        echo "> Morinus </option>";
+                echo "<option value='m' ";
+                if ($h_sys == "m") {
+                    echo " selected";
+                }
+                echo "> Morinus </option>";
 
-        echo "<option value='a' ";
-        if ($h_sys == "a") {
-            echo " selected";
-        }
-        echo "> Equal house - Asc </option>";
+                echo "<option value='a' ";
+                if ($h_sys == "a") {
+                    echo " selected";
+                }
+                echo "> Equal house - Asc </option>";
 
-        echo "<option value='t' ";
-        if ($h_sys == "t") {
-            echo " selected";
-        }
-        echo "> Topocentric </option>";
+                echo "<option value='t' ";
+                if ($h_sys == "t") {
+                    echo " selected";
+                }
+                echo "> Topocentric </option>";
 
-        echo "<option value='v' ";
-        if ($h_sys == "v") {
-            echo " selected";
-        }
-        echo "> Vehlow </option>";
-        ?>
+                echo "<option value='v' ";
+                if ($h_sys == "v") {
+                    echo " selected";
+                }
+                echo "> Vehlow </option>";
+                ?>
             </select>
 
             <input type="hidden" name="id1"         value="<?php echo (isset($_POST['id1']) ? $_POST['id1'] : NULL); ?>">
@@ -367,6 +392,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
         $wheel_height = $wheel_width + 50;    //includes space at top of wheel for header
 
         $qdata1 = array(
+            'session_name' => $sessionName,
             'rx1' => $rx1,
             'l1' => $line1,
             'ubt1' => $ubt1
@@ -374,6 +400,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
         $wargs1 = http_build_query($qdata1);
 
         $qdata2 = array(
+            'session_name' => $sessionName,
             'rx1' => $rx1,
             'rx2' => $rx2,
             'ubt1' => $ubt1,
@@ -559,7 +586,7 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
 
 //display the natal chart report
         if ($no_interps == True) {
-            include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
+            include ($_SERVER['DOCUMENT_ROOT'] . "/charting/home/footer.php");
             exit();
         } else {
             echo '<center><table width="61.8%" cellpadding="0" cellspacing="0" border="0">';
@@ -819,13 +846,15 @@ if (isset($_POST['submitted']) Or isset($_POST['h_sys_submitted'])) {
             echo '</table></center>';
             echo "<br><br>";
 
-            include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
+            saveSession($sessionName);
+
+            include ($_SERVER['DOCUMENT_ROOT'] . "/charting/home/footer.php");
             exit();
         }
     }
 }
 
-include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
+include ($_SERVER['DOCUMENT_ROOT'] . "/charting/home/footer.php");
 exit();
 
 Function left($leftstring, $leftlength) {
@@ -911,10 +940,10 @@ Function Find_Specific_Report_Paragraph_ASPECTS($phrase_to_look_for, $file, $x, 
             $flag = 0;
             while (trim($file_array[$i]) != "*") {
                 if ($flag == 0) {
-                    if  (  (isset($p_h[$y][$x]) ? $p_h[$y][$x] : 0) == 0) {
+                    if ((isset($p_h[$y][$x]) ? $p_h[$y][$x] : 0) == 0) {
                         $t = " (power = " . sprintf("%.2f", $p_h[$x][$y]) . " and this aspect is neutral)";
                     }
-                    if ( (isset($p_h[$y][$x]) ? $p_h[$y][$x] : 0) > 0) {
+                    if ((isset($p_h[$y][$x]) ? $p_h[$y][$x] : 0) > 0) {
                         $t = " (power = " . sprintf("%.2f", $p_h[$x][$y]) . " and this aspect is harmonious = " . sprintf("%.2f", $p_h[$y][$x]) . ")";
                     }
                     if ((isset($p_h[$y][$x]) ? $p_h[$y][$x] : 0)) {

@@ -880,8 +880,11 @@ dbug($_REQUEST,false);
         ?>
     </div>
 <!-- /section -->
-
+<!--    <div style="position:absolute;top:0px; left:0px;border:1px solid black;min-width:100px;min-height:100px" id="chartImage" title="Position of Planets Now">
+        <img style="width:100%" src="">
+    </div>-->
 <?php
+
 require getRootDir(). "/lib/popup_predefs.php"; /* has all the dovs for the jquery-ui popups */
 require getRootDir(). "/elements/footer.php";
 /* clean up anythign laying around */

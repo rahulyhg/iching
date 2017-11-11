@@ -1,13 +1,31 @@
 <?php
 
-if (!isset($_SESSION)) {
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-/* Edited top work with PHP7 :JWX */
-//include("constants_eng.php");
-//require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/functions.php");
 
-require_once $_SERVER['DOCUMENT_ROOT']."/charting/functions.php";
+
+$sessionName = "right_now_wheel_JSON";
+
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/functions.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/my_functions_MYSQLI.php");
+
+include($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/constants.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/scripts/constants_eng.php");
+
+if (isset($_REQUEST['session_name'])) {
+    loadSession($_REQUEST['session_name']);
+} else {
+    loadSession("right_now_JSON");
+}
+
+$_REQUEST['session_name'] = $sessionName;
+$_SESSION['REQUEST'] = $_REQUEST;
+
+saveSession($sessionName);
+
+
 
 //require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
 //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
@@ -570,24 +588,24 @@ Function Reduce_below_30($longitude) {
 
     return $lng;
 }
-
-Function mysqlSafeEscapeString($conn, $string) {
-// replace HTML tags '<>' with '[]'
-    $temp1 = str_replace("<", "[", $string);
-    $temp2 = str_replace(">", "]", $temp1);
-
-// but keep <br> or <br />
-// turn <br> into <br /> so later it will be turned into ""
-// using just <br> will add extra blank lines
-    $temp1 = str_replace("[br]", "<br />", $temp2);
-    $temp2 = str_replace("[br /]", "<br />", $temp1);
-
-    if (get_magic_quotes_gpc()) {
-        return $temp2;
-    } else {
-        return mysqli_real_escape_string($conn, $temp2);
-    }
-}
+//
+//Function mysqlSafeEscapeString($conn, $string) {
+//// replace HTML tags '<>' with '[]'
+//    $temp1 = str_replace("<", "[", $string);
+//    $temp2 = str_replace(">", "]", $temp1);
+//
+//// but keep <br> or <br />
+//// turn <br> into <br /> so later it will be turned into ""
+//// using just <br> will add extra blank lines
+//    $temp1 = str_replace("[br]", "<br />", $temp2);
+//    $temp2 = str_replace("[br /]", "<br />", $temp1);
+//
+//    if (get_magic_quotes_gpc()) {
+//        return $temp2;
+//    } else {
+//        return mysqli_real_escape_string($conn, $temp2);
+//    }
+//}
 
 Function Sort_planets_by_descending_longitude($num_planets, $longitude, &$sort, &$sort_pos) {
 // load all $longitude() into sort() and keep track of the planet numbers in $sort_pos()

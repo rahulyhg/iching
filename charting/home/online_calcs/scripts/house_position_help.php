@@ -7,6 +7,10 @@
 
 ?>
 
+      <center>
+          <a href="/charting/home/online_calcs/scripts/view_records.php">[home]</a><br>
+      </center>
+
   <br>
   
   <font size='2'>

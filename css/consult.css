@@ -573,3 +573,18 @@ html,body {
 
 }
 
+#closeImage {
+        z-index:1000;
+        position:relative;
+        font-size:24pt;
+    text-align: center;
+}
+
+#chartImage {
+    width:100%;
+    position:absolute;
+    top:0px;
+    left:0px;
+    border:1px solid black;
+    text-align: center;
+}

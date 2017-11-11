@@ -1,4 +1,8 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 /* Edited top work with PHP7 :JWX */
 
 include ('../accesscontrol.php');
@@ -7,11 +11,19 @@ if ($is_logged_in == False) {
     echo "You are not yet logged in.";
     exit();
 }
+//
+//  if(isset($_REQUEST['session_name'])) {
+//      loadSession($_REQUEST['session_name']);
+//  } else {
+//      loadSession("harmonics");
+//  }
 
-include ('../header.html');
-include ('../constants.php');           //nedded because of "../footer.html" statements
+
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/home/header.php");           //nedded because of "../footer.html" statements
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/constants.php");           //nedded because of "../footer.html" statements
 // connect to the database and point to the proper database
 require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/functions.php");
 ?>
 <script type="text/javascript" src="jquery-1.2.1.pack.js"></script>
 
@@ -466,6 +478,7 @@ if ($num_records == 0) {
                         </TD>
 
                         <td>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to produce a natal chart and its interpretation report" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -488,6 +501,8 @@ if ($num_records == 0) {
                         </TD>
 
                         <td>
+                            <input type="hidden" name="session_name" value="view_record">
+                            
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to generate the natal cosmodynes" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -510,6 +525,8 @@ if ($num_records == 0) {
                         </TD>
 
                         <td>
+
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to produce vocational analysis and natal chart report" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -539,6 +556,7 @@ if ($num_records == 0) {
                         </td>
 
                         <td>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit1" value="Click here to generate a contest chart" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </td>
@@ -561,6 +579,7 @@ if ($num_records == 0) {
                         </TD>
 
                         <td>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to generate the natal midpoints" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -570,7 +589,7 @@ if ($num_records == 0) {
         </div>
 
 
-        <div class="tabbertab" id="tab1" title="Harmonics">
+        <div class="tabbertab" id="tab1" title="BROKEN Harmonics">
             <br>
             <h9>Harmonic Charts - </h9><strong>Enter an ID number in the box below to generate the harmonic chart.</strong><br><br>
 
@@ -617,6 +636,7 @@ if ($num_records == 0) {
 
                     <tr>  
                         <td>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit1" value="Click here to generate a harmonic chart" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </td>
@@ -638,6 +658,7 @@ if ($num_records == 0) {
                         </td>
 
                         <td>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit1" value="Click here to generate an event chart" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </td>
@@ -670,6 +691,7 @@ if ($num_records == 0) {
                         </TD>
 
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click to see your synastry (compatibility) with another person - plus a report" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -697,6 +719,7 @@ if ($num_records == 0) {
                         </TD>
 
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to see your dual cosmodynes (check your compatibility)" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -717,6 +740,7 @@ if ($num_records == 0) {
                             ID #: <INPUT size="6" name="id1" value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sex of that ID #: <input type='text' size='2' maxlength='1' id='sex' name='sex'> (m for male and f for female)&nbsp;&nbsp;&nbsp;
                             <input type="hidden" name="submit_dc" value="submit_dc">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="hidden" name="session_name" value="view_record">
                             <INPUT type="submit" name="submit1" value="Click here to calculate &amp; see your dual cosmodyne scores" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                             <br><br><br>
                             <a href="view_dc_scores.php">Click here</a> if you just want to see current scores in your database (without calculating new scores)
@@ -745,6 +769,7 @@ if ($num_records == 0) {
                         </TD>
 
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to produce a composite chart for your relationship" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -772,6 +797,7 @@ if ($num_records == 0) {
                         </TD>
 
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to produce a Davison relationship chart" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -822,6 +848,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here for Solar Arcs for Any Date compared to your Natal Chart" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -867,6 +894,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here for Progressions for Any Date compared to your Natal Chart" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -898,6 +926,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here for Progressed Moon Declinations" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </td>
@@ -1079,6 +1108,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to produce a Solar Return" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </td>
@@ -1248,6 +1278,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='3'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to produce a Lunar Return" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -1293,6 +1324,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here for Solar Arcs/Transits for Any Date compared to your Natal Chart" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -1338,6 +1370,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here for Progressions/Transits for Any Date compared to your Natal Chart" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -1388,6 +1421,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to produce Transits for Any Date compared to your Natal Chart" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -1459,6 +1493,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to produce Progressed vs Natal Positions" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -1507,6 +1542,7 @@ if ($num_records == 0) {
 
                     <tr>
                         <td colspan='2'>
+                            <input type="hidden" name="session_name" value="view_record">
                             <input type="hidden" name="submitted" value="submitted">
                             &nbsp;&nbsp;&nbsp;<INPUT type="submit" name="submit1" value="Click here to produce Progressed Synastry" style="background-color:#ddddee;color:#0000ff;font-size:12px;font-weight:normal">
                         </TD>
@@ -1532,4 +1568,6 @@ if ($num_records == 0) {
 }
 
 include ('../footer.html');
+
+saveSession("view_record");
 ?>

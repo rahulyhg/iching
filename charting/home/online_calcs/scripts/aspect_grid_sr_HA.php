@@ -1,5 +1,8 @@
 <?php
-  session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
   
   require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
   //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
@@ -156,10 +159,19 @@ Function display_aspect_grid($longitude, $rx1)
 // ------------------------------------------
 
 // draw in the planet glyphs
-  for ($i = 0; $i <= $last_planet_num; $i++)
+        //JWX
+        $lpn = $last_planet_num * 2;
+        $dd = array_fill(0,$lpn,0);
+        for($j=0;$j<$last_planet_num;$j++) {
+            $rx1[$j] = (isset($rx1[$j])?$rx1[$j]:0);
+        }
+        $rx1 = $dd;  
+  
+  
+  for ($i = 0; $i < $last_planet_num; $i++)
   {
-    drawboldtext($im, 18, 0, $margins + $i * $cell_width, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
 
+    drawboldtext($im, 18, 0, $margins + $i * $cell_width, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
     // display planet data in the right-hand table
     drawboldtext($im, 16, 0, $margins + $left_margin_planet_table, $cell_height * ($i + 1), $black, './HamburgSymbols.ttf', chr($pl_glyph[$i]), 0);
     imagettftext($im, 10, 0, $margins + $left_margin_planet_table + $cell_width * 2, $cell_height * ($i + 1) - 3, $blue, './arial.ttf', $pl_name[$i]);

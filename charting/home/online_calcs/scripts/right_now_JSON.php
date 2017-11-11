@@ -1,14 +1,33 @@
 <?php
-
-if (!isset($_SESSION)) {
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+
+$sessionName = "natal_wheel";
+
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/functions.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/my_functions_MYSQLI.php");
+
+include($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/constants.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/scripts/constants_eng.php");
+
+
+$sessionName = "right_now_JSON";
+$_SESSION['REQUEST']['session_name'] = $sessionName;
+$_SESSION['REQUEST'] = $_REQUEST;
+
+saveSession($sessionName);
+
+
+
 header("Content-type: text/plain");
+//var_dump($_SESSION);
 /* Edited top work with PHP7 :JWX */
 //include ('header_right_now.html');
-
-
-require_once $_SERVER['DOCUMENT_ROOT']."/charting/functions.php";
+//
+//require_once $_SERVER['DOCUMENT_ROOT']."/charting/functions.php";
 
 // calculate astronomic data
 $swephsrc = './sweph';    //sweph MUST be in a folder no less than at this level
@@ -154,7 +173,8 @@ $sql = "UPDATE astro_reports SET transits_right_now = '$count'";
 $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 print_r(json_encode($_SESSION,JSON_PRETTY_PRINT));
-
+saveSession($sessionName);
+//var_dump($_SESSION);
 exit();
 
 Function left($leftstring, $leftlength) {

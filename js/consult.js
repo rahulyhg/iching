@@ -1,30 +1,55 @@
+    function killThis(name) {
+        $('#'+name).remove();
+    }
 $(document).ready(function () {
 
-    
+
     
     $("#astroIcon").on("click", function (e) {
+        console.log("astroIcon clicked");
         e.preventDefault();
         $(function () {
-            var astroPosAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_JSON.php";
-
+            console.log("in function");
+            /* this URL gets all teh time/place data and returns a JSON string */
+            var astroPosAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_JSON.php?session_name=right_now_JSON";
+            var getWheelAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?" ;
             $.getJSON(astroPosAPI, function (json) {
                 console.log("JSON Data: " + json.filename);
-                var getImage = "http://slider.com/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?" + json.wargs1;
-
+                console.log("calling:" + getWheelAPI);
+                console.log("w/:" + json.wargs1);
+                /* this URL returns a png of the chart from al;l the time/place data it was sent */
+                var getImage = getWheelAPI + json.wargs1;
+                /* make a query parameter string and send it as args to the URL */
                 $.ajax({
                     url: getImage,
                     type: "POST",
                     data: {
                         'right_now_p1': json.right_now_p1,
                         'filename': json.filename,
-                        'num_planets': json.num_planets
+                        'num_planets': json.num_planets,
+                        'session_name': 'right_now_JSON'
                     },
+                    
                     success: function (data) {
                         var newimage = "http://slider.com/charting/home/tmp/" + data;
-                        $('#chartImage').attr("src", newimage);
+                        console.log(newimage);
                         console.log("image: " + data);
                         console.log("urlimage: " + newimage);
-                        window.open(newimage,"newwin");
+                        
+                        var newDiv = "\
+<div \n\
+    style='position:absolute;top:0px; \n\
+    left:0px;border:1px solid black;min-width:100px;min-height:100px' \n\
+    id='chartImage' \n\
+    title='Position of Planets Now'> \n\
+<div onClick='killThis(\"chartImage\")' style='z-index:1000; position:relative;font-size:24pt' id='closeImage' class='btn-warning'>CLOSE</div>\n\
+<img style='width:100%' src=" + newimage + "> \n\
+</div> \
+";
+                        $('html').append(newDiv);
+//                        $('#chartImage').attr("src", newimage);
+//                        $('#chartImage').css("display","visible");
+//                        window.open(newimage,"newwin");
 
                     }
                 });

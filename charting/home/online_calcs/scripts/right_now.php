@@ -202,7 +202,6 @@ $result = @mysqli_query($conn, $sql) or error_log(mysqli_error($conn), 0);
 
 
 echo "<br /><br />";
-var_dump($_SESSION);
 
 include ($_SERVER['DOCUMENT_ROOT']."/charting/home/footer.php");
 exit();

@@ -1,37 +1,52 @@
 <?php
-  session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 
   include("constants_eng.php");
   require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/functions.php");
-
   require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
+  
+  if(isset($_REQUEST['session_name'])) {
+      loadSession($_REQUEST['session_name']);
+  } else {
+      loadSession("harmonics");
+  }
 
+  var_dump($_SESSION);
   $copyright1 = "This chart wheel is copyrighted";
   $copyright2 = "and generated at " . YOUR_URL;
 
-  $line1 = mysqlSafeEscapeString($conn, $_GET["l1"]);
-  $line2 = mysqlSafeEscapeString($conn, $_GET["l2"]);
+  $line1 = mysqlSafeEscapeString($conn, (isset($_GET["l1"])?$_GET["l1"]:""));
+  $line2 = mysqlSafeEscapeString($conn, (isset($_GET["l2"])?$_GET["l2"]:""));
 
-  $retrograde1 = mysqlSafeEscapeString($conn, $_GET["rx1"]);
-  $retrograde2 = mysqlSafeEscapeString($conn, $_GET["rx2"]);
+  $retrograde1 = mysqlSafeEscapeString($conn, (isset($_GET["rx1"])?$_GET["rx1"]:""));
+  $retrograde2 = mysqlSafeEscapeString($conn, (isset($_GET["rx2"])?$_GET["rx2"]:""));
 
-  $ubt1 = mysqlSafeEscapeString($conn, $_GET["ubt1"]);
-  $ubt2 = mysqlSafeEscapeString($conn, $_GET["ubt2"]);
+  $ubt1 = mysqlSafeEscapeString($conn, (isset($_GET["ubt1"])?$_GET["ubt1"]:""));
+  $ubt2 = mysqlSafeEscapeString($conn, (isset($_GET["ubt2"])?$_GET["ubt2"]:""));
 
-  $longitude1 = $_SESSION['longitude1_HA'];
-  $hc1 = $_SESSION['hc1_HA'];
-  $house_pos1 = $_SESSION['house_pos1_HA'];
+  $longitude1 = (isset($_SESSION['longitude1_HA'])?$_SESSION['longitude1_HA']:0);
+  $hc1 = (isset($_SESSION['hc1_HA'])?$_SESSION['hc1_HA']:0);
+  $house_pos1 = (isset($_SESSION['house_pos1_HA'])?$_SESSION['house_pos1_HA']:0);
 
-  $longitude2 = $_SESSION['longitude2_HA'];
-  $hc2 = $_SESSION['hc2_HA'];
+  $longitude2 = (isset($_SESSION['longitude2_HA'])?$_SESSION['house_pos1_HA']:0);
+  $hc2 = (isset($_SESSION['hc2_HA'])?$_SESSION['house_pos1_HA']:0);
 
-  $house_pos2_in_1 = $_SESSION['house_pos2_in_1_HA'];
+  $house_pos2_in_1 = (isset($_SESSION['house_pos2_in_1_HA'])?$_SESSION['house_pos2_in_1_HA']:0);
 
-  $longitude2_MC = $_SESSION['longitude2_MC'];          //"floating" MC
+  $longitude2_MC = (isset($_SESSION['longitude2_MC'])?$_SESSION['longitude2_MC']:0);          //"floating" MC
 
   $Ascendant1 = $hc1[1];
+  $hc1 = syncSize($hc1,13,0);
+  var_dump($hc1);
+  
   $hc1[13] = $hc1[1];
 
+  $longitude1 = syncSize($longitude1,LAST_PLANET + 2,0);
+  $longitude2 = syncSize($longitude2,LAST_PLANET + 2,0);//JWX
+  
   $longitude1[LAST_PLANET + 1] = $hc1[1];
   $longitude1[LAST_PLANET + 2] = $hc1[10];
 
@@ -41,7 +56,7 @@
 
 
 // set the content-type
-  header("Content-type: image/png");
+//    header("Content-type: image/png");
 
 // create the blank image
   $overall_size = 800;
@@ -151,7 +166,7 @@
   {
     $angle = $i + sprintf("%.0f", $Ascendant1);
 
-    if ($flag == True)
+    if ((isset($flag) ? $flag : false) == True)
     {
       imagefilledarc($im, $center_pt_x, $center_pt_y, $diameter - 1, $diameter - 1, $angle, $angle + 30, $light_blue, IMG_ARC_PIE);
     }
@@ -160,7 +175,7 @@
       imagefilledarc($im, $center_pt_x, $center_pt_y, $diameter - 1, $diameter - 1, $angle, $angle + 30, $white, IMG_ARC_PIE);
     }
 
-    $flag = !$flag;
+    $flag = !(isset($flag) ? $flag : false);
   }
 
 
@@ -783,8 +798,15 @@ Function Count_planets_in_each_house($num_planets, $house_pos, &$sort_pos, &$sor
 // run through all the planets and see how many planets are in each house
   for ($i = 0; $i <= $num_planets - 1; $i++)
   {
-    // get house planet is in
+    $sort_pos = syncSize($sort_pos,$i,0);//JWX
+    $house_pos = syncSize($house_pos,$sort_pos[$i],0);//JWX
+
+    //        // get house planet is in
     $temp = $house_pos[$sort_pos[$i]];
+
+    $nopih = syncSize($nopih,$temp,0);//JWX
+    $home = syncSize($home,$i,0);//JWX
+
     $nopih[$temp]++;
     $home[$i] = $temp;
   }
@@ -903,8 +925,8 @@ Function display_house_number($num, $angle, $radii, &$xy)
     $y_adj = sin(deg2rad($angle)) * $char_height;
   }
 
-  $xy[0] = $xpos0 + $x_adj - ($radii * cos(deg2rad($angle + 12)));
-  $xy[1] = $ypos0 + $y_adj + ($radii * sin(deg2rad($angle + 12)));
+  $xy[0] = $xpos0 + (isset($x_adj) ? $x_adj : 0) - ($radii * cos(deg2rad($angle + 12)));
+  $xy[1] = $ypos0 + (isset($y_adj) ? $y_adj : 0) + ($radii * sin(deg2rad($angle + 12)));
 
   return ($xy);
 }
@@ -1008,8 +1030,8 @@ Function display_house_cusp($num, $angle, $radii, &$xy)
   $x_adj = -cos(deg2rad($angle));
   $y_adj = sin(deg2rad($angle));
 
-  $xy[0] = $xpos0 + $x_adj - ($radii * cos(deg2rad($angle)));
-  $xy[1] = $ypos0 + $y_adj + ($radii * sin(deg2rad($angle)));
+  $xy[0] = $xpos0 + (isset($x_adj) ? $x_adj : 0) - ($radii * cos(deg2rad($angle)));
+  $xy[1] = $ypos0 + (isset($y_adj) ? $y_adj : 0) + ($radii * sin(deg2rad($angle)));
 
   return ($xy);
 }
@@ -1162,8 +1184,8 @@ Function display_house_number_new($num, $angle, $radii, &$xy)
     $y_adj = sin(deg2rad($angle));
   }
 
-  $xy[0] = $xpos0 + $x_adj - ($radii * cos(deg2rad($angle)));
-  $xy[1] = $ypos0 + $y_adj + ($radii * sin(deg2rad($angle)));;
+  $xy[0] = $xpos0 + (isset($x_adj) ? $x_adj : 0) - ($radii * cos(deg2rad($angle)));
+  $xy[1] = $ypos0 + (isset($y_adj) ? $y_adj : 0) + ($radii * sin(deg2rad($angle)));;
 
   return ($xy);
 }
