@@ -38,11 +38,9 @@ $(document).ready(function () {
                         
                         var newDiv = "\
 <div \n\
-    style='position:absolute;top:0px; \n\
-    left:0px;border:1px solid black;min-width:100px;min-height:100px' \n\
     id='chartImage' \n\
     title='Position of Planets Now'> \n\
-<div onClick='killThis(\"chartImage\")' style='z-index:1000; position:relative;font-size:24pt' id='closeImage' class='btn-warning'>CLOSE</div>\n\
+<div onClick='killThis(\"chartImage\")'  id='closeImage' class='btn-warning'>POSITIONS OF PLANETS USED IN CASTING<BR><span style=\"color:black;font-size:15pt\"> (CLICK TO CLOSE)</span></div>\n\
 <img style='width:100%' src=" + newimage + "> \n\
 </div> \
 ";
