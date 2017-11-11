@@ -40,7 +40,7 @@ $(document).ready(function () {
 <div \n\
     id='chartImage' \n\
     title='Position of Planets Now'> \n\
-<div onClick='killThis(\"chartImage\")'  id='closeImage' class='btn-warning'>POSITIONS OF PLANETS USED IN CASTING<BR><span style=\"color:black;font-size:15pt\"> (CLICK TO CLOSE)</span></div>\n\
+<div onClick='killThis(\"chartImage\")'  id='closeImage' class='btn-warning'>POSITIONS OF PLANETS USED IN CASTING<BR><span style=\"color:black;font-size:2vw\"> (CLICK TO CLOSE)</span></div>\n\
 <img style='width:100%' src=" + newimage + "> \n\
 </div> \
 ";
