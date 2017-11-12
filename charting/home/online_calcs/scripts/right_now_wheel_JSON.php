@@ -25,7 +25,7 @@ $_SESSION['REQUEST'] = $_REQUEST;
 
 saveSession($sessionName);
 
-
+//var_dump($_SESSION);
 
 //require_once($_SERVER['DOCUMENT_ROOT'] . "/charting/mysqli_connect_online_calcs_db_MYSQLI.php");
 //require_once($_SERVER['DOCUMENT_ROOT'] .  "/charting/my_functions_MYSQLI.php");
@@ -40,9 +40,21 @@ $retrograde = mysqlSafeEscapeString($conn, $_GET["rx1"]);
 //$adata = json_decode($adataJson,true);
 //var_dump($adata);
 
-$longitude = $_REQUEST['right_now_p1'];
-$filename = $_REQUEST['filename'];
 
+$longitude = null;
+if (isset($_REQUEST['right_now_p1'])) {
+    $longitude = $_REQUEST['right_now_p1'];
+} else {
+    $longitude = $_SESSION['right_now_p1'];
+}
+$filename = null;
+if (isset($_REQUEST['filename'])) {
+    $filename = $_REQUEST['filename'];
+} else {
+    $filename = $_SESSION['filename'];
+}
+
+//var_dump($longitude);
 for ($i = 1; $i <= 12; $i++) {
     $hc[$i] = ($i - 1) * 30;
 }
@@ -55,7 +67,8 @@ $longitude[LAST_PLANET + 2] = $hc[10];
 $Ascendant1 = $hc[1];
 
 for ($i = 0; $i <= LAST_PLANET + 2; $i++) {
-    $house_pos[$i] = floor($longitude[$i] / 30) + 1;
+    $x=  floor($longitude[$i] / 30) + 1;
+    $house_pos[$i] = $x;
 }
 
 // set the content-type

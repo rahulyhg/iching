@@ -15,7 +15,7 @@ include($_SERVER['DOCUMENT_ROOT'] . "/charting/home/online_calcs/scripts/constan
 
 
 $sessionName = "right_now_JSON";
-$_SESSION['REQUEST']['session_name'] = $sessionName;
+$_REQUEST['session_name'] = $sessionName;
 $_SESSION['REQUEST'] = $_REQUEST;
 
 saveSession($sessionName);
