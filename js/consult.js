@@ -42,7 +42,7 @@ $(document).ready(function () {
                         },
 
                         success: function (data) {
-                            var newimage = "http://slider.com/charting/home/tmp/" + data;
+                            var newimage = "/charting/home/tmp/" + data;
                             consolelog(newimage);
                             consolelog("image: " + data);
                             consolelog("urlimage: " + newimage);
