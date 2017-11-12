@@ -1,23 +1,28 @@
-    function killThis(name) {
-        $('#'+name).remove();
-    }
+function killThis(name) {
+    $('#' + name).remove();
+}
+function consolelog(s) {
+    console.log(s);
+    alert(s);
+}
+
 $(document).ready(function () {
 
 
-    
+
     $("#astroIcon").on("click", function (e) {
         console.log("astroIcon clicked");
         $('#astroIcon').attr("src", "/images/astroIcon_inv.png");
         e.preventDefault();
         $(function () {
-            console.log("in function");
+            consolelog("in function");
             /* this URL gets all teh time/place data and returns a JSON string */
             var astroPosAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_JSON.php?session_name=right_now_JSON";
-            var getWheelAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?" ;
+            var getWheelAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?";
             $.getJSON(astroPosAPI, function (json) {
-                console.log("JSON Data: " + json.filename);
-                console.log("calling:" + getWheelAPI);
-                console.log("w/:" + json.wargs1);
+                consolelog("JSON Data: " + json.filename);
+                consolelog("calling:" + getWheelAPI);
+                consolelog("w/:" + json.wargs1);
                 /* this URL returns a png of the chart from al;l the time/place data it was sent */
                 var getImage = getWheelAPI + json.wargs1;
                 /* make a query parameter string and send it as args to the URL */
@@ -30,14 +35,14 @@ $(document).ready(function () {
                         'num_planets': json.num_planets,
                         'session_name': 'right_now_JSON'
                     },
-                    
+
                     success: function (data) {
                         var newimage = "http://slider.com/charting/home/tmp/" + data;
-                        console.log(newimage);
-                        console.log("image: " + data);
-                        console.log("urlimage: " + newimage);
+                        consolelog(newimage);
+                        consolelog("image: " + data);
+                        consolelog("urlimage: " + newimage);
                         $('#astroIcon').attr("src", "/images/astroIcon75.png");
-    
+
                         var newDiv = "\
 <div \n\
     id='chartImage' \n\
