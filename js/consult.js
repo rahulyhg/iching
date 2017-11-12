@@ -3,7 +3,7 @@ function killThis(name) {
 }
 function consolelog(s) {
     console.log(s);
-    alert(s);
+//    alert(s);
 }
 
 $(document).ready(function () {
