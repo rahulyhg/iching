@@ -10,6 +10,7 @@ AddType application/x-httpd-php .php
 #hide php extension
 
 RewriteEngine On
+RewriteCond %{REQUEST_URI}  !(\.png|\.jpg|\.gif|\.jpeg|\.bm|\.pdf)$
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule (.*) $1.php [L]
