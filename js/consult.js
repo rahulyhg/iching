@@ -7,6 +7,7 @@ $(document).ready(function () {
     
     $("#astroIcon").on("click", function (e) {
         console.log("astroIcon clicked");
+        $('#astroIcon').attr("src", "/images/astroIcon_inv.png");
         e.preventDefault();
         $(function () {
             console.log("in function");
@@ -35,7 +36,8 @@ $(document).ready(function () {
                         console.log(newimage);
                         console.log("image: " + data);
                         console.log("urlimage: " + newimage);
-                        
+                        $('#astroIcon').attr("src", "/images/astroIcon75.png");
+    
                         var newDiv = "\
 <div \n\
     id='chartImage' \n\
