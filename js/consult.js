@@ -21,50 +21,54 @@ $(document).ready(function () {
             consolelog(astroPosAPI);
             var getWheelAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?";
             consolelog(getWheelAPI);
-            $.getJSON(astroPosAPI, function (json) {
-                consolelog("JSON Data: " + json.filename);
-                consolelog("calling:" + getWheelAPI);
-                consolelog("w/:" + json.wargs1);
-                /* this URL returns a png of the chart from al;l the time/place data it was sent */
-                var getImage = getWheelAPI + json.wargs1;
-                /* make a query parameter string and send it as args to the URL */
-                $.ajax({
-                    url: getImage,
-                    type: "POST",
-                    data: {
-                        'right_now_p1': json.right_now_p1,
-                        'filename': json.filename,
-                        'num_planets': json.num_planets,
-                        'session_name': 'right_now_JSON'
-                    },
+            try {
+                $.getJSON(astroPosAPI, function (json) {
+                    consolelog("JSON Data: " + json.filename);
+                    consolelog("calling:" + getWheelAPI);
+                    consolelog("w/:" + json.wargs1);
+                    /* this URL returns a png of the chart from al;l the time/place data it was sent */
+                    var getImage = getWheelAPI + json.wargs1;
+                    /* make a query parameter string and send it as args to the URL */
+                    $.ajax({
+                        url: getImage,
+                        type: "POST",
+                        data: {
+                            'right_now_p1': json.right_now_p1,
+                            'filename': json.filename,
+                            'num_planets': json.num_planets,
+                            'session_name': 'right_now_JSON'
+                        },
 
-                    success: function (data) {
-                        var newimage = "http://slider.com/charting/home/tmp/" + data;
-                        consolelog(newimage);
-                        consolelog("image: " + data);
-                        consolelog("urlimage: " + newimage);
-                        $('#astroIcon').attr("src", "/images/astroIcon75.png");
+                        success: function (data) {
+                            var newimage = "http://slider.com/charting/home/tmp/" + data;
+                            consolelog(newimage);
+                            consolelog("image: " + data);
+                            consolelog("urlimage: " + newimage);
+                            $('#astroIcon').attr("src", "/images/astroIcon75.png");
 
-                        var newDiv = "\
-<div \n\
-    id='chartImage' \n\
-    title='Position of Planets Now'> \n\
-<div onClick='killThis(\"chartImage\")'  id='closeImage' class='btn-warning'>POSITIONS OF PLANETS USED IN CASTING<BR><span id='closeButton'style=\"color:black;font-size:2vw\"> (CLICK TO CLOSE)</span></div>\n\
-<img style='width:100%' src=" + newimage + "> \n\
-</div> \
-";
-                        $('html').append(newDiv);
-//                        $('#chartImage').attr("src", newimage);
-//                        $('#chartImage').css("display","visible");
-//                        window.open(newimage,"newwin");
+                            var newDiv = "\
+    <div \n\
+        id='chartImage' \n\
+        title='Position of Planets Now'> \n\
+    <div onClick='killThis(\"chartImage\")'  id='closeImage' class='btn-warning'>POSITIONS OF PLANETS USED IN CASTING<BR><span id='closeButton'style=\"color:black;font-size:2vw\"> (CLICK TO CLOSE)</span></div>\n\
+    <img style='width:100%' src=" + newimage + "> \n\
+    </div> \
+    ";
+                            $('html').append(newDiv);
+    //                        $('#chartImage').attr("src", newimage);
+    //                        $('#chartImage').css("display","visible");
+    //                        window.open(newimage,"newwin");
 
-                    },
-                    error: function () {
-                        consolelog("ERROR");
-                        consolelog(data);
-                    }
+                        },
+                        error: function () {
+                            consolelog("ERROR");
+                            consolelog(data);
+                        }
+                    });
                 });
-            });
+            } catch(err) {
+                consolelog(err.message);            
+            }
         });
     });
 
