@@ -72,7 +72,7 @@ for ($i = 0; $i <= LAST_PLANET + 2; $i++) {
 
 // set the content-type
 header("Content-type: text/plain");
-var_dump($longitude);
+//var_dump($longitude);
 // create the blank image
 $overall_size = 640;
 $y_top_margin = 50;
