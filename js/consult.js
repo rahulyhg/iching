@@ -17,9 +17,9 @@ $(document).ready(function () {
         $(function () {
             consolelog("in function");
             /* this URL gets all teh time/place data and returns a JSON string */
-            var astroPosAPI = "/charting/home/online_calcs/scripts/right_now_JSON.php?session_name=right_now_JSON";
+            var astroPosAPI = "http://"+window.location.hostname+"/charting/home/online_calcs/scripts/right_now_JSON.php?session_name=right_now_JSON";
             consolelog(astroPosAPI);
-            var getWheelAPI = "/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?";
+            var getWheelAPI = "http://"+window.location.hostname+"/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?";
             consolelog(getWheelAPI);
             try {
                 consolelog("x1");
@@ -42,7 +42,7 @@ $(document).ready(function () {
                         },
 
                         success: function (data) {
-                            var newimage = "/charting/home/tmp/" + data;
+                            var newimage = "http://"+window.location.hostname+"/charting/home/tmp/" + data;
                             consolelog(newimage);
                             consolelog("image: " + data);
                             consolelog("urlimage: " + newimage);
