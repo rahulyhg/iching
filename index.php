@@ -2,6 +2,12 @@
 if (isset($_REQUEST['f_final'])) {
     $_REQUEST['mode']="manual";
 }
+if (isset($_REQUEST['question'])) {
+    if ($_REQUEST['question']=="msg12") {
+         header('Location: /reports.php?r=messages'); 
+    }
+}
+
 
 require $_SERVER['DOCUMENT_ROOT']."/lib/functions.php";
 

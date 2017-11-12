@@ -567,6 +567,19 @@ EOX;
             die("FATAL ERROR");                   
         }
     }
+    public function getSuggestions() {
+        try {
+            $query = "select * from site_suggestions";
+            $sth = $this->o->prepare($query);
+            $sth->bindParam(":sug", $sug,PDO::PARAM_STR);
+            $sth->execute();
+            $r = $sth->fetchAll(PDO::FETCH_ASSOC);
+            return($r);            return(1);
+        } catch (PDOException $e) {
+            dbug($e,TRUE);
+            die("FATAL ERROR");                   
+        }
+    }
     public function subSearch($searchStr) {
         $sr = array();
 
