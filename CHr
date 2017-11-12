@@ -11,4 +11,4 @@ sudo chown -R www-data astro
 sudo chmod -R a+rw  astro
 sudo chmod -R 777 log
 sudo chmod -R 777 charting/sessions  
-sudo chmod -R 777 tmp
+sudo chmod -R 777 charting/home/tmp
