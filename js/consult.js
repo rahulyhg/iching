@@ -18,7 +18,9 @@ $(document).ready(function () {
             consolelog("in function");
             /* this URL gets all teh time/place data and returns a JSON string */
             var astroPosAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_JSON.php?session_name=right_now_JSON";
+            consolelog(astroPosAPI);
             var getWheelAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?";
+            consolelog(getWheelAPI);
             $.getJSON(astroPosAPI, function (json) {
                 consolelog("JSON Data: " + json.filename);
                 consolelog("calling:" + getWheelAPI);
@@ -56,6 +58,10 @@ $(document).ready(function () {
 //                        $('#chartImage').css("display","visible");
 //                        window.open(newimage,"newwin");
 
+                    },
+                    error: function () {
+                        consolelog("ERROR");
+                        consolelog(data);
                     }
                 });
             });
