@@ -22,7 +22,9 @@ $(document).ready(function () {
             var getWheelAPI = "http://slider.com/charting/home/online_calcs/scripts/right_now_wheel_JSON.php?";
             consolelog(getWheelAPI);
             try {
+                consolelog("x1");
                 $.getJSON(astroPosAPI, function (json) {
+                consolelog("x2");
                     consolelog("JSON Data: " + json.filename);
                     consolelog("calling:" + getWheelAPI);
                     consolelog("w/:" + json.wargs1);
