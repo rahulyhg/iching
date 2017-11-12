@@ -54,7 +54,7 @@ if (isset($_REQUEST['filename'])) {
     $filename = $_SESSION['filename'];
 }
 
-//var_dump($longitude);
+var_dump($longitude);
 for ($i = 1; $i <= 12; $i++) {
     $hc[$i] = ($i - 1) * 30;
 }
