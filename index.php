@@ -333,6 +333,10 @@ dbug($_REQUEST,false);
    
             $a = $GLOBALS['dbh']->getAllHexes(); /* set global for ALL hexes, used for reference, rather than  teh dataabase */
 
+            if (   (!isset($ary['tossed'][0])) || (!isset($ary['final'][0])) ) {
+                dbug("oops!  something went wrong somewhere.  Press the HOME icon (red & white yin/yang icon) and try again.");
+                exit;
+            }
             /* fill in the arrays with tossed data */
             $t = $ary['tossed'][0];
             $f = $ary['final'][0];
