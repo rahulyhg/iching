@@ -54,7 +54,6 @@ if (isset($_REQUEST['filename'])) {
     $filename = $_SESSION['filename'];
 }
 
-//var_dump($longitude);
 for ($i = 1; $i <= 12; $i++) {
     $hc[$i] = ($i - 1) * 30;
 }
@@ -73,6 +72,7 @@ for ($i = 0; $i <= LAST_PLANET + 2; $i++) {
 
 // set the content-type
 header("Content-type: text/plain");
+var_dump($longitude);
 // create the blank image
 $overall_size = 640;
 $y_top_margin = 50;
