@@ -583,7 +583,7 @@ for ($i = 0; $i <= $last_planet_num - 1; $i++) {
 
 
 // draw the image in png format - using imagepng() results in clearer text compared with imagejpeg()
-imagepng($im,"/home/jw/src/iching/charting/home/tmp/".$filename);
+imagepng($im, getRootDir()."/charting/home/tmp/".$filename);
 echo $filename;
 imagedestroy($im);
 exit();
