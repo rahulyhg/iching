@@ -10,3 +10,5 @@ sudo chmod -R a+rw  id
 sudo chown -R www-data astro
 sudo chmod -R a+rw  astro
 sudo chmod -R 777 log
+sudo chmod -R 777 sessions  
+sudo chmod -R 777 tmp
